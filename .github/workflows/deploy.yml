@@ -1,40 +1,39 @@
-name: 自动构建与发布 vmrey.github.io 博客
+name: Deploy vmrey.github.io to GitHub Pages
 
 on:
   push:
-    branches:
-      - main  # 当您向 main 分支提交任何文章时自动触发
-  workflow_dispatch: # 支持在 GitHub 网页上点击按钮一键手动触发
+    branches: ["main"]
+  workflow_dispatch:
 
-# 赋予部署 GitHub Pages 的权限
+# 赋予部署 GitHub Pages 的最小所需权限
 permissions:
-  contents: write
+  contents: read
   pages: write
   id-token: write
 
+# 避免并发部署冲突
 concurrency:
   group: "pages"
   cancel-in-progress: false
 
 jobs:
-  build-and-deploy:
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
     runs-on: ubuntu-latest
     steps:
       - name: 检出仓库代码
         uses: actions/checkout@v4
 
-      - name: 配置 Node.js 环境
-        uses: actions/setup-node@v4
+      - name: 配置 GitHub Pages 环境
+        uses: actions/configure-pages@v5
+
+      - name: 上传全站静态资源产物
+        uses: actions/upload-pages-artifact@v3
         with:
-          node-version: 20
+          path: '.'
 
-      - name: 自动编译 Markdown 为静态网页与索引
-        run: node build.js
-
-      - name: 提交并推送到仓库
-        run: |
-          git config --global user.name "github-actions[bot]"
-          git config --global user.email "github-actions[bot]@users.noreply.github.com"
-          git add -A
-          git diff-index --quiet HEAD || git commit -m "chore: auto-build static posts from markdown [skip ci]"
-          git push
+      - name: 正式发布上线到 GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
