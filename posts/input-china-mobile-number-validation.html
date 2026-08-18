@@ -1,0 +1,725 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>前端输入框严格限制只能输入中国手机号码的最佳实践 - vmrey.github.io</title>
+  <meta name="description" content="结合 input 事件过滤、粘贴拦截与最新 11 位号段正则，打造极致体验的手机号输入框校验。">
+  <link rel="icon" type="image/svg+xml" href="../favicon.svg">
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="../css/prism.css">
+</head>
+<body>
+
+  <!-- 移动端顶部标题导航条 -->
+  <div class="mobile-header">
+    <div class="mobile-title-wrap">
+      <svg class="mobile-book-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path>
+        <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path>
+        <line x1="9" y1="7" x2="15" y2="7"></line>
+        <line x1="9" y1="11" x2="13" y2="11"></line>
+      </svg>
+      <div class="mobile-title">vmrey.github.io</div>
+    </div>
+    <button id="menu-toggle-btn" class="menu-toggle-btn" aria-label="切换侧边栏菜单">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <line x1="3" y1="12" x2="21" y2="12"></line>
+        <line x1="3" y1="6" x2="21" y2="6"></line>
+        <line x1="3" y1="18" x2="21" y2="18"></line>
+      </svg>
+    </button>
+  </div>
+
+  <div id="sidebar-overlay" class="sidebar-overlay"></div>
+
+  <div class="app-layout">
+    
+    <!-- 左侧常驻导航 -->
+    <aside class="app-sidebar" id="app-sidebar">
+      <div class="sidebar-inner">
+        <a href="../index.html" class="sidebar-brand">
+          <div class="sidebar-avatar" title="vmrey.github.io 博客">
+            <svg class="sidebar-avatar-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path>
+              <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path>
+              <line x1="9" y1="7" x2="15" y2="7"></line>
+              <line x1="9" y1="11" x2="13" y2="11"></line>
+            </svg>
+          </div>
+          <div class="sidebar-info">
+            <div class="sidebar-name">vmrey.github.io</div>
+            <div class="sidebar-tagline">构建工具，写干净的代码</div>
+          </div>
+        </a>
+
+        <!-- 左侧全局搜索快捷入口 (支持 ⌘K) -->
+        <button class="sidebar-search-btn open-search-modal" type="button" title="全站深度全文搜索 (Cmd+K)">
+          <span class="search-btn-left">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="11" cy="11" r="8"></circle>
+              <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+            </svg>
+            <span>全文搜索...</span>
+          </span>
+          <kbd class="kbd-badge">⌘K</kbd>
+        </button>
+
+        <!-- 导航分组 1：分类专栏 (支持多层级子专栏) -->
+        <div class="sidebar-nav-group">
+          <div class="nav-group-title">文章专栏</div>
+          
+          <!-- 全部文章 -->
+          <a href="../index.html" class="sidebar-nav-item  category-filter-btn" data-tag="all" data-label="全部文章">
+            <span class="nav-item-left">
+              <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg>
+              <span>全部文章</span>
+            </span>
+            <span class="nav-badge">27</span>
+          </a>
+
+          <!-- 专栏：前端开发 -->
+          <div class="nav-item-tree open">
+            <div class="tree-header-row">
+              <a href="../index.html?tag=%E5%89%8D%E7%AB%AF%E5%BC%80%E5%8F%91" class="sidebar-nav-item category-filter-btn" data-tag="前端开发" data-label="前端开发">
+                <span class="nav-item-left">
+                  <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"></polyline><polyline points="8 6 2 12 8 18"></polyline></svg>
+                  <span>前端开发</span>
+                </span>
+                <span class="nav-badge">11</span>
+              </a>
+              <button type="button" class="subtree-toggle-btn" aria-label="展开或折叠前端开发子菜单">
+                <svg class="chevron-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+              </button>
+            </div>
+            <div class="nav-subtree">
+              <a href="../index.html?tag=Vue" class="subtree-item category-filter-btn" data-tag="Vue" data-label="Vue 与组件">
+                <span class="subtree-item-left">
+                  <span class="subtree-item-dot"></span>
+                  <span class="subtree-item-name">Vue 与组件</span>
+                </span>
+                <span class="subtree-badge">4</span>
+              </a>
+              <a href="../index.html?tag=JavaScript" class="subtree-item category-filter-btn" data-tag="JavaScript" data-label="JS 与工具函数">
+                <span class="subtree-item-left">
+                  <span class="subtree-item-dot"></span>
+                  <span class="subtree-item-name">JS 与工具函数</span>
+                </span>
+                <span class="subtree-badge">6</span>
+              </a>
+              <a href="../index.html?tag=%E5%BE%AE%E4%BF%A1%E5%B0%8F%E7%A8%8B%E5%BA%8F" class="subtree-item category-filter-btn" data-tag="微信小程序" data-label="微信小程序">
+                <span class="subtree-item-left">
+                  <span class="subtree-item-dot"></span>
+                  <span class="subtree-item-name">微信小程序</span>
+                </span>
+                <span class="subtree-badge">2</span>
+              </a>
+            </div>
+          </div>
+
+          <!-- 专栏：Linux 与服务端 -->
+          <div class="nav-item-tree open">
+            <div class="tree-header-row">
+              <a href="../index.html?tag=Linux" class="sidebar-nav-item category-filter-btn" data-tag="Linux" data-label="Linux 与服务端">
+                <span class="nav-item-left">
+                  <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="8" rx="2" ry="2"></rect><rect x="2" y="14" width="20" height="8" rx="2" ry="2"></rect><line x1="6" y1="6" x2="6.01" y2="6"></line><line x1="6" y1="18" x2="6.01" y2="18"></line></svg>
+                  <span>Linux 与服务端</span>
+                </span>
+                <span class="nav-badge">9</span>
+              </a>
+              <button type="button" class="subtree-toggle-btn" aria-label="展开或折叠Linux 与服务端子菜单">
+                <svg class="chevron-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+              </button>
+            </div>
+            <div class="nav-subtree">
+              <a href="../index.html?tag=Docker" class="subtree-item category-filter-btn" data-tag="Docker" data-label="Docker 与容器">
+                <span class="subtree-item-left">
+                  <span class="subtree-item-dot"></span>
+                  <span class="subtree-item-name">Docker 与容器</span>
+                </span>
+                <span class="subtree-badge">3</span>
+              </a>
+              <a href="../index.html?tag=Nginx" class="subtree-item category-filter-btn" data-tag="Nginx" data-label="网络与反代">
+                <span class="subtree-item-left">
+                  <span class="subtree-item-dot"></span>
+                  <span class="subtree-item-name">网络与反代</span>
+                </span>
+                <span class="subtree-badge">3</span>
+              </a>
+              <a href="../index.html?tag=%E5%8E%8B%E5%8A%9B%E6%B5%8B%E8%AF%95" class="subtree-item category-filter-btn" data-tag="压力测试" data-label="性能与压测">
+                <span class="subtree-item-left">
+                  <span class="subtree-item-dot"></span>
+                  <span class="subtree-item-name">性能与压测</span>
+                </span>
+                <span class="subtree-badge">3</span>
+              </a>
+            </div>
+          </div>
+
+          <!-- 专栏：效率工具与软件 -->
+          <div class="nav-item-tree open">
+            <div class="tree-header-row">
+              <a href="../index.html?tag=%E6%95%88%E7%8E%87%E5%B7%A5%E5%85%B7" class="sidebar-nav-item category-filter-btn" data-tag="效率工具" data-label="效率工具与软件">
+                <span class="nav-item-left">
+                  <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"></path></svg>
+                  <span>效率工具与软件</span>
+                </span>
+                <span class="nav-badge">7</span>
+              </a>
+              <button type="button" class="subtree-toggle-btn" aria-label="展开或折叠效率工具与软件子菜单">
+                <svg class="chevron-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+              </button>
+            </div>
+            <div class="nav-subtree">
+              <a href="../index.html?tag=Git" class="subtree-item category-filter-btn" data-tag="Git" data-label="Git 与 SVN">
+                <span class="subtree-item-left">
+                  <span class="subtree-item-dot"></span>
+                  <span class="subtree-item-name">Git 与 SVN</span>
+                </span>
+                <span class="subtree-badge">1</span>
+              </a>
+              <a href="../index.html?tag=%E8%BD%AF%E4%BB%B6" class="subtree-item category-filter-btn" data-tag="软件" data-label="开源软件与脚本">
+                <span class="subtree-item-left">
+                  <span class="subtree-item-dot"></span>
+                  <span class="subtree-item-name">开源软件与脚本</span>
+                </span>
+                <span class="subtree-badge">1</span>
+              </a>
+              <a href="../index.html?tag=Claude" class="subtree-item category-filter-btn" data-tag="Claude" data-label="Claude 与 AI">
+                <span class="subtree-item-left">
+                  <span class="subtree-item-dot"></span>
+                  <span class="subtree-item-name">Claude 与 AI</span>
+                </span>
+                <span class="subtree-badge">1</span>
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <div class="sidebar-nav-group">
+          <div class="nav-group-title">导航与资源</div>
+          <a href="../files.html" class="sidebar-nav-item ">
+            <span class="nav-item-left">
+              <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path><line x1="12" y1="11" x2="12" y2="17"></line><line x1="9" y1="14" x2="15" y2="14"></line></svg>
+              <span>资源文件库</span>
+            </span>
+            <span class="nav-badge">10</span>
+          </a>
+          <a href="../about.html" class="sidebar-nav-item ">
+            <span class="nav-item-left">
+              <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+              <span>关于本站</span>
+            </span>
+          </a>
+          <a href="https://github.com/vmrey/vmrey.github.io" target="_blank" rel="noopener noreferrer" class="sidebar-nav-item">
+            <span class="nav-item-left">
+              <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0 9 18.13V22"></path></svg>
+              <span>GitHub 源码</span>
+            </span>
+          </a>
+        </div>
+      </div>
+
+      <div class="sidebar-footer">
+        <div class="theme-toggle-row">
+          <span id="theme-mode-text">深色模式</span>
+          <button id="theme-toggle" class="theme-toggle-btn" type="button" title="切换主题外观"></button>
+        </div>
+        <div class="sidebar-copyright">
+          © 2018-<span class="current-year">2026</span> vmrey.github.io<br>用代码与文字记录探索
+        </div>
+      </div>
+    </aside>
+
+    <!-- 主内容区 -->
+    <main class="app-main">
+      <!-- 文章标题与元数据头部 -->
+      <header class="article-header">
+        <a href="../index.html" class="back-link">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
+          <span>返回文章列表</span>
+        </a>
+        <h1 class="article-title">前端输入框严格限制只能输入中国手机号码的最佳实践</h1>
+        <div class="article-meta">
+          <span class="post-block-tag">前端开发</span>
+          <span>·</span>
+          <time datetime="2026-04-15">2026-04-15</time>
+          <span>·</span>
+          <span>26 分钟阅读</span>
+        </div>
+      </header>
+
+      <!-- 正文与目录两栏并排布局 -->
+      <div class="article-layout">
+        <article class="article-content" id="main-content">
+          <div class="prose">
+
+
+<h2 id="中国手机号码规则">中国手机号码规则</h2>
+
+<p>| 规则 | 说明 |</p>
+<p>|------|------|</p>
+<p>| <strong>长度</strong> | 11位数字 |</p>
+<p>| <strong>开头</strong> | 必须以 <code>1</code> 开头 |</p>
+<p>| <strong>第二位</strong> | <code>3-9</code>（不能是0或1） |</p>
+<p>| <strong>常见号段</strong> | 13x、14x、15x、16x、17x、18x、19x |</p>
+
+<h2 id="纯-javascript-实现">纯 JavaScript 实现</h2>
+
+<h3 id="方法1-输入实时过滤">方法1：输入实时过滤</h3>
+
+<pre><code class="language-html">&lt;!DOCTYPE html&gt;
+&lt;html lang=&quot;zh-CN&quot;&gt;
+&lt;head&gt;
+    &lt;meta charset=&quot;UTF-8&quot;&gt;
+    &lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1.0&quot;&gt;
+    &lt;title&gt;手机号码输入限制&lt;/title&gt;
+    &lt;style&gt;
+        .input-box {
+            width: 300px;
+            padding: 12px;
+            font-size: 16px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+    &lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+    &lt;input 
+        type=&quot;tel&quot; 
+        id=&quot;phone-input&quot; 
+        placeholder=&quot;请输入手机号码&quot; 
+        class=&quot;input-box&quot;
+        maxlength=&quot;11&quot;
+    &gt;
+
+    &lt;script&gt;
+        const phoneInput = document.getElementById('phone-input');
+        
+        phoneInput.addEventListener('input', function(e) {
+            let value = this.value;
+            
+            // 1. 只保留数字
+            value = value.replace(/[^\d]/g, '');
+            
+            // 2. 确保以1开头
+            if (value.length &gt; 0 &amp;&amp; value[0] !== '1') {
+                value = value.replace(/^[^1]/, '');
+            }
+            
+            // 3. 第二位必须是3-9
+            if (value.length &gt;= 2) {
+                const secondDigit = value[1];
+                if (!/[3-9]/.test(secondDigit)) {
+                    value = value[0] + value.substring(2);
+                }
+            }
+            
+            // 4. 限制长度为11位
+            if (value.length &gt; 11) {
+                value = value.substring(0, 11);
+            }
+            
+            this.value = value;
+        });
+    &lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;</code></pre>
+
+<h3 id="方法2-正则表达式验证">方法2：正则表达式验证</h3>
+
+<pre><code class="language-javascript">/**
+ * 验证中国手机号码
+ * @param {string} phone - 手机号码
+ * @returns {boolean} - 是否为有效手机号码
+ */
+function validatePhone(phone) {
+    // 移除所有空格和横线
+    phone = phone.replace(/[\s-]/g, '');
+    
+    // 正则表达式：1开头，第二位3-9，后面9位数字
+    const phoneRegex = /^1[3-9]\d{9}$/;
+    
+    return phoneRegex.test(phone);
+}
+
+// 验证示例
+console.log(validatePhone('13812345678'));  // true
+console.log(validatePhone('138 1234 5678')); // true
+console.log(validatePhone('138-1234-5678')); // true
+console.log(validatePhone('12812345678'));  // false (第二位不是3-9)
+console.log(validatePhone('1381234567'));   // false (不足11位)
+console.log(validatePhone('138123456789')); // false (超过11位)</code></pre>
+
+<h2 id="vue-版本">Vue 版本</h2>
+
+<pre><code class="language-html">&lt;!DOCTYPE html&gt;
+&lt;html lang=&quot;zh-CN&quot;&gt;
+&lt;head&gt;
+    &lt;meta charset=&quot;UTF-8&quot;&gt;
+    &lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1.0&quot;&gt;
+    &lt;title&gt;Vue 手机号码输入限制&lt;/title&gt;
+    &lt;script src=&quot;https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js&quot;&gt;&lt;/script&gt;
+    &lt;style&gt;
+        .input-box {
+            width: 300px;
+            padding: 12px;
+            font-size: 16px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            outline: none;
+        }
+        .input-box:focus {
+            border-color: #409eff;
+        }
+        .valid {
+            border-color: #67c23a;
+        }
+        .invalid {
+            border-color: #f56c6c;
+        }
+    &lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+    &lt;div id=&quot;app&quot;&gt;
+        &lt;input 
+            v-model=&quot;phone&quot; 
+            placeholder=&quot;请输入手机号码&quot; 
+            class=&quot;input-box&quot;
+            :class=&quot;{ valid: isValid, invalid: phone &amp;&amp; !isValid }&quot;
+            @input=&quot;handleInput&quot;
+        &gt;
+        &lt;div v-if=&quot;phone&quot; class=&quot;validation-message&quot;&gt;
+            &lt;span v-if=&quot;isValid&quot; style=&quot;color: #67c23a;&quot;&gt;✓ 格式正确&lt;/span&gt;
+            &lt;span v-else style=&quot;color: #f56c6c;&quot;&gt;✗ 请输入有效的手机号码&lt;/span&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
+
+    &lt;script&gt;
+        new Vue({
+            el: '#app',
+            data: {
+                phone: ''
+            },
+            computed: {
+                isValid() {
+                    const phoneRegex = /^1[3-9]\d{9}$/;
+                    return phoneRegex.test(this.phone);
+                }
+            },
+            methods: {
+                handleInput() {
+                    let value = this.phone;
+                    
+                    // 只保留数字
+                    value = value.replace(/[^\d]/g, '');
+                    
+                    // 确保以1开头
+                    if (value &amp;&amp; value[0] !== '1') {
+                        value = value.replace(/^[^1]/, '');
+                    }
+                    
+                    // 第二位必须是3-9
+                    if (value.length &gt;= 2 &amp;&amp; !/[3-9]/.test(value[1])) {
+                        value = value[0] + value.substring(2);
+                    }
+                    
+                    // 限制长度
+                    this.phone = value.substring(0, 11);
+                }
+            }
+        });
+    &lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;</code></pre>
+
+<h2 id="react-版本">React 版本</h2>
+
+<pre><code class="language-jsx">import { useState, useEffect } from 'react';
+
+function PhoneInput() {
+    const [phone, setPhone] = useState('');
+    
+    const isValid = /^1[3-9]\d{9}$/.test(phone);
+    
+    const handleInput = (e) =&gt; {
+        let value = e.target.value;
+        
+        // 只保留数字
+        value = value.replace(/[^\d]/g, '');
+        
+        // 确保以1开头
+        if (value &amp;&amp; value[0] !== '1') {
+            value = value.replace(/^[^1]/, '');
+        }
+        
+        // 第二位必须是3-9
+        if (value.length &gt;= 2 &amp;&amp; !/[3-9]/.test(value[1])) {
+            value = value[0] + value.substring(2);
+        }
+        
+        // 限制长度
+        setPhone(value.substring(0, 11));
+    };
+    
+    return (
+        &lt;div&gt;
+            &lt;input
+                type=&quot;tel&quot;
+                value={phone}
+                onChange={handleInput}
+                placeholder=&quot;请输入手机号码&quot;
+                style={{
+                    width: '300px',
+                    padding: '12px',
+                    fontSize: '16px',
+                    border: `1px solid ${isValid ? '#67c23a' : phone ? '#f56c6c' : '#ddd'}`,
+                    borderRadius: '4px',
+                    outline: 'none'
+                }}
+            /&gt;
+            {phone &amp;&amp; (
+                &lt;div style={{ marginTop: '8px', color: isValid ? '#67c23a' : '#f56c6c' }}&gt;
+                    {isValid ? '✓ 格式正确' : '✗ 请输入有效的手机号码'}
+                &lt;/div&gt;
+            )}
+        &lt;/div&gt;
+    );
+}
+
+export default PhoneInput;</code></pre>
+
+<h2 id="常用工具函数">常用工具函数</h2>
+
+<h3 id="1-手机号码格式化">1. 手机号码格式化</h3>
+
+<pre><code class="language-javascript">/**
+ * 格式化手机号码（添加空格分隔）
+ * @param {string} phone - 手机号码
+ * @returns {string} - 格式化后的号码
+ */
+function formatPhone(phone) {
+    phone = phone.replace(/[^\d]/g, '');
+    
+    if (phone.length &lt;= 3) return phone;
+    if (phone.length &lt;= 7) return phone.substring(0, 3) + ' ' + phone.substring(3);
+    
+    return phone.substring(0, 3) + ' ' + phone.substring(3, 7) + ' ' + phone.substring(7);
+}
+
+console.log(formatPhone('13812345678')); // &quot;138 1234 5678&quot;</code></pre>
+
+<h3 id="2-手机号码脱敏">2. 手机号码脱敏</h3>
+
+<pre><code class="language-javascript">/**
+ * 手机号码脱敏（中间4位用*代替）
+ * @param {string} phone - 手机号码
+ * @returns {string} - 脱敏后的号码
+ */
+function maskPhone(phone) {
+    phone = phone.replace(/[^\d]/g, '');
+    
+    if (phone.length &gt;= 11) {
+        return phone.substring(0, 3) + '****' + phone.substring(7);
+    }
+    
+    return phone;
+}
+
+console.log(maskPhone('13812345678')); // &quot;138****5678&quot;</code></pre>
+
+<h3 id="3-完整验证工具">3. 完整验证工具</h3>
+
+<pre><code class="language-javascript">/**
+ * 手机号码验证工具
+ */
+const PhoneValidator = {
+    // 验证手机号码
+    validate(phone) {
+        const cleanPhone = phone.replace(/[\s-]/g, '');
+        return /^1[3-9]\d{9}$/.test(cleanPhone);
+    },
+    
+    // 获取号码类型
+    getType(phone) {
+        const cleanPhone = phone.replace(/[\s-]/g, '');
+        if (!this.validate(cleanPhone)) return '无效号码';
+        
+        const prefix = cleanPhone.substring(0, 3);
+        
+        const types = {
+            '130': '联通', '131': '联通', '132': '联通',
+            '145': '联通', '146': '联通', '155': '联通',
+            '156': '联通', '166': '联通', '175': '联通',
+            '176': '联通', '185': '联通', '186': '联通',
+            '133': '电信', '149': '电信', '153': '电信',
+            '173': '电信', '177': '电信', '180': '电信',
+            '181': '电信', '189': '电信', '199': '电信',
+            '134': '移动', '135': '移动', '136': '移动',
+            '137': '移动', '138': '移动', '139': '移动',
+            '147': '移动', '150': '移动', '151': '移动',
+            '152': '移动', '157': '移动', '158': '移动',
+            '159': '移动', '178': '移动', '182': '移动',
+            '183': '移动', '184': '移动', '187': '移动',
+            '188': '移动', '198': '移动'
+        };
+        
+        return types[prefix] || '未知运营商';
+    },
+    
+    // 格式化号码
+    format(phone) {
+        const cleanPhone = phone.replace(/[^\d]/g, '');
+        if (cleanPhone.length &lt;= 3) return cleanPhone;
+        if (cleanPhone.length &lt;= 7) return cleanPhone.substring(0, 3) + ' ' + cleanPhone.substring(3);
+        return cleanPhone.substring(0, 3) + ' ' + cleanPhone.substring(3, 7) + ' ' + cleanPhone.substring(7);
+    },
+    
+    // 脱敏号码
+    mask(phone) {
+        const cleanPhone = phone.replace(/[^\d]/g, '');
+        if (cleanPhone.length &gt;= 11) {
+            return cleanPhone.substring(0, 3) + '****' + cleanPhone.substring(7);
+        }
+        return cleanPhone;
+    }
+};
+
+// 使用示例
+console.log(PhoneValidator.validate('13812345678')); // true
+console.log(PhoneValidator.getType('13812345678'));  // &quot;移动&quot;
+console.log(PhoneValidator.format('13812345678'));   // &quot;138 1234 5678&quot;
+console.log(PhoneValidator.mask('13812345678'));     // &quot;138****5678&quot;</code></pre>
+
+<h2 id="常见问题">常见问题</h2>
+
+<h3 id="q1-为什么要限制第二位必须是3-9">Q1: 为什么要限制第二位必须是3-9？</h3>
+
+<p>A: 根据中国工信部的规定，手机号码的第二位代表号段类型：</p>
+<ul>
+<li><code>13x</code>：传统号段</li>
+<li><code>14x</code>：物联网/数据卡</li>
+<li><code>15x</code>：传统号段</li>
+<li><code>16x</code>：新号段</li>
+<li><code>17x</code>：数据卡/虚拟运营商</li>
+<li><code>18x</code>：3G/4G号段</li>
+<li><code>19x</code>：5G号段</li>
+</ul>
+
+<p><code>10</code>和<code>11</code>开头的号码不是普通手机号码。</p>
+
+<h3 id="q2-是否需要考虑国际区号">Q2: 是否需要考虑国际区号？</h3>
+
+<p>A: 如果需要支持国际号码，可以修改正则表达式：</p>
+
+<pre><code class="language-javascript">// 支持带+86或86前缀的号码
+const phoneRegex = /^(?:\+?86)?1[3-9]\d{9}$/;</code></pre>
+
+<h3 id="q3-为什么不直接使用-input-的-type-tel">Q3: 为什么不直接使用 input 的 type="tel"？</h3>
+
+<p>A: <code>type=&quot;tel&quot;</code> 主要是在移动端唤起数字键盘，本身不包含验证逻辑，仍需要 JavaScript 进行验证。</p>
+
+<h3 id="q4-如何防止用户粘贴无效内容">Q4: 如何防止用户粘贴无效内容？</h3>
+
+<p>A: 添加粘贴事件处理：</p>
+
+<pre><code class="language-javascript">phoneInput.addEventListener('paste', function(e) {
+    e.preventDefault();
+    const text = (e.clipboardData || window.clipboardData).getData('text');
+    const cleanText = text.replace(/[^\d]/g, '');
+    document.execCommand('insertText', false, cleanText.substring(0, 11));
+});</code></pre>
+
+<h2 id="总结">总结</h2>
+
+<p>手机号码验证需要注意以下几点：</p>
+
+<ul>
+<li>✅ <strong>实时过滤</strong>：只允许输入数字</li>
+<li>✅ <strong>格式验证</strong>：确保符合中国手机号规则</li>
+<li>✅ <strong>用户反馈</strong>：及时显示验证结果</li>
+<li>✅ <strong>格式化显示</strong>：提高可读性</li>
+<li>✅ <strong>脱敏处理</strong>：保护用户隐私</li>
+</ul>
+
+<p>合理的手机号码验证可以提升用户体验，减少错误输入！</p>
+
+          </div>
+
+          <div class="post-block-footer" style="margin-top: 3.5rem; padding-top: 1.5rem;">
+            <a href="../index.html" class="read-more-text">
+              <span>← 返回文章专栏</span>
+            </a>
+          </div>
+        </article>
+
+        <!-- 右侧文章大纲 TOC -->
+        <aside class="article-toc-panel" aria-label="文章目录大纲">
+          <div class="toc-box">
+            <div class="toc-box-title">本页导读 · 快速直达</div>
+            <ul class="toc-list">
+            <li>
+              <a href="#中国手机号码规则" class="toc-link" title="中国手机号码规则">中国手机号码规则</a>
+            </li>
+            <li>
+              <a href="#纯-javascript-实现" class="toc-link" title="纯 JavaScript 实现">纯 JavaScript 实现</a>
+            </li>
+            <li>
+              <a href="#方法1-输入实时过滤" class="toc-link" title="方法1：输入实时过滤">方法1：输入实时过滤</a>
+            </li>
+            <li>
+              <a href="#方法2-正则表达式验证" class="toc-link" title="方法2：正则表达式验证">方法2：正则表达式验证</a>
+            </li>
+            <li>
+              <a href="#vue-版本" class="toc-link" title="Vue 版本">Vue 版本</a>
+            </li>
+            <li>
+              <a href="#react-版本" class="toc-link" title="React 版本">React 版本</a>
+            </li>
+            <li>
+              <a href="#常用工具函数" class="toc-link" title="常用工具函数">常用工具函数</a>
+            </li>
+            <li>
+              <a href="#1-手机号码格式化" class="toc-link" title="1. 手机号码格式化">1. 手机号码格式化</a>
+            </li>
+            <li>
+              <a href="#2-手机号码脱敏" class="toc-link" title="2. 手机号码脱敏">2. 手机号码脱敏</a>
+            </li>
+            <li>
+              <a href="#3-完整验证工具" class="toc-link" title="3. 完整验证工具">3. 完整验证工具</a>
+            </li>
+            <li>
+              <a href="#常见问题" class="toc-link" title="常见问题">常见问题</a>
+            </li>
+            <li>
+              <a href="#q1-为什么要限制第二位必须是3-9" class="toc-link" title="Q1: 为什么要限制第二位必须是3-9？">Q1: 为什么要限制第二位必须是3-9？</a>
+            </li>
+            <li>
+              <a href="#q2-是否需要考虑国际区号" class="toc-link" title="Q2: 是否需要考虑国际区号？">Q2: 是否需要考虑国际区号？</a>
+            </li>
+            <li>
+              <a href="#q3-为什么不直接使用-input-的-type-tel" class="toc-link" title="Q3: 为什么不直接使用 input 的 type="tel"？">Q3: 为什么不直接使用 input 的 type="tel"？</a>
+            </li>
+            <li>
+              <a href="#q4-如何防止用户粘贴无效内容" class="toc-link" title="Q4: 如何防止用户粘贴无效内容？">Q4: 如何防止用户粘贴无效内容？</a>
+            </li>
+            <li>
+              <a href="#总结" class="toc-link" title="总结">总结</a>
+            </li>
+            </ul>
+          </div>
+        </aside>
+      </div>
+    </main>
+
+  </div>
+
+  <script src="../js/config.js"></script>
+  <script src="../data/search-index.js"></script>
+  <script src="../js/main.js"></script>
+  <script src="../js/prism.js"></script>
+  <script src="../js/search.js"></script>
+  <script src="../js/file-preview.js"></script>
+
+</body>
+</html>

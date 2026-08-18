@@ -1,0 +1,40 @@
+name: 自动构建与发布 vmrey.github.io 博客
+
+on:
+  push:
+    branches:
+      - main  # 当您向 main 分支提交任何文章时自动触发
+  workflow_dispatch: # 支持在 GitHub 网页上点击按钮一键手动触发
+
+# 赋予部署 GitHub Pages 的权限
+permissions:
+  contents: write
+  pages: write
+  id-token: write
+
+concurrency:
+  group: "pages"
+  cancel-in-progress: false
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: 检出仓库代码
+        uses: actions/checkout@v4
+
+      - name: 配置 Node.js 环境
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: 自动编译 Markdown 为静态网页与索引
+        run: node build.js
+
+      - name: 提交并推送到仓库
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          git add -A
+          git diff-index --quiet HEAD || git commit -m "chore: auto-build static posts from markdown [skip ci]"
+          git push

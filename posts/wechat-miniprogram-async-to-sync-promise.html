@@ -1,0 +1,723 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>微信小程序将异步 API 封装为 Promise 同步调用（async/await）实战 - vmrey.github.io</title>
+  <meta name="description" content="利用 Promisify 模式批量将 wx.request、wx.showModal 等回调式 API 转为标准的 async/await 同步写法。">
+  <link rel="icon" type="image/svg+xml" href="../favicon.svg">
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="../css/prism.css">
+</head>
+<body>
+
+  <!-- 移动端顶部标题导航条 -->
+  <div class="mobile-header">
+    <div class="mobile-title-wrap">
+      <svg class="mobile-book-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path>
+        <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path>
+        <line x1="9" y1="7" x2="15" y2="7"></line>
+        <line x1="9" y1="11" x2="13" y2="11"></line>
+      </svg>
+      <div class="mobile-title">vmrey.github.io</div>
+    </div>
+    <button id="menu-toggle-btn" class="menu-toggle-btn" aria-label="切换侧边栏菜单">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <line x1="3" y1="12" x2="21" y2="12"></line>
+        <line x1="3" y1="6" x2="21" y2="6"></line>
+        <line x1="3" y1="18" x2="21" y2="18"></line>
+      </svg>
+    </button>
+  </div>
+
+  <div id="sidebar-overlay" class="sidebar-overlay"></div>
+
+  <div class="app-layout">
+    
+    <!-- 左侧常驻导航 -->
+    <aside class="app-sidebar" id="app-sidebar">
+      <div class="sidebar-inner">
+        <a href="../index.html" class="sidebar-brand">
+          <div class="sidebar-avatar" title="vmrey.github.io 博客">
+            <svg class="sidebar-avatar-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path>
+              <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path>
+              <line x1="9" y1="7" x2="15" y2="7"></line>
+              <line x1="9" y1="11" x2="13" y2="11"></line>
+            </svg>
+          </div>
+          <div class="sidebar-info">
+            <div class="sidebar-name">vmrey.github.io</div>
+            <div class="sidebar-tagline">构建工具，写干净的代码</div>
+          </div>
+        </a>
+
+        <!-- 左侧全局搜索快捷入口 (支持 ⌘K) -->
+        <button class="sidebar-search-btn open-search-modal" type="button" title="全站深度全文搜索 (Cmd+K)">
+          <span class="search-btn-left">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="11" cy="11" r="8"></circle>
+              <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+            </svg>
+            <span>全文搜索...</span>
+          </span>
+          <kbd class="kbd-badge">⌘K</kbd>
+        </button>
+
+        <!-- 导航分组 1：分类专栏 (支持多层级子专栏) -->
+        <div class="sidebar-nav-group">
+          <div class="nav-group-title">文章专栏</div>
+          
+          <!-- 全部文章 -->
+          <a href="../index.html" class="sidebar-nav-item  category-filter-btn" data-tag="all" data-label="全部文章">
+            <span class="nav-item-left">
+              <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg>
+              <span>全部文章</span>
+            </span>
+            <span class="nav-badge">27</span>
+          </a>
+
+          <!-- 专栏：前端开发 -->
+          <div class="nav-item-tree open">
+            <div class="tree-header-row">
+              <a href="../index.html?tag=%E5%89%8D%E7%AB%AF%E5%BC%80%E5%8F%91" class="sidebar-nav-item category-filter-btn" data-tag="前端开发" data-label="前端开发">
+                <span class="nav-item-left">
+                  <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"></polyline><polyline points="8 6 2 12 8 18"></polyline></svg>
+                  <span>前端开发</span>
+                </span>
+                <span class="nav-badge">11</span>
+              </a>
+              <button type="button" class="subtree-toggle-btn" aria-label="展开或折叠前端开发子菜单">
+                <svg class="chevron-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+              </button>
+            </div>
+            <div class="nav-subtree">
+              <a href="../index.html?tag=Vue" class="subtree-item category-filter-btn" data-tag="Vue" data-label="Vue 与组件">
+                <span class="subtree-item-left">
+                  <span class="subtree-item-dot"></span>
+                  <span class="subtree-item-name">Vue 与组件</span>
+                </span>
+                <span class="subtree-badge">4</span>
+              </a>
+              <a href="../index.html?tag=JavaScript" class="subtree-item category-filter-btn" data-tag="JavaScript" data-label="JS 与工具函数">
+                <span class="subtree-item-left">
+                  <span class="subtree-item-dot"></span>
+                  <span class="subtree-item-name">JS 与工具函数</span>
+                </span>
+                <span class="subtree-badge">6</span>
+              </a>
+              <a href="../index.html?tag=%E5%BE%AE%E4%BF%A1%E5%B0%8F%E7%A8%8B%E5%BA%8F" class="subtree-item category-filter-btn" data-tag="微信小程序" data-label="微信小程序">
+                <span class="subtree-item-left">
+                  <span class="subtree-item-dot"></span>
+                  <span class="subtree-item-name">微信小程序</span>
+                </span>
+                <span class="subtree-badge">2</span>
+              </a>
+            </div>
+          </div>
+
+          <!-- 专栏：Linux 与服务端 -->
+          <div class="nav-item-tree open">
+            <div class="tree-header-row">
+              <a href="../index.html?tag=Linux" class="sidebar-nav-item category-filter-btn" data-tag="Linux" data-label="Linux 与服务端">
+                <span class="nav-item-left">
+                  <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="8" rx="2" ry="2"></rect><rect x="2" y="14" width="20" height="8" rx="2" ry="2"></rect><line x1="6" y1="6" x2="6.01" y2="6"></line><line x1="6" y1="18" x2="6.01" y2="18"></line></svg>
+                  <span>Linux 与服务端</span>
+                </span>
+                <span class="nav-badge">9</span>
+              </a>
+              <button type="button" class="subtree-toggle-btn" aria-label="展开或折叠Linux 与服务端子菜单">
+                <svg class="chevron-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+              </button>
+            </div>
+            <div class="nav-subtree">
+              <a href="../index.html?tag=Docker" class="subtree-item category-filter-btn" data-tag="Docker" data-label="Docker 与容器">
+                <span class="subtree-item-left">
+                  <span class="subtree-item-dot"></span>
+                  <span class="subtree-item-name">Docker 与容器</span>
+                </span>
+                <span class="subtree-badge">3</span>
+              </a>
+              <a href="../index.html?tag=Nginx" class="subtree-item category-filter-btn" data-tag="Nginx" data-label="网络与反代">
+                <span class="subtree-item-left">
+                  <span class="subtree-item-dot"></span>
+                  <span class="subtree-item-name">网络与反代</span>
+                </span>
+                <span class="subtree-badge">3</span>
+              </a>
+              <a href="../index.html?tag=%E5%8E%8B%E5%8A%9B%E6%B5%8B%E8%AF%95" class="subtree-item category-filter-btn" data-tag="压力测试" data-label="性能与压测">
+                <span class="subtree-item-left">
+                  <span class="subtree-item-dot"></span>
+                  <span class="subtree-item-name">性能与压测</span>
+                </span>
+                <span class="subtree-badge">3</span>
+              </a>
+            </div>
+          </div>
+
+          <!-- 专栏：效率工具与软件 -->
+          <div class="nav-item-tree open">
+            <div class="tree-header-row">
+              <a href="../index.html?tag=%E6%95%88%E7%8E%87%E5%B7%A5%E5%85%B7" class="sidebar-nav-item category-filter-btn" data-tag="效率工具" data-label="效率工具与软件">
+                <span class="nav-item-left">
+                  <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"></path></svg>
+                  <span>效率工具与软件</span>
+                </span>
+                <span class="nav-badge">7</span>
+              </a>
+              <button type="button" class="subtree-toggle-btn" aria-label="展开或折叠效率工具与软件子菜单">
+                <svg class="chevron-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+              </button>
+            </div>
+            <div class="nav-subtree">
+              <a href="../index.html?tag=Git" class="subtree-item category-filter-btn" data-tag="Git" data-label="Git 与 SVN">
+                <span class="subtree-item-left">
+                  <span class="subtree-item-dot"></span>
+                  <span class="subtree-item-name">Git 与 SVN</span>
+                </span>
+                <span class="subtree-badge">1</span>
+              </a>
+              <a href="../index.html?tag=%E8%BD%AF%E4%BB%B6" class="subtree-item category-filter-btn" data-tag="软件" data-label="开源软件与脚本">
+                <span class="subtree-item-left">
+                  <span class="subtree-item-dot"></span>
+                  <span class="subtree-item-name">开源软件与脚本</span>
+                </span>
+                <span class="subtree-badge">1</span>
+              </a>
+              <a href="../index.html?tag=Claude" class="subtree-item category-filter-btn" data-tag="Claude" data-label="Claude 与 AI">
+                <span class="subtree-item-left">
+                  <span class="subtree-item-dot"></span>
+                  <span class="subtree-item-name">Claude 与 AI</span>
+                </span>
+                <span class="subtree-badge">1</span>
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <div class="sidebar-nav-group">
+          <div class="nav-group-title">导航与资源</div>
+          <a href="../files.html" class="sidebar-nav-item ">
+            <span class="nav-item-left">
+              <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path><line x1="12" y1="11" x2="12" y2="17"></line><line x1="9" y1="14" x2="15" y2="14"></line></svg>
+              <span>资源文件库</span>
+            </span>
+            <span class="nav-badge">10</span>
+          </a>
+          <a href="../about.html" class="sidebar-nav-item ">
+            <span class="nav-item-left">
+              <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+              <span>关于本站</span>
+            </span>
+          </a>
+          <a href="https://github.com/vmrey/vmrey.github.io" target="_blank" rel="noopener noreferrer" class="sidebar-nav-item">
+            <span class="nav-item-left">
+              <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0 9 18.13V22"></path></svg>
+              <span>GitHub 源码</span>
+            </span>
+          </a>
+        </div>
+      </div>
+
+      <div class="sidebar-footer">
+        <div class="theme-toggle-row">
+          <span id="theme-mode-text">深色模式</span>
+          <button id="theme-toggle" class="theme-toggle-btn" type="button" title="切换主题外观"></button>
+        </div>
+        <div class="sidebar-copyright">
+          © 2018-<span class="current-year">2026</span> vmrey.github.io<br>用代码与文字记录探索
+        </div>
+      </div>
+    </aside>
+
+    <!-- 主内容区 -->
+    <main class="app-main">
+      <!-- 文章标题与元数据头部 -->
+      <header class="article-header">
+        <a href="../index.html" class="back-link">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
+          <span>返回文章列表</span>
+        </a>
+        <h1 class="article-title">微信小程序将异步 API 封装为 Promise 同步调用（async/await）实战</h1>
+        <div class="article-meta">
+          <span class="post-block-tag">前端开发</span>
+          <span>·</span>
+          <time datetime="2026-03-25">2026-03-25</time>
+          <span>·</span>
+          <span>20 分钟阅读</span>
+        </div>
+      </header>
+
+      <!-- 正文与目录两栏并排布局 -->
+      <div class="article-layout">
+        <article class="article-content" id="main-content">
+          <div class="prose">
+
+
+<p>在微信小程序开发中，异步 API 是常态，但有时我们需要同步的代码风格来处理业务逻辑。本文介绍几种常用的异步转同步方案。</p>
+
+<h3 id="方案一-promise-封装-async-await-推荐">方案一：Promise 封装 + async/await（推荐）</h3>
+
+<pre><code class="language-javascript">Page({
+  data: {
+    userInfo: null,
+    token: ''
+  },
+
+  onLoad() {
+    this.initUserInfo();
+  },
+
+  /**
+   * 统一封装 wx.request 为 Promise
+   * @param {Object} options - 请求配置
+   * @returns {Promise}
+   */
+  request(options) {
+    return new Promise((resolve, reject) =&gt; {
+      wx.request({
+        ...options,
+        success: (res) =&gt; {
+          // 统一处理业务错误
+          if (res.data &amp;&amp; res.data.code !== 0) {
+            reject(new Error(res.data.message || '请求失败'));
+          } else {
+            resolve(res.data);
+          }
+        },
+        fail: (err) =&gt; {
+          reject(new Error(err.errMsg || '网络请求失败'));
+        }
+      });
+    });
+  },
+
+  /**
+   * 封装 wx.login 为 Promise
+   * @returns {Promise&lt;string&gt;} - 返回 code
+   */
+  login() {
+    return new Promise((resolve, reject) =&gt; {
+      wx.login({
+        success: (res) =&gt; {
+          if (res.code) {
+            resolve(res.code);
+          } else {
+            reject(new Error('登录失败'));
+          }
+        },
+        fail: (err) =&gt; {
+          reject(new Error(err.errMsg || '登录失败'));
+        }
+      });
+    });
+  },
+
+  /**
+   * 同步风格的用户信息初始化
+   */
+  async initUserInfo() {
+    try {
+      // 1. 获取账号信息
+      const accountInfo = wx.getAccountInfoSync();
+      const appId = accountInfo.miniProgram.appId;
+      
+      // 2. 登录获取 code
+      const code = await this.login();
+      console.log('获取 code 成功:', code);
+      
+      // 3. 登录请求
+      const loginResult = await this.request({
+        url: 'https://api.example.com/login',
+        method: 'POST',
+        data: {
+          js_code: code,
+          appid: appId
+        }
+      });
+      console.log('登录成功:', loginResult);
+      
+      // 4. 获取用户信息
+      const userInfoResult = await this.request({
+        url: 'https://api.example.com/user/info',
+        method: 'POST',
+        data: {
+          openId: loginResult.openId,
+          sessionKey: loginResult.sessionKey
+        }
+      });
+      console.log('获取用户信息成功:', userInfoResult);
+      
+      // 5. 更新页面数据
+      this.setData({
+        userInfo: userInfoResult,
+        token: loginResult.token
+      });
+      
+    } catch (error) {
+      console.error('初始化用户信息失败:', error.message);
+      // 可以在这里添加错误处理，如显示错误提示
+      wx.showToast({
+        title: '登录失败',
+        icon: 'none'
+      });
+    }
+  }
+});</code></pre>
+
+<hr>
+
+<h2 id="进阶方案-统一-api-管理">✨ 进阶方案：统一 API 管理</h2>
+
+<h3 id="创建统一的-api-管理文件">创建统一的 API 管理文件</h3>
+
+<pre><code class="language-javascript">// utils/api.js
+class ApiService {
+  constructor() {
+    this.baseUrl = 'https://api.example.com';
+    this.token = '';
+  }
+
+  /**
+   * 设置 token
+   */
+  setToken(token) {
+    this.token = token;
+  }
+
+  /**
+   * 请求拦截器
+   */
+  async request(options) {
+    // 添加公共参数
+    const headers = {
+      'Content-Type': 'application/json',
+      ...(this.token &amp;&amp; { 'Authorization': `Bearer ${this.token}` })
+    };
+
+    return new Promise((resolve, reject) =&gt; {
+      wx.request({
+        url: this.baseUrl + options.url,
+        method: options.method || 'GET',
+        data: options.data || {},
+        headers,
+        success: (res) =&gt; {
+          if (res.statusCode === 200) {
+            if (res.data.code === 0) {
+              resolve(res.data.data);
+            } else if (res.data.code === 401) {
+              // token 失效，重新登录
+              reject(new Error('登录已过期，请重新登录'));
+            } else {
+              reject(new Error(res.data.message || '请求失败'));
+            }
+          } else {
+            reject(new Error(`HTTP 错误: ${res.statusCode}`));
+          }
+        },
+        fail: (err) =&gt; {
+          reject(new Error(err.errMsg || '网络请求失败'));
+        }
+      });
+    });
+  }
+
+  /**
+   * 登录接口
+   */
+  async login(code, appId) {
+    return await this.request({
+      url: '/login',
+      method: 'POST',
+      data: { js_code: code, appid: appId }
+    });
+  }
+
+  /**
+   * 获取用户信息
+   */
+  async getUserInfo(openId) {
+    return await this.request({
+      url: '/user/info',
+      method: 'POST',
+      data: { openId }
+    });
+  }
+
+  /**
+   * 获取商品列表
+   */
+  async getGoodsList(params) {
+    return await this.request({
+      url: '/goods/list',
+      method: 'GET',
+      data: params
+    });
+  }
+}
+
+// 导出单例
+export default new ApiService();</code></pre>
+
+<h3 id="在页面中使用">在页面中使用</h3>
+
+<pre><code class="language-javascript">// pages/index/index.js
+import api from '../../utils/api.js';
+
+Page({
+  data: {
+    goods: []
+  },
+
+  async onLoad() {
+    await this.init();
+  },
+
+  async init() {
+    try {
+      // 1. 登录
+      const code = await this.getLoginCode();
+      const loginResult = await api.login(code, 'your-app-id');
+      
+      // 2. 设置 token
+      api.setToken(loginResult.token);
+      
+      // 3. 获取数据
+      const goods = await api.getGoodsList({ page: 1, size: 10 });
+      
+      // 4. 更新视图
+      this.setData({ goods });
+      
+    } catch (error) {
+      console.error('初始化失败:', error.message);
+      wx.showToast({ title: '加载失败', icon: 'none' });
+    }
+  },
+
+  getLoginCode() {
+    return new Promise((resolve, reject) =&gt; {
+      wx.login({
+        success: (res) =&gt; resolve(res.code),
+        fail: (err) =&gt; reject(err)
+      });
+    });
+  }
+});</code></pre>
+
+<hr>
+
+<h2 id="常用异步-api-promise-封装">🛠️ 常用异步 API Promise 封装</h2>
+
+<pre><code class="language-javascript">// utils/promise.js
+const promisify = (fn) =&gt; {
+  return (...args) =&gt; {
+    return new Promise((resolve, reject) =&gt; {
+      fn({
+        ...args[0],
+        success: resolve,
+        fail: reject
+      });
+    });
+  };
+};
+
+// 封装常用 API
+export const login = promisify(wx.login);
+export const getUserInfo = promisify(wx.getUserInfo);
+export const request = promisify(wx.request);
+export const showToast = promisify(wx.showToast);
+export const showLoading = promisify(wx.showLoading);
+export const hideLoading = promisify(wx.hideLoading);
+export const navigateTo = promisify(wx.navigateTo);
+export const switchTab = promisify(wx.switchTab);</code></pre>
+
+<h3 id="使用示例">使用示例</h3>
+
+<pre><code class="language-javascript">import { login, request, showLoading, hideLoading } from '../../utils/promise.js';
+
+async function fetchData() {
+  try {
+    await showLoading({ title: '加载中...' });
+    
+    const { code } = await login();
+    const result = await request({
+      url: 'https://api.example.com/data',
+      method: 'POST',
+      data: { code }
+    });
+    
+    await hideLoading();
+    return result;
+    
+  } catch (error) {
+    await hideLoading();
+    throw error;
+  }
+}</code></pre>
+
+<hr>
+
+<h2 id="方案对比">📊 方案对比</h2>
+
+<p>| 方案 | 优点 | 缺点 | 适用场景 |</p>
+<p>|------|------|------|----------|</p>
+<p>| <strong>基础 Promise 封装</strong> | 简单直观 | 代码重复 | 小型项目、快速开发 |</p>
+<p>| <strong>统一 API 管理</strong> | 易于维护、统一处理 | 需要额外配置 | 中大型项目 |</p>
+<p>| <strong>promisify 工具函数</strong> | 通用、简洁 | 缺少个性化处理 | 需要频繁封装多个 API |</p>
+
+<hr>
+
+<h2 id="注意事项">⚠️ 注意事项</h2>
+
+<h3 id="1-错误处理必须要有">1. 错误处理必须要有</h3>
+
+<pre><code class="language-javascript">// 错误做法 ❌
+async function badExample() {
+  const data = await api.request(); // 如果失败会直接抛出异常
+  console.log(data);
+}
+
+// 正确做法 ✅
+async function goodExample() {
+  try {
+    const data = await api.request();
+    console.log(data);
+  } catch (error) {
+    console.error('请求失败:', error);
+    // 显示错误提示
+    wx.showToast({ title: '请求失败', icon: 'none' });
+  }
+}</code></pre>
+
+<h3 id="2-await-必须在-async-函数中使用">2. await 必须在 async 函数中使用</h3>
+
+<pre><code class="language-javascript">// 错误 ❌
+Page({
+  onLoad() {
+    await this.fetchData(); // 错误：onLoad 不是 async 函数
+  }
+});
+
+// 正确 ✅
+Page({
+  async onLoad() {
+    await this.fetchData();
+  },
+  
+  async fetchData() {
+    // ...
+  }
+});</code></pre>
+
+<h3 id="3-不要滥用同步写法">3. 不要滥用同步写法</h3>
+
+<pre><code class="language-javascript">// 不推荐 ❌ - 串行请求，性能差
+async function badRequest() {
+  const a = await api.get('/a');
+  const b = await api.get('/b');
+  const c = await api.get('/c');
+}
+
+// 推荐 ✅ - 并行请求，性能更好
+async function goodRequest() {
+  const [a, b, c] = await Promise.all([
+    api.get('/a'),
+    api.get('/b'),
+    api.get('/c')
+  ]);
+}</code></pre>
+
+<h3 id="4-小程序兼容性">4. 小程序兼容性</h3>
+
+<p>| 特性 | 支持版本 | 说明 |</p>
+<p>|------|---------|------|</p>
+<p>| async/await | 基础库 2.10.2+ | 需要在开发者工具中开启 ES6 转 ES5 |</p>
+<p>| Promise.all | 基础库 1.5.0+ | 支持 |</p>
+<p>| Promise.race | 基础库 1.5.0+ | 支持 |</p>
+
+<hr>
+
+<h2 id="总结">📝 总结</h2>
+
+<p>异步转同步的核心是 <strong>Promise + async/await</strong>：</p>
+
+<ul>
+<li><strong>封装</strong>：将 wx API 封装为 Promise</li>
+<li><strong>调用</strong>：使用 async/await 实现同步风格</li>
+<li><strong>处理</strong>：使用 try-catch 捕获错误</li>
+<li><strong>优化</strong>：合理使用 Promise.all 提升性能</li>
+</ul>
+
+<p>这种方式既保持了异步的性能优势，又拥有同步代码的可读性。</p>
+
+          </div>
+
+          <div class="post-block-footer" style="margin-top: 3.5rem; padding-top: 1.5rem;">
+            <a href="../index.html" class="read-more-text">
+              <span>← 返回文章专栏</span>
+            </a>
+          </div>
+        </article>
+
+        <!-- 右侧文章大纲 TOC -->
+        <aside class="article-toc-panel" aria-label="文章目录大纲">
+          <div class="toc-box">
+            <div class="toc-box-title">本页导读 · 快速直达</div>
+            <ul class="toc-list">
+            <li>
+              <a href="#方案一-promise-封装-async-await-推荐" class="toc-link" title="方案一：Promise 封装 + async/await（推荐）">方案一：Promise 封装 + async/await（推荐）</a>
+            </li>
+            <li>
+              <a href="#进阶方案-统一-api-管理" class="toc-link" title="✨ 进阶方案：统一 API 管理">✨ 进阶方案：统一 API 管理</a>
+            </li>
+            <li>
+              <a href="#创建统一的-api-管理文件" class="toc-link" title="创建统一的 API 管理文件">创建统一的 API 管理文件</a>
+            </li>
+            <li>
+              <a href="#在页面中使用" class="toc-link" title="在页面中使用">在页面中使用</a>
+            </li>
+            <li>
+              <a href="#常用异步-api-promise-封装" class="toc-link" title="🛠️ 常用异步 API Promise 封装">🛠️ 常用异步 API Promise 封装</a>
+            </li>
+            <li>
+              <a href="#使用示例" class="toc-link" title="使用示例">使用示例</a>
+            </li>
+            <li>
+              <a href="#方案对比" class="toc-link" title="📊 方案对比">📊 方案对比</a>
+            </li>
+            <li>
+              <a href="#注意事项" class="toc-link" title="⚠️ 注意事项">⚠️ 注意事项</a>
+            </li>
+            <li>
+              <a href="#1-错误处理必须要有" class="toc-link" title="1. 错误处理必须要有">1. 错误处理必须要有</a>
+            </li>
+            <li>
+              <a href="#2-await-必须在-async-函数中使用" class="toc-link" title="2. await 必须在 async 函数中使用">2. await 必须在 async 函数中使用</a>
+            </li>
+            <li>
+              <a href="#3-不要滥用同步写法" class="toc-link" title="3. 不要滥用同步写法">3. 不要滥用同步写法</a>
+            </li>
+            <li>
+              <a href="#4-小程序兼容性" class="toc-link" title="4. 小程序兼容性">4. 小程序兼容性</a>
+            </li>
+            <li>
+              <a href="#总结" class="toc-link" title="📝 总结">📝 总结</a>
+            </li>
+            </ul>
+          </div>
+        </aside>
+      </div>
+    </main>
+
+  </div>
+
+  <script src="../js/config.js"></script>
+  <script src="../data/search-index.js"></script>
+  <script src="../js/main.js"></script>
+  <script src="../js/prism.js"></script>
+  <script src="../js/search.js"></script>
+  <script src="../js/file-preview.js"></script>
+
+</body>
+</html>

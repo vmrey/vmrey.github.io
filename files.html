@@ -1,0 +1,724 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>资源文件库 - vmrey.github.io</title>
+  <meta name="description" content="包含 Vue 组件源码、Shell 部署脚本、Windows 批处理以及项目压缩包附件，以文件夹嵌套树状结构呈现，支持全站免跳转在线代码高亮预览与高速直接下载。">
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/prism.css">
+</head>
+<body>
+
+  <!-- 移动端顶部标题导航条 -->
+  <div class="mobile-header">
+    <div class="mobile-title-wrap">
+      <svg class="mobile-book-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path>
+        <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path>
+        <line x1="9" y1="7" x2="15" y2="7"></line>
+        <line x1="9" y1="11" x2="13" y2="11"></line>
+      </svg>
+      <div class="mobile-title">vmrey.github.io</div>
+    </div>
+    <button id="menu-toggle-btn" class="menu-toggle-btn" aria-label="切换侧边栏菜单">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <line x1="3" y1="12" x2="21" y2="12"></line>
+        <line x1="3" y1="6" x2="21" y2="6"></line>
+        <line x1="3" y1="18" x2="21" y2="18"></line>
+      </svg>
+    </button>
+  </div>
+
+  <div id="sidebar-overlay" class="sidebar-overlay"></div>
+
+  <div class="app-layout">
+    
+    <!-- 左侧常驻导航 -->
+    <aside class="app-sidebar" id="app-sidebar">
+      <div class="sidebar-inner">
+        <a href="index.html" class="sidebar-brand">
+          <div class="sidebar-avatar" title="vmrey.github.io 博客">
+            <svg class="sidebar-avatar-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path>
+              <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path>
+              <line x1="9" y1="7" x2="15" y2="7"></line>
+              <line x1="9" y1="11" x2="13" y2="11"></line>
+            </svg>
+          </div>
+          <div class="sidebar-info">
+            <div class="sidebar-name">vmrey.github.io</div>
+            <div class="sidebar-tagline">构建工具，写干净的代码</div>
+          </div>
+        </a>
+
+        <!-- 左侧全局搜索快捷入口 (支持 ⌘K) -->
+        <button class="sidebar-search-btn open-search-modal" type="button" title="全站深度全文搜索 (Cmd+K)">
+          <span class="search-btn-left">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="11" cy="11" r="8"></circle>
+              <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+            </svg>
+            <span>全文搜索...</span>
+          </span>
+          <kbd class="kbd-badge">⌘K</kbd>
+        </button>
+
+        <!-- 导航分组 1：分类专栏 (支持多层级子专栏) -->
+        <div class="sidebar-nav-group">
+          <div class="nav-group-title">文章专栏</div>
+          
+          <!-- 全部文章 -->
+          <a href="index.html" class="sidebar-nav-item  category-filter-btn" data-tag="all" data-label="全部文章">
+            <span class="nav-item-left">
+              <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg>
+              <span>全部文章</span>
+            </span>
+            <span class="nav-badge">27</span>
+          </a>
+
+          <!-- 专栏：前端开发 -->
+          <div class="nav-item-tree open">
+            <div class="tree-header-row">
+              <a href="index.html?tag=%E5%89%8D%E7%AB%AF%E5%BC%80%E5%8F%91" class="sidebar-nav-item category-filter-btn" data-tag="前端开发" data-label="前端开发">
+                <span class="nav-item-left">
+                  <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"></polyline><polyline points="8 6 2 12 8 18"></polyline></svg>
+                  <span>前端开发</span>
+                </span>
+                <span class="nav-badge">11</span>
+              </a>
+              <button type="button" class="subtree-toggle-btn" aria-label="展开或折叠前端开发子菜单">
+                <svg class="chevron-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+              </button>
+            </div>
+            <div class="nav-subtree">
+              <a href="index.html?tag=Vue" class="subtree-item category-filter-btn" data-tag="Vue" data-label="Vue 与组件">
+                <span class="subtree-item-left">
+                  <span class="subtree-item-dot"></span>
+                  <span class="subtree-item-name">Vue 与组件</span>
+                </span>
+                <span class="subtree-badge">4</span>
+              </a>
+              <a href="index.html?tag=JavaScript" class="subtree-item category-filter-btn" data-tag="JavaScript" data-label="JS 与工具函数">
+                <span class="subtree-item-left">
+                  <span class="subtree-item-dot"></span>
+                  <span class="subtree-item-name">JS 与工具函数</span>
+                </span>
+                <span class="subtree-badge">6</span>
+              </a>
+              <a href="index.html?tag=%E5%BE%AE%E4%BF%A1%E5%B0%8F%E7%A8%8B%E5%BA%8F" class="subtree-item category-filter-btn" data-tag="微信小程序" data-label="微信小程序">
+                <span class="subtree-item-left">
+                  <span class="subtree-item-dot"></span>
+                  <span class="subtree-item-name">微信小程序</span>
+                </span>
+                <span class="subtree-badge">2</span>
+              </a>
+            </div>
+          </div>
+
+          <!-- 专栏：Linux 与服务端 -->
+          <div class="nav-item-tree open">
+            <div class="tree-header-row">
+              <a href="index.html?tag=Linux" class="sidebar-nav-item category-filter-btn" data-tag="Linux" data-label="Linux 与服务端">
+                <span class="nav-item-left">
+                  <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="8" rx="2" ry="2"></rect><rect x="2" y="14" width="20" height="8" rx="2" ry="2"></rect><line x1="6" y1="6" x2="6.01" y2="6"></line><line x1="6" y1="18" x2="6.01" y2="18"></line></svg>
+                  <span>Linux 与服务端</span>
+                </span>
+                <span class="nav-badge">9</span>
+              </a>
+              <button type="button" class="subtree-toggle-btn" aria-label="展开或折叠Linux 与服务端子菜单">
+                <svg class="chevron-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+              </button>
+            </div>
+            <div class="nav-subtree">
+              <a href="index.html?tag=Docker" class="subtree-item category-filter-btn" data-tag="Docker" data-label="Docker 与容器">
+                <span class="subtree-item-left">
+                  <span class="subtree-item-dot"></span>
+                  <span class="subtree-item-name">Docker 与容器</span>
+                </span>
+                <span class="subtree-badge">3</span>
+              </a>
+              <a href="index.html?tag=Nginx" class="subtree-item category-filter-btn" data-tag="Nginx" data-label="网络与反代">
+                <span class="subtree-item-left">
+                  <span class="subtree-item-dot"></span>
+                  <span class="subtree-item-name">网络与反代</span>
+                </span>
+                <span class="subtree-badge">3</span>
+              </a>
+              <a href="index.html?tag=%E5%8E%8B%E5%8A%9B%E6%B5%8B%E8%AF%95" class="subtree-item category-filter-btn" data-tag="压力测试" data-label="性能与压测">
+                <span class="subtree-item-left">
+                  <span class="subtree-item-dot"></span>
+                  <span class="subtree-item-name">性能与压测</span>
+                </span>
+                <span class="subtree-badge">3</span>
+              </a>
+            </div>
+          </div>
+
+          <!-- 专栏：效率工具与软件 -->
+          <div class="nav-item-tree open">
+            <div class="tree-header-row">
+              <a href="index.html?tag=%E6%95%88%E7%8E%87%E5%B7%A5%E5%85%B7" class="sidebar-nav-item category-filter-btn" data-tag="效率工具" data-label="效率工具与软件">
+                <span class="nav-item-left">
+                  <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"></path></svg>
+                  <span>效率工具与软件</span>
+                </span>
+                <span class="nav-badge">7</span>
+              </a>
+              <button type="button" class="subtree-toggle-btn" aria-label="展开或折叠效率工具与软件子菜单">
+                <svg class="chevron-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+              </button>
+            </div>
+            <div class="nav-subtree">
+              <a href="index.html?tag=Git" class="subtree-item category-filter-btn" data-tag="Git" data-label="Git 与 SVN">
+                <span class="subtree-item-left">
+                  <span class="subtree-item-dot"></span>
+                  <span class="subtree-item-name">Git 与 SVN</span>
+                </span>
+                <span class="subtree-badge">1</span>
+              </a>
+              <a href="index.html?tag=%E8%BD%AF%E4%BB%B6" class="subtree-item category-filter-btn" data-tag="软件" data-label="开源软件与脚本">
+                <span class="subtree-item-left">
+                  <span class="subtree-item-dot"></span>
+                  <span class="subtree-item-name">开源软件与脚本</span>
+                </span>
+                <span class="subtree-badge">1</span>
+              </a>
+              <a href="index.html?tag=Claude" class="subtree-item category-filter-btn" data-tag="Claude" data-label="Claude 与 AI">
+                <span class="subtree-item-left">
+                  <span class="subtree-item-dot"></span>
+                  <span class="subtree-item-name">Claude 与 AI</span>
+                </span>
+                <span class="subtree-badge">1</span>
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <div class="sidebar-nav-group">
+          <div class="nav-group-title">导航与资源</div>
+          <a href="files.html" class="sidebar-nav-item active">
+            <span class="nav-item-left">
+              <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path><line x1="12" y1="11" x2="12" y2="17"></line><line x1="9" y1="14" x2="15" y2="14"></line></svg>
+              <span>资源文件库</span>
+            </span>
+            <span class="nav-badge">10</span>
+          </a>
+          <a href="about.html" class="sidebar-nav-item ">
+            <span class="nav-item-left">
+              <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+              <span>关于本站</span>
+            </span>
+          </a>
+          <a href="https://github.com/vmrey/vmrey.github.io" target="_blank" rel="noopener noreferrer" class="sidebar-nav-item">
+            <span class="nav-item-left">
+              <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0 9 18.13V22"></path></svg>
+              <span>GitHub 源码</span>
+            </span>
+          </a>
+        </div>
+      </div>
+
+      <div class="sidebar-footer">
+        <div class="theme-toggle-row">
+          <span id="theme-mode-text">深色模式</span>
+          <button id="theme-toggle" class="theme-toggle-btn" type="button" title="切换主题外观"></button>
+        </div>
+        <div class="sidebar-copyright">
+          © 2018-<span class="current-year">2026</span> vmrey.github.io<br>用代码与文字记录探索
+        </div>
+      </div>
+    </aside>
+
+    <!-- 主内容区 -->
+    <main class="app-main">
+      <header class="feed-header">
+        <div class="feed-title-wrap">
+          <div class="feed-title-row">
+            <h1>资源文件库</h1>
+            <div class="feed-stats-pills">
+              <span class="stat-pill highlight" id="files-count-badge">共 4 个文件夹 · 10 个附件</span>
+              <span class="stat-pill">文件夹嵌套树状浏览</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="search-box-wrap">
+          <svg class="search-box-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="11" cy="11" r="8"></circle>
+            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+          </svg>
+          <input 
+            type="text" 
+            id="file-filter-input" 
+            class="search-input" 
+            placeholder="输入文件名、扩展名或功能描述即时定位文件..." 
+            aria-label="过滤文件资源"
+            autocomplete="off"
+          >
+        </div>
+      </header>
+
+      <!-- 资源管理器快捷控制栏 (面包屑与展开/折叠全部) -->
+      <div class="explorer-controls-bar">
+        <div class="explorer-breadcrumbs">
+          <span class="crumb-root">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
+            <span>根目录</span>
+          </span>
+          <span>/</span>
+          <span>assets</span>
+          <span>/</span>
+          <span>files</span>
+          <span>/</span>
+        </div>
+
+        <div class="explorer-tree-actions">
+          <button type="button" class="tree-action-btn" id="btn-expand-all" title="展开所有文件夹">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+            <span>全部展开</span>
+          </button>
+          <button type="button" class="tree-action-btn" id="btn-collapse-all" title="折叠所有文件夹">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
+            <span>全部折叠</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- 文件夹嵌套树状视图容器 -->
+      <div class="explorer-folders-container" id="explorer-folders-container">
+      <!-- 文件夹目录：前端组件与工具源码 -->
+      <div class="explorer-folder-block open" id="folder-frontend">
+        <div class="folder-header-row" data-folder-target="folder-frontend">
+          <div class="folder-title-left">
+            <svg class="folder-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+            <div class="folder-icon-wrap">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path></svg>
+            </div>
+            <span class="folder-name">前端组件与工具源码</span>
+            <code class="folder-path-pill">assets/files/frontend/</code>
+          </div>
+          <div class="folder-meta-right">
+            <span class="folder-count-badge">3 个文件</span>
+          </div>
+        </div>
+        <div class="folder-content-body">
+          <div class="nested-files-list">
+          <div class="nested-file-row" data-name="fileupload.vue" data-ext="vue" data-desc="vue3 + element plus 文件上传组件源码（支持回显、批量与手动控制提交）">
+            <div class="file-row-left">
+              <div class="file-type-pill" style="color: #10b981; border-color: #10b98140; background: #10b98115;">
+                .VUE
+              </div>
+              <div class="file-name-meta">
+                <div class="file-name-line">
+                  <span class="file-main-name">FileUpload.vue</span>
+                  <span class="file-size-tag">12.7 KB</span>
+                </div>
+                <div class="file-desc-line" title="Vue3 + Element Plus 文件上传组件源码（支持回显、批量与手动控制提交）">Vue3 + Element Plus 文件上传组件源码（支持回显、批量与手动控制提交）</div>
+              </div>
+            </div>
+            <div class="file-row-actions">
+              <button type="button" class="file-action-btn primary file-preview-btn" data-preview-file="assets/files/FileUpload.vue" data-file-name="FileUpload.vue">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+          <span>在线预览</span>
+        </button>
+              <a href="assets/files/FileUpload.vue" download="FileUpload.vue" class="file-action-btn" title="下载该文件到本地">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+                <span>直接下载</span>
+              </a>
+            </div>
+          </div>
+          <div class="nested-file-row" data-name="queryform.vue" data-ext="vue" data-desc="vue3 + element plus 查询表单通用封装组件源码（响应式布局与重置联动）">
+            <div class="file-row-left">
+              <div class="file-type-pill" style="color: #10b981; border-color: #10b98140; background: #10b98115;">
+                .VUE
+              </div>
+              <div class="file-name-meta">
+                <div class="file-name-line">
+                  <span class="file-main-name">QueryForm.vue</span>
+                  <span class="file-size-tag">10.3 KB</span>
+                </div>
+                <div class="file-desc-line" title="Vue3 + Element Plus 查询表单通用封装组件源码（响应式布局与重置联动）">Vue3 + Element Plus 查询表单通用封装组件源码（响应式布局与重置联动）</div>
+              </div>
+            </div>
+            <div class="file-row-actions">
+              <button type="button" class="file-action-btn primary file-preview-btn" data-preview-file="assets/files/QueryForm.vue" data-file-name="QueryForm.vue">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+          <span>在线预览</span>
+        </button>
+              <a href="assets/files/QueryForm.vue" download="QueryForm.vue" class="file-action-btn" title="下载该文件到本地">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+                <span>直接下载</span>
+              </a>
+            </div>
+          </div>
+          <div class="nested-file-row" data-name="tools.js" data-ext="js" data-desc="javascript 常用实用函数库合集（防抖节流、树递归、深拷贝、数据类型判断）">
+            <div class="file-row-left">
+              <div class="file-type-pill" style="color: #10b981; border-color: #10b98140; background: #10b98115;">
+                .JS
+              </div>
+              <div class="file-name-meta">
+                <div class="file-name-line">
+                  <span class="file-main-name">tools.js</span>
+                  <span class="file-size-tag">24.7 KB</span>
+                </div>
+                <div class="file-desc-line" title="JavaScript 常用实用函数库合集（防抖节流、树递归、深拷贝、数据类型判断）">JavaScript 常用实用函数库合集（防抖节流、树递归、深拷贝、数据类型判断）</div>
+              </div>
+            </div>
+            <div class="file-row-actions">
+              <button type="button" class="file-action-btn primary file-preview-btn" data-preview-file="assets/files/tools.js" data-file-name="tools.js">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+          <span>在线预览</span>
+        </button>
+              <a href="assets/files/tools.js" download="tools.js" class="file-action-btn" title="下载该文件到本地">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+                <span>直接下载</span>
+              </a>
+            </div>
+          </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 文件夹目录：Linux 与服务端运维脚本 -->
+      <div class="explorer-folder-block open" id="folder-linux">
+        <div class="folder-header-row" data-folder-target="folder-linux">
+          <div class="folder-title-left">
+            <svg class="folder-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+            <div class="folder-icon-wrap">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path></svg>
+            </div>
+            <span class="folder-name">Linux 与服务端运维脚本</span>
+            <code class="folder-path-pill">assets/files/linux/</code>
+          </div>
+          <div class="folder-meta-right">
+            <span class="folder-count-badge">2 个文件</span>
+          </div>
+        </div>
+        <div class="folder-content-body">
+          <div class="nested-files-list">
+          <div class="nested-file-row" data-name="frps.sh" data-ext="sh" data-desc="frp 内网穿透服务端 linux 一键自动化安装、配置与 systemd 管理脚本">
+            <div class="file-row-left">
+              <div class="file-type-pill" style="color: #a855f7; border-color: #a855f740; background: #a855f715;">
+                .SH
+              </div>
+              <div class="file-name-meta">
+                <div class="file-name-line">
+                  <span class="file-main-name">frps.sh</span>
+                  <span class="file-size-tag">29.1 KB</span>
+                </div>
+                <div class="file-desc-line" title="FRP 内网穿透服务端 Linux 一键自动化安装、配置与 Systemd 管理脚本">FRP 内网穿透服务端 Linux 一键自动化安装、配置与 Systemd 管理脚本</div>
+              </div>
+            </div>
+            <div class="file-row-actions">
+              <button type="button" class="file-action-btn primary file-preview-btn" data-preview-file="assets/files/frps.sh" data-file-name="frps.sh">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+          <span>在线预览</span>
+        </button>
+              <a href="assets/files/frps.sh" download="frps.sh" class="file-action-btn" title="下载该文件到本地">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+                <span>直接下载</span>
+              </a>
+            </div>
+          </div>
+          <div class="nested-file-row" data-name="xray.sh" data-ext="sh" data-desc="xray core 核心网络代理服务一键安装与证书部署脚本">
+            <div class="file-row-left">
+              <div class="file-type-pill" style="color: #a855f7; border-color: #a855f740; background: #a855f715;">
+                .SH
+              </div>
+              <div class="file-name-meta">
+                <div class="file-name-line">
+                  <span class="file-main-name">xray.sh</span>
+                  <span class="file-size-tag">23.1 KB</span>
+                </div>
+                <div class="file-desc-line" title="Xray Core 核心网络代理服务一键安装与证书部署脚本">Xray Core 核心网络代理服务一键安装与证书部署脚本</div>
+              </div>
+            </div>
+            <div class="file-row-actions">
+              <button type="button" class="file-action-btn primary file-preview-btn" data-preview-file="assets/files/xray.sh" data-file-name="xray.sh">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+          <span>在线预览</span>
+        </button>
+              <a href="assets/files/xray.sh" download="xray.sh" class="file-action-btn" title="下载该文件到本地">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+                <span>直接下载</span>
+              </a>
+            </div>
+          </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 文件夹目录：Windows 自动化批处理脚本 -->
+      <div class="explorer-folder-block open" id="folder-windows">
+        <div class="folder-header-row" data-folder-target="folder-windows">
+          <div class="folder-title-left">
+            <svg class="folder-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+            <div class="folder-icon-wrap">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path></svg>
+            </div>
+            <span class="folder-name">Windows 自动化批处理脚本</span>
+            <code class="folder-path-pill">assets/files/windows/</code>
+          </div>
+          <div class="folder-meta-right">
+            <span class="folder-count-badge">2 个文件</span>
+          </div>
+        </div>
+        <div class="folder-content-body">
+          <div class="nested-files-list">
+          <div class="nested-file-row" data-name="cmd_proxy.bat" data-ext="bat" data-desc="windows cmd 终端一键设置与清除 http/socks5 代理环境变量脚本">
+            <div class="file-row-left">
+              <div class="file-type-pill" style="color: #0ea5e9; border-color: #0ea5e940; background: #0ea5e915;">
+                .BAT
+              </div>
+              <div class="file-name-meta">
+                <div class="file-name-line">
+                  <span class="file-main-name">cmd_proxy.bat</span>
+                  <span class="file-size-tag">823 B</span>
+                </div>
+                <div class="file-desc-line" title="Windows CMD 终端一键设置与清除 HTTP/SOCKS5 代理环境变量脚本">Windows CMD 终端一键设置与清除 HTTP/SOCKS5 代理环境变量脚本</div>
+              </div>
+            </div>
+            <div class="file-row-actions">
+              <button type="button" class="file-action-btn primary file-preview-btn" data-preview-file="assets/files/cmd_proxy.bat" data-file-name="cmd_proxy.bat">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+          <span>在线预览</span>
+        </button>
+              <a href="assets/files/cmd_proxy.bat" download="cmd_proxy.bat" class="file-action-btn" title="下载该文件到本地">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+                <span>直接下载</span>
+              </a>
+            </div>
+          </div>
+          <div class="nested-file-row" data-name="filenamereplascrip.bat" data-ext="bat" data-desc="windows 批量替换与修改文件名自动化 bat 批处理脚本">
+            <div class="file-row-left">
+              <div class="file-type-pill" style="color: #0ea5e9; border-color: #0ea5e940; background: #0ea5e915;">
+                .BAT
+              </div>
+              <div class="file-name-meta">
+                <div class="file-name-line">
+                  <span class="file-main-name">fileNameReplaScrip.bat</span>
+                  <span class="file-size-tag">879 B</span>
+                </div>
+                <div class="file-desc-line" title="Windows 批量替换与修改文件名自动化 BAT 批处理脚本">Windows 批量替换与修改文件名自动化 BAT 批处理脚本</div>
+              </div>
+            </div>
+            <div class="file-row-actions">
+              <button type="button" class="file-action-btn primary file-preview-btn" data-preview-file="assets/files/fileNameReplaScrip.bat" data-file-name="fileNameReplaScrip.bat">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+          <span>在线预览</span>
+        </button>
+              <a href="assets/files/fileNameReplaScrip.bat" download="fileNameReplaScrip.bat" class="file-action-btn" title="下载该文件到本地">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+                <span>直接下载</span>
+              </a>
+            </div>
+          </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 文件夹目录：工程归档与设计资源包 -->
+      <div class="explorer-folder-block open" id="folder-archives">
+        <div class="folder-header-row" data-folder-target="folder-archives">
+          <div class="folder-title-left">
+            <svg class="folder-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+            <div class="folder-icon-wrap">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path></svg>
+            </div>
+            <span class="folder-name">工程归档与设计资源包</span>
+            <code class="folder-path-pill">assets/files/archives/</code>
+          </div>
+          <div class="folder-meta-right">
+            <span class="folder-count-badge">3 个文件</span>
+          </div>
+        </div>
+        <div class="folder-content-body">
+          <div class="nested-files-list">
+          <div class="nested-file-row" data-name="imghandle_jpg.zip" data-ext="zip" data-desc="photoshop 批量压缩 jpg 图片 extendscript 脚本与动作资源包">
+            <div class="file-row-left">
+              <div class="file-type-pill" style="color: #ec4899; border-color: #ec489940; background: #ec489915;">
+                .ZIP
+              </div>
+              <div class="file-name-meta">
+                <div class="file-name-line">
+                  <span class="file-main-name">ImgHandle_jpg.zip</span>
+                  <span class="file-size-tag">1.7 KB</span>
+                </div>
+                <div class="file-desc-line" title="Photoshop 批量压缩 JPG 图片 ExtendScript 脚本与动作资源包">Photoshop 批量压缩 JPG 图片 ExtendScript 脚本与动作资源包</div>
+              </div>
+            </div>
+            <div class="file-row-actions">
+              <button type="button" class="file-action-btn file-preview-btn" data-preview-file="assets/files/ImgHandle_jpg.zip" data-file-name="ImgHandle_jpg.zip" title="二进制压缩包">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path></svg>
+          <span>详情</span>
+        </button>
+              <a href="assets/files/ImgHandle_jpg.zip" download="ImgHandle_jpg.zip" class="file-action-btn" title="下载该文件到本地">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+                <span>直接下载</span>
+              </a>
+            </div>
+          </div>
+          <div class="nested-file-row" data-name="curvecharts.rar" data-ext="rar" data-desc="平滑贝塞尔曲线与数据可视化图表组件资源包">
+            <div class="file-row-left">
+              <div class="file-type-pill" style="color: #ec4899; border-color: #ec489940; background: #ec489915;">
+                .RAR
+              </div>
+              <div class="file-name-meta">
+                <div class="file-name-line">
+                  <span class="file-main-name">curveCharts.rar</span>
+                  <span class="file-size-tag">6.9 KB</span>
+                </div>
+                <div class="file-desc-line" title="平滑贝塞尔曲线与数据可视化图表组件资源包">平滑贝塞尔曲线与数据可视化图表组件资源包</div>
+              </div>
+            </div>
+            <div class="file-row-actions">
+              <button type="button" class="file-action-btn file-preview-btn" data-preview-file="assets/files/curveCharts.rar" data-file-name="curveCharts.rar" title="二进制压缩包">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path></svg>
+          <span>详情</span>
+        </button>
+              <a href="assets/files/curveCharts.rar" download="curveCharts.rar" class="file-action-btn" title="下载该文件到本地">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+                <span>直接下载</span>
+              </a>
+            </div>
+          </div>
+          <div class="nested-file-row" data-name="优惠券弹框组件.zip" data-ext="zip" data-desc="vue 前端业务优惠券领取与展示弹框交互组件完整工程包">
+            <div class="file-row-left">
+              <div class="file-type-pill" style="color: #ec4899; border-color: #ec489940; background: #ec489915;">
+                .ZIP
+              </div>
+              <div class="file-name-meta">
+                <div class="file-name-line">
+                  <span class="file-main-name">优惠券弹框组件.zip</span>
+                  <span class="file-size-tag">30.4 KB</span>
+                </div>
+                <div class="file-desc-line" title="Vue 前端业务优惠券领取与展示弹框交互组件完整工程包">Vue 前端业务优惠券领取与展示弹框交互组件完整工程包</div>
+              </div>
+            </div>
+            <div class="file-row-actions">
+              <button type="button" class="file-action-btn file-preview-btn" data-preview-file="assets/files/优惠券弹框组件.zip" data-file-name="优惠券弹框组件.zip" title="二进制压缩包">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path></svg>
+          <span>详情</span>
+        </button>
+              <a href="assets/files/优惠券弹框组件.zip" download="优惠券弹框组件.zip" class="file-action-btn" title="下载该文件到本地">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+                <span>直接下载</span>
+              </a>
+            </div>
+          </div>
+          </div>
+        </div>
+      </div>
+      </div>
+
+      <!-- 空结果提示 -->
+      <div id="no-files-results" class="empty-state-card" style="display: none;">
+        <div class="empty-state-illustration">
+          <div class="empty-state-glow"></div>
+          <svg class="empty-state-svg" viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="14" y="8" width="36" height="48" rx="6" stroke-dasharray="4 4" opacity="0.6"/>
+            <path d="M22 22h20M22 30h14M22 38h8" opacity="0.4"/>
+            <circle cx="44" cy="44" r="12" fill="var(--surface)" stroke="var(--primary)" stroke-width="2"/>
+            <line x1="52.5" y1="52.5" x2="60" y2="60" stroke="var(--primary)" stroke-width="2.5"/>
+          </svg>
+        </div>
+        <h3 class="empty-state-title">未找到匹配的文件</h3>
+        <p class="empty-state-desc">未检索到包含该关键词的文件或脚本，请尝试缩短或更换搜索词</p>
+      </div>
+    </main>
+
+  </div>
+
+  <script src="js/config.js"></script>
+  <script src="data/search-index.js"></script>
+  <script src="js/main.js"></script>
+  <script src="js/prism.js"></script>
+  <script src="js/search.js"></script>
+  <script src="js/file-preview.js"></script>
+  <script>
+    // 文件夹嵌套树状交互逻辑 (展开/折叠/实时过滤)
+    document.addEventListener('DOMContentLoaded', () => {
+      const folderBlocks = Array.from(document.querySelectorAll('.explorer-folder-block'));
+      const filterInput = document.getElementById('file-filter-input');
+      const btnExpandAll = document.getElementById('btn-expand-all');
+      const btnCollapseAll = document.getElementById('btn-collapse-all');
+      const noResults = document.getElementById('no-files-results');
+      const countBadge = document.getElementById('files-count-badge');
+
+      // 文件夹点击展开 / 折叠
+      document.querySelectorAll('.folder-header-row').forEach(header => {
+        header.addEventListener('click', () => {
+          const targetId = header.getAttribute('data-folder-target');
+          const block = document.getElementById(targetId);
+          if (block) {
+            block.classList.toggle('open');
+          }
+        });
+      });
+
+      // 全部展开
+      if (btnExpandAll) {
+        btnExpandAll.addEventListener('click', () => {
+          folderBlocks.forEach(b => b.classList.add('open'));
+        });
+      }
+
+      // 全部折叠
+      if (btnCollapseAll) {
+        btnCollapseAll.addEventListener('click', () => {
+          folderBlocks.forEach(b => b.classList.remove('open'));
+        });
+      }
+
+      // 实时搜索过滤 (自动高亮并展开有匹配项的文件夹)
+      if (filterInput) {
+        filterInput.addEventListener('input', (e) => {
+          const query = e.target.value.trim().toLowerCase();
+          let totalVisibleFiles = 0;
+          let visibleFolders = 0;
+
+          folderBlocks.forEach(folder => {
+            const rowsInFolder = Array.from(folder.querySelectorAll('.nested-file-row'));
+            let visibleInThisFolder = 0;
+
+            rowsInFolder.forEach(row => {
+              const name = row.getAttribute('data-name') || '';
+              const ext = row.getAttribute('data-ext') || '';
+              const desc = row.getAttribute('data-desc') || '';
+              const match = !query || name.includes(query) || ext.includes(query) || desc.includes(query);
+
+              if (match) {
+                row.style.display = 'flex';
+                visibleInThisFolder++;
+                totalVisibleFiles++;
+              } else {
+                row.style.display = 'none';
+              }
+            });
+
+            if (visibleInThisFolder > 0) {
+              folder.style.display = 'block';
+              folder.classList.add('open');
+              visibleFolders++;
+            } else {
+              folder.style.display = 'none';
+            }
+          });
+
+          if (noResults) {
+            noResults.style.display = totalVisibleFiles === 0 ? 'flex' : 'none';
+          }
+
+          if (countBadge) {
+            countBadge.textContent = query 
+              ? '搜索结果: ' + totalVisibleFiles + ' 个文件 (' + visibleFolders + ' 个文件夹)'
+              : '共 ' + folderBlocks.length + ' 个文件夹 · ' + totalVisibleFiles + ' 个附件';
+          }
+        });
+      }
+    });
+  </script>
+</body>
+</html>

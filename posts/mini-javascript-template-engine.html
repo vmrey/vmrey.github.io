@@ -1,0 +1,680 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>实现一个最优雅的微型 JavaScript 模板引擎：30 行代码解析核心原理 - vmrey.github.io</title>
+  <meta name="description" content="通过正则表达式与 new Function / eval 构建轻量高效的字符串模板渲染引擎，解析 Mustache/EJS 核心思想。">
+  <link rel="icon" type="image/svg+xml" href="../favicon.svg">
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="../css/prism.css">
+</head>
+<body>
+
+  <!-- 移动端顶部标题导航条 -->
+  <div class="mobile-header">
+    <div class="mobile-title-wrap">
+      <svg class="mobile-book-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path>
+        <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path>
+        <line x1="9" y1="7" x2="15" y2="7"></line>
+        <line x1="9" y1="11" x2="13" y2="11"></line>
+      </svg>
+      <div class="mobile-title">vmrey.github.io</div>
+    </div>
+    <button id="menu-toggle-btn" class="menu-toggle-btn" aria-label="切换侧边栏菜单">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <line x1="3" y1="12" x2="21" y2="12"></line>
+        <line x1="3" y1="6" x2="21" y2="6"></line>
+        <line x1="3" y1="18" x2="21" y2="18"></line>
+      </svg>
+    </button>
+  </div>
+
+  <div id="sidebar-overlay" class="sidebar-overlay"></div>
+
+  <div class="app-layout">
+    
+    <!-- 左侧常驻导航 -->
+    <aside class="app-sidebar" id="app-sidebar">
+      <div class="sidebar-inner">
+        <a href="../index.html" class="sidebar-brand">
+          <div class="sidebar-avatar" title="vmrey.github.io 博客">
+            <svg class="sidebar-avatar-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path>
+              <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path>
+              <line x1="9" y1="7" x2="15" y2="7"></line>
+              <line x1="9" y1="11" x2="13" y2="11"></line>
+            </svg>
+          </div>
+          <div class="sidebar-info">
+            <div class="sidebar-name">vmrey.github.io</div>
+            <div class="sidebar-tagline">构建工具，写干净的代码</div>
+          </div>
+        </a>
+
+        <!-- 左侧全局搜索快捷入口 (支持 ⌘K) -->
+        <button class="sidebar-search-btn open-search-modal" type="button" title="全站深度全文搜索 (Cmd+K)">
+          <span class="search-btn-left">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="11" cy="11" r="8"></circle>
+              <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+            </svg>
+            <span>全文搜索...</span>
+          </span>
+          <kbd class="kbd-badge">⌘K</kbd>
+        </button>
+
+        <!-- 导航分组 1：分类专栏 (支持多层级子专栏) -->
+        <div class="sidebar-nav-group">
+          <div class="nav-group-title">文章专栏</div>
+          
+          <!-- 全部文章 -->
+          <a href="../index.html" class="sidebar-nav-item  category-filter-btn" data-tag="all" data-label="全部文章">
+            <span class="nav-item-left">
+              <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg>
+              <span>全部文章</span>
+            </span>
+            <span class="nav-badge">27</span>
+          </a>
+
+          <!-- 专栏：前端开发 -->
+          <div class="nav-item-tree open">
+            <div class="tree-header-row">
+              <a href="../index.html?tag=%E5%89%8D%E7%AB%AF%E5%BC%80%E5%8F%91" class="sidebar-nav-item category-filter-btn" data-tag="前端开发" data-label="前端开发">
+                <span class="nav-item-left">
+                  <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"></polyline><polyline points="8 6 2 12 8 18"></polyline></svg>
+                  <span>前端开发</span>
+                </span>
+                <span class="nav-badge">11</span>
+              </a>
+              <button type="button" class="subtree-toggle-btn" aria-label="展开或折叠前端开发子菜单">
+                <svg class="chevron-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+              </button>
+            </div>
+            <div class="nav-subtree">
+              <a href="../index.html?tag=Vue" class="subtree-item category-filter-btn" data-tag="Vue" data-label="Vue 与组件">
+                <span class="subtree-item-left">
+                  <span class="subtree-item-dot"></span>
+                  <span class="subtree-item-name">Vue 与组件</span>
+                </span>
+                <span class="subtree-badge">4</span>
+              </a>
+              <a href="../index.html?tag=JavaScript" class="subtree-item category-filter-btn" data-tag="JavaScript" data-label="JS 与工具函数">
+                <span class="subtree-item-left">
+                  <span class="subtree-item-dot"></span>
+                  <span class="subtree-item-name">JS 与工具函数</span>
+                </span>
+                <span class="subtree-badge">6</span>
+              </a>
+              <a href="../index.html?tag=%E5%BE%AE%E4%BF%A1%E5%B0%8F%E7%A8%8B%E5%BA%8F" class="subtree-item category-filter-btn" data-tag="微信小程序" data-label="微信小程序">
+                <span class="subtree-item-left">
+                  <span class="subtree-item-dot"></span>
+                  <span class="subtree-item-name">微信小程序</span>
+                </span>
+                <span class="subtree-badge">2</span>
+              </a>
+            </div>
+          </div>
+
+          <!-- 专栏：Linux 与服务端 -->
+          <div class="nav-item-tree open">
+            <div class="tree-header-row">
+              <a href="../index.html?tag=Linux" class="sidebar-nav-item category-filter-btn" data-tag="Linux" data-label="Linux 与服务端">
+                <span class="nav-item-left">
+                  <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="8" rx="2" ry="2"></rect><rect x="2" y="14" width="20" height="8" rx="2" ry="2"></rect><line x1="6" y1="6" x2="6.01" y2="6"></line><line x1="6" y1="18" x2="6.01" y2="18"></line></svg>
+                  <span>Linux 与服务端</span>
+                </span>
+                <span class="nav-badge">9</span>
+              </a>
+              <button type="button" class="subtree-toggle-btn" aria-label="展开或折叠Linux 与服务端子菜单">
+                <svg class="chevron-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+              </button>
+            </div>
+            <div class="nav-subtree">
+              <a href="../index.html?tag=Docker" class="subtree-item category-filter-btn" data-tag="Docker" data-label="Docker 与容器">
+                <span class="subtree-item-left">
+                  <span class="subtree-item-dot"></span>
+                  <span class="subtree-item-name">Docker 与容器</span>
+                </span>
+                <span class="subtree-badge">3</span>
+              </a>
+              <a href="../index.html?tag=Nginx" class="subtree-item category-filter-btn" data-tag="Nginx" data-label="网络与反代">
+                <span class="subtree-item-left">
+                  <span class="subtree-item-dot"></span>
+                  <span class="subtree-item-name">网络与反代</span>
+                </span>
+                <span class="subtree-badge">3</span>
+              </a>
+              <a href="../index.html?tag=%E5%8E%8B%E5%8A%9B%E6%B5%8B%E8%AF%95" class="subtree-item category-filter-btn" data-tag="压力测试" data-label="性能与压测">
+                <span class="subtree-item-left">
+                  <span class="subtree-item-dot"></span>
+                  <span class="subtree-item-name">性能与压测</span>
+                </span>
+                <span class="subtree-badge">3</span>
+              </a>
+            </div>
+          </div>
+
+          <!-- 专栏：效率工具与软件 -->
+          <div class="nav-item-tree open">
+            <div class="tree-header-row">
+              <a href="../index.html?tag=%E6%95%88%E7%8E%87%E5%B7%A5%E5%85%B7" class="sidebar-nav-item category-filter-btn" data-tag="效率工具" data-label="效率工具与软件">
+                <span class="nav-item-left">
+                  <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"></path></svg>
+                  <span>效率工具与软件</span>
+                </span>
+                <span class="nav-badge">7</span>
+              </a>
+              <button type="button" class="subtree-toggle-btn" aria-label="展开或折叠效率工具与软件子菜单">
+                <svg class="chevron-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+              </button>
+            </div>
+            <div class="nav-subtree">
+              <a href="../index.html?tag=Git" class="subtree-item category-filter-btn" data-tag="Git" data-label="Git 与 SVN">
+                <span class="subtree-item-left">
+                  <span class="subtree-item-dot"></span>
+                  <span class="subtree-item-name">Git 与 SVN</span>
+                </span>
+                <span class="subtree-badge">1</span>
+              </a>
+              <a href="../index.html?tag=%E8%BD%AF%E4%BB%B6" class="subtree-item category-filter-btn" data-tag="软件" data-label="开源软件与脚本">
+                <span class="subtree-item-left">
+                  <span class="subtree-item-dot"></span>
+                  <span class="subtree-item-name">开源软件与脚本</span>
+                </span>
+                <span class="subtree-badge">1</span>
+              </a>
+              <a href="../index.html?tag=Claude" class="subtree-item category-filter-btn" data-tag="Claude" data-label="Claude 与 AI">
+                <span class="subtree-item-left">
+                  <span class="subtree-item-dot"></span>
+                  <span class="subtree-item-name">Claude 与 AI</span>
+                </span>
+                <span class="subtree-badge">1</span>
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <div class="sidebar-nav-group">
+          <div class="nav-group-title">导航与资源</div>
+          <a href="../files.html" class="sidebar-nav-item ">
+            <span class="nav-item-left">
+              <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path><line x1="12" y1="11" x2="12" y2="17"></line><line x1="9" y1="14" x2="15" y2="14"></line></svg>
+              <span>资源文件库</span>
+            </span>
+            <span class="nav-badge">10</span>
+          </a>
+          <a href="../about.html" class="sidebar-nav-item ">
+            <span class="nav-item-left">
+              <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+              <span>关于本站</span>
+            </span>
+          </a>
+          <a href="https://github.com/vmrey/vmrey.github.io" target="_blank" rel="noopener noreferrer" class="sidebar-nav-item">
+            <span class="nav-item-left">
+              <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0 9 18.13V22"></path></svg>
+              <span>GitHub 源码</span>
+            </span>
+          </a>
+        </div>
+      </div>
+
+      <div class="sidebar-footer">
+        <div class="theme-toggle-row">
+          <span id="theme-mode-text">深色模式</span>
+          <button id="theme-toggle" class="theme-toggle-btn" type="button" title="切换主题外观"></button>
+        </div>
+        <div class="sidebar-copyright">
+          © 2018-<span class="current-year">2026</span> vmrey.github.io<br>用代码与文字记录探索
+        </div>
+      </div>
+    </aside>
+
+    <!-- 主内容区 -->
+    <main class="app-main">
+      <!-- 文章标题与元数据头部 -->
+      <header class="article-header">
+        <a href="../index.html" class="back-link">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
+          <span>返回文章列表</span>
+        </a>
+        <h1 class="article-title">实现一个最优雅的微型 JavaScript 模板引擎：30 行代码解析核心原理</h1>
+        <div class="article-meta">
+          <span class="post-block-tag">前端开发</span>
+          <span>·</span>
+          <time datetime="2026-04-22">2026-04-22</time>
+          <span>·</span>
+          <span>22 分钟阅读</span>
+        </div>
+      </header>
+
+      <!-- 正文与目录两栏并排布局 -->
+      <div class="article-layout">
+        <article class="article-content" id="main-content">
+          <div class="prose">
+
+
+<h2 id="模板引擎实现原理">模板引擎实现原理</h2>
+
+<p>模板引擎的核心原理是将模板字符串中的占位符替换为实际数据值。一个优雅的模板引擎应该具备以下特性：</p>
+
+<ul>
+<li><strong>简洁的语法</strong>：易于书写和理解</li>
+<li><strong>强大的功能</strong>：支持变量、循环、条件等</li>
+<li><strong>安全性</strong>：防止XSS攻击</li>
+<li><strong>性能优化</strong>：编译缓存机制</li>
+</ul>
+
+<h2 id="基础版本-简单变量替换">基础版本：简单变量替换</h2>
+
+<pre><code class="language-html">&lt;!DOCTYPE html&gt;
+&lt;html lang=&quot;zh-CN&quot;&gt;
+&lt;head&gt;
+    &lt;meta charset=&quot;UTF-8&quot;&gt;
+    &lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1.0&quot;&gt;
+    &lt;title&gt;模板引擎基础实现&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+    &lt;div id=&quot;app&quot;&gt;&lt;/div&gt;
+
+    &lt;script&gt;
+        // 模板数据
+        var tempData = { 
+            &quot;name&quot;: &quot;张三&quot;, 
+            &quot;age&quot;: 28, 
+            &quot;sex&quot;: &quot;男&quot; 
+        };
+
+        // 模板字符串（修正了原代码中的变量错误）
+        var templateStr = `&lt;h1&gt;我是{{name}}，性别：{{sex}}，年龄：{{age}}&lt;/h1&gt;`;
+
+        /**
+         * 简单模板渲染函数
+         * @param {string} templateStr - 模板字符串
+         * @param {object} data - 数据对象
+         * @returns {string} - 渲染后的HTML
+         */
+        function render(templateStr, data) {
+            return templateStr.replace(/\{\{(\w+)\}\}/g, function(match, key) {
+                // 处理数据不存在的情况
+                return data[key] !== undefined ? data[key] : '';
+            });
+        }
+
+        // 渲染模板
+        document.getElementById('app').innerHTML = render(templateStr, tempData);
+    &lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;</code></pre>
+
+<h2 id="进阶版本-支持循环和条件">进阶版本：支持循环和条件</h2>
+
+<pre><code class="language-javascript">/**
+ * 进阶模板引擎
+ * 支持：变量替换、条件判断、循环遍历
+ */
+function advancedRender(template, data) {
+    // 1. 处理条件判断 {{if condition}}...{{/if}}
+    template = template.replace(
+        /\{\{if\s+(\w+)\}\}(.*?)\{\{\/if\}\}/g,
+        function(match, condition, content) {
+            return data[condition] ? content : '';
+        }
+    );
+
+    // 2. 处理循环 {{for item in list}}...{{/for}}
+    template = template.replace(
+        /\{\{for\s+(\w+)\s+in\s+(\w+)\}\}(.*?)\{\{\/for\}\}/g,
+        function(match, itemName, listName, content) {
+            var list = data[listName] || [];
+            return list.map(function(item) {
+                return content.replace(/\{\{\s*(\w+)\s*\}\}/g, function(m, key) {
+                    return item[key] !== undefined ? item[key] : '';
+                });
+            }).join('');
+        }
+    );
+
+    // 3. 处理变量替换 {{variable}}
+    template = template.replace(/\{\{(\w+)\}\}/g, function(match, key) {
+        return data[key] !== undefined ? data[key] : '';
+    });
+
+    return template;
+}
+
+// 使用示例
+var data = {
+    title: '用户列表',
+    users: [
+        { name: '张三', age: 28, active: true },
+        { name: '李四', age: 32, active: false },
+        { name: '王五', age: 24, active: true }
+    ],
+    showTitle: true
+};
+
+var template = `
+    &lt;div&gt;
+        {{if showTitle}}
+            &lt;h1&gt;{{title}}&lt;/h1&gt;
+        {{/if}}
+        &lt;ul&gt;
+            {{for user in users}}
+                &lt;li&gt;{{user.name}} - {{user.age}}岁&lt;/li&gt;
+            {{/for}}
+        &lt;/ul&gt;
+    &lt;/div&gt;
+`;
+
+console.log(advancedRender(template, data));</code></pre>
+
+<h2 id="完整版本-带缓存和安全过滤">完整版本：带缓存和安全过滤</h2>
+
+<pre><code class="language-javascript">/**
+ * 完整模板引擎实现
+ * 特性：编译缓存、XSS过滤、错误处理
+ */
+var TemplateEngine = (function() {
+    // 编译缓存
+    var cache = {};
+
+    /**
+     * XSS安全过滤
+     * @param {string} str - 需要过滤的字符串
+     * @returns {string} - 过滤后的字符串
+     */
+    function escapeHtml(str) {
+        if (typeof str !== 'string') return str;
+        return str
+            .replace(/&amp;/g, '&amp;amp;')
+            .replace(/&lt;/g, '&amp;lt;')
+            .replace(/&gt;/g, '&amp;gt;')
+            .replace(/&quot;/g, '&amp;quot;')
+            .replace(/'/g, '&amp;#039;');
+    }
+
+    /**
+     * 编译模板
+     * @param {string} template - 模板字符串
+     * @returns {Function} - 编译后的渲染函数
+     */
+    function compile(template) {
+        // 检查缓存
+        if (cache[template]) {
+            return cache[template];
+        }
+
+        // 模板转译为JavaScript代码
+        var code = `
+            var result = [];
+            result.push(&quot;${template
+                .replace(/&quot;/g, '\\&quot;')
+                .replace(/\{\{=(\w+)\}\}/g, '&quot;,escapeHtml(data[&quot;$1&quot;]),&quot;')  // 安全输出
+                .replace(/\{\{(\w+)\}\}/g, '&quot;,data[&quot;$1&quot;],&quot;')               // 普通输出
+                .replace(/\{\{if\s+(\w+)\}\}/g, '&quot;);if(data[&quot;$1&quot;]){result.push(&quot;')
+                .replace(/\{\{\/if\}\}/g, '&quot;);}result.push(&quot;')
+                .replace(/\{\{for\s+(\w+)\s+in\s+(\w+)\}\}/g, '&quot;);for(var i=0;i&lt;data[&quot;$2&quot;].length;i++){var $1=data[&quot;$2&quot;][i];result.push(&quot;')
+                .replace(/\{\{\/for\}\}/g, '&quot;);}result.push(&quot;')
+            }&quot;);
+            return result.join(&quot;&quot;);
+        `;
+
+        // 创建渲染函数
+        var render = new Function('data', 'escapeHtml', code);
+        
+        // 缓存编译结果
+        cache[template] = render;
+        
+        return render;
+    }
+
+    /**
+     * 渲染模板
+     * @param {string} template - 模板字符串
+     * @param {object} data - 数据对象
+     * @returns {string} - 渲染后的HTML
+     */
+    function render(template, data) {
+        try {
+            var compiled = compile(template);
+            return compiled(data, escapeHtml);
+        } catch (error) {
+            console.error('模板渲染错误:', error);
+            return '模板渲染失败';
+        }
+    }
+
+    /**
+     * 清除缓存
+     */
+    function clearCache() {
+        cache = {};
+    }
+
+    return {
+        render: render,
+        compile: compile,
+        clearCache: clearCache
+    };
+})();
+
+// 使用示例
+var template = `
+    &lt;div class=&quot;user-card&quot;&gt;
+        &lt;h2&gt;{{=name}}&lt;/h2&gt;
+        &lt;p&gt;年龄：{{age}}&lt;/p&gt;
+        {{if active}}
+            &lt;span class=&quot;status active&quot;&gt;在线&lt;/span&gt;
+        {{/if}}
+        &lt;ul&gt;
+            {{for item in hobbies}}
+                &lt;li&gt;{{=item}}&lt;/li&gt;
+            {{/for}}
+        &lt;/ul&gt;
+    &lt;/div&gt;
+`;
+
+var data = {
+    name: '&lt;script&gt;alert(&quot;XSS攻击&quot;)&lt;/script&gt;',  // 恶意代码
+    age: 28,
+    active: true,
+    hobbies: ['编程', '阅读', '运动']
+};
+
+// 渲染结果会自动过滤XSS
+console.log(TemplateEngine.render(template, data));</code></pre>
+
+<h2 id="模板引擎语法参考">模板引擎语法参考</h2>
+
+<p>| 语法 | 说明 | 示例 |</p>
+<p>|------|------|------|</p>
+<p>| <code>{{variable}}</code> | 普通变量输出 | <code>{{name}}</code> |</p>
+<p>| <code>{{=variable}}</code> | 安全输出（XSS过滤） | <code>{{=content}}</code> |</p>
+<p>| <code>{{if condition}}...{{/if}}</code> | 条件判断 | <code>{{if active}}在线{{/if}}</code> |</p>
+<p>| <code>{{for item in list}}...{{/for}}</code> | 循环遍历 | <code>{{for user in users}}{{user.name}}{{/for}}</code> |</p>
+
+<h2 id="性能优化策略">性能优化策略</h2>
+
+<h3 id="1-编译缓存">1. 编译缓存</h3>
+
+<pre><code class="language-javascript">// 使用WeakMap缓存编译结果
+var compileCache = new WeakMap();
+
+function compileWithCache(template) {
+    if (compileCache.has(template)) {
+        return compileCache.get(template);
+    }
+    
+    var compiled = compile(template);
+    compileCache.set(template, compiled);
+    
+    return compiled;
+}</code></pre>
+
+<h3 id="2-批量渲染">2. 批量渲染</h3>
+
+<pre><code class="language-javascript">// 批量渲染多个模板
+function renderBatch(templates, data) {
+    return templates.map(function(tpl) {
+        return TemplateEngine.render(tpl, data);
+    });
+}</code></pre>
+
+<h3 id="3-虚拟dom集成">3. 虚拟DOM集成</h3>
+
+<pre><code class="language-javascript">// 与虚拟DOM结合
+function renderToVDOM(template, data) {
+    var html = TemplateEngine.render(template, data);
+    return createElement('div', { innerHTML: html }).firstChild;
+}</code></pre>
+
+<h2 id="实际应用示例">实际应用示例</h2>
+
+<pre><code class="language-html">&lt;!DOCTYPE html&gt;
+&lt;html lang=&quot;zh-CN&quot;&gt;
+&lt;head&gt;
+    &lt;meta charset=&quot;UTF-8&quot;&gt;
+    &lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1.0&quot;&gt;
+    &lt;title&gt;模板引擎实战&lt;/title&gt;
+    &lt;style&gt;
+        .user-list { list-style: none; padding: 0; }
+        .user-item { padding: 10px; border-bottom: 1px solid #eee; }
+        .active { color: green; }
+        .inactive { color: gray; }
+    &lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+    &lt;div id=&quot;app&quot;&gt;&lt;/div&gt;
+
+    &lt;script&gt;
+        // 模板字符串
+        var template = `
+            &lt;h1&gt;{{title}}&lt;/h1&gt;
+            &lt;p&gt;{{description}}&lt;/p&gt;
+            &lt;ul class=&quot;user-list&quot;&gt;
+                {{for user in users}}
+                    &lt;li class=&quot;user-item&quot;&gt;
+                        &lt;strong&gt;{{=user.name}}&lt;/strong&gt;
+                        &lt;span class=&quot;{{user.active ? 'active' : 'inactive'}}&quot;&gt;
+                            {{user.active ? '在线' : '离线'}}
+                        &lt;/span&gt;
+                    &lt;/li&gt;
+                {{/for}}
+            &lt;/ul&gt;
+            {{if users.length === 0}}
+                &lt;p&gt;暂无用户数据&lt;/p&gt;
+            {{/if}}
+        `;
+
+        // 数据
+        var data = {
+            title: '用户管理系统',
+            description: '展示系统中的所有用户',
+            users: [
+                { name: '张三', active: true },
+                { name: '李四', active: false },
+                { name: '王五', active: true }
+            ]
+        };
+
+        // 渲染
+        document.getElementById('app').innerHTML = TemplateEngine.render(template, data);
+    &lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;</code></pre>
+
+<h2 id="与主流模板引擎对比">与主流模板引擎对比</h2>
+
+<p>| 特性 | 本实现 | Handlebars | Mustache | EJS |</p>
+<p>|------|--------|------------|----------|-----|</p>
+<p>| 变量替换 | ✅ | ✅ | ✅ | ✅ |</p>
+<p>| 条件判断 | ✅ | ✅ | ❌ | ✅ |</p>
+<p>| 循环遍历 | ✅ | ✅ | ✅ | ✅ |</p>
+<p>| XSS过滤 | ✅ | ✅ | ❌ | ❌ |</p>
+<p>| 编译缓存 | ✅ | ✅ | ✅ | ✅ |</p>
+<p>| 自定义helper | ❌ | ✅ | ❌ | ✅ |</p>
+<p>| 体积大小 | 小 | 中 | 小 | 中 |</p>
+
+<h2 id="总结">总结</h2>
+
+<p>一个优雅的模板引擎应该具备以下特点：</p>
+
+<ul>
+<li>✅ <strong>简洁的API</strong>：易于使用和学习</li>
+<li>✅ <strong>安全可靠</strong>：自动XSS过滤</li>
+<li>✅ <strong>高性能</strong>：编译缓存机制</li>
+<li>✅ <strong>功能完善</strong>：支持变量、循环、条件</li>
+<li>✅ <strong>错误处理</strong>：友好的错误提示</li>
+</ul>
+
+<p>本实现提供了一个轻量级但功能完善的模板引擎，适合在不需要引入大型库的场景中使用。</p>
+
+          </div>
+
+          <div class="post-block-footer" style="margin-top: 3.5rem; padding-top: 1.5rem;">
+            <a href="../index.html" class="read-more-text">
+              <span>← 返回文章专栏</span>
+            </a>
+          </div>
+        </article>
+
+        <!-- 右侧文章大纲 TOC -->
+        <aside class="article-toc-panel" aria-label="文章目录大纲">
+          <div class="toc-box">
+            <div class="toc-box-title">本页导读 · 快速直达</div>
+            <ul class="toc-list">
+            <li>
+              <a href="#模板引擎实现原理" class="toc-link" title="模板引擎实现原理">模板引擎实现原理</a>
+            </li>
+            <li>
+              <a href="#基础版本-简单变量替换" class="toc-link" title="基础版本：简单变量替换">基础版本：简单变量替换</a>
+            </li>
+            <li>
+              <a href="#进阶版本-支持循环和条件" class="toc-link" title="进阶版本：支持循环和条件">进阶版本：支持循环和条件</a>
+            </li>
+            <li>
+              <a href="#完整版本-带缓存和安全过滤" class="toc-link" title="完整版本：带缓存和安全过滤">完整版本：带缓存和安全过滤</a>
+            </li>
+            <li>
+              <a href="#模板引擎语法参考" class="toc-link" title="模板引擎语法参考">模板引擎语法参考</a>
+            </li>
+            <li>
+              <a href="#性能优化策略" class="toc-link" title="性能优化策略">性能优化策略</a>
+            </li>
+            <li>
+              <a href="#1-编译缓存" class="toc-link" title="1. 编译缓存">1. 编译缓存</a>
+            </li>
+            <li>
+              <a href="#2-批量渲染" class="toc-link" title="2. 批量渲染">2. 批量渲染</a>
+            </li>
+            <li>
+              <a href="#3-虚拟dom集成" class="toc-link" title="3. 虚拟DOM集成">3. 虚拟DOM集成</a>
+            </li>
+            <li>
+              <a href="#实际应用示例" class="toc-link" title="实际应用示例">实际应用示例</a>
+            </li>
+            <li>
+              <a href="#与主流模板引擎对比" class="toc-link" title="与主流模板引擎对比">与主流模板引擎对比</a>
+            </li>
+            <li>
+              <a href="#总结" class="toc-link" title="总结">总结</a>
+            </li>
+            </ul>
+          </div>
+        </aside>
+      </div>
+    </main>
+
+  </div>
+
+  <script src="../js/config.js"></script>
+  <script src="../data/search-index.js"></script>
+  <script src="../js/main.js"></script>
+  <script src="../js/prism.js"></script>
+  <script src="../js/search.js"></script>
+  <script src="../js/file-preview.js"></script>
+
+</body>
+</html>

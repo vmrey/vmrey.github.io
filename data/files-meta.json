@@ -1,0 +1,42 @@
+{
+  "FileUpload.vue": {
+    "desc": "Vue3 + Element Plus 文件上传组件源码（支持回显、批量与手动控制提交）",
+    "category": "前端组件"
+  },
+  "QueryForm.vue": {
+    "desc": "Vue3 + Element Plus 查询表单通用封装组件源码（响应式布局与重置联动）",
+    "category": "前端组件"
+  },
+  "tools.js": {
+    "desc": "JavaScript 常用实用函数库合集（防抖节流、树递归、深拷贝、数据类型判断）",
+    "category": "代码库"
+  },
+  "frps.sh": {
+    "desc": "FRP 内网穿透服务端 Linux 一键自动化安装、配置与 Systemd 管理脚本",
+    "category": "Shell 脚本"
+  },
+  "xray.sh": {
+    "desc": "Xray Core 核心网络代理服务一键安装与证书部署脚本",
+    "category": "Shell 脚本"
+  },
+  "fileNameReplaScrip.bat": {
+    "desc": "Windows 批量替换与修改文件名自动化 BAT 批处理脚本",
+    "category": "Windows 批处理"
+  },
+  "cmd_proxy.bat": {
+    "desc": "Windows CMD 终端一键设置与清除 HTTP/SOCKS5 代理环境变量脚本",
+    "category": "Windows 批处理"
+  },
+  "优惠券弹框组件.zip": {
+    "desc": "Vue 前端业务优惠券领取与展示弹框交互组件完整工程包",
+    "category": "压缩资源包"
+  },
+  "ImgHandle_jpg.zip": {
+    "desc": "Photoshop 批量压缩 JPG 图片 ExtendScript 脚本与动作资源包",
+    "category": "压缩资源包"
+  },
+  "curveCharts.rar": {
+    "desc": "平滑贝塞尔曲线与数据可视化图表组件资源包",
+    "category": "压缩资源包"
+  }
+}

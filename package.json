@@ -1,0 +1,19 @@
+{
+  "name": "vmrey-blog",
+  "version": "1.0.0",
+  "description": "vmrey.github.io 个人博客自动化发布与构建工具",
+  "scripts": {
+    "build": "node build.js",
+    "new": "node build.js --new",
+    "serve": "npx serve .",
+    "audit": "node scripts/audit-links.js",
+    "deploy": "git add . && git commit -m \"Update blog articles\" && git push"
+  },
+  "keywords": [
+    "blog",
+    "static-site",
+    "markdown"
+  ],
+  "author": "vmrey",
+  "license": "MIT"
+}
