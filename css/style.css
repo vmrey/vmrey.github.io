@@ -2269,17 +2269,23 @@ del {
 .preview-btn {
   display: inline-flex;
   align-items: center;
-  gap: 0.4rem;
-  padding: 0.45rem 0.85rem;
+  justify-content: center;
+  gap: 0.35rem;
+  height: 32px;
+  padding: 0 0.75rem;
   background: var(--surface);
   border: 1px solid var(--border);
   border-radius: var(--radius-md);
   font-size: 0.8rem;
   font-weight: 600;
+  line-height: 1;
+  box-sizing: border-box;
   color: var(--text-main);
   cursor: pointer;
   text-decoration: none;
   transition: var(--transition);
+  vertical-align: middle;
+  user-select: none;
 }
 
 .preview-btn:hover {
@@ -3148,7 +3154,7 @@ del {
     display: none;
   }
   .preview-btn {
-    padding: 0.45rem;
+    padding: 0;
     width: 32px;
     height: 32px;
     justify-content: center;
