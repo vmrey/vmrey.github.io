@@ -504,6 +504,19 @@ button {
   transform: rotate(-90deg);
 }
 
+/* 当子菜单项处于选中激活状态，而父级专栏处于折叠状态时，高亮折叠指示箭头 */
+.nav-item-tree:not(.open):has(.subtree-item.active) .subtree-toggle-btn,
+.nav-item-tree.has-active-child:not(.open) .subtree-toggle-btn {
+  color: var(--primary);
+  background: var(--primary-soft);
+}
+
+.nav-item-tree:not(.open):has(.subtree-item.active) .chevron-icon,
+.nav-item-tree.has-active-child:not(.open) .chevron-icon {
+  color: var(--primary);
+  stroke-width: 2.6;
+}
+
 .nav-subtree {
   display: flex;
   flex-direction: column;

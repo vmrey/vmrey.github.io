@@ -389,6 +389,14 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
+  // 同步专栏折叠树是否包含激活子项的状态（用于在折叠时精准高亮指示箭头）
+  function syncTreeActiveState() {
+    document.querySelectorAll('.nav-item-tree').forEach(tree => {
+      const hasActiveChild = !!tree.querySelector('.subtree-item.active');
+      tree.classList.toggle('has-active-child', hasActiveChild);
+    });
+  }
+
   // 空状态快捷按钮：一键重置筛选并返回全部文章
   const emptyResetBtn = document.getElementById('empty-state-reset-btn') || document.getElementById('empty-reset-btn');
   if (emptyResetBtn) {
@@ -399,8 +407,10 @@ document.addEventListener('DOMContentLoaded', () => {
       if (allBtn) {
         allBtn.click();
       } else {
+        allFilterBtns.forEach(b => b.classList.remove('active'));
         activeTag = 'all';
         currentPage = 1;
+        syncTreeActiveState();
         renderPage();
       }
       scrollToFeedTop();
@@ -428,6 +438,8 @@ document.addEventListener('DOMContentLoaded', () => {
     } catch (e) {
       console.warn('URLSearchParams parse error:', e);
     }
+
+    syncTreeActiveState();
 
     allFilterBtns.forEach(btn => {
       btn.addEventListener('click', (e) => {
@@ -458,6 +470,8 @@ document.addEventListener('DOMContentLoaded', () => {
         if (tree) {
           tree.classList.add('open');
         }
+
+        syncTreeActiveState();
 
         activeTag = targetTag;
         currentPage = 1;
