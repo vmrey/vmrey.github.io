@@ -248,7 +248,7 @@
           <div class="feed-title-row">
             <h1>工具导航</h1>
             <div class="feed-stats-pills">
-              <span class="stat-pill highlight" id="tools-count-badge">共 4 个分类 · 13 个实用工具</span>
+              <span class="stat-pill highlight" id="tools-count-badge">共 6 个分类 · 16 个实用工具</span>
               <span class="stat-pill">开发效能利器精选</span>
             </div>
           </div>
@@ -274,9 +274,15 @@
       <div class="nav-quick-filters">
         <button type="button" class="nav-pill-btn active" data-filter-cat="all">
           <span>全部工具</span>
-          <span class="nav-pill-count">13</span>
+          <span class="nav-pill-count">16</span>
         </button>
         
+        <button type="button" class="nav-pill-btn" data-filter-cat="架构设计与思维导图">
+          <span>架构设计与思维导图</span>
+          <span class="nav-pill-count">1</span>
+        </button>
+        
+
         <button type="button" class="nav-pill-btn" data-filter-cat="数据转换与格式化">
           <span>数据转换与格式化</span>
           <span class="nav-pill-count">4</span>
@@ -285,7 +291,13 @@
 
         <button type="button" class="nav-pill-btn" data-filter-cat="图像与多媒体处理">
           <span>图像与多媒体处理</span>
-          <span class="nav-pill-count">3</span>
+          <span class="nav-pill-count">4</span>
+        </button>
+        
+
+        <button type="button" class="nav-pill-btn" data-filter-cat="实用生成与办公工具">
+          <span>实用生成与办公工具</span>
+          <span class="nav-pill-count">1</span>
         </button>
         
 
@@ -305,6 +317,63 @@
 
       <!-- 工具卡片展示流 -->
       <div class="nav-sections-container" id="tools-sections-container">
+      <!-- 分类矩阵：架构设计与思维导图 -->
+      <section class="nav-category-section" data-cat-name="架构设计与思维导图">
+        <div class="nav-category-header">
+          <div class="nav-cat-title-left">
+            <div class="nav-cat-icon">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="18" cy="5" r="3"></circle><circle cx="6" cy="12" r="3"></circle><circle cx="18" cy="19" r="3"></circle><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line>
+              </svg>
+            </div>
+            <h2 class="nav-cat-title">架构设计与思维导图</h2>
+            <span class="nav-cat-desc">系统架构图、业务流程图、UML 时序图与拓扑图专业在线绘制利器</span>
+          </div>
+          <span class="nav-cat-count">1 个工具</span>
+        </div>
+
+        <div class="nav-repo-grid">
+          <!-- Tool Card: draw.io -->
+          <div class="nav-repo-card" data-name="draw.io" data-desc="完全免费开源的专业在线流程图、架构图与 uml 绘制利器 极其强大的在线绘图工具，支持绘制系统架构图、流程图、时序图、网络拓扑图与思维导图，支持导出矢量 svg、png、pdf 及直接存储至 github / 本地。" data-tags="架构图,流程图,uml,拓扑图,免费开源" data-cat="架构设计与思维导图">
+            <div class="repo-card-top">
+              <div class="repo-header-info">
+                <div class="repo-icon-badge">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"></path>
+                  </svg>
+                </div>
+                <div class="repo-title-meta">
+                  <div class="repo-name-line">
+                    <a href="https://app.diagrams.net/" target="_blank" rel="noopener noreferrer" class="repo-main-name" title="前往 draw.io 官网">
+                      draw.io
+                    </a>
+                    <span class="repo-badge">开源绘图利器</span>
+                  </div>
+                  <div class="repo-fullname">app.diagrams.net/</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="repo-tagline-text">完全免费开源的专业在线流程图、架构图与 UML 绘制利器</div>
+            <p class="repo-desc-text">极其强大的在线绘图工具，支持绘制系统架构图、流程图、时序图、网络拓扑图与思维导图，支持导出矢量 SVG、PNG、PDF 及直接存储至 GitHub / 本地。</p>
+
+            <div class="repo-card-bottom">
+              <div class="repo-tags-wrap">
+                <span class="repo-tag">#架构图</span><span class="repo-tag">#流程图</span><span class="repo-tag">#UML</span><span class="repo-tag">#拓扑图</span><span class="repo-tag">#免费开源</span>
+              </div>
+              <a href="https://app.diagrams.net/" target="_blank" rel="noopener noreferrer" class="repo-visit-btn" title="在新窗口直达 draw.io 在线工具">
+                <span>直达工具</span>
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
+                  <polyline points="15 3 21 3 21 9"></polyline>
+                  <line x1="10" y1="14" x2="21" y2="3"></line>
+                </svg>
+              </a>
+            </div>
+          </div>
+        </div>
+      </section>
+
       <!-- 分类矩阵：数据转换与格式化 -->
       <section class="nav-category-section" data-cat-name="数据转换与格式化">
         <div class="nav-category-header">
@@ -488,10 +557,48 @@
             <h2 class="nav-cat-title">图像与多媒体处理</h2>
             <span class="nav-cat-desc">图片无损压缩、SVG 矢量精简、格式转换与多媒体在线处理工具</span>
           </div>
-          <span class="nav-cat-count">3 个工具</span>
+          <span class="nav-cat-count">4 个工具</span>
         </div>
 
         <div class="nav-repo-grid">
+          <!-- Tool Card: CloudConvert (SVG to ICO) -->
+          <div class="nav-repo-card" data-name="cloudconvert (svg to ico)" data-desc="专业高保真在线 svg 矢量图转 ico 网站图标 favicon 转换器 支持将 svg 矢量文件快速批量转换为多尺寸高清 ico 网站图标，支持自定义图标分辨率（16x16、32x32、48x48 等），免安装即用。" data-tags="svg,ico,favicon,格式转换,网站图标" data-cat="图像与多媒体处理">
+            <div class="repo-card-top">
+              <div class="repo-header-info">
+                <div class="repo-icon-badge">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"></path>
+                  </svg>
+                </div>
+                <div class="repo-title-meta">
+                  <div class="repo-name-line">
+                    <a href="https://cloudconvert.com/svg-to-ico" target="_blank" rel="noopener noreferrer" class="repo-main-name" title="前往 CloudConvert (SVG to ICO) 官网">
+                      CloudConvert (SVG to ICO)
+                    </a>
+                    <span class="repo-badge">格式转换</span>
+                  </div>
+                  <div class="repo-fullname">cloudconvert.com/svg-to-ico</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="repo-tagline-text">专业高保真在线 SVG 矢量图转 ICO 网站图标 Favicon 转换器</div>
+            <p class="repo-desc-text">支持将 SVG 矢量文件快速批量转换为多尺寸高清 ICO 网站图标，支持自定义图标分辨率（16x16、32x32、48x48 等），免安装即用。</p>
+
+            <div class="repo-card-bottom">
+              <div class="repo-tags-wrap">
+                <span class="repo-tag">#SVG</span><span class="repo-tag">#ICO</span><span class="repo-tag">#Favicon</span><span class="repo-tag">#格式转换</span><span class="repo-tag">#网站图标</span>
+              </div>
+              <a href="https://cloudconvert.com/svg-to-ico" target="_blank" rel="noopener noreferrer" class="repo-visit-btn" title="在新窗口直达 CloudConvert (SVG to ICO) 在线工具">
+                <span>直达工具</span>
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
+                  <polyline points="15 3 21 3 21 9"></polyline>
+                  <line x1="10" y1="14" x2="21" y2="3"></line>
+                </svg>
+              </a>
+            </div>
+          </div>
           <!-- Tool Card: TinyPNG -->
           <div class="nav-repo-card" data-name="tinypng" data-desc="智能 webp、png 与 jpeg 图像高保真无损压缩服务 业界公认最优秀的智能有损压缩算法之一，大幅减小图片文件体积的同时保留完美视觉画质，极大提升网站加载速度。" data-tags="webp,png,jpg,性能优化,cdn" data-cat="图像与多媒体处理">
             <div class="repo-card-top">
@@ -597,6 +704,63 @@
                 <span class="repo-tag">#AVIF</span><span class="repo-tag">#WebP</span><span class="repo-tag">#Wasm</span><span class="repo-tag">#本地处理</span><span class="repo-tag">#隐私安全</span>
               </div>
               <a href="https://squoosh.app" target="_blank" rel="noopener noreferrer" class="repo-visit-btn" title="在新窗口直达 Squoosh 在线工具">
+                <span>直达工具</span>
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
+                  <polyline points="15 3 21 3 21 9"></polyline>
+                  <line x1="10" y1="14" x2="21" y2="3"></line>
+                </svg>
+              </a>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 分类矩阵：实用生成与办公工具 -->
+      <section class="nav-category-section" data-cat-name="实用生成与办公工具">
+        <div class="nav-category-header">
+          <div class="nav-cat-title-left">
+            <div class="nav-cat-icon">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect>
+              </svg>
+            </div>
+            <h2 class="nav-cat-title">实用生成与办公工具</h2>
+            <span class="nav-cat-desc">二维码在线生成、美化设计与日常高频开发辅助工具</span>
+          </div>
+          <span class="nav-cat-count">1 个工具</span>
+        </div>
+
+        <div class="nav-repo-grid">
+          <!-- Tool Card: 草料二维码 -->
+          <div class="nav-repo-card" data-name="草料二维码" data-desc="国内领先的专业二维码在线生成、解析与美化设计平台 支持文本、网址链接、图片、文件、名片等多种内容一键生成二维码，提供丰富高颜值样式定制、参数微调与高清矢量/位图导出。" data-tags="二维码,qr code,生成器,常用工具,图片" data-cat="实用生成与办公工具">
+            <div class="repo-card-top">
+              <div class="repo-header-info">
+                <div class="repo-icon-badge">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"></path>
+                  </svg>
+                </div>
+                <div class="repo-title-meta">
+                  <div class="repo-name-line">
+                    <a href="https://cli.im/" target="_blank" rel="noopener noreferrer" class="repo-main-name" title="前往 草料二维码 官网">
+                      草料二维码
+                    </a>
+                    <span class="repo-badge">二维码首选</span>
+                  </div>
+                  <div class="repo-fullname">cli.im/</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="repo-tagline-text">国内领先的专业二维码在线生成、解析与美化设计平台</div>
+            <p class="repo-desc-text">支持文本、网址链接、图片、文件、名片等多种内容一键生成二维码，提供丰富高颜值样式定制、参数微调与高清矢量/位图导出。</p>
+
+            <div class="repo-card-bottom">
+              <div class="repo-tags-wrap">
+                <span class="repo-tag">#二维码</span><span class="repo-tag">#QR Code</span><span class="repo-tag">#生成器</span><span class="repo-tag">#常用工具</span><span class="repo-tag">#图片</span>
+              </div>
+              <a href="https://cli.im/" target="_blank" rel="noopener noreferrer" class="repo-visit-btn" title="在新窗口直达 草料二维码 在线工具">
                 <span>直达工具</span>
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                   <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>

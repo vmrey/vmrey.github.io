@@ -1,5 +1,27 @@
 [
   {
+    "category": "架构设计与思维导图",
+    "description": "系统架构图、业务流程图、UML 时序图与拓扑图专业在线绘制利器",
+    "icon": "diagram",
+    "items": [
+      {
+        "name": "draw.io",
+        "url": "https://app.diagrams.net/",
+        "tagline": "完全免费开源的专业在线流程图、架构图与 UML 绘制利器",
+        "description": "极其强大的在线绘图工具，支持绘制系统架构图、流程图、时序图、网络拓扑图与思维导图，支持导出矢量 SVG、PNG、PDF 及直接存储至 GitHub / 本地。",
+        "category": "流程与架构图",
+        "badge": "开源绘图利器",
+        "tags": [
+          "架构图",
+          "流程图",
+          "UML",
+          "拓扑图",
+          "免费开源"
+        ]
+      }
+    ]
+  },
+  {
     "category": "数据转换与格式化",
     "description": "JSON 可视化、代码类型互转、正则表达式与数据格式处理利器",
     "icon": "code",
@@ -70,6 +92,21 @@
     "icon": "image",
     "items": [
       {
+        "name": "CloudConvert (SVG to ICO)",
+        "url": "https://cloudconvert.com/svg-to-ico",
+        "tagline": "专业高保真在线 SVG 矢量图转 ICO 网站图标 Favicon 转换器",
+        "description": "支持将 SVG 矢量文件快速批量转换为多尺寸高清 ICO 网站图标，支持自定义图标分辨率（16x16、32x32、48x48 等），免安装即用。",
+        "category": "图标格式转换",
+        "badge": "格式转换",
+        "tags": [
+          "SVG",
+          "ICO",
+          "Favicon",
+          "格式转换",
+          "网站图标"
+        ]
+      },
+      {
         "name": "TinyPNG",
         "url": "https://tinypng.com",
         "tagline": "智能 WebP、PNG 与 JPEG 图像高保真无损压缩服务",
@@ -111,6 +148,28 @@
           "Wasm",
           "本地处理",
           "隐私安全"
+        ]
+      }
+    ]
+  },
+  {
+    "category": "实用生成与办公工具",
+    "description": "二维码在线生成、美化设计与日常高频开发辅助工具",
+    "icon": "grid",
+    "items": [
+      {
+        "name": "草料二维码",
+        "url": "https://cli.im/",
+        "tagline": "国内领先的专业二维码在线生成、解析与美化设计平台",
+        "description": "支持文本、网址链接、图片、文件、名片等多种内容一键生成二维码，提供丰富高颜值样式定制、参数微调与高清矢量/位图导出。",
+        "category": "二维码生成",
+        "badge": "二维码首选",
+        "tags": [
+          "二维码",
+          "QR Code",
+          "生成器",
+          "常用工具",
+          "图片"
         ]
       }
     ]
