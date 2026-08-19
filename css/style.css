@@ -2784,10 +2784,13 @@ del {
   align-items: center;
   justify-content: center;
   gap: 0.35rem;
-  padding: 0.38rem 0.75rem;
+  height: 32px;
+  padding: 0 0.75rem;
   border-radius: var(--radius-md);
   font-size: 0.8rem;
   font-weight: 600;
+  line-height: 1;
+  box-sizing: border-box;
   cursor: pointer;
   transition: var(--transition);
   text-decoration: none;
@@ -2795,6 +2798,7 @@ del {
   background: var(--surface);
   border: 1px solid var(--border);
   color: var(--text-main);
+  vertical-align: middle;
 }
 
 .file-action-btn:hover {
