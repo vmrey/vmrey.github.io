@@ -143,12 +143,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // 4. 确保所有分类目录默认全量展开
-  document.querySelectorAll('.nav-item-tree').forEach(tree => {
-    tree.classList.add('open');
-  });
-
-  // 展开 / 折叠子专栏按钮事件 (44px 全高大热区)
+  // 4. 展开 / 折叠子专栏按钮事件 (44px 全高大热区)
   const subtreeToggleBtns = document.querySelectorAll('.subtree-toggle-btn');
   subtreeToggleBtns.forEach(toggleBtn => {
     toggleBtn.addEventListener('click', (e) => {

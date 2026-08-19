@@ -68,7 +68,7 @@ function renderSidebar({
 
       navCategoriesHtml += `
           <!-- 专栏：${cat.name} -->
-          <div class="nav-item-tree open">
+          <div class="nav-item-tree">
             <div class="tree-header-row">
               <${isLinkMode ? 'a href="' + catLinkHref + '"' : 'button type="button"'} class="sidebar-nav-item category-filter-btn" data-tag="${cat.tag}" data-label="${cat.name}" title="${cat.name}">
                 <span class="nav-item-left">
