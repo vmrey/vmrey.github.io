@@ -101,11 +101,18 @@ npm run deploy                 # 或 git add . && git commit -m "feat: 发布新
 │   └── audit-links.js           # 0 死链与静态资源完整性自动化审计工具
 │
 ├── .agents/skills/              # 项目专属 AI 技能包
-│   └── blog-manager/SKILL.md    # 自动化维护技能文档
+│   ├── blog-manager/SKILL.md    # 文章与附件自动化运维技能文档
+│   └── nav-manager/             # 🧭 导航生态运维与全库智能查重技能包
+│       ├── SKILL.md             # 导航维护技能 SOP 说明
+│       └── scripts/
+│           └── manage-nav.js    # 跨库查重、增删改查 CLI 自动化引擎
 │
 └── [输出 HTML 产物]              # 由 build.js 全自动编译输出，无需手动维护
     ├── index.html               # 博客首页
     ├── files.html               # 资源文件库
+    ├── nav.html                 # GitHub 优质开源导航中心
+    ├── tools.html               # 实用在线工具导航中心
+    ├── ai.html                  # 顶级 AI 前沿大模型与智能体导航中心
     ├── about.html               # 关于本站
     └── posts/                   # 编译生成的独立静态文章详情页 (*.html)
 ```
@@ -168,12 +175,44 @@ readTime: 6 分钟阅读
 
 ---
 
-### 🔍 4.3 质量与死链全自动化审计 (Audit SOP)
-在每次大规模增删改内容或模板后，AI 必须主动运行：
+### 🧭 4.3 全站导航生态运维与查重技能 (nav-manager Skill SOP)
+
+全站导航数据完全由 JSON 单一数据源驱动（`data/ai-nav.json`、`data/tools-nav.json`、`data/github-nav.json`）。AI 在维护导航时必须遵循**跨库智能查重**与标准生命周期：
+
+#### 🔍 核心查重规则 (Duplicate Detection Rules)
+- **URL 规范化碰撞检测**：自动剥离协议 (`http/https`)、`www.` 二级域、结尾斜杠 `/` 与杂项参数，跨 AI/工具/GitHub 三大库进行唯一性检测；
+- **名称模糊排重**：去除空格、符号并统一转小写，防止不同写法导致重复收录；
+- **自动归类原则**：
+  - AI 大模型、Prompt 工具、Agent 智能体 ➔ 归入 **AI 导航** (`data/ai-nav.json`)；
+  - 在线工具、格式转换、网络检测、效率辅助 ➔ 归入 **工具导航** (`data/tools-nav.json`)；
+  - 重点推荐开源代码仓库与架构 ➔ 归入 **GitHub 导航** (`data/github-nav.json`)。
+
+#### 🛠️ 常用 CLI 维护命令
+```bash
+# 1. 全库智能查重检测
+node .agents/skills/nav-manager/scripts/manage-nav.js check
+
+# 2. 查看全站导航分类与收录汇总
+node .agents/skills/nav-manager/scripts/manage-nav.js list
+
+# 3. 添加新站点 (自动触发跨库查重，重复则直接拦截并报警)
+node .agents/skills/nav-manager/scripts/manage-nav.js add <ai|tools|github> <分类名称> <站点名称> <URL> [一句话介绍] [详细说明] [标签1,标签2] [徽标文字]
+
+# 4. 修改已有站点信息 (name/url/tagline/desc/tags/badge)
+node .agents/skills/nav-manager/scripts/manage-nav.js modify <搜索关键词> <字段名> <新值>
+
+# 5. 删除导航站点 (自动清理空分类并触发重构)
+node .agents/skills/nav-manager/scripts/manage-nav.js delete <名称或URL关键词>
+```
+
+---
+
+### 🔍 4.4 质量与死链全自动化审计 (Audit SOP)
+在每次大规模增删改内容、导航或模板后，AI 必须主动运行：
 ```bash
 npm run audit
 ```
-确保全站 60+ 个 HTML 文件、1900+ 条链接与资源引用的死链数为 0。
+确保全站 70+ 个 HTML 文件、2100+ 条链接与资源引用的死链数为 0。
 
 ---
 
