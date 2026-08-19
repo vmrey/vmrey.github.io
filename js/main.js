@@ -143,7 +143,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // 4. 展开 / 折叠子专栏按钮事件 (44px 全高大热区)
+  // 4. 展开 / 折叠子专栏按钮事件 (手风琴模式：每次只能打开一个，展开当前时关闭其余)
   const subtreeToggleBtns = document.querySelectorAll('.subtree-toggle-btn');
   subtreeToggleBtns.forEach(toggleBtn => {
     toggleBtn.addEventListener('click', (e) => {
@@ -151,7 +151,18 @@ document.addEventListener('DOMContentLoaded', () => {
       e.preventDefault();
       const tree = toggleBtn.closest('.nav-item-tree');
       if (tree) {
-        tree.classList.toggle('open');
+        const willOpen = !tree.classList.contains('open');
+        // 手风琴模式：先关闭所有其他专栏
+        document.querySelectorAll('.nav-item-tree').forEach(otherTree => {
+          if (otherTree !== tree) {
+            otherTree.classList.remove('open');
+          }
+        });
+        if (willOpen) {
+          tree.classList.add('open');
+        } else {
+          tree.classList.remove('open');
+        }
       }
     });
   });
@@ -429,14 +440,21 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // 如果点击的是已经选中的父级专栏，再次点击兼具折叠/展开功能
         if (isAlreadyActive && tree && !btn.classList.contains('subtree-item')) {
-          tree.classList.toggle('open');
+          const willOpen = !tree.classList.contains('open');
+          document.querySelectorAll('.nav-item-tree').forEach(otherTree => {
+            if (otherTree !== tree) otherTree.classList.remove('open');
+          });
+          tree.classList.toggle('open', willOpen);
           return;
         }
 
         allFilterBtns.forEach(b => b.classList.remove('active'));
         btn.classList.add('active');
 
-        // 如果点击父级或子级，确保所属菜单处于展开状态
+        // 手风琴模式：展开当前所属专栏，折叠其余专栏
+        document.querySelectorAll('.nav-item-tree').forEach(otherTree => {
+          if (otherTree !== tree) otherTree.classList.remove('open');
+        });
         if (tree) {
           tree.classList.add('open');
         }
