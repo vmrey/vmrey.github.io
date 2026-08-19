@@ -26,8 +26,16 @@ function renderNavLayout({
       </div>
   `;
 
+  const iconSvgs = {
+    'Node.js 版本管理': `<polyline points="4 17 10 11 4 5"></polyline><line x1="12" y1="19" x2="20" y2="19"></line>`,
+    '系统与装机利器': `<circle cx="12" cy="12" r="10"></circle><circle cx="12" cy="12" r="3"></circle>`,
+    '服务器安全与防护': `<path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>`
+  };
+
   // 2. 渲染各分类项目卡片矩阵
   const categoriesHtml = navCategories.map(cat => {
+    const catIconSvg = iconSvgs[cat.category] || `<polygon points="12 2 2 7 12 12 22 7 12 2"></polygon><polyline points="2 17 12 22 22 17"></polyline><polyline points="2 12 12 17 22 12"></polyline>`;
+
     const cardsHtml = cat.items.map(item => {
       const tagsHtml = (item.tags || []).map(tag => `<span class="repo-tag">#${tag}</span>`).join('');
       
@@ -77,8 +85,7 @@ function renderNavLayout({
           <div class="nav-cat-title-left">
             <div class="nav-cat-icon">
               <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <polyline points="4 17 10 11 4 5"></polyline>
-                <line x1="12" y1="19" x2="20" y2="19"></line>
+                ${catIconSvg}
               </svg>
             </div>
             <h2 class="nav-cat-title">${cat.category}</h2>
@@ -235,7 +242,7 @@ ${categoriesHtml}
   return renderBaseLayout({
     title: `GitHub 导航 · ${blogConfig.siteName}`,
     description: `精选收录高价值 GitHub 开源项目、Node.js 版本管理器与优质工程工具链`,
-    keywords: `GitHub, 开源导航, fnm, nvm, Node.js, 开发者工具, ${blogConfig.siteName}`,
+    keywords: `GitHub, 开源导航, fnm, nvm, Ventoy, Fail2Ban, Node.js, 开发者工具, ${blogConfig.siteName}`,
     sidebarHtml,
     activePage: 'nav',
     mainContentHtml,

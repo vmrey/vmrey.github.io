@@ -22,6 +22,46 @@
     ]
   },
   {
+    "category": "终端与远程运维工具",
+    "description": "全能终端箱、SSH 客户端与多协议远程服务器管理软件",
+    "icon": "terminal",
+    "items": [
+      {
+        "name": "MobaXterm",
+        "url": "https://mobaxterm.mobatek.net/",
+        "tagline": "Windows 平台最全能的远程计算工具箱与一体化终端管理器",
+        "description": "集成 SSH、X11、RDP、VNC、FTP/SFTP 等全协议支持，内建丰富的 Unix 工具集与图形化多标签终端界面，远程运维终极解决方案。",
+        "category": "全能终端",
+        "badge": "全能终端箱",
+        "tags": [
+          "MobaXterm",
+          "SSH",
+          "X11",
+          "RDP",
+          "VNC",
+          "终端箱",
+          "远程连接"
+        ]
+      },
+      {
+        "name": "FinalShell",
+        "url": "http://www.hostbuf.com/",
+        "tagline": "一体化多平台国产良心 SSH 终端与服务器实时监控管理软件",
+        "description": "深度整合 SSH 客户端与服务器硬件状态实时监测（CPU/内存/网络/进程），支持可视化 SFTP 文件管理与命令智能自动补全。",
+        "category": "SSH客户端",
+        "badge": "SSH/SFTP合一",
+        "tags": [
+          "FinalShell",
+          "SSH",
+          "终端工具",
+          "SFTP",
+          "Linux运维",
+          "服务器管理"
+        ]
+      }
+    ]
+  },
+  {
     "category": "架构设计与思维导图",
     "description": "系统架构图、业务流程图、UML 时序图与拓扑图专业在线绘制利器",
     "icon": "diagram",
@@ -44,6 +84,28 @@
     ]
   },
   {
+    "category": "系统优化与效率工具",
+    "description": "深度软件卸载、注册表清理与操作系统日常维护利器",
+    "icon": "cpu",
+    "items": [
+      {
+        "name": "Geek Uninstaller",
+        "url": "https://geekuninstaller.com/",
+        "tagline": "Windows 平台极简高效的绿色单文件软件卸载与深度清理工具",
+        "description": "单文件免安装的 Windows 卸载神器，支持强力删除流氓与顽固残留软件、深度扫描清理注册表键值与关联垃圾文件。",
+        "category": "系统工具",
+        "badge": "深度卸载",
+        "tags": [
+          "Geek",
+          "软件卸载",
+          "Windows",
+          "注册表清理",
+          "系统工具"
+        ]
+      }
+    ]
+  },
+  {
     "category": "图像与多媒体处理",
     "description": "格式转换、SVG 矢量精简与多媒体在线处理工具",
     "icon": "image",
@@ -61,6 +123,28 @@
           "Favicon",
           "格式转换",
           "网站图标"
+        ]
+      }
+    ]
+  },
+  {
+    "category": "编辑与写作工具",
+    "description": "Markdown 写作排版、文档双屏实时预览与格式导出编辑器",
+    "icon": "edit",
+    "items": [
+      {
+        "name": "MarkdownPad",
+        "url": "http://markdownpad.com/",
+        "tagline": "经典 Windows 平台专属 Markdown 写作与双屏实时预览编辑器",
+        "description": "提供所见即所得的双屏 HTML 渲染预览，支持自定义 CSS 渲染主题样式、丰富快捷键排版与 PDF/HTML 网页一键导出。",
+        "category": "文档编辑",
+        "badge": "Markdown写作",
+        "tags": [
+          "Markdown",
+          "编辑器",
+          "文档写作",
+          "Windows",
+          "HTML导出"
         ]
       }
     ]

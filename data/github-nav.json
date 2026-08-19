@@ -37,5 +37,53 @@
         ]
       }
     ]
+  },
+  {
+    "category": "系统与装机利器",
+    "description": "多系统启动 U 盘制作、系统安装与底层维护工具",
+    "icon": "disc",
+    "items": [
+      {
+        "name": "Ventoy",
+        "repo": "ventoy/Ventoy",
+        "url": "https://github.com/ventoy/Ventoy",
+        "tagline": "新一代多系统多合一启动 U 盘制作神器，无需格式化直接启动 ISO",
+        "description": "革命性的多合一启动盘制作工具。安装一次 Ventoy 后，只需将 Windows/Linux 的 ISO/WIM/IMG 镜像文件直接拷贝进 U 盘即可在开机菜单直接引导启动。",
+        "language": "C",
+        "badge": "装机必备神器",
+        "tags": [
+          "Ventoy",
+          "启动盘",
+          "ISO启动",
+          "C",
+          "系统安装",
+          "U盘"
+        ]
+      }
+    ]
+  },
+  {
+    "category": "服务器安全与防护",
+    "description": "Linux 服务器防暴力破解、恶意 IP 自动封禁与安全审计工具",
+    "icon": "shield",
+    "items": [
+      {
+        "name": "Fail2Ban",
+        "repo": "fail2ban/fail2ban",
+        "url": "https://github.com/fail2ban/fail2ban",
+        "tagline": "Linux 服务器日志驱动的自动化恶意 IP 封禁与防暴力破解系统",
+        "description": "通过持续分析 SSH、Nginx、Postfix 等系统服务日志，精准识别非法尝试与暴力破解攻击，并自动调用 iptables / firewalld 实时封禁攻击者 IP。",
+        "language": "Python",
+        "badge": "安全防护标杆",
+        "tags": [
+          "Fail2Ban",
+          "Linux安全",
+          "防爆破",
+          "Python",
+          "SSH防护",
+          "防火墙"
+        ]
+      }
+    ]
   }
 ]
