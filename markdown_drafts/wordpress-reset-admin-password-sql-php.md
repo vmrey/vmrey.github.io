@@ -2,7 +2,7 @@
 title: WordPress 忘记管理员密码时的应急重置与修复方法
 date: 2021-10-20
 category: Linux 与服务端
-subcategory: 开源软件与脚本
+subcategory: 脚本与运维
 tags: WordPress,PHP,MySQL,密码重置,运维
 summary: 梳理 WordPress 管理员密码丢失后的两种快速重置手段：MySQL 数据库 MD5 哈希直接更新与临时 functions.php 代码注入。
 readTime: 2 分钟阅读

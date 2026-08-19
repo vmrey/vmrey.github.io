@@ -2,7 +2,7 @@
 title: Photoshop 批量压缩与图片重命名 ExtendScript (JSX) 脚本源码
 date: 2026-07-05
 category: 效率工具与软件
-subcategory: 实用软件与脚本
+subcategory: PS脚本
 tags: 效率工具,Photoshop,JavaScript,自动化
 summary: 使用 Adobe ExtendScript 编写 PS 自动化脚本，一键递归处理整个文件夹中的图片并按质量比导出。
 readTime: 18 分钟阅读

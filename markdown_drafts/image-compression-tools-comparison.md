@@ -2,7 +2,7 @@
 title: 高质量无损图片压缩工具与批量处理方案横向评测
 date: 2026-07-15
 category: 效率工具与软件
-subcategory: 实用软件与脚本
+subcategory: 图像工具
 tags: 效率工具,图片压缩,Web优化
 summary: 横向对比 TinyPNG、Caesium、Squoosh 等多款主流压缩工具，如何在保持视觉高保真的同时将体积缩减 70%。
 readTime: 9 分钟阅读

@@ -2,7 +2,7 @@
 title: VSCode 中使用正则表达式批量清理 console.log 打印语句
 date: 2021-05-08
 category: 效率工具与软件
-subcategory: 开源软件与脚本
+subcategory: VSCode与正则
 tags: VSCode,正则表达式,代码清洗,效率工具
 summary: 项目打包上线前，利用 VSCode 强大的正则查找与替换功能，一键安全快速清除所有调试用 console.log 语句。
 readTime: 2 分钟阅读

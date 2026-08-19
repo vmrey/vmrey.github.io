@@ -2,7 +2,7 @@
 title: Windows 批量修改文件名与字符替换批处理 (.bat) 脚本
 date: 2026-06-28
 category: 效率工具与软件
-subcategory: 实用软件与脚本
+subcategory: 批处理与脚本
 tags: 效率工具,Windows,批处理,自动化
 summary: 无需安装第三方软件，利用原生 Bat 批处理脚本一键完成指定文件夹下海量文件的前缀添加与文本替换。
 readTime: 15 分钟阅读

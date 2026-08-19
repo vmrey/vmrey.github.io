@@ -49,7 +49,6 @@ window.BLOG_CONFIG = {
       icon: 'tool',
       children: [
         { name: 'Git 与 SVN', tag: 'Git' },
-        { name: '开源软件与脚本', tag: '软件' },
         { name: 'Claude 与 AI', tag: 'Claude' }
       ]
     }

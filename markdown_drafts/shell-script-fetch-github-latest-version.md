@@ -2,7 +2,7 @@
 title: Shell 脚本自动获取 GitHub 开源项目最新 Releases 版本号
 date: 2021-12-01
 category: Linux 与服务端
-subcategory: 开源软件与脚本
+subcategory: 脚本与运维
 tags: Linux,Shell,GitHub,自动化,版本获取
 summary: 编写通用 Bash 脚本，自动通过正则解析 GitHub Releases 或通用开源软件下载页面的最新 Release Tag 版本号。
 readTime: 2 分钟阅读

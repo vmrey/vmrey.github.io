@@ -2,7 +2,7 @@
 title: Shell 脚本中输出红/绿/黄多色格式化终端文本函数
 date: 2021-11-15
 category: Linux 与服务端
-subcategory: 开源软件与脚本
+subcategory: 脚本与运维
 tags: Linux,Shell,Bash,ANSI转义,运维脚本
 summary: 封装基于 ANSI 转义码的通用 Shell 终端彩色文本打印函数，用于高亮显示部署脚本的成功、警告与错误日志。
 readTime: 2 分钟阅读

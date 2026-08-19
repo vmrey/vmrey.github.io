@@ -2,7 +2,7 @@
 title: VSCode 前端开发高频实用正则表达式查找与批量替换清单
 date: 2022-03-20
 category: 效率工具与软件
-subcategory: 开源软件与脚本
+subcategory: VSCode与正则
 tags: VSCode,正则表达式,Vue,前端技巧
 summary: 精选 VSCode 全局重构高频正则：快速批量将 v-model 改为 v-model.trim、清理行尾空格及修正多余空行。
 readTime: 3 分钟阅读
