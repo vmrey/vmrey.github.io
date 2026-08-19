@@ -85,5 +85,29 @@
         ]
       }
     ]
+  },
+  {
+    "category": "前端安全与设备识别",
+    "description": "浏览器设备指纹采集、无 Cookie 访客身份识别与前端风控库",
+    "icon": "fingerprint",
+    "items": [
+      {
+        "name": "FingerprintJS",
+        "repo": "fingerprintjs/fingerprintjs",
+        "url": "https://github.com/fingerprintjs/fingerprintjs",
+        "tagline": "最流行的浏览器端高精度设备指纹识别与无 Cookie 访客识别库",
+        "description": "无需 Cookie 或本地存储，通过分析 Canvas、WebGL、音频上下文、系统字体与硬件特征生成高稳定性设备指纹，广泛用于业务反欺诈与安全风控。",
+        "language": "TypeScript",
+        "badge": "TypeScript / 设备指纹",
+        "tags": [
+          "Fingerprint",
+          "设备指纹",
+          "TypeScript",
+          "安全风控",
+          "浏览器特征",
+          "前端库"
+        ]
+      }
+    ]
   }
 ]
