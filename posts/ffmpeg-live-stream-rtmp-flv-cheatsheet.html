@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>FFmpeg 常用音视频推流、转码与循环直播命令速查指南 - vmrey.github.io</title>
-  <meta name="description" content="整理基于 FFmpeg 的 RTMP/FLV 本地视频循环推流命令、硬件加速转码与常用分辨率封装参数。">
+  <meta name="description" content="整理基于 FFmpeg 的 RTMP/FLV 本地视频循环推流命令、硬件加速转码、多码率推流与后台无人值守推流脚本。">
   <link rel="icon" type="image/svg+xml" href="../favicon.svg">
   <link rel="stylesheet" href="../css/style.css">
   <link rel="stylesheet" href="../css/prism.css">
@@ -38,29 +38,36 @@
     <!-- 左侧常驻导航 -->
     <aside class="app-sidebar" id="app-sidebar">
       <div class="sidebar-inner">
-        <a href="../index.html" class="sidebar-brand">
-          <div class="sidebar-avatar" title="vmrey.github.io 博客">
-            <svg class="sidebar-avatar-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path>
-              <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path>
-              <line x1="9" y1="7" x2="15" y2="7"></line>
-              <line x1="9" y1="11" x2="13" y2="11"></line>
+        <div class="sidebar-header-row">
+          <a href="../index.html" class="sidebar-brand">
+            <div class="sidebar-avatar" title="vmrey.github.io 博客">
+              <svg class="sidebar-avatar-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path>
+                <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path>
+                <line x1="9" y1="7" x2="15" y2="7"></line>
+                <line x1="9" y1="11" x2="13" y2="11"></line>
+              </svg>
+            </div>
+            <div class="sidebar-info">
+              <div class="sidebar-name">vmrey.github.io</div>
+              <div class="sidebar-tagline">构建工具，写干净的代码</div>
+            </div>
+          </a>
+          <button type="button" id="sidebar-collapse-btn" class="sidebar-collapse-btn" title="折叠/展开侧边栏 (PC)" aria-label="折叠侧边栏">
+            <svg class="collapse-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="15 18 9 12 15 6"></polyline>
             </svg>
-          </div>
-          <div class="sidebar-info">
-            <div class="sidebar-name">vmrey.github.io</div>
-            <div class="sidebar-tagline">构建工具，写干净的代码</div>
-          </div>
-        </a>
+          </button>
+        </div>
 
         <!-- 左侧全局搜索快捷入口 (支持 ⌘K) -->
         <button class="sidebar-search-btn open-search-modal" type="button" title="全站深度全文搜索 (Cmd+K)">
           <span class="search-btn-left">
-            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <svg class="search-icon" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
               <circle cx="11" cy="11" r="8"></circle>
               <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
             </svg>
-            <span>全文搜索...</span>
+            <span class="search-btn-text">全文搜索...</span>
           </span>
           <kbd class="kbd-badge">⌘K</kbd>
         </button>
@@ -70,49 +77,44 @@
           <div class="nav-group-title">文章专栏</div>
           
           <!-- 全部文章 -->
-          <a href="../index.html" class="sidebar-nav-item  category-filter-btn" data-tag="all" data-label="全部文章">
+          <a href="../index.html" class="sidebar-nav-item  category-filter-btn" data-tag="all" data-label="全部文章" title="全部文章">
             <span class="nav-item-left">
               <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg>
-              <span>全部文章</span>
+              <span class="nav-item-text">全部文章</span>
             </span>
-            <span class="nav-badge">27</span>
           </a>
 
           <!-- 专栏：前端开发 -->
           <div class="nav-item-tree open">
             <div class="tree-header-row">
-              <a href="../index.html?tag=%E5%89%8D%E7%AB%AF%E5%BC%80%E5%8F%91" class="sidebar-nav-item category-filter-btn" data-tag="前端开发" data-label="前端开发">
+              <a href="../index.html?tag=%E5%89%8D%E7%AB%AF%E5%BC%80%E5%8F%91" class="sidebar-nav-item category-filter-btn" data-tag="前端开发" data-label="前端开发" title="前端开发">
                 <span class="nav-item-left">
                   <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"></polyline><polyline points="8 6 2 12 8 18"></polyline></svg>
-                  <span>前端开发</span>
+                  <span class="nav-item-text">前端开发</span>
                 </span>
-                <span class="nav-badge">11</span>
               </a>
-              <button type="button" class="subtree-toggle-btn" aria-label="展开或折叠前端开发子菜单">
+              <button type="button" class="subtree-toggle-btn" aria-label="展开或折叠前端开发子菜单" title="展开或折叠前端开发">
                 <svg class="chevron-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
               </button>
             </div>
             <div class="nav-subtree">
-              <a href="../index.html?tag=Vue" class="subtree-item category-filter-btn" data-tag="Vue" data-label="Vue 与组件">
+              <a href="../index.html?tag=Vue" class="subtree-item category-filter-btn" data-tag="Vue" data-label="Vue 与组件" title="Vue 与组件">
                 <span class="subtree-item-left">
                   <span class="subtree-item-dot"></span>
                   <span class="subtree-item-name">Vue 与组件</span>
                 </span>
-                <span class="subtree-badge">4</span>
               </a>
-              <a href="../index.html?tag=JavaScript" class="subtree-item category-filter-btn" data-tag="JavaScript" data-label="JS 与工具函数">
+              <a href="../index.html?tag=JavaScript" class="subtree-item category-filter-btn" data-tag="JavaScript" data-label="JS 与工具函数" title="JS 与工具函数">
                 <span class="subtree-item-left">
                   <span class="subtree-item-dot"></span>
                   <span class="subtree-item-name">JS 与工具函数</span>
                 </span>
-                <span class="subtree-badge">6</span>
               </a>
-              <a href="../index.html?tag=%E5%BE%AE%E4%BF%A1%E5%B0%8F%E7%A8%8B%E5%BA%8F" class="subtree-item category-filter-btn" data-tag="微信小程序" data-label="微信小程序">
+              <a href="../index.html?tag=%E5%BE%AE%E4%BF%A1%E5%B0%8F%E7%A8%8B%E5%BA%8F" class="subtree-item category-filter-btn" data-tag="微信小程序" data-label="微信小程序" title="微信小程序">
                 <span class="subtree-item-left">
                   <span class="subtree-item-dot"></span>
                   <span class="subtree-item-name">微信小程序</span>
                 </span>
-                <span class="subtree-badge">2</span>
               </a>
             </div>
           </div>
@@ -120,38 +122,34 @@
           <!-- 专栏：Linux 与服务端 -->
           <div class="nav-item-tree open">
             <div class="tree-header-row">
-              <a href="../index.html?tag=Linux" class="sidebar-nav-item category-filter-btn" data-tag="Linux" data-label="Linux 与服务端">
+              <a href="../index.html?tag=Linux" class="sidebar-nav-item category-filter-btn" data-tag="Linux" data-label="Linux 与服务端" title="Linux 与服务端">
                 <span class="nav-item-left">
                   <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="8" rx="2" ry="2"></rect><rect x="2" y="14" width="20" height="8" rx="2" ry="2"></rect><line x1="6" y1="6" x2="6.01" y2="6"></line><line x1="6" y1="18" x2="6.01" y2="18"></line></svg>
-                  <span>Linux 与服务端</span>
+                  <span class="nav-item-text">Linux 与服务端</span>
                 </span>
-                <span class="nav-badge">9</span>
               </a>
-              <button type="button" class="subtree-toggle-btn" aria-label="展开或折叠Linux 与服务端子菜单">
+              <button type="button" class="subtree-toggle-btn" aria-label="展开或折叠Linux 与服务端子菜单" title="展开或折叠Linux 与服务端">
                 <svg class="chevron-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
               </button>
             </div>
             <div class="nav-subtree">
-              <a href="../index.html?tag=Docker" class="subtree-item category-filter-btn" data-tag="Docker" data-label="Docker 与容器">
+              <a href="../index.html?tag=Docker" class="subtree-item category-filter-btn" data-tag="Docker" data-label="Docker 与容器" title="Docker 与容器">
                 <span class="subtree-item-left">
                   <span class="subtree-item-dot"></span>
                   <span class="subtree-item-name">Docker 与容器</span>
                 </span>
-                <span class="subtree-badge">3</span>
               </a>
-              <a href="../index.html?tag=Nginx" class="subtree-item category-filter-btn" data-tag="Nginx" data-label="网络与反代">
+              <a href="../index.html?tag=Nginx" class="subtree-item category-filter-btn" data-tag="Nginx" data-label="网络与反代" title="网络与反代">
                 <span class="subtree-item-left">
                   <span class="subtree-item-dot"></span>
                   <span class="subtree-item-name">网络与反代</span>
                 </span>
-                <span class="subtree-badge">3</span>
               </a>
-              <a href="../index.html?tag=%E5%8E%8B%E5%8A%9B%E6%B5%8B%E8%AF%95" class="subtree-item category-filter-btn" data-tag="压力测试" data-label="性能与压测">
+              <a href="../index.html?tag=%E5%8E%8B%E5%8A%9B%E6%B5%8B%E8%AF%95" class="subtree-item category-filter-btn" data-tag="压力测试" data-label="性能与压测" title="性能与压测">
                 <span class="subtree-item-left">
                   <span class="subtree-item-dot"></span>
                   <span class="subtree-item-name">性能与压测</span>
                 </span>
-                <span class="subtree-badge">3</span>
               </a>
             </div>
           </div>
@@ -159,38 +157,34 @@
           <!-- 专栏：效率工具与软件 -->
           <div class="nav-item-tree open">
             <div class="tree-header-row">
-              <a href="../index.html?tag=%E6%95%88%E7%8E%87%E5%B7%A5%E5%85%B7" class="sidebar-nav-item category-filter-btn" data-tag="效率工具" data-label="效率工具与软件">
+              <a href="../index.html?tag=%E6%95%88%E7%8E%87%E5%B7%A5%E5%85%B7" class="sidebar-nav-item category-filter-btn" data-tag="效率工具" data-label="效率工具与软件" title="效率工具与软件">
                 <span class="nav-item-left">
                   <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"></path></svg>
-                  <span>效率工具与软件</span>
+                  <span class="nav-item-text">效率工具与软件</span>
                 </span>
-                <span class="nav-badge">7</span>
               </a>
-              <button type="button" class="subtree-toggle-btn" aria-label="展开或折叠效率工具与软件子菜单">
+              <button type="button" class="subtree-toggle-btn" aria-label="展开或折叠效率工具与软件子菜单" title="展开或折叠效率工具与软件">
                 <svg class="chevron-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
               </button>
             </div>
             <div class="nav-subtree">
-              <a href="../index.html?tag=Git" class="subtree-item category-filter-btn" data-tag="Git" data-label="Git 与 SVN">
+              <a href="../index.html?tag=Git" class="subtree-item category-filter-btn" data-tag="Git" data-label="Git 与 SVN" title="Git 与 SVN">
                 <span class="subtree-item-left">
                   <span class="subtree-item-dot"></span>
                   <span class="subtree-item-name">Git 与 SVN</span>
                 </span>
-                <span class="subtree-badge">1</span>
               </a>
-              <a href="../index.html?tag=%E8%BD%AF%E4%BB%B6" class="subtree-item category-filter-btn" data-tag="软件" data-label="开源软件与脚本">
+              <a href="../index.html?tag=%E8%BD%AF%E4%BB%B6" class="subtree-item category-filter-btn" data-tag="软件" data-label="开源软件与脚本" title="开源软件与脚本">
                 <span class="subtree-item-left">
                   <span class="subtree-item-dot"></span>
                   <span class="subtree-item-name">开源软件与脚本</span>
                 </span>
-                <span class="subtree-badge">1</span>
               </a>
-              <a href="../index.html?tag=Claude" class="subtree-item category-filter-btn" data-tag="Claude" data-label="Claude 与 AI">
+              <a href="../index.html?tag=Claude" class="subtree-item category-filter-btn" data-tag="Claude" data-label="Claude 与 AI" title="Claude 与 AI">
                 <span class="subtree-item-left">
                   <span class="subtree-item-dot"></span>
                   <span class="subtree-item-name">Claude 与 AI</span>
                 </span>
-                <span class="subtree-badge">1</span>
               </a>
             </div>
           </div>
@@ -198,23 +192,22 @@
 
         <div class="sidebar-nav-group">
           <div class="nav-group-title">导航与资源</div>
-          <a href="../files.html" class="sidebar-nav-item ">
+          <a href="../files.html" class="sidebar-nav-item " title="资源文件库">
             <span class="nav-item-left">
               <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path><line x1="12" y1="11" x2="12" y2="17"></line><line x1="9" y1="14" x2="15" y2="14"></line></svg>
-              <span>资源文件库</span>
+              <span class="nav-item-text">资源文件库</span>
             </span>
-            <span class="nav-badge">10</span>
           </a>
-          <a href="../about.html" class="sidebar-nav-item ">
+          <a href="../about.html" class="sidebar-nav-item " title="关于本站">
             <span class="nav-item-left">
               <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
-              <span>关于本站</span>
+              <span class="nav-item-text">关于本站</span>
             </span>
           </a>
-          <a href="https://github.com/vmrey/vmrey.github.io" target="_blank" rel="noopener noreferrer" class="sidebar-nav-item">
+          <a href="https://github.com/vmrey/vmrey.github.io" target="_blank" rel="noopener noreferrer" class="sidebar-nav-item" title="GitHub 源码">
             <span class="nav-item-left">
               <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0 9 18.13V22"></path></svg>
-              <span>GitHub 源码</span>
+              <span class="nav-item-text">GitHub 源码</span>
             </span>
           </a>
         </div>
@@ -233,38 +226,108 @@
 
     <!-- 主内容区 -->
     <main class="app-main">
-      <!-- 文章标题与元数据头部 -->
-      <header class="article-header">
-        <a href="../index.html" class="back-link">
-          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
-          <span>返回文章列表</span>
-        </a>
-        <h1 class="article-title">FFmpeg 常用音视频推流、转码与循环直播命令速查指南</h1>
-        <div class="article-meta">
-          <span class="post-block-tag">Linux与服务端</span>
-          <span>·</span>
-          <time datetime="2026-06-18">2026-06-18</time>
-          <span>·</span>
-          <span>3 分钟阅读</span>
+      <div class="article-container">
+        <!-- 文章标题与元数据头部 -->
+        <header class="article-header">
+          <a href="../index.html" class="back-link">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
+            <span>返回文章列表</span>
+          </a>
+          <h1 class="article-title">FFmpeg 常用音视频推流、转码与循环直播命令速查指南</h1>
+          <div class="article-meta">
+            <span class="post-block-tag">Linux与服务端</span>
+            <span>·</span>
+            <time datetime="2026-06-18">2026-06-18</time>
+            <span>·</span>
+            <span>4 分钟阅读</span>
+          </div>
+        </header>
+
+        <!-- 正文内容区 -->
+        <div class="article-layout">
+          <article class="article-content" id="main-content">
+            <div class="prose">
+<div class="callout"><p><strong>FFmpeg</strong> 是音视频处理领域的事实标准工具。通过 FFmpeg 可以实现将本地 MP4/MKV 视频文件、网络 RTSP 摄像头流或麦克风音频，实时编码封装推送到 RTMP/FLV 直播流媒体服务器（如 YouTube、Bilibili、斗鱼、Nginx-RTMP 等）。</p></div>
+<hr>
+<h2 id="一-基础-rtmp-视频推流核心命令">一、基础 RTMP 视频推流核心命令</h2>
+<p>将本地视频文件原画质推送到 RTMP 节点：</p>
+<pre><code class="language-bash">ffmpeg -re -i &quot;input.mp4&quot; -c:v copy -c:a aac -b:a 192k -strict -2 -f flv &quot;rtmp://a.rtmp.youtube.com/live2/你的直播码&quot;</code></pre>
+<h3 id="关键参数解析">⚙️ 关键参数解析</h3>
+<div class="table-container">
+<table class="markdown-table">
+  <thead>
+    <tr>
+      <th style="text-align: left">参数</th>
+      <th style="text-align: left">含义说明</th>
+      <th style="text-align: left">推荐取值</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: left"><strong><code>-re</code></strong></td>
+      <td style="text-align: left"><strong>实时帧率读取</strong>（Read at native frame rate）。必须加在 <code>-i</code> 之前，模拟实时采集速度，防止过快发送导致缓冲区溢出。</td>
+      <td style="text-align: left">必须开启</td>
+    </tr>
+    <tr>
+      <td style="text-align: left"><strong><code>-i &quot;input.mp4&quot;</code></strong></td>
+      <td style="text-align: left">指定输入媒体源文件路径或网络 RTSP URL。</td>
+      <td style="text-align: left">文件绝对/相对路径</td>
+    </tr>
+    <tr>
+      <td style="text-align: left"><strong><code>-c:v copy</code></strong></td>
+      <td style="text-align: left">视频流直接复制，不重新编码，极省 CPU。</td>
+      <td style="text-align: left">若编码兼容推荐 <code>copy</code></td>
+    </tr>
+    <tr>
+      <td style="text-align: left"><strong><code>-c:a aac</code></strong></td>
+      <td style="text-align: left">将音频流转换为 RTMP 标准 AAC 编码。</td>
+      <td style="text-align: left"><code>aac</code></td>
+    </tr>
+    <tr>
+      <td style="text-align: left"><strong><code>-b:a 192k</code></strong></td>
+      <td style="text-align: left">设定音频码率为 192 kbps，保障音质。</td>
+      <td style="text-align: left"><code>128k</code> ~ <code>320k</code></td>
+    </tr>
+    <tr>
+      <td style="text-align: left"><strong><code>-f flv</code></strong></td>
+      <td style="text-align: left">封装格式设定为 FLV（RTMP 协议标准封装格式）。</td>
+      <td style="text-align: left"><code>flv</code></td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+<hr>
+<h2 id="二-进阶实战-7x24小时无人值守循环推流">二、进阶实战：7x24小时无人值守循环推流</h2>
+<p>将文件夹内的视频无限循环直播推流（可配合 <code>screen</code> 或 <code>nohup</code> 后台常驻）：</p>
+<pre><code class="language-bash">nohup ffmpeg -re -stream_loop -1 -i &quot;video.mp4&quot; -c:v libx264 -preset veryfast -b:v 3000k -maxrate 3500k -bufsize 6000k -pix_fmt yuv420p -g 50 -c:a aac -b:a 128k -ar 44100 -f flv &quot;rtmp://live-push.example.com/live/streamkey&quot; &gt; /var/log/ffmpeg_live.log 2&gt;&amp;1 &amp;</code></pre>
+<div class="callout"><p>💡 <strong>参数补充</strong>：<br>- <strong><code>-stream_loop -1</code></strong>：开启无限循环播放输入源；<br>- <strong><code>-preset veryfast</code></strong>：H.264 快速编码预设，大幅降低 CPU 负载；<br>- <strong><code>-g 50</code></strong>：设置关键帧间隔（GOP），通常设为帧率的 2 倍（2秒一个关键帧），提升观众秒开率。</p></div>
+<hr>
+<h2 id="三-常用进阶推流场景速查">三、常用进阶推流场景速查</h2>
+<h3 id="1-重新编码并压制为标准-1080p-30fps">1. 重新编码并压制为标准 1080P / 30fps</h3>
+<pre><code class="language-bash">ffmpeg -re -i &quot;input.mkv&quot; -c:v libx264 -s 1920x1080 -r 30 -c:a aac -f flv &quot;rtmp://your-rtmp-server/live/stream&quot;</code></pre>
+<h3 id="2-静态图片-背景音乐推流为音乐电台直播">2. 静态图片 + 背景音乐推流为音乐电台直播</h3>
+<pre><code class="language-bash">ffmpeg -re -loop 1 -i &quot;cover.jpg&quot; -i &quot;audio.mp3&quot; -c:v libx264 -tune stillimage -c:a aac -b:a 192k -pix_fmt yuv420p -shortest -f flv &quot;rtmp://your-rtmp-server/live/stream&quot;</code></pre>
+<hr>
+<h2 id="四-后台运行与进程管理">四、后台运行与进程管理</h2>
+<ul>
+<li><strong>查看当前推流进程</strong>：<code>ps -ef | grep ffmpeg</code>
+</li>
+<li><strong>实时查看推流日志</strong>：<code>tail -f /var/log/ffmpeg_live.log</code>
+</li>
+<li><strong>停止推流</strong>：<code>pkill -f ffmpeg</code> 或 <code>kill -9 &lt;PID&gt;</code>
+</li>
+</ul>
+            </div>
+
+            <div class="post-block-footer" style="margin-top: 3.5rem; padding-top: 1.5rem;">
+              <a href="../index.html" class="read-more-text">
+                <span>← 返回文章专栏</span>
+              </a>
+            </div>
+          </article>
         </div>
-      </header>
-
-      <!-- 正文与目录两栏并排布局 -->
-      <div class="article-layout">
-        <article class="article-content" id="main-content">
-          <div class="prose">
-
-<h4 id="linux-推流命令">linux 推流命令</h4>
-<pre><code class="language-sh">ffmpeg -re -i &quot;视频源地址&quot; -c:v copy -c:a aac -b:a 192k -strict -2 -f flv &quot;rtmp://a.rtmp.youtube.com/live2/直播码&quot;</code></pre>
-
-          </div>
-
-          <div class="post-block-footer" style="margin-top: 3.5rem; padding-top: 1.5rem;">
-            <a href="../index.html" class="read-more-text">
-              <span>← 返回文章专栏</span>
-            </a>
-          </div>
-        </article>
+      </div>
 
         <!-- 右侧文章大纲 TOC -->
         <aside class="article-toc-panel" aria-label="文章目录大纲">
@@ -272,15 +335,39 @@
             <div class="toc-box-title">本页导读 · 快速直达</div>
             <ul class="toc-list">
             <li>
-              <a href="#linux-推流命令" class="toc-link" title="linux 推流命令">linux 推流命令</a>
+              <a href="#一-基础-rtmp-视频推流核心命令" class="toc-link" title="一、基础 RTMP 视频推流核心命令">一、基础 RTMP 视频推流核心命令</a>
+            </li>
+            <li>
+              <a href="#关键参数解析" class="toc-link" title="⚙️ 关键参数解析">⚙️ 关键参数解析</a>
+            </li>
+            <li>
+              <a href="#二-进阶实战-7x24小时无人值守循环推流" class="toc-link" title="二、进阶实战：7x24小时无人值守循环推流">二、进阶实战：7x24小时无人值守循环推流</a>
+            </li>
+            <li>
+              <a href="#三-常用进阶推流场景速查" class="toc-link" title="三、常用进阶推流场景速查">三、常用进阶推流场景速查</a>
+            </li>
+            <li>
+              <a href="#1-重新编码并压制为标准-1080p-30fps" class="toc-link" title="1. 重新编码并压制为标准 1080P / 30fps">1. 重新编码并压制为标准 1080P / 30fps</a>
+            </li>
+            <li>
+              <a href="#2-静态图片-背景音乐推流为音乐电台直播" class="toc-link" title="2. 静态图片 + 背景音乐推流为音乐电台直播">2. 静态图片 + 背景音乐推流为音乐电台直播</a>
+            </li>
+            <li>
+              <a href="#四-后台运行与进程管理" class="toc-link" title="四、后台运行与进程管理">四、后台运行与进程管理</a>
             </li>
             </ul>
           </div>
         </aside>
-      </div>
     </main>
 
   </div>
+
+  <!-- 全局回到顶部按钮 (右下角固定) -->
+  <button id="back-to-top-btn" class="back-to-top-btn" type="button" title="回到顶部" aria-label="回到顶部">
+    <svg class="back-to-top-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+      <polyline points="18 15 12 9 6 15"></polyline>
+    </svg>
+  </button>
 
   <script src="../js/config.js"></script>
   <script src="../data/search-index.js"></script>

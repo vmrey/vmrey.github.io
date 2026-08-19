@@ -13,6 +13,9 @@ npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 
+# Root Local Scripts
+/cmd_proxy.bat
+
 # Dependencies
 node_modules/
 dist/

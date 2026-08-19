@@ -1,10 +1,10 @@
 /* 语法高亮与纯净代码块容器 (代码块自身完全无背景，纯透明融入页面底色) */
 
-/* 强制清除所有代码元素及其子节点的一切背景 */
+/* 强制清除多行代码块 pre 及其子节点的一切背景，保持极简通透 */
 pre,
 pre *,
-code,
-code *,
+pre code,
+pre code *,
 .code-block-wrapper,
 .code-block-wrapper *,
 .code-block-header,

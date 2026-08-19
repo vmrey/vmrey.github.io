@@ -67,10 +67,25 @@ document.addEventListener('DOMContentLoaded', () => {
     el.innerHTML = `© ${yearText} ${CONFIG.siteName || 'vmrey.github.io'}<br>${CONFIG.copyrightNotice || '用代码与文字记录探索'}`;
   });
 
-  // 2. Mobile Sidebar Toggle
+  // 2. PC & Mobile Sidebar Toggle Controller
   const menuToggleBtn = document.getElementById('menu-toggle-btn');
   const sidebar = document.getElementById('app-sidebar');
   const sidebarOverlay = document.getElementById('sidebar-overlay');
+  const sidebarCollapseBtn = document.getElementById('sidebar-collapse-btn');
+
+  // 初始化 PC 侧边栏折叠状态（记忆用户上次设置）
+  const savedSidebarCollapsed = localStorage.getItem('sidebar_collapsed');
+  if (savedSidebarCollapsed === 'true' && window.innerWidth > 900) {
+    document.body.classList.add('sidebar-collapsed');
+  }
+
+  if (sidebarCollapseBtn) {
+    sidebarCollapseBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const isCollapsed = document.body.classList.toggle('sidebar-collapsed');
+      localStorage.setItem('sidebar_collapsed', isCollapsed ? 'true' : 'false');
+    });
+  }
 
   function toggleSidebar(open) {
     if (!sidebar) return;
@@ -479,5 +494,27 @@ document.addEventListener('DOMContentLoaded', () => {
       window.addEventListener('scroll', highlightCurrentTOC, { passive: true });
       highlightCurrentTOC();
     }
+  }
+
+  // 5. Back To Top Floating Button Controller
+  const backToTopBtn = document.getElementById('back-to-top-btn');
+  if (backToTopBtn) {
+    function toggleBackToTop() {
+      if (window.scrollY > 300) {
+        backToTopBtn.classList.add('visible');
+      } else {
+        backToTopBtn.classList.remove('visible');
+      }
+    }
+
+    window.addEventListener('scroll', toggleBackToTop, { passive: true });
+    toggleBackToTop();
+
+    backToTopBtn.addEventListener('click', () => {
+      window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+      });
+    });
   }
 });

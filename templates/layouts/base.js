@@ -55,6 +55,13 @@ ${mainContentHtml}
 
   </div>
 
+  <!-- 全局回到顶部按钮 (右下角固定) -->
+  <button id="back-to-top-btn" class="back-to-top-btn" type="button" title="回到顶部" aria-label="回到顶部">
+    <svg class="back-to-top-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+      <polyline points="18 15 12 9 6 15"></polyline>
+    </svg>
+  </button>
+
   ${scriptTags}
 ${inlineScripts ? `  <script>\n${inlineScripts}\n  </script>` : ''}
 </body>

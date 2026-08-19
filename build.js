@@ -144,7 +144,7 @@ if (fs.existsSync(CONFIG_PATH)) {
   }
 }
 
-// 增强型轻量 Markdown 解析器
+// 全功能零依赖 GFM (GitHub Flavored Markdown) + Mermaid 图表解析引擎
 function parseFrontMatterAndMarkdown(raw) {
   let meta = {
     title: '未命名文章',
@@ -171,28 +171,122 @@ function parseFrontMatterAndMarkdown(raw) {
     content = fmMatch[2];
   }
 
+  // 提取脚注定义 (如 [^1]: 这是脚注内容)
+  const footnotes = {};
+  const footnoteKeys = [];
+  content = content.replace(/^\[\^([a-zA-Z0-9_-]+)\]:\s*([\s\S]*?)(?=\n\[\^|\n\n|\n*$)/gm, (match, fnId, fnText) => {
+    footnotes[fnId] = fnText.trim();
+    footnoteKeys.push(fnId);
+    return '';
+  });
+
   const headings = [];
-  const lines = content.split('\n');
-  const processedLines = [];
+  const lines = content.split(/\r?\n/);
+  const out = [];
+
   let inCodeBlock = false;
   let codeLang = '';
   let codeBuffer = [];
 
+  let inTable = false;
+  let tableHeader = [];
+  let tableAligns = [];
+  let tableRows = [];
+
+  let inList = false;
+  let listStack = []; // 嵌套列表栈管理
+
+  let inBlockquote = false;
+  let blockquoteBuffer = [];
+
+  function closeTable() {
+    if (!inTable) return;
+    let tblHtml = '<div class="table-container">\n<table class="markdown-table">\n';
+    if (tableHeader.length > 0) {
+      tblHtml += '  <thead>\n    <tr>\n';
+      tableHeader.forEach((cell, idx) => {
+        const align = tableAligns[idx] ? ` style="text-align: ${tableAligns[idx]}"` : '';
+        tblHtml += `      <th${align}>${formatInlineMarkdown(cell)}</th>\n`;
+      });
+      tblHtml += '    </tr>\n  </thead>\n';
+    }
+    if (tableRows.length > 0) {
+      tblHtml += '  <tbody>\n';
+      tableRows.forEach(row => {
+        tblHtml += '    <tr>\n';
+        row.forEach((cell, idx) => {
+          const align = tableAligns[idx] ? ` style="text-align: ${tableAligns[idx]}"` : '';
+          tblHtml += `      <td${align}>${formatInlineMarkdown(cell)}</td>\n`;
+        });
+        tblHtml += '    </tr>\n';
+      });
+      tblHtml += '  </tbody>\n';
+    }
+    tblHtml += '</table>\n</div>\n';
+    out.push(tblHtml);
+    inTable = false;
+    tableHeader = [];
+    tableAligns = [];
+    tableRows = [];
+  }
+
+  function closeList() {
+    if (!inList) return;
+    while (listStack.length > 0) {
+      const top = listStack.pop();
+      out.push(`</li>\n</${top.type}>`);
+    }
+    inList = false;
+  }
+
+  function closeBlockquote() {
+    if (!inBlockquote) return;
+    const bqContent = blockquoteBuffer.map(b => formatInlineMarkdown(b)).join('<br>');
+    out.push(`<div class="callout"><p>${bqContent}</p></div>`);
+    inBlockquote = false;
+    blockquoteBuffer = [];
+  }
+
   for (let i = 0; i < lines.length; i++) {
     const line = lines[i];
 
-    // 代码块
-    const codeMatch = line.match(/^```(\w+)?/);
+    // 1. 代码块与结构图 (```mermaid / ```js / ```bash 等)
+    const codeMatch = line.match(/^\s*```(\w+)?/);
     if (codeMatch) {
+      closeTable();
+      closeList();
+      closeBlockquote();
+
       if (!inCodeBlock) {
         inCodeBlock = true;
-        codeLang = codeMatch[1] || 'bash';
+        codeLang = (codeMatch[1] || 'bash').toLowerCase();
         if (codeLang === 'code') codeLang = 'javascript';
         codeBuffer = [];
       } else {
         inCodeBlock = false;
-        const codeText = escapeHtml(codeBuffer.join('\n'));
-        processedLines.push(`<pre><code class="language-${codeLang}">${codeText}</code></pre>`);
+        // 智能去除首行/多行因为 Markdown 缩进而带来的公共缩进空格
+        let codeLines = [...codeBuffer];
+        // 去除首尾多余空行
+        while (codeLines.length > 0 && codeLines[0].trim() === '') codeLines.shift();
+        while (codeLines.length > 0 && codeLines[codeLines.length - 1].trim() === '') codeLines.pop();
+        
+        const nonEmptyLines = codeLines.filter(l => l.trim().length > 0);
+        if (nonEmptyLines.length > 0) {
+          const minIndent = Math.min(...nonEmptyLines.map(l => l.match(/^(\s*)/)[1].length));
+          if (minIndent > 0) {
+            codeLines = codeLines.map(l => l.length >= minIndent ? l.slice(minIndent) : l);
+          }
+        }
+
+        if (codeLang === 'mermaid') {
+          // Mermaid 流程图/时序图/结构图
+          const chartCode = escapeHtml(codeLines.join('\n'));
+          out.push(`<div class="mermaid-wrap"><pre class="mermaid">${chartCode}</pre></div>`);
+        } else {
+          // 语法高亮代码块
+          const codeText = escapeHtml(codeLines.join('\n'));
+          out.push(`<pre><code class="language-${codeLang}">${codeText}</code></pre>`);
+        }
       }
       continue;
     }
@@ -202,99 +296,206 @@ function parseFrontMatterAndMarkdown(raw) {
       continue;
     }
 
-    // 标题
-    const h4Match = line.match(/^####\s+(.+)$/);
-    const h3Match = line.match(/^###\s+(.+)$/);
-    const h2Match = line.match(/^##\s+(.+)$/);
-    const h1Match = line.match(/^#\s+(.+)$/);
-
-    if (h4Match) {
-      const title = h4Match[1].trim();
-      const id = slugify(title);
-      headings.push({ level: 4, title, id });
-      processedLines.push(`<h4 id="${id}">${title}</h4>`);
+    // 2. 表格 (GFM Table)
+    const isTableRow = /^\|(.+)\|$/.test(line.trim());
+    if (isTableRow) {
+      closeList();
+      closeBlockquote();
+      const cells = line.trim().slice(1, -1).split('|').map(c => c.trim());
+      
+      // 判断是否是分隔线 (如 | --- | :---: | ---: |)
+      const isAlignRow = cells.every(c => /^:?-+:?$/.test(c));
+      if (isAlignRow) {
+        tableAligns = cells.map(c => {
+          if (c.startsWith(':') && c.endsWith(':')) return 'center';
+          if (c.endsWith(':')) return 'right';
+          if (c.startsWith(':')) return 'left';
+          return 'left';
+        });
+        inTable = true;
+      } else if (!inTable) {
+        tableHeader = cells;
+      } else {
+        tableRows.push(cells);
+      }
       continue;
-    }
-    if (h3Match) {
-      const title = h3Match[1].trim();
-      const id = slugify(title);
-      headings.push({ level: 3, title, id });
-      processedLines.push(`<h3 id="${id}">${title}</h3>`);
-      continue;
-    }
-    if (h2Match) {
-      const title = h2Match[1].trim();
-      const id = slugify(title);
-      headings.push({ level: 2, title, id });
-      processedLines.push(`<h2 id="${id}">${title}</h2>`);
-      continue;
-    }
-    if (h1Match) {
-      const title = h1Match[1].trim();
-      continue; // 正文最顶部大标题由页面模板渲染，不重复输出
+    } else if (inTable) {
+      closeTable();
     }
 
-    // 提示块 (Callout)
-    const quoteMatch = line.match(/^>\s+(.+)$/);
+    // 3. 引用块 / 提示卡片 (Blockquote)
+    const quoteMatch = line.match(/^>\s?(.*)$/);
     if (quoteMatch) {
-      processedLines.push(`<div class="callout"><p>${formatInlineMarkdown(quoteMatch[1])}</p></div>`);
+      closeTable();
+      closeList();
+      inBlockquote = true;
+      blockquoteBuffer.push(quoteMatch[1]);
+      continue;
+    } else if (inBlockquote) {
+      closeBlockquote();
+    }
+
+    // 4. 水平分割线
+    if (/^(\*{3,}|-{3,}|_{3,})$/.test(line.trim())) {
+      closeTable();
+      closeList();
+      closeBlockquote();
+      out.push('<hr>');
       continue;
     }
 
-    // 分割线
-    if (line.match(/^---$/) || line.match(/^\*\*\*$/)) {
-      processedLines.push(`<hr>`);
+    // 5. 标题 (Headers # ~ ######)
+    const headerMatch = line.match(/^(#{1,6})\s+(.+)$/);
+    if (headerMatch) {
+      closeTable();
+      closeList();
+      closeBlockquote();
+      const level = headerMatch[1].length;
+      const title = headerMatch[2].trim();
+      const id = slugify(title);
+
+      if (level === 1) {
+        // 文章首行 H1 由页面顶部模板统一渲染
+        continue;
+      }
+      headings.push({ level, title, id });
+      out.push(`<h${level} id="${id}">${formatInlineMarkdown(title)}</h${level}>`);
       continue;
     }
 
-    // 空行
+    // 6. 列表（支持深层多级嵌套、无序、有序、任务列表 Task List）
+    const listMatch = line.match(/^(\s*)([-*+]|\d+\.)\s+(.+)$/);
+    if (listMatch) {
+      closeTable();
+      closeBlockquote();
+
+      const indent = listMatch[1].length;
+      const bullet = listMatch[2];
+      let itemContent = listMatch[3];
+      const isOrdered = /^\d+\./.test(bullet);
+      const listType = isOrdered ? 'ol' : 'ul';
+
+      // 任务列表解析 (GFM Task List: - [ ] 或 - [x])
+      let isTaskItem = false;
+      let taskChecked = false;
+      if (!isOrdered) {
+        const taskMatch = itemContent.match(/^\[([ xX])\]\s+(.*)$/);
+        if (taskMatch) {
+          isTaskItem = true;
+          taskChecked = taskMatch[1].toLowerCase() === 'x';
+          itemContent = taskMatch[2];
+        }
+      }
+
+      const formattedItem = formatInlineMarkdown(itemContent);
+      const itemHtml = isTaskItem
+        ? `<li class="task-list-item"><input type="checkbox" disabled ${taskChecked ? 'checked' : ''} class="task-checkbox"> <span>${formattedItem}</span>`
+        : `<li>${formattedItem}`;
+
+      if (!inList) {
+        inList = true;
+        listStack = [{ indent, type: listType }];
+        out.push(`<${listType}${isTaskItem ? ' class="task-list"' : ''}>\n${itemHtml}`);
+      } else {
+        let top = listStack[listStack.length - 1];
+        if (indent > top.indent) {
+          // 深度进入下一级嵌套
+          listStack.push({ indent, type: listType });
+          out.push(`\n<${listType}${isTaskItem ? ' class="task-list"' : ''}>\n${itemHtml}`);
+        } else if (indent < top.indent) {
+          // 回退上一级列表
+          while (listStack.length > 0 && indent < listStack[listStack.length - 1].indent) {
+            const popped = listStack.pop();
+            out.push(`</li>\n</${popped.type}>`);
+          }
+          out.push(`</li>\n${itemHtml}`);
+        } else {
+          // 同级列表项
+          out.push(`</li>\n${itemHtml}`);
+        }
+      }
+      continue;
+    } else if (inList && line.trim() === '') {
+      // 遇到空行暂不立即关闭，看下一行是否还是列表
+      continue;
+    } else if (inList) {
+      closeList();
+    }
+
+    // 7. 空行
     if (line.trim() === '') {
-      processedLines.push('');
       continue;
     }
 
-    // 无序列表
-    const ulMatch = line.match(/^[-*]\s+(.+)$/);
-    if (ulMatch) {
-      processedLines.push(`<li>${formatInlineMarkdown(ulMatch[1])}</li>`);
+    // 8. 定义列表 (Definition List: 术语\n: 定义)
+    if (line.startsWith(': ') && out.length > 0 && out[out.length - 1].startsWith('<p>')) {
+      const prevParagraph = out.pop();
+      const term = prevParagraph.replace(/^<p>|<\/p>$/g, '');
+      const def = formatInlineMarkdown(line.slice(2));
+      out.push(`<dl class="markdown-dl"><dt>${term}</dt><dd>${def}</dd></dl>`);
       continue;
     }
 
-    // 有序列表
-    const olMatch = line.match(/^\d+\.\s+(.+)$/);
-    if (olMatch) {
-      processedLines.push(`<li>${formatInlineMarkdown(olMatch[1])}</li>`);
-      continue;
-    }
-
-    // 默认段落
-    processedLines.push(`<p>${formatInlineMarkdown(line)}</p>`);
+    // 9. 普通段落
+    out.push(`<p>${formatInlineMarkdown(line)}</p>`);
   }
 
-  // 拼接 HTML 并规整列表标签
-  let html = processedLines.join('\n');
-  html = html.replace(/(<li>.*<\/li>\n?)+/g, match => `<ul>\n${match}</ul>\n`);
+  closeTable();
+  closeList();
+  closeBlockquote();
 
+  // 10. 如果存在脚注，在文末生成现代脚注列表
+  if (footnoteKeys.length > 0) {
+    let fnHtml = '<div class="footnotes-section">\n<hr class="footnotes-divider">\n<div class="footnotes-title">参考与注释</div>\n<ol class="footnotes-list">\n';
+    footnoteKeys.forEach(fnId => {
+      const fnText = formatInlineMarkdown(footnotes[fnId]);
+      fnHtml += `  <li id="fn-${fnId}">${fnText} <a href="#fnref-${fnId}" class="footnote-backref" title="返回正文引用处">↩</a></li>\n`;
+    });
+    fnHtml += '</ol>\n</div>\n';
+    out.push(fnHtml);
+  }
+
+  const html = out.join('\n');
   return { meta, html, headings, rawText: content };
 }
 
+// 增强型行内 Markdown 解析器 (支持加粗、斜体、删除线、代码、图片、链接、脚注引用、徽章等)
 function formatInlineMarkdown(text) {
+  if (!text) return '';
   let res = escapeHtml(text);
-  // 加粗
+
+  // 1. 删除线 (~~内容~~)
+  res = res.replace(/~~(.*?)~~/g, '<del>$1</del>');
+
+  // 2. 加粗 (**内容** 或 __内容__)
   res = res.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
-  // 斜体
+  res = res.replace(/__(.*?)__/g, '<strong>$1</strong>');
+
+  // 3. 斜体 (*内容* 或 _内容_)
   res = res.replace(/\*(.*?)\*/g, '<em>$1</em>');
-  // 行内代码
-  res = res.replace(/`(.*?)`/g, '<code>$1</code>');
-  // 图片
+  res = res.replace(/_([^_]+)_/g, '<em>$1</em>');
+
+  // 4. 行内代码 (`code`)
+  res = res.replace(/`([^`]+)`/g, '<code>$1</code>');
+
+  // 5. 脚注引用 ([^1])
+  res = res.replace(/\[\^([a-zA-Z0-9_-]+)\]/g, '<sup class="footnote-ref"><a href="#fn-$1" id="fnref-$1">[$1]</a></sup>');
+
+  // 6. 图片 (![alt](url))
   res = res.replace(/!\[(.*?)\]\((.*?)\)/g, '<img src="$2" alt="$1" class="article-image">');
-  // 链接
-  res = res.replace(/\[(.*?)\]\((.*?)\)/g, '<a href="$2" target="_blank" rel="noopener noreferrer">$1</a>');
+
+  // 7. 链接 ([text](url))
+  res = res.replace(/\[(.*?)\]\((.*?)\)/g, (match, text, url) => {
+    const isExternal = url.startsWith('http://') || url.startsWith('https://');
+    const targetAttr = isExternal ? ' target="_blank" rel="noopener noreferrer"' : '';
+    return `<a href="${url}"${targetAttr}>${text}</a>`;
+  });
+
   return res;
 }
 
 function escapeHtml(str) {
-  return str
+  return (str || '')
     .replace(/&/g, '&amp;')
     .replace(/</g, '&lt;')
     .replace(/>/g, '&gt;')

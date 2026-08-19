@@ -11,14 +11,36 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
     "date": "2026-08-10",
     "tags": [
       "效率工具",
-      "AI工具",
       "Claude",
-      "终端工具"
+      "AI工具",
+      "终端工具",
+      "开发提效"
     ],
-    "summary": "配置 Claude CLI 开发者工具的默认权限模式，跳过危险操作弹窗提示，实现全自动化命令行执行。",
-    "content": "Claude开启 bypass权限配置 javascript \"permissions\": { \"defaultMode\": \"bypassPermissions\" }, \"skipDangerousModePermissionPrompt\": true,",
-    "fullText": "Claude Code 开启 Bypass 免确认权限配置指南 配置 Claude CLI 开发者工具的默认权限模式，跳过危险操作弹窗提示，实现全自动化命令行执行。 效率工具 AI工具 Claude 终端工具 Claude开启 bypass权限配置 javascript \"permissions\": { \"defaultMode\": \"bypassPermissions\" }, \"skipDangerousModePermissionPrompt\": true,",
-    "sections": []
+    "summary": "详解 Claude Code CLI 工具的配置文件位置与 bypassPermissions 权限模式，跳过危险操作与命令执行的频繁确认提示，实现高效全自动化 Coding。",
+    "content": "Claude Code 开启 Bypass 免确认权限配置指南 > Claude Code 是 Anthropic 官方推出的终端 AI 编程助手。在日常执行多步骤重构、运行测试或批量读写文件时，频繁的安全确认弹窗会打断心流。本文介绍如何配置 bypassPermissions 模式以实现全自动化执行。 --- 一、配置文件路径说明 Claude Code 的全局用户配置文件通常存放在用户主目录下： - macOS / Linux ： ~/.claude.json 或 ~/.claude/config.json - Windows ： C:\\Users\\<你的用户名>\\.claude.json --- 二、核心配置代码 在配置文件中找到或添加 permissions 相关配置段，设置为 bypassPermissions 模式： json { \"permissions\": { \"defaultMode\": \"bypassPermissions\" }, \"skipDangerousModePermissionPrompt\": true } --- 三、配置项核心参数解析 | 配置键名 | 取值类型 | 功能说明 | | :--- | :--- | :--- | | defaultMode | string | 权限策略。设置为 \"bypassPermissions\" 时，文件读写与普通命令将不再每次弹窗要求确认。 | | skipDangerousModePermissionPrompt | boolean | 是否跳过危险命令/全权限模式的安全警告确认，设为 true 可实现全自动静默运行。 | --- 四、安全使用建议 ⚠️ 1. 工作区隔离 ：建议在已纳入 Git 版本控制的独立项目目录中使用该模式，以便随时通过 git status / git diff 审阅或一键撤回更改。 2. 敏感环境防护 ：在包含生产密钥、云凭据或重要系统环境的机器上，建议保持默认确认模式。",
+    "fullText": "Claude Code 开启 Bypass 免确认权限配置指南 详解 Claude Code CLI 工具的配置文件位置与 bypassPermissions 权限模式，跳过危险操作与命令执行的频繁确认提示，实现高效全自动化 Coding。 效率工具 Claude AI工具 终端工具 开发提效 Claude Code 开启 Bypass 免确认权限配置指南 > Claude Code 是 Anthropic 官方推出的终端 AI 编程助手。在日常执行多步骤重构、运行测试或批量读写文件时，频繁的安全确认弹窗会打断心流。本文介绍如何配置 bypassPermissions 模式以实现全自动化执行。 --- 一、配置文件路径说明 Claude Code 的全局用户配置文件通常存放在用户主目录下： - macOS / Linux ： ~/.claude.json 或 ~/.claude/config.json - Windows ： C:\\Users\\<你的用户名>\\.claude.json --- 二、核心配置代码 在配置文件中找到或添加 permissions 相关配置段，设置为 bypassPermissions 模式： json { \"permissions\": { \"defaultMode\": \"bypassPermissions\" }, \"skipDangerousModePermissionPrompt\": true } --- 三、配置项核心参数解析 | 配置键名 | 取值类型 | 功能说明 | | :--- | :--- | :--- | | defaultMode | string | 权限策略。设置为 \"bypassPermissions\" 时，文件读写与普通命令将不再每次弹窗要求确认。 | | skipDangerousModePermissionPrompt | boolean | 是否跳过危险命令/全权限模式的安全警告确认，设为 true 可实现全自动静默运行。 | --- 四、安全使用建议 ⚠️ 1. 工作区隔离 ：建议在已纳入 Git 版本控制的独立项目目录中使用该模式，以便随时通过 git status / git diff 审阅或一键撤回更改。 2. 敏感环境防护 ：在包含生产密钥、云凭据或重要系统环境的机器上，建议保持默认确认模式。",
+    "sections": [
+      {
+        "title": "一、配置文件路径说明",
+        "anchor": "#一-配置文件路径说明",
+        "id": "一-配置文件路径说明"
+      },
+      {
+        "title": "二、核心配置代码",
+        "anchor": "#二-核心配置代码",
+        "id": "二-核心配置代码"
+      },
+      {
+        "title": "三、配置项核心参数解析",
+        "anchor": "#三-配置项核心参数解析",
+        "id": "三-配置项核心参数解析"
+      },
+      {
+        "title": "四、安全使用建议 ⚠️",
+        "anchor": "#四-安全使用建议",
+        "id": "四-安全使用建议"
+      }
+    ]
   },
   {
     "id": "git-common-commands-cheatsheet",
@@ -30,58 +52,95 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
       "效率工具",
       "Git",
       "版本控制",
-      "工作流"
+      "工作流",
+      "开发提效"
     ],
-    "summary": "整理日常开发中最常用的 Git 核心命令：分支切换、暂存管理、冲突解决、标签管理与远程同步。",
-    "content": "添加用户 sh ssh-keygen -t rsa -C 'admin@example.com' 第二步：找到公钥文件 sh .ssh/id_rsa.pub 初始化仓库命令 sh git init git 全局配置 sh git config --global user.name \"admin\" && git config --global user.email \"admin@example.com\"",
-    "fullText": "Git 常用高频命令与分支协同工作流速查清单 整理日常开发中最常用的 Git 核心命令：分支切换、暂存管理、冲突解决、标签管理与远程同步。 效率工具 Git 版本控制 工作流 添加用户 sh ssh-keygen -t rsa -C 'admin@example.com' 第二步：找到公钥文件 sh .ssh/id_rsa.pub 初始化仓库命令 sh git init git 全局配置 sh git config --global user.name \"admin\" && git config --global user.email \"admin@example.com\"",
+    "summary": "系统整理日常开发中最常用的 Git 核心操作：SSH 密钥生成、全局身份配置、分支管理、暂存区操作、回退撤销与冲突解决速查。",
+    "content": "Git 常用高频命令与分支协同工作流速查清单 > Git 是现代软件工程不可或缺的分布式版本控制系统。本文精选日常敏捷开发中最常用、最容易遗忘的核心命令清单。 --- 一、初始配置与 SSH 密钥生成 1. 配置全局用户名与邮箱 bash git config --global user.name \"你的名字\" git config --global user.email \"your_email@example.com\" 2. 生成 SSH 密钥并添加到 GitHub / GitLab bash ssh-keygen -t ed25519 -C \"your_email@example.com\" 或传统 RSA 格式： ssh-keygen -t rsa -b 4096 -C \"your_email@example.com\" 查看并复制生成的公钥内容（粘贴至 GitHub Settings -> SSH Keys ）： - Linux / macOS ： cat ~/.ssh/id_ed25519.pub 或 cat ~/.ssh/id_rsa.pub - Windows ： type %USERPROFILE%\\.ssh\\id_rsa.pub --- 二、基础操作与提交工作流 | 操作场景 | 推荐命令 | 说明 | | :--- | :--- | :--- | | 初始化本地仓库 | git init | 在当前目录下创建 .git 版本库 | | 克隆远程仓库 | git clone <仓库URL> | 完整下载远程代码库 | | 查看工作区状态 | git status | 查看文件修改、暂存与未跟踪状态 | | 添加所有更改至暂存区 | git add . | 暂存所有新建和被修改文件 | | 提交并附带信息 | git commit -m \"feat: 提交说明\" | 提交暂存区内容到版本库 | | 推送到远程默认分支 | git push origin main | 推送本地提交到远程仓库 | | 拉取远程最新代码 | git pull origin main | 获取远程更新并自动合并 | --- 三、分支管理与协作流程 bash 1. 查看本地与远程所有分支 git branch -a 2. 创建并切换到新特性分支 git checkout -b feature/login 或新版命令： git switch -c feature/login 3. 切换回主分支 git checkout main 或新版命令： git switch main 4. 合并指定分支到当前分支 git merge feature/login 5. 删除已合并的本地分支 git branch -d feature/login --- 四、暂存与撤销操作（救急锦囊） 1. 临时保存未完成的工作（Stash） bash 暂存当前未提交的工作区修改 git stash 查看暂存列表 git stash list 恢复最近一次暂存并从 stash 列表中删除 git stash pop 2. 撤销修改与版本回退 bash 丢弃工作区中某个文件的未暂存修改 git checkout -- <文件名> 或新版：git restore <文件名> 撤销最近一次 commit，但保留工作区修改（软回退，最常用） git reset --soft HEAD~1 彻底回退到某个历史 commit（危险：工作区未保存代码会丢失） git reset --hard <commit-id>",
+    "fullText": "Git 常用高频命令与分支协同工作流速查清单 系统整理日常开发中最常用的 Git 核心操作：SSH 密钥生成、全局身份配置、分支管理、暂存区操作、回退撤销与冲突解决速查。 效率工具 Git 版本控制 工作流 开发提效 Git 常用高频命令与分支协同工作流速查清单 > Git 是现代软件工程不可或缺的分布式版本控制系统。本文精选日常敏捷开发中最常用、最容易遗忘的核心命令清单。 --- 一、初始配置与 SSH 密钥生成 1. 配置全局用户名与邮箱 bash git config --global user.name \"你的名字\" git config --global user.email \"your_email@example.com\" 2. 生成 SSH 密钥并添加到 GitHub / GitLab bash ssh-keygen -t ed25519 -C \"your_email@example.com\" 或传统 RSA 格式： ssh-keygen -t rsa -b 4096 -C \"your_email@example.com\" 查看并复制生成的公钥内容（粘贴至 GitHub Settings -> SSH Keys ）： - Linux / macOS ： cat ~/.ssh/id_ed25519.pub 或 cat ~/.ssh/id_rsa.pub - Windows ： type %USERPROFILE%\\.ssh\\id_rsa.pub --- 二、基础操作与提交工作流 | 操作场景 | 推荐命令 | 说明 | | :--- | :--- | :--- | | 初始化本地仓库 | git init | 在当前目录下创建 .git 版本库 | | 克隆远程仓库 | git clone <仓库URL> | 完整下载远程代码库 | | 查看工作区状态 | git status | 查看文件修改、暂存与未跟踪状态 | | 添加所有更改至暂存区 | git add . | 暂存所有新建和被修改文件 | | 提交并附带信息 | git commit -m \"feat: 提交说明\" | 提交暂存区内容到版本库 | | 推送到远程默认分支 | git push origin main | 推送本地提交到远程仓库 | | 拉取远程最新代码 | git pull origin main | 获取远程更新并自动合并 | --- 三、分支管理与协作流程 bash 1. 查看本地与远程所有分支 git branch -a 2. 创建并切换到新特性分支 git checkout -b feature/login 或新版命令： git switch -c feature/login 3. 切换回主分支 git checkout main 或新版命令： git switch main 4. 合并指定分支到当前分支 git merge feature/login 5. 删除已合并的本地分支 git branch -d feature/login --- 四、暂存与撤销操作（救急锦囊） 1. 临时保存未完成的工作（Stash） bash 暂存当前未提交的工作区修改 git stash 查看暂存列表 git stash list 恢复最近一次暂存并从 stash 列表中删除 git stash pop 2. 撤销修改与版本回退 bash 丢弃工作区中某个文件的未暂存修改 git checkout -- <文件名> 或新版：git restore <文件名> 撤销最近一次 commit，但保留工作区修改（软回退，最常用） git reset --soft HEAD~1 彻底回退到某个历史 commit（危险：工作区未保存代码会丢失） git reset --hard <commit-id>",
     "sections": [
       {
-        "title": "添加用户",
-        "anchor": "#添加用户",
-        "id": "添加用户"
+        "title": "一、初始配置与 SSH 密钥生成",
+        "anchor": "#一-初始配置与-ssh-密钥生成",
+        "id": "一-初始配置与-ssh-密钥生成"
       },
       {
-        "title": "第二步：找到公钥文件",
-        "anchor": "#第二步-找到公钥文件",
-        "id": "第二步-找到公钥文件"
+        "title": "1. 配置全局用户名与邮箱",
+        "anchor": "#1-配置全局用户名与邮箱",
+        "id": "1-配置全局用户名与邮箱"
       },
       {
-        "title": "初始化仓库命令",
-        "anchor": "#初始化仓库命令",
-        "id": "初始化仓库命令"
+        "title": "2. 生成 SSH 密钥并添加到 GitHub / GitLab",
+        "anchor": "#2-生成-ssh-密钥并添加到-github-gitlab",
+        "id": "2-生成-ssh-密钥并添加到-github-gitlab"
       },
       {
-        "title": "git 全局配置",
-        "anchor": "#git-全局配置",
-        "id": "git-全局配置"
+        "title": "二、基础操作与提交工作流",
+        "anchor": "#二-基础操作与提交工作流",
+        "id": "二-基础操作与提交工作流"
+      },
+      {
+        "title": "三、分支管理与协作流程",
+        "anchor": "#三-分支管理与协作流程",
+        "id": "三-分支管理与协作流程"
+      },
+      {
+        "title": "四、暂存与撤销操作（救急锦囊）",
+        "anchor": "#四-暂存与撤销操作-救急锦囊",
+        "id": "四-暂存与撤销操作-救急锦囊"
+      },
+      {
+        "title": "1. 临时保存未完成的工作（Stash）",
+        "anchor": "#1-临时保存未完成的工作-stash",
+        "id": "1-临时保存未完成的工作-stash"
+      },
+      {
+        "title": "2. 撤销修改与版本回退",
+        "anchor": "#2-撤销修改与版本回退",
+        "id": "2-撤销修改与版本回退"
       }
     ]
   },
   {
     "id": "svn-subversion-commands-cheatsheet",
-    "title": "SVN (Subversion) 常用版本控制命令速查与使用指南",
+    "title": "SVN (Subversion) 常用版本控制命令速查与批量清理指南",
     "url": "posts/svn-subversion-commands-cheatsheet.html",
     "category": "效率工具与软件",
     "date": "2026-07-30",
     "tags": [
       "效率工具",
       "SVN",
-      "版本控制"
+      "版本控制",
+      "命令行技巧"
     ],
-    "summary": "整理 SVN 常用操作命令：checkout 检出、commit 提交、update 更新、log 历史与 revert 回退。",
-    "content": "macbook 中使用命令 如果你删除了很多文件，并且想删除所有状态为 '!' missing 的文件： sh svn status | grep '^!' | sed 's/^! //' | xargs svn delete 添加新增的文件 sh svn status | grep '^?' | sed 's/^? //' | xargs svn add",
-    "fullText": "SVN (Subversion) 常用版本控制命令速查与使用指南 整理 SVN 常用操作命令：checkout 检出、commit 提交、update 更新、log 历史与 revert 回退。 效率工具 SVN 版本控制 macbook 中使用命令 如果你删除了很多文件，并且想删除所有状态为 '!' missing 的文件： sh svn status | grep '^!' | sed 's/^! //' | xargs svn delete 添加新增的文件 sh svn status | grep '^?' | sed 's/^? //' | xargs svn add",
+    "summary": "整理 SVN 核心操作命令速查表，重点讲解在 macOS/Linux 终端下一键批量添加未跟踪文件 (?) 与批量删除丢失文件 (!) 的 Shell 管道组合技巧。",
+    "content": "SVN 常用版本控制命令速查与批量清理指南 > SVN Apache Subversion 是经典集中式版本控制系统。在日常使用终端管理 SVN 仓库时，经常需要处理本地文件批量增删的同步问题。本文精选高频实用命令与批量处理技巧。 --- 一、日常核心命令速查表 | 操作场景 | 推荐命令 | 简要说明 | | :--- | :--- | :--- | | 检出仓库 Checkout | svn checkout <URL> 目录名 | 首次下载远程仓库到本地（可缩写为 svn co ） | | 更新代码 Update | svn update | 将远程最新提交同步到当前工作区（可缩写为 svn up ） | | 查看修改状态 Status | svn status | 查看当前工作区状态（可缩写为 svn st ） | | 提交修改 Commit | svn commit -m \"提交说明\" | 提交已修改内容至远程版本库（可缩写为 svn ci ） | | 添加新文件 Add | svn add <文件名/目录> | 将新建文件纳入版本控制 | | 还原修改 Revert | svn revert <文件名> | 撤销本地未提交的修改 | | 查看日志 Log | svn log -l 10 | 查看最近 10 条提交历史记录 | --- 二、终端高效技巧：批量处理增删文件（重点） 在日常重构或通过外部工具（如 Finder / VSCode）批量操作了大量文件后， svn status 会出现大量 ? （未跟踪）或 ! （本地已丢失）状态。使用以下单行 Shell 管道命令可一键批量处理： 1. 批量删除所有丢失的文件（状态为 ! ） 如果你在本地物理删除了很多文件，需要同步从 SVN 版本控制中标记删除： bash svn status | grep '^!' | sed 's/^! //' | xargs svn delete 2. 批量添加所有新创建的文件（状态为 ? ） 如果你在本地新建了许多文件，需要一次性全部纳入 SVN 追踪： bash svn status | grep '^?' | sed 's/^? //' | xargs svn add --- 三、解决版本冲突 Conflict Resolution 当执行 svn update 产生代码冲突时，冲突文件会标记为 C ： 1. 查看冲突状态 ： svn status 2. 选择解决方案 ： - 保留我的版本（覆盖远程）： svn resolve --accept mine-full <文件名> - 保留远程版本（放弃本地）： svn resolve --accept theirs-full <文件名> 3. 标记冲突已解决 ： svn resolved <文件名> 4. 提交代码 ： svn commit -m \"fix: 解决合并冲突\"",
+    "fullText": "SVN (Subversion) 常用版本控制命令速查与批量清理指南 整理 SVN 核心操作命令速查表，重点讲解在 macOS/Linux 终端下一键批量添加未跟踪文件 (?) 与批量删除丢失文件 (!) 的 Shell 管道组合技巧。 效率工具 SVN 版本控制 命令行技巧 SVN 常用版本控制命令速查与批量清理指南 > SVN Apache Subversion 是经典集中式版本控制系统。在日常使用终端管理 SVN 仓库时，经常需要处理本地文件批量增删的同步问题。本文精选高频实用命令与批量处理技巧。 --- 一、日常核心命令速查表 | 操作场景 | 推荐命令 | 简要说明 | | :--- | :--- | :--- | | 检出仓库 Checkout | svn checkout <URL> 目录名 | 首次下载远程仓库到本地（可缩写为 svn co ） | | 更新代码 Update | svn update | 将远程最新提交同步到当前工作区（可缩写为 svn up ） | | 查看修改状态 Status | svn status | 查看当前工作区状态（可缩写为 svn st ） | | 提交修改 Commit | svn commit -m \"提交说明\" | 提交已修改内容至远程版本库（可缩写为 svn ci ） | | 添加新文件 Add | svn add <文件名/目录> | 将新建文件纳入版本控制 | | 还原修改 Revert | svn revert <文件名> | 撤销本地未提交的修改 | | 查看日志 Log | svn log -l 10 | 查看最近 10 条提交历史记录 | --- 二、终端高效技巧：批量处理增删文件（重点） 在日常重构或通过外部工具（如 Finder / VSCode）批量操作了大量文件后， svn status 会出现大量 ? （未跟踪）或 ! （本地已丢失）状态。使用以下单行 Shell 管道命令可一键批量处理： 1. 批量删除所有丢失的文件（状态为 ! ） 如果你在本地物理删除了很多文件，需要同步从 SVN 版本控制中标记删除： bash svn status | grep '^!' | sed 's/^! //' | xargs svn delete 2. 批量添加所有新创建的文件（状态为 ? ） 如果你在本地新建了许多文件，需要一次性全部纳入 SVN 追踪： bash svn status | grep '^?' | sed 's/^? //' | xargs svn add --- 三、解决版本冲突 Conflict Resolution 当执行 svn update 产生代码冲突时，冲突文件会标记为 C ： 1. 查看冲突状态 ： svn status 2. 选择解决方案 ： - 保留我的版本（覆盖远程）： svn resolve --accept mine-full <文件名> - 保留远程版本（放弃本地）： svn resolve --accept theirs-full <文件名> 3. 标记冲突已解决 ： svn resolved <文件名> 4. 提交代码 ： svn commit -m \"fix: 解决合并冲突\"",
     "sections": [
       {
-        "title": "如果你删除了很多文件，并且想删除所有状态为 '!' (missing) 的文件：",
-        "anchor": "#如果你删除了很多文件-并且想删除所有状态为-missing-的文件",
-        "id": "如果你删除了很多文件-并且想删除所有状态为-missing-的文件"
+        "title": "一、日常核心命令速查表",
+        "anchor": "#一-日常核心命令速查表",
+        "id": "一-日常核心命令速查表"
       },
       {
-        "title": "添加新增的文件",
-        "anchor": "#添加新增的文件",
-        "id": "添加新增的文件"
+        "title": "二、终端高效技巧：批量处理增删文件（重点）",
+        "anchor": "#二-终端高效技巧-批量处理增删文件-重点",
+        "id": "二-终端高效技巧-批量处理增删文件-重点"
+      },
+      {
+        "title": "1. 批量删除所有丢失的文件（状态为 `!`）",
+        "anchor": "#1-批量删除所有丢失的文件-状态为",
+        "id": "1-批量删除所有丢失的文件-状态为"
+      },
+      {
+        "title": "2. 批量添加所有新创建的文件（状态为 `?`）",
+        "anchor": "#2-批量添加所有新创建的文件-状态为",
+        "id": "2-批量添加所有新创建的文件-状态为"
+      },
+      {
+        "title": "三、解决版本冲突 (Conflict Resolution)",
+        "anchor": "#三-解决版本冲突-conflict-resolution",
+        "id": "三-解决版本冲突-conflict-resolution"
       }
     ]
   },
@@ -340,7 +399,7 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
   },
   {
     "id": "rustdesk-server-docker-deploy",
-    "title": "使用 Docker 快速搭建 RustDesk 自建远程桌面中继服务器（hbbs/hbbr）",
+    "title": "使用 Docker Compose 快速搭建 RustDesk 自建远程桌面中继服务器（hbbs/hbbr）",
     "url": "posts/rustdesk-server-docker-deploy.html",
     "category": "Linux与服务端",
     "date": "2026-07-12",
@@ -348,36 +407,57 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
       "Linux",
       "Docker",
       "RustDesk",
-      "远程控制"
+      "远程控制",
+      "运维实战"
     ],
-    "summary": "基于 Docker Compose 完整部署开源远程桌面 RustDesk 的 ID 注册服务器与中继服务，配置防火墙与 Key 密钥。",
-    "content": "docker安装 RustDesk 中继服务器 第一步： 安装 docker docker 官方安装教程 https://docs.docker.com/engine/install/ 第二步： 创建一个 docker-compose.yml 文件把下面的配置内容添加进去、防火墙开放下面用到的端口 sh services: hbbs 是 RustDesk ID 注册/中继服务器 Rendezvous/Relay Server hbbs: 容器名称 container_name: hbbs 使用最新的 RustDesk 服务器镜像 image: rustdesk/rustdesk-server:latest 容器启动时运行 hbbs 命令 command: hbbs 映射数据卷：将宿主机当前目录下的 data 文件夹映射到容器的 /root 目录，用于保存配置和数据。 volumes: - ./data:/root !!! 移除 network_mode: \"host\" - 不使用 host 网络模式，而是使用 Docker 默认的 bridge 网络模式。 ports 映射格式：'宿主机端口:容器端口/协议' ports: 21115 TCP : 用于 NAT 类型测试。 - \"21115:21115/tcp\" 21116 TCP/UDP : 请注意 21116 应该同时为 TCP 和 UDP 启用。 21116/UDP 用于 ID 注册和心跳服务。21116/TCP 用于 TCP 打洞和连接服务。 - \"21116:21116/tcp\" - \"21116:21116/udp\" 21118 TCP : 用于支持网页客户端。 - \"21118:21118/tcp\" 依赖于 hbbr 容器，确保 hbbr 先启动。 depends_on: - hbbr 除非手动停止，否则容器会在退出时自动重启。 restart: unless-stopped hbbr 是 RustDesk 中继服务器 Relay Server hbbr: 容器名称 container_name: hbbr 使用最新的 RustDesk 服务器镜像 image: rustdesk/rustdesk-server:latest 容器启动时运行 hbbr 命令 command: hbbr 映射数据卷，与 hbbs 共享配置和数据。 volumes: - ./data:/root !!! 移除 network_mode: \"host\" - 不使用 host 网络模式。 ports 映射格式：'宿主机端口:容器端口/协议' ports: TCP : 用于中继服务。 - \"21117:21117/tcp\" TCP : 用于支持网页客户端。 - \"21119:21119/tcp\" 除非手动停止，否则容器会在退出时自动重启。 restart: unless-stopped 第三步： 拉取镜像并启动 sh docker compose up -d 客户端配置 1、ID服务器、ip:21116 2、中继服务器、ip:21117 3、key是这个文件里面的内容、id_ed25519.pub",
-    "fullText": "使用 Docker 快速搭建 RustDesk 自建远程桌面中继服务器（hbbs/hbbr） 基于 Docker Compose 完整部署开源远程桌面 RustDesk 的 ID 注册服务器与中继服务，配置防火墙与 Key 密钥。 Linux Docker RustDesk 远程控制 docker安装 RustDesk 中继服务器 第一步： 安装 docker docker 官方安装教程 https://docs.docker.com/engine/install/ 第二步： 创建一个 docker-compose.yml 文件把下面的配置内容添加进去、防火墙开放下面用到的端口 sh services: hbbs 是 RustDesk ID 注册/中继服务器 Rendezvous/Relay Server hbbs: 容器名称 container_name: hbbs 使用最新的 RustDesk 服务器镜像 image: rustdesk/rustdesk-server:latest 容器启动时运行 hbbs 命令 command: hbbs 映射数据卷：将宿主机当前目录下的 data 文件夹映射到容器的 /root 目录，用于保存配置和数据。 volumes: - ./data:/root !!! 移除 network_mode: \"host\" - 不使用 host 网络模式，而是使用 Docker 默认的 bridge 网络模式。 ports 映射格式：'宿主机端口:容器端口/协议' ports: 21115 TCP : 用于 NAT 类型测试。 - \"21115:21115/tcp\" 21116 TCP/UDP : 请注意 21116 应该同时为 TCP 和 UDP 启用。 21116/UDP 用于 ID 注册和心跳服务。21116/TCP 用于 TCP 打洞和连接服务。 - \"21116:21116/tcp\" - \"21116:21116/udp\" 21118 TCP : 用于支持网页客户端。 - \"21118:21118/tcp\" 依赖于 hbbr 容器，确保 hbbr 先启动。 depends_on: - hbbr 除非手动停止，否则容器会在退出时自动重启。 restart: unless-stopped hbbr 是 RustDesk 中继服务器 Relay Server hbbr: 容器名称 container_name: hbbr 使用最新的 RustDesk 服务器镜像 image: rustdesk/rustdesk-server:latest 容器启动时运行 hbbr 命令 command: hbbr 映射数据卷，与 hbbs 共享配置和数据。 volumes: - ./data:/root !!! 移除 network_mode: \"host\" - 不使用 host 网络模式。 ports 映射格式：'宿主机端口:容器端口/协议' ports: TCP : 用于中继服务。 - \"21117:21117/tcp\" TCP : 用于支持网页客户端。 - \"21119:21119/tcp\" 除非手动停止，否则容器会在退出时自动重启。 restart: unless-stopped 第三步： 拉取镜像并启动 sh docker compose up -d 客户端配置 1、ID服务器、ip:21116 2、中继服务器、ip:21117 3、key是这个文件里面的内容、id_ed25519.pub",
+    "summary": "基于 Docker Compose 完整部署开源远程桌面 RustDesk 的 ID 注册服务器与中继服务，详解 21115-21119 端口映射、防火墙放行与客户端 Key 密钥联调。",
+    "content": "使用 Docker Compose 快速搭建 RustDesk 自建远程桌面中继服务器 > RustDesk 是一款优秀的开源远程桌面控制软件，支持全平台互通。通过自建 hbbs （ID 注册/打洞）与 hbbr （数据中继）服务器，可以彻底摆脱官方公共服务器的带宽限制与延迟波动，实现端到端高速低延迟直连。 --- 一、核心架构与网络端口规划 RustDesk 服务端主要由两个核心组件构成： 1. hbbs RustDesk ID/Rendezvous Server ：负责客户端 ID 分配、心跳注册以及 P2P 穿透打洞； 2. hbbr RustDesk Relay Server ：当双方网络无法实现 P2P 直连时，提供全加密流量转发中继。 🌐 必须放行的防火墙端口列表 | 端口号 | 协议 | 对应服务 | 核心用途说明 | | :--- | :--- | :--- | :--- | | 21115 | TCP | hbbs | NAT 类型探测与打洞测试 | | 21116 | TCP + UDP | hbbs | 核心注册端口 （UDP 用于心跳/注册；TCP 用于打洞与连接） | | 21117 | TCP | hbbr | 核心中继端口 （提供流量转发中继服务） | | 21118 | TCP | hbbs | Web 网页端客户端支持（选开） | | 21119 | TCP | hbbr | Web 网页端中继支持（选开） | > ⚠️ 注意 ：请务必在服务器安全组（如阿里云/腾讯云/华为云）以及系统防火墙（UFW/Firewalld）中放行以上端口，尤其是 21116 必须同时放行 TCP 和 UDP ！ --- 二、服务端 Docker Compose 部署步骤 第一步：安装 Docker 环境 确保云主机已安装 Docker 与 Docker Compose 插件： - 官方参考： Docker 官方安装教程 https://docs.docker.com/engine/install/ 第二步：创建部署目录与编排配置 在服务器中创建专门的工作目录（如 /opt/rustdesk ）： bash mkdir -p /opt/rustdesk && cd /opt/rustdesk 创建 docker-compose.yml 配置文件： yaml services: 1. hbbs: ID注册与穿透打洞服务器 hbbs: container_name: rustdesk-hbbs image: rustdesk/rustdesk-server:latest command: hbbs volumes: - ./data:/root 持久化挂载：存储生成的公私钥对与系统配置 ports: - \"21115:21115/tcp\" - \"21116:21116/tcp\" - \"21116:21116/udp\" - \"21118:21118/tcp\" depends_on: - hbbr restart: unless-stopped 2. hbbr: 流量中继服务器 hbbr: container_name: rustdesk-hbbr image: rustdesk/rustdesk-server:latest command: hbbr volumes: - ./data:/root 与 hbbs 共享相同的密钥数据卷 ports: - \"21117:21117/tcp\" - \"21119:21119/tcp\" restart: unless-stopped 第三步：拉取镜像并后台启动服务 bash docker compose up -d 启动完成后，执行 docker compose ps 查看容器状态，确保两个容器均为 Up 状态。 --- 三、获取客户端通信加密 Key 密钥 服务首次成功启动后， hbbs 会在 ./data 目录下自动生成一对非对称加密公私钥（用于防止中继服务器被他人未授权蹭用）： 执行以下命令查看你的专属公钥： bash cat ./data/id_ed25519.pub > 📋 输出的字符串即为你的 Key 密钥 （类似一串 Base64 编码文本），复制并妥善保存。 --- 四、RustDesk 客户端连接配置指南 在控制端和被控端（Windows / macOS / Linux / Android / iOS）电脑或手机上下载并打开 RustDesk 客户端： 1. 进入客户端 「设置」 -> 「网络」 -> 「ID/中继服务器」 ； 2. 填入自建服务器参数： - ID 服务器 ： 你的服务器公网IP 或 域名 （无需填端口，客户端默认 21116） - 中继服务器 ： 你的服务器公网IP 或 域名 （无需填端口，客户端默认 21117） - API 服务器 ： （留空即可） - Key 密钥 ：填写上一步从 id_ed25519.pub 中复制的内容 3. 点击 「确定」 保存。 --- 五、连接验证与就绪状态 返回 RustDesk 客户端主界面，查看底部状态栏： - 若显示 🟢 「就绪 Ready 」 ，说明已成功连接自建服务器； - 此时双方主机即可直接输入对方的 9 位数字 ID 和密码，享受自建低延迟高速远程桌面体验！",
+    "fullText": "使用 Docker Compose 快速搭建 RustDesk 自建远程桌面中继服务器（hbbs/hbbr） 基于 Docker Compose 完整部署开源远程桌面 RustDesk 的 ID 注册服务器与中继服务，详解 21115-21119 端口映射、防火墙放行与客户端 Key 密钥联调。 Linux Docker RustDesk 远程控制 运维实战 使用 Docker Compose 快速搭建 RustDesk 自建远程桌面中继服务器 > RustDesk 是一款优秀的开源远程桌面控制软件，支持全平台互通。通过自建 hbbs （ID 注册/打洞）与 hbbr （数据中继）服务器，可以彻底摆脱官方公共服务器的带宽限制与延迟波动，实现端到端高速低延迟直连。 --- 一、核心架构与网络端口规划 RustDesk 服务端主要由两个核心组件构成： 1. hbbs RustDesk ID/Rendezvous Server ：负责客户端 ID 分配、心跳注册以及 P2P 穿透打洞； 2. hbbr RustDesk Relay Server ：当双方网络无法实现 P2P 直连时，提供全加密流量转发中继。 🌐 必须放行的防火墙端口列表 | 端口号 | 协议 | 对应服务 | 核心用途说明 | | :--- | :--- | :--- | :--- | | 21115 | TCP | hbbs | NAT 类型探测与打洞测试 | | 21116 | TCP + UDP | hbbs | 核心注册端口 （UDP 用于心跳/注册；TCP 用于打洞与连接） | | 21117 | TCP | hbbr | 核心中继端口 （提供流量转发中继服务） | | 21118 | TCP | hbbs | Web 网页端客户端支持（选开） | | 21119 | TCP | hbbr | Web 网页端中继支持（选开） | > ⚠️ 注意 ：请务必在服务器安全组（如阿里云/腾讯云/华为云）以及系统防火墙（UFW/Firewalld）中放行以上端口，尤其是 21116 必须同时放行 TCP 和 UDP ！ --- 二、服务端 Docker Compose 部署步骤 第一步：安装 Docker 环境 确保云主机已安装 Docker 与 Docker Compose 插件： - 官方参考： Docker 官方安装教程 https://docs.docker.com/engine/install/ 第二步：创建部署目录与编排配置 在服务器中创建专门的工作目录（如 /opt/rustdesk ）： bash mkdir -p /opt/rustdesk && cd /opt/rustdesk 创建 docker-compose.yml 配置文件： yaml services: 1. hbbs: ID注册与穿透打洞服务器 hbbs: container_name: rustdesk-hbbs image: rustdesk/rustdesk-server:latest command: hbbs volumes: - ./data:/root 持久化挂载：存储生成的公私钥对与系统配置 ports: - \"21115:21115/tcp\" - \"21116:21116/tcp\" - \"21116:21116/udp\" - \"21118:21118/tcp\" depends_on: - hbbr restart: unless-stopped 2. hbbr: 流量中继服务器 hbbr: container_name: rustdesk-hbbr image: rustdesk/rustdesk-server:latest command: hbbr volumes: - ./data:/root 与 hbbs 共享相同的密钥数据卷 ports: - \"21117:21117/tcp\" - \"21119:21119/tcp\" restart: unless-stopped 第三步：拉取镜像并后台启动服务 bash docker compose up -d 启动完成后，执行 docker compose ps 查看容器状态，确保两个容器均为 Up 状态。 --- 三、获取客户端通信加密 Key 密钥 服务首次成功启动后， hbbs 会在 ./data 目录下自动生成一对非对称加密公私钥（用于防止中继服务器被他人未授权蹭用）： 执行以下命令查看你的专属公钥： bash cat ./data/id_ed25519.pub > 📋 输出的字符串即为你的 Key 密钥 （类似一串 Base64 编码文本），复制并妥善保存。 --- 四、RustDesk 客户端连接配置指南 在控制端和被控端（Windows / macOS / Linux / Android / iOS）电脑或手机上下载并打开 RustDesk 客户端： 1. 进入客户端 「设置」 -> 「网络」 -> 「ID/中继服务器」 ； 2. 填入自建服务器参数： - ID 服务器 ： 你的服务器公网IP 或 域名 （无需填端口，客户端默认 21116） - 中继服务器 ： 你的服务器公网IP 或 域名 （无需填端口，客户端默认 21117） - API 服务器 ： （留空即可） - Key 密钥 ：填写上一步从 id_ed25519.pub 中复制的内容 3. 点击 「确定」 保存。 --- 五、连接验证与就绪状态 返回 RustDesk 客户端主界面，查看底部状态栏： - 若显示 🟢 「就绪 Ready 」 ，说明已成功连接自建服务器； - 此时双方主机即可直接输入对方的 9 位数字 ID 和密码，享受自建低延迟高速远程桌面体验！",
     "sections": [
       {
-        "title": "docker安装 RustDesk 中继服务器",
-        "anchor": "#docker安装-rustdesk-中继服务器",
-        "id": "docker安装-rustdesk-中继服务器"
+        "title": "一、核心架构与网络端口规划",
+        "anchor": "#一-核心架构与网络端口规划",
+        "id": "一-核心架构与网络端口规划"
       },
       {
-        "title": "第一步：",
-        "anchor": "#第一步",
-        "id": "第一步"
+        "title": "🌐 必须放行的防火墙端口列表",
+        "anchor": "#必须放行的防火墙端口列表",
+        "id": "必须放行的防火墙端口列表"
       },
       {
-        "title": "第二步：",
-        "anchor": "#第二步",
-        "id": "第二步"
+        "title": "二、服务端 Docker Compose 部署步骤",
+        "anchor": "#二-服务端-docker-compose-部署步骤",
+        "id": "二-服务端-docker-compose-部署步骤"
       },
       {
-        "title": "第三步：",
-        "anchor": "#第三步",
-        "id": "第三步"
+        "title": "第一步：安装 Docker 环境",
+        "anchor": "#第一步-安装-docker-环境",
+        "id": "第一步-安装-docker-环境"
       },
       {
-        "title": "客户端配置",
-        "anchor": "#客户端配置",
-        "id": "客户端配置"
+        "title": "第二步：创建部署目录与编排配置",
+        "anchor": "#第二步-创建部署目录与编排配置",
+        "id": "第二步-创建部署目录与编排配置"
+      },
+      {
+        "title": "第三步：拉取镜像并后台启动服务",
+        "anchor": "#第三步-拉取镜像并后台启动服务",
+        "id": "第三步-拉取镜像并后台启动服务"
+      },
+      {
+        "title": "三、获取客户端通信加密 Key 密钥",
+        "anchor": "#三-获取客户端通信加密-key-密钥",
+        "id": "三-获取客户端通信加密-key-密钥"
+      },
+      {
+        "title": "四、RustDesk 客户端连接配置指南",
+        "anchor": "#四-rustdesk-客户端连接配置指南",
+        "id": "四-rustdesk-客户端连接配置指南"
+      },
+      {
+        "title": "五、连接验证与就绪状态",
+        "anchor": "#五-连接验证与就绪状态",
+        "id": "五-连接验证与就绪状态"
       }
     ]
   },
@@ -461,7 +541,7 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
   },
   {
     "id": "kodbox-cloud-disk-docker-install",
-    "title": "Kodbox 可道云私有网盘 Docker Compose 一键部署指南",
+    "title": "Kodbox 可道云私有网盘部署实战指南（Docker 与源码双方案）",
     "url": "posts/kodbox-cloud-disk-docker-install.html",
     "category": "Linux与服务端",
     "date": "2026-07-02",
@@ -469,31 +549,72 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
       "Linux",
       "Docker",
       "网盘存储",
-      "Kodbox"
+      "Kodbox",
+      "运维实战"
     ],
-    "summary": "轻量好用的私有云存储 Kodbox 容器化搭建，持久化挂载数据卷与 MySQL 数据库快速联调。",
-    "content": "可道云 docker 安装教程【sqlite数据库版本】 第一步： 安装 docker docker 官方安装教程 https://docs.docker.com/engine/install/ 第二步： 创建一个 docker-compose.yml 文件把下面的配置内容添加进去、防火墙开放443端口 sh services: app: image: kodcloud/kodbox ports: - 443:80 左边 443 是主机访问端口，可按需修改 移除 links: db 和 links: redis volumes: 保持数据持久化是关键！ Kodbox 会将 SQLite 数据库文件放在这个映射的目录内，例如：./site/data/kodbox.sqlite - \"./site:/var/www/html\" 左边 ./site 代表kodbox持久化目录位置 restart: always 第三步： 拉取镜像并启动 sh docker compose up -d",
-    "fullText": "Kodbox 可道云私有网盘 Docker Compose 一键部署指南 轻量好用的私有云存储 Kodbox 容器化搭建，持久化挂载数据卷与 MySQL 数据库快速联调。 Linux Docker 网盘存储 Kodbox 可道云 docker 安装教程【sqlite数据库版本】 第一步： 安装 docker docker 官方安装教程 https://docs.docker.com/engine/install/ 第二步： 创建一个 docker-compose.yml 文件把下面的配置内容添加进去、防火墙开放443端口 sh services: app: image: kodcloud/kodbox ports: - 443:80 左边 443 是主机访问端口，可按需修改 移除 links: db 和 links: redis volumes: 保持数据持久化是关键！ Kodbox 会将 SQLite 数据库文件放在这个映射的目录内，例如：./site/data/kodbox.sqlite - \"./site:/var/www/html\" 左边 ./site 代表kodbox持久化目录位置 restart: always 第三步： 拉取镜像并启动 sh docker compose up -d",
+    "summary": "全面整理 Kodbox 可道云私有云存储部署方案：包含 Docker Compose 极简持久化搭建与常规 LNMP 裸机源码快速安装。",
+    "content": "Kodbox 可道云私有网盘部署实战指南（Docker 与源码双方案） > Kodbox（可道云） 是一款界面类似 Windows 桌面交互、体验极佳的私有云存储与在线协作文档管理系统。本文整理两种最常用的实战部署方案，供不同环境灵活选择。 --- 方案对比与选型建议 | 部署方案 | 适用场景 | 核心依赖 | 维护成本 | | :--- | :--- | :--- | :--- | | 方案一：Docker Compose（推荐） | 追求快速上线、环境隔离、数据迁移方便 | Docker & Docker Compose | ⭐ 极低（一键拉起，数据集中挂载） | | 方案二：裸机源码安装 | 已有宝塔面板或 LNMP / LAMP 传统主机环境 | Nginx/Apache + PHP 7.4+ + SQLite/MySQL | ⭐⭐ 中等（需自行配置 Web 服务器与目录权限） | --- 方案一：Docker Compose 一键部署（推荐 · SQLite版） 本方案使用 Kodbox 官方镜像，内置 SQLite 轻量数据库，无需额外拉起 MySQL 容器，极省内存与 CPU 资源。 第一步：环境准备 确保服务器已安装 Docker 与 Docker Compose： - 官方指引： Docker 官方安装教程 https://docs.docker.com/engine/install/ 第二步：编写配置文件 在目标目录（如 /opt/kodbox ）下创建 docker-compose.yml 文件： yaml services: app: image: kodcloud/kodbox:latest container_name: kodbox-app ports: - 443:80 左侧 443 为宿主机访问端口，可按需改为 8080 或 80 volumes: 持久化挂载：Kodbox 的所有系统配置、SQLite数据库 ./site/data/kodbox.sqlite 与用户网盘文件均保存在此 - \"./site:/var/www/html\" restart: always > 💡 提示 ：若宿主机 443 端口已被占用，可将端口映射修改为 8080:80 或 8888:80 ，后续通过 http://服务器IP:8080 访问。 第三步：拉取镜像并后台启动 在 docker-compose.yml 同级目录下执行： bash docker compose up -d 第四步：初始化配置 浏览器访问 http://服务器IP:映射端口 ，按向导设定超级管理员账号与密码即可完成初始化。 --- 方案二：常规非 Docker 源码部署（LNMP 环境） 适合在传统物理机、云服务器或已有 Web 环境（如宝塔、Nginx、Apache）中直接搭建。 第一步：下载可道云官方源码 进入你的 Web 站点根目录（如 /www/wwwroot/kodbox ），执行下载： bash wget https://github.com/kalcaddle/kodbox/archive/refs/heads/main.zip 第二步：解压源码包 bash unzip main.zip 第三步：配置目录读写权限 Kodbox 运行需要对根目录及子目录拥有写权限，执行递归赋权： bash chmod -Rf 777 ./ 第四步：访问向导完成安装 1. 在浏览器中打开绑定的域名或 IP； 2. 按照可道云网页安装向导进行环境自检（确保 PHP 扩展如 curl 、 mbstring 、 gd 、 sqlite3/mysqli 就绪）； 3. 选择数据库类型（小型个人使用建议直接勾选 SQLite ，免去配置 MySQL 用户名密码）； 4. 设置管理员账号与密码，点击「确定」立即进入私有云桌面。 --- 常见问题排查与运维贴士 1. 端口冲突问题 ：若启动失败，使用 netstat -tlpn | grep 443 检查端口是否被 Nginx 或 Apache 占用。 2. 数据备份方案 ： - Docker 版 ：只需定时备份宿主机的 ./site 文件夹，即可全量备份所有网盘文件与数据库。 - 源码版 ：备份站点目录及数据库即可。",
+    "fullText": "Kodbox 可道云私有网盘部署实战指南（Docker 与源码双方案） 全面整理 Kodbox 可道云私有云存储部署方案：包含 Docker Compose 极简持久化搭建与常规 LNMP 裸机源码快速安装。 Linux Docker 网盘存储 Kodbox 运维实战 Kodbox 可道云私有网盘部署实战指南（Docker 与源码双方案） > Kodbox（可道云） 是一款界面类似 Windows 桌面交互、体验极佳的私有云存储与在线协作文档管理系统。本文整理两种最常用的实战部署方案，供不同环境灵活选择。 --- 方案对比与选型建议 | 部署方案 | 适用场景 | 核心依赖 | 维护成本 | | :--- | :--- | :--- | :--- | | 方案一：Docker Compose（推荐） | 追求快速上线、环境隔离、数据迁移方便 | Docker & Docker Compose | ⭐ 极低（一键拉起，数据集中挂载） | | 方案二：裸机源码安装 | 已有宝塔面板或 LNMP / LAMP 传统主机环境 | Nginx/Apache + PHP 7.4+ + SQLite/MySQL | ⭐⭐ 中等（需自行配置 Web 服务器与目录权限） | --- 方案一：Docker Compose 一键部署（推荐 · SQLite版） 本方案使用 Kodbox 官方镜像，内置 SQLite 轻量数据库，无需额外拉起 MySQL 容器，极省内存与 CPU 资源。 第一步：环境准备 确保服务器已安装 Docker 与 Docker Compose： - 官方指引： Docker 官方安装教程 https://docs.docker.com/engine/install/ 第二步：编写配置文件 在目标目录（如 /opt/kodbox ）下创建 docker-compose.yml 文件： yaml services: app: image: kodcloud/kodbox:latest container_name: kodbox-app ports: - 443:80 左侧 443 为宿主机访问端口，可按需改为 8080 或 80 volumes: 持久化挂载：Kodbox 的所有系统配置、SQLite数据库 ./site/data/kodbox.sqlite 与用户网盘文件均保存在此 - \"./site:/var/www/html\" restart: always > 💡 提示 ：若宿主机 443 端口已被占用，可将端口映射修改为 8080:80 或 8888:80 ，后续通过 http://服务器IP:8080 访问。 第三步：拉取镜像并后台启动 在 docker-compose.yml 同级目录下执行： bash docker compose up -d 第四步：初始化配置 浏览器访问 http://服务器IP:映射端口 ，按向导设定超级管理员账号与密码即可完成初始化。 --- 方案二：常规非 Docker 源码部署（LNMP 环境） 适合在传统物理机、云服务器或已有 Web 环境（如宝塔、Nginx、Apache）中直接搭建。 第一步：下载可道云官方源码 进入你的 Web 站点根目录（如 /www/wwwroot/kodbox ），执行下载： bash wget https://github.com/kalcaddle/kodbox/archive/refs/heads/main.zip 第二步：解压源码包 bash unzip main.zip 第三步：配置目录读写权限 Kodbox 运行需要对根目录及子目录拥有写权限，执行递归赋权： bash chmod -Rf 777 ./ 第四步：访问向导完成安装 1. 在浏览器中打开绑定的域名或 IP； 2. 按照可道云网页安装向导进行环境自检（确保 PHP 扩展如 curl 、 mbstring 、 gd 、 sqlite3/mysqli 就绪）； 3. 选择数据库类型（小型个人使用建议直接勾选 SQLite ，免去配置 MySQL 用户名密码）； 4. 设置管理员账号与密码，点击「确定」立即进入私有云桌面。 --- 常见问题排查与运维贴士 1. 端口冲突问题 ：若启动失败，使用 netstat -tlpn | grep 443 检查端口是否被 Nginx 或 Apache 占用。 2. 数据备份方案 ： - Docker 版 ：只需定时备份宿主机的 ./site 文件夹，即可全量备份所有网盘文件与数据库。 - 源码版 ：备份站点目录及数据库即可。",
     "sections": [
       {
-        "title": "可道云 docker 安装教程【sqlite数据库版本】",
-        "anchor": "#可道云-docker-安装教程-sqlite数据库版本",
-        "id": "可道云-docker-安装教程-sqlite数据库版本"
+        "title": "方案对比与选型建议",
+        "anchor": "#方案对比与选型建议",
+        "id": "方案对比与选型建议"
       },
       {
-        "title": "第一步：",
-        "anchor": "#第一步",
-        "id": "第一步"
+        "title": "方案一：Docker Compose 一键部署（推荐 · SQLite版）",
+        "anchor": "#方案一-docker-compose-一键部署-推荐-sqlite版",
+        "id": "方案一-docker-compose-一键部署-推荐-sqlite版"
       },
       {
-        "title": "第二步：",
-        "anchor": "#第二步",
-        "id": "第二步"
+        "title": "第一步：环境准备",
+        "anchor": "#第一步-环境准备",
+        "id": "第一步-环境准备"
       },
       {
-        "title": "第三步：",
-        "anchor": "#第三步",
-        "id": "第三步"
+        "title": "第二步：编写配置文件",
+        "anchor": "#第二步-编写配置文件",
+        "id": "第二步-编写配置文件"
+      },
+      {
+        "title": "第三步：拉取镜像并后台启动",
+        "anchor": "#第三步-拉取镜像并后台启动",
+        "id": "第三步-拉取镜像并后台启动"
+      },
+      {
+        "title": "第四步：初始化配置",
+        "anchor": "#第四步-初始化配置",
+        "id": "第四步-初始化配置"
+      },
+      {
+        "title": "方案二：常规非 Docker 源码部署（LNMP 环境）",
+        "anchor": "#方案二-常规非-docker-源码部署-lnmp-环境",
+        "id": "方案二-常规非-docker-源码部署-lnmp-环境"
+      },
+      {
+        "title": "第一步：下载可道云官方源码",
+        "anchor": "#第一步-下载可道云官方源码",
+        "id": "第一步-下载可道云官方源码"
+      },
+      {
+        "title": "第二步：解压源码包",
+        "anchor": "#第二步-解压源码包",
+        "id": "第二步-解压源码包"
+      },
+      {
+        "title": "第三步：配置目录读写权限",
+        "anchor": "#第三步-配置目录读写权限",
+        "id": "第三步-配置目录读写权限"
+      },
+      {
+        "title": "第四步：访问向导完成安装",
+        "anchor": "#第四步-访问向导完成安装",
+        "id": "第四步-访问向导完成安装"
+      },
+      {
+        "title": "常见问题排查与运维贴士",
+        "anchor": "#常见问题排查与运维贴士",
+        "id": "常见问题排查与运维贴士"
       }
     ]
   },
@@ -632,29 +753,41 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
   },
   {
     "id": "nginx-reverse-proxy-emby-config",
-    "title": "Nginx 高性能反向代理 Emby 媒体服务器配置与 WebSocket 支持",
+    "title": "Nginx 全站反向代理配置说明文档（Cloudflare CDN + 流媒体优化版）",
     "url": "posts/nginx-reverse-proxy-emby-config.html",
-    "category": "Linux与服务端",
+    "category": "Linux 与服务端",
     "date": "2026-06-25",
     "tags": [
       "Linux",
       "Nginx",
       "Emby",
-      "媒体服务器"
+      "流媒体",
+      "Cloudflare",
+      "反向代理"
     ],
-    "summary": "配置 Nginx 反代 Emby 流媒体服务，开启 WebSocket 实时长连接、大文件分片传输与客户端真实 IP 透传。",
-    "content": "Nginx 全站反向代理配置说明文档（Cloudflare CDN + 流媒体优化版） 📌 配置概述 本配置专为 Cloudflare CDN + 全站反向代理 架构设计，通过引入动态域名变量、SNI 强校验、HTTPS 协议识别以及重定向安全锁，实现了对目标源站（如 Emby 等流媒体服务）的高效、稳定全站映射。同时针对大文件传输和长连接做了深度优化。 --- 📄 完整配置代码 你可以直接点击代码块右上角的 “复制” 按钮获取最终优化后的完整配置： nginx resolver 8.8.8.8 1.1.1.1 valid=300s; resolver_timeout 5s; location / { 1. 转发目标域名变量（全站代理的目标源站，如需更换在此修改） set $target_domain \"www.target.com\"; proxy_pass https://$target_domain; proxy_set_header Host $target_domain; proxy_ssl_server_name on; proxy_ssl_name $target_domain; 2. 协议识别（防止后端误判为 HTTP） proxy_set_header X-Forwarded-Proto $scheme; 3. 全站代理安全锁（自动修正源站的绝对路径与重定向，防止用户跳去源站） proxy_redirect https://$target_domain/ /; 4. WebSocket 支持（保障全站的实时双向通信） proxy_http_version 1.1; proxy_set_header Upgrade $http_upgrade; proxy_set_header Connection $http_connection; 5. 大文件传输与长连接优化（防断开、支持高清视频流畅拖动进度条） proxy_buffering off; proxy_cache off; chunked_transfer_encoding on; proxy_connect_timeout 300; proxy_send_timeout 86400; proxy_read_timeout 86400; proxy_set_header Range $http_range; proxy_set_header If-Range $http_if_range; proxy_request_buffering off; }",
-    "fullText": "Nginx 高性能反向代理 Emby 媒体服务器配置与 WebSocket 支持 配置 Nginx 反代 Emby 流媒体服务，开启 WebSocket 实时长连接、大文件分片传输与客户端真实 IP 透传。 Linux Nginx Emby 媒体服务器 Nginx 全站反向代理配置说明文档（Cloudflare CDN + 流媒体优化版） 📌 配置概述 本配置专为 Cloudflare CDN + 全站反向代理 架构设计，通过引入动态域名变量、SNI 强校验、HTTPS 协议识别以及重定向安全锁，实现了对目标源站（如 Emby 等流媒体服务）的高效、稳定全站映射。同时针对大文件传输和长连接做了深度优化。 --- 📄 完整配置代码 你可以直接点击代码块右上角的 “复制” 按钮获取最终优化后的完整配置： nginx resolver 8.8.8.8 1.1.1.1 valid=300s; resolver_timeout 5s; location / { 1. 转发目标域名变量（全站代理的目标源站，如需更换在此修改） set $target_domain \"www.target.com\"; proxy_pass https://$target_domain; proxy_set_header Host $target_domain; proxy_ssl_server_name on; proxy_ssl_name $target_domain; 2. 协议识别（防止后端误判为 HTTP） proxy_set_header X-Forwarded-Proto $scheme; 3. 全站代理安全锁（自动修正源站的绝对路径与重定向，防止用户跳去源站） proxy_redirect https://$target_domain/ /; 4. WebSocket 支持（保障全站的实时双向通信） proxy_http_version 1.1; proxy_set_header Upgrade $http_upgrade; proxy_set_header Connection $http_connection; 5. 大文件传输与长连接优化（防断开、支持高清视频流畅拖动进度条） proxy_buffering off; proxy_cache off; chunked_transfer_encoding on; proxy_connect_timeout 300; proxy_send_timeout 86400; proxy_read_timeout 86400; proxy_set_header Range $http_range; proxy_set_header If-Range $http_if_range; proxy_request_buffering off; }",
+    "summary": "专为 Cloudflare CDN + 全站反向代理架构设计，支持 Emby 流媒体大文件分片、WebSocket 实时长连接与 SNI 强校验。",
+    "content": "Nginx 全站反向代理配置说明文档（Cloudflare CDN + 流媒体优化版） 📌 一、配置概述 本配置专为 Cloudflare CDN + 全站反向代理 架构设计，通过引入动态域名变量、SNI 强校验、HTTPS 协议识别以及重定向安全锁，实现了对目标源站（如 Emby 等流媒体服务）的高效、稳定全站映射。同时针对大文件传输和长连接做了深度优化。 --- 📄 二、完整配置代码 你可以直接点击代码块右上角复制最终优化后的完整配置： nginx 动态解析与 DNS 超时控制 resolver 8.8.8.8 1.1.1.1 valid=300s; resolver_timeout 5s; location / { 1. 转发目标域名变量（全站代理的目标源站，如需更换在此修改） set $target_domain \"www.target.com\"; proxy_pass https://$target_domain; proxy_set_header Host $target_domain; proxy_ssl_server_name on; proxy_ssl_name $target_domain; 2. 协议识别（防止后端误判为 HTTP） proxy_set_header X-Forwarded-Proto $scheme; 3. 全站代理安全锁（自动修正源站的绝对路径与重定向，防止用户跳去源站） proxy_redirect https://$target_domain/ /; 4. WebSocket 支持（保障全站的实时双向通信） proxy_http_version 1.1; proxy_set_header Upgrade $http_upgrade; proxy_set_header Connection $http_connection; 5. 大文件传输与长连接优化（防断开、支持高清视频流畅拖动进度条） proxy_buffering off; proxy_cache off; chunked_transfer_encoding on; proxy_connect_timeout 300; proxy_send_timeout 86400; proxy_read_timeout 86400; proxy_set_header Range $http_range; proxy_set_header If-Range $http_if_range; proxy_request_buffering off; } --- 🔍 三、核心优化指令详解 | 配置指令 / 机制 | 作用说明 | 解决的痛点问题 | | :--- | :--- | :--- | | resolver ... valid=300s; | 指定上游 DNS 解析器与缓存周期 | 解决动态源站 IP 变动后 Nginx 无法解析导致 502 的问题 | | proxy_ssl_server_name on; | 开启上游 HTTPS SNI 扩展支持 | 解决反代 Cloudflare 等 CDN 源站时由于缺少 SNI 握手失败报错 | | proxy_redirect https://$target_domain/ /; | 自动改写源站 301/302 重定向头部 | 防止客户端登录或跳转时被重定向暴露原源站域名 | | proxy_set_header Upgrade ... | 开启 HTTP/1.1 WebSocket 双向升级 | 确保 Emby 播放进度同步、即时控制与长轮询不掉线 | | proxy_buffering off; | 关闭响应缓冲区，采用流式直接传输 | 解决视频拖动进度条卡顿、初始加载缓冲时间过长问题 | | proxy_read_timeout 86400; | 延长上游连接读取超时至 24 小时 | 防止播放超长 4K 电影或挂起播放器时被 Nginx 提前切断连接 | --- 🛠️ 四、部署与生效检查 bash 1. 检查 Nginx 配置文件语法是否正确 nginx -t 2. 平滑重载 Nginx 进程 nginx -s reload",
+    "fullText": "Nginx 全站反向代理配置说明文档（Cloudflare CDN + 流媒体优化版） 专为 Cloudflare CDN + 全站反向代理架构设计，支持 Emby 流媒体大文件分片、WebSocket 实时长连接与 SNI 强校验。 Linux Nginx Emby 流媒体 Cloudflare 反向代理 Nginx 全站反向代理配置说明文档（Cloudflare CDN + 流媒体优化版） 📌 一、配置概述 本配置专为 Cloudflare CDN + 全站反向代理 架构设计，通过引入动态域名变量、SNI 强校验、HTTPS 协议识别以及重定向安全锁，实现了对目标源站（如 Emby 等流媒体服务）的高效、稳定全站映射。同时针对大文件传输和长连接做了深度优化。 --- 📄 二、完整配置代码 你可以直接点击代码块右上角复制最终优化后的完整配置： nginx 动态解析与 DNS 超时控制 resolver 8.8.8.8 1.1.1.1 valid=300s; resolver_timeout 5s; location / { 1. 转发目标域名变量（全站代理的目标源站，如需更换在此修改） set $target_domain \"www.target.com\"; proxy_pass https://$target_domain; proxy_set_header Host $target_domain; proxy_ssl_server_name on; proxy_ssl_name $target_domain; 2. 协议识别（防止后端误判为 HTTP） proxy_set_header X-Forwarded-Proto $scheme; 3. 全站代理安全锁（自动修正源站的绝对路径与重定向，防止用户跳去源站） proxy_redirect https://$target_domain/ /; 4. WebSocket 支持（保障全站的实时双向通信） proxy_http_version 1.1; proxy_set_header Upgrade $http_upgrade; proxy_set_header Connection $http_connection; 5. 大文件传输与长连接优化（防断开、支持高清视频流畅拖动进度条） proxy_buffering off; proxy_cache off; chunked_transfer_encoding on; proxy_connect_timeout 300; proxy_send_timeout 86400; proxy_read_timeout 86400; proxy_set_header Range $http_range; proxy_set_header If-Range $http_if_range; proxy_request_buffering off; } --- 🔍 三、核心优化指令详解 | 配置指令 / 机制 | 作用说明 | 解决的痛点问题 | | :--- | :--- | :--- | | resolver ... valid=300s; | 指定上游 DNS 解析器与缓存周期 | 解决动态源站 IP 变动后 Nginx 无法解析导致 502 的问题 | | proxy_ssl_server_name on; | 开启上游 HTTPS SNI 扩展支持 | 解决反代 Cloudflare 等 CDN 源站时由于缺少 SNI 握手失败报错 | | proxy_redirect https://$target_domain/ /; | 自动改写源站 301/302 重定向头部 | 防止客户端登录或跳转时被重定向暴露原源站域名 | | proxy_set_header Upgrade ... | 开启 HTTP/1.1 WebSocket 双向升级 | 确保 Emby 播放进度同步、即时控制与长轮询不掉线 | | proxy_buffering off; | 关闭响应缓冲区，采用流式直接传输 | 解决视频拖动进度条卡顿、初始加载缓冲时间过长问题 | | proxy_read_timeout 86400; | 延长上游连接读取超时至 24 小时 | 防止播放超长 4K 电影或挂起播放器时被 Nginx 提前切断连接 | --- 🛠️ 四、部署与生效检查 bash 1. 检查 Nginx 配置文件语法是否正确 nginx -t 2. 平滑重载 Nginx 进程 nginx -s reload",
     "sections": [
       {
-        "title": "📌 配置概述",
-        "anchor": "#配置概述",
-        "id": "配置概述"
+        "title": "📌 一、配置概述",
+        "anchor": "#一-配置概述",
+        "id": "一-配置概述"
       },
       {
-        "title": "📄 完整配置代码",
-        "anchor": "#完整配置代码",
-        "id": "完整配置代码"
+        "title": "📄 二、完整配置代码",
+        "anchor": "#二-完整配置代码",
+        "id": "二-完整配置代码"
+      },
+      {
+        "title": "🔍 三、核心优化指令详解",
+        "anchor": "#三-核心优化指令详解",
+        "id": "三-核心优化指令详解"
+      },
+      {
+        "title": "🛠️ 四、部署与生效检查",
+        "anchor": "#四-部署与生效检查",
+        "id": "四-部署与生效检查"
       }
     ]
   },
@@ -668,16 +801,47 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
       "Linux",
       "FFmpeg",
       "音视频",
-      "流媒体"
+      "流媒体",
+      "推流"
     ],
-    "summary": "整理基于 FFmpeg 的 RTMP/FLV 本地视频循环推流命令、硬件加速转码与常用分辨率封装参数。",
-    "content": "linux 推流命令 sh ffmpeg -re -i \"视频源地址\" -c:v copy -c:a aac -b:a 192k -strict -2 -f flv \"rtmp://a.rtmp.youtube.com/live2/直播码\"",
-    "fullText": "FFmpeg 常用音视频推流、转码与循环直播命令速查指南 整理基于 FFmpeg 的 RTMP/FLV 本地视频循环推流命令、硬件加速转码与常用分辨率封装参数。 Linux FFmpeg 音视频 流媒体 linux 推流命令 sh ffmpeg -re -i \"视频源地址\" -c:v copy -c:a aac -b:a 192k -strict -2 -f flv \"rtmp://a.rtmp.youtube.com/live2/直播码\"",
+    "summary": "整理基于 FFmpeg 的 RTMP/FLV 本地视频循环推流命令、硬件加速转码、多码率推流与后台无人值守推流脚本。",
+    "content": "FFmpeg 常用音视频推流、转码与循环直播命令速查指南 > FFmpeg 是音视频处理领域的事实标准工具。通过 FFmpeg 可以实现将本地 MP4/MKV 视频文件、网络 RTSP 摄像头流或麦克风音频，实时编码封装推送到 RTMP/FLV 直播流媒体服务器（如 YouTube、Bilibili、斗鱼、Nginx-RTMP 等）。 --- 一、基础 RTMP 视频推流核心命令 将本地视频文件原画质推送到 RTMP 节点： bash ffmpeg -re -i \"input.mp4\" -c:v copy -c:a aac -b:a 192k -strict -2 -f flv \"rtmp://a.rtmp.youtube.com/live2/你的直播码\" ⚙️ 关键参数解析 | 参数 | 含义说明 | 推荐取值 | | :--- | :--- | :--- | | -re | 实时帧率读取 （Read at native frame rate）。必须加在 -i 之前，模拟实时采集速度，防止过快发送导致缓冲区溢出。 | 必须开启 | | -i \"input.mp4\" | 指定输入媒体源文件路径或网络 RTSP URL。 | 文件绝对/相对路径 | | -c:v copy | 视频流直接复制，不重新编码，极省 CPU。 | 若编码兼容推荐 copy | | -c:a aac | 将音频流转换为 RTMP 标准 AAC 编码。 | aac | | -b:a 192k | 设定音频码率为 192 kbps，保障音质。 | 128k ~ 320k | | -f flv | 封装格式设定为 FLV（RTMP 协议标准封装格式）。 | flv | --- 二、进阶实战：7x24小时无人值守循环推流 将文件夹内的视频无限循环直播推流（可配合 screen 或 nohup 后台常驻）： bash nohup ffmpeg -re -stream_loop -1 -i \"video.mp4\" -c:v libx264 -preset veryfast -b:v 3000k -maxrate 3500k -bufsize 6000k -pix_fmt yuv420p -g 50 -c:a aac -b:a 128k -ar 44100 -f flv \"rtmp://live-push.example.com/live/streamkey\" > /var/log/ffmpeg_live.log 2>&1 & > 💡 参数补充 ： > - -stream_loop -1 ：开启无限循环播放输入源； > - -preset veryfast ：H.264 快速编码预设，大幅降低 CPU 负载； > - -g 50 ：设置关键帧间隔（GOP），通常设为帧率的 2 倍（2秒一个关键帧），提升观众秒开率。 --- 三、常用进阶推流场景速查 1. 重新编码并压制为标准 1080P / 30fps bash ffmpeg -re -i \"input.mkv\" -c:v libx264 -s 1920x1080 -r 30 -c:a aac -f flv \"rtmp://your-rtmp-server/live/stream\" 2. 静态图片 + 背景音乐推流为音乐电台直播 bash ffmpeg -re -loop 1 -i \"cover.jpg\" -i \"audio.mp3\" -c:v libx264 -tune stillimage -c:a aac -b:a 192k -pix_fmt yuv420p -shortest -f flv \"rtmp://your-rtmp-server/live/stream\" --- 四、后台运行与进程管理 - 查看当前推流进程 ： ps -ef | grep ffmpeg - 实时查看推流日志 ： tail -f /var/log/ffmpeg_live.log - 停止推流 ： pkill -f ffmpeg 或 kill -9 <PID>",
+    "fullText": "FFmpeg 常用音视频推流、转码与循环直播命令速查指南 整理基于 FFmpeg 的 RTMP/FLV 本地视频循环推流命令、硬件加速转码、多码率推流与后台无人值守推流脚本。 Linux FFmpeg 音视频 流媒体 推流 FFmpeg 常用音视频推流、转码与循环直播命令速查指南 > FFmpeg 是音视频处理领域的事实标准工具。通过 FFmpeg 可以实现将本地 MP4/MKV 视频文件、网络 RTSP 摄像头流或麦克风音频，实时编码封装推送到 RTMP/FLV 直播流媒体服务器（如 YouTube、Bilibili、斗鱼、Nginx-RTMP 等）。 --- 一、基础 RTMP 视频推流核心命令 将本地视频文件原画质推送到 RTMP 节点： bash ffmpeg -re -i \"input.mp4\" -c:v copy -c:a aac -b:a 192k -strict -2 -f flv \"rtmp://a.rtmp.youtube.com/live2/你的直播码\" ⚙️ 关键参数解析 | 参数 | 含义说明 | 推荐取值 | | :--- | :--- | :--- | | -re | 实时帧率读取 （Read at native frame rate）。必须加在 -i 之前，模拟实时采集速度，防止过快发送导致缓冲区溢出。 | 必须开启 | | -i \"input.mp4\" | 指定输入媒体源文件路径或网络 RTSP URL。 | 文件绝对/相对路径 | | -c:v copy | 视频流直接复制，不重新编码，极省 CPU。 | 若编码兼容推荐 copy | | -c:a aac | 将音频流转换为 RTMP 标准 AAC 编码。 | aac | | -b:a 192k | 设定音频码率为 192 kbps，保障音质。 | 128k ~ 320k | | -f flv | 封装格式设定为 FLV（RTMP 协议标准封装格式）。 | flv | --- 二、进阶实战：7x24小时无人值守循环推流 将文件夹内的视频无限循环直播推流（可配合 screen 或 nohup 后台常驻）： bash nohup ffmpeg -re -stream_loop -1 -i \"video.mp4\" -c:v libx264 -preset veryfast -b:v 3000k -maxrate 3500k -bufsize 6000k -pix_fmt yuv420p -g 50 -c:a aac -b:a 128k -ar 44100 -f flv \"rtmp://live-push.example.com/live/streamkey\" > /var/log/ffmpeg_live.log 2>&1 & > 💡 参数补充 ： > - -stream_loop -1 ：开启无限循环播放输入源； > - -preset veryfast ：H.264 快速编码预设，大幅降低 CPU 负载； > - -g 50 ：设置关键帧间隔（GOP），通常设为帧率的 2 倍（2秒一个关键帧），提升观众秒开率。 --- 三、常用进阶推流场景速查 1. 重新编码并压制为标准 1080P / 30fps bash ffmpeg -re -i \"input.mkv\" -c:v libx264 -s 1920x1080 -r 30 -c:a aac -f flv \"rtmp://your-rtmp-server/live/stream\" 2. 静态图片 + 背景音乐推流为音乐电台直播 bash ffmpeg -re -loop 1 -i \"cover.jpg\" -i \"audio.mp3\" -c:v libx264 -tune stillimage -c:a aac -b:a 192k -pix_fmt yuv420p -shortest -f flv \"rtmp://your-rtmp-server/live/stream\" --- 四、后台运行与进程管理 - 查看当前推流进程 ： ps -ef | grep ffmpeg - 实时查看推流日志 ： tail -f /var/log/ffmpeg_live.log - 停止推流 ： pkill -f ffmpeg 或 kill -9 <PID>",
     "sections": [
       {
-        "title": "linux 推流命令",
-        "anchor": "#linux-推流命令",
-        "id": "linux-推流命令"
+        "title": "一、基础 RTMP 视频推流核心命令",
+        "anchor": "#一-基础-rtmp-视频推流核心命令",
+        "id": "一-基础-rtmp-视频推流核心命令"
+      },
+      {
+        "title": "⚙️ 关键参数解析",
+        "anchor": "#关键参数解析",
+        "id": "关键参数解析"
+      },
+      {
+        "title": "二、进阶实战：7x24小时无人值守循环推流",
+        "anchor": "#二-进阶实战-7x24小时无人值守循环推流",
+        "id": "二-进阶实战-7x24小时无人值守循环推流"
+      },
+      {
+        "title": "三、常用进阶推流场景速查",
+        "anchor": "#三-常用进阶推流场景速查",
+        "id": "三-常用进阶推流场景速查"
+      },
+      {
+        "title": "1. 重新编码并压制为标准 1080P / 30fps",
+        "anchor": "#1-重新编码并压制为标准-1080p-30fps",
+        "id": "1-重新编码并压制为标准-1080p-30fps"
+      },
+      {
+        "title": "2. 静态图片 + 背景音乐推流为音乐电台直播",
+        "anchor": "#2-静态图片-背景音乐推流为音乐电台直播",
+        "id": "2-静态图片-背景音乐推流为音乐电台直播"
+      },
+      {
+        "title": "四、后台运行与进程管理",
+        "anchor": "#四-后台运行与进程管理",
+        "id": "四-后台运行与进程管理"
       }
     ]
   },
@@ -731,6 +895,11 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
         "id": "ssl-一键生成证书脚本"
       },
       {
+        "title": "第一步：安装脚本",
+        "anchor": "#第一步-安装脚本",
+        "id": "第一步-安装脚本"
+      },
+      {
         "title": "第二步：生成证书80端口验证方式（保证80未被占用）",
         "anchor": "#第二步-生成证书80端口验证方式-保证80未被占用",
         "id": "第二步-生成证书80端口验证方式-保证80未被占用"
@@ -777,39 +946,55 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
   },
   {
     "id": "vue-common-plugins-ecosystem",
-    "title": "Vue 常用高频插件与生产级生态工具库清单",
+    "title": "Vue 3 生产级高频插件与生态工具库精选清单",
     "url": "posts/vue-common-plugins-ecosystem.html",
     "category": "前端开发",
     "date": "2026-05-28",
     "tags": [
       "前端开发",
       "Vue",
-      "开发工具",
-      "生态推荐"
+      "Vite",
+      "开发提效",
+      "前端工程化"
     ],
-    "summary": "整理 Vue 常用插件：富文本编辑器、拖拽排版、数据可视化、权限控制与工具函数库。",
-    "content": "vue 常用插件汇总 开发工具类： 1、unplugin-vue-router 组件路由自动化生成工具 2、pre-dev.js 本地环境运行 node pre-dev.js 文件、本地环境文件配置 3、unplugin-auto-import 自动化导入 js、vue、vue-router、pinia、element-plus 等 性能优化类： 1、vite-plugin-compression 代码开启gzip压缩格式 2、pinia-plugin-persistedstate 对pinia开启持久话存储 3、vue-image-compressor 开启图压缩 4、vue-virtual-scroller 对滚动翻页得页面开启虚拟滚动 安全类： 1、dompurify 防止内容注入 2、xss 防止xss 攻击",
-    "fullText": "Vue 常用高频插件与生产级生态工具库清单 整理 Vue 常用插件：富文本编辑器、拖拽排版、数据可视化、权限控制与工具函数库。 前端开发 Vue 开发工具 生态推荐 vue 常用插件汇总 开发工具类： 1、unplugin-vue-router 组件路由自动化生成工具 2、pre-dev.js 本地环境运行 node pre-dev.js 文件、本地环境文件配置 3、unplugin-auto-import 自动化导入 js、vue、vue-router、pinia、element-plus 等 性能优化类： 1、vite-plugin-compression 代码开启gzip压缩格式 2、pinia-plugin-persistedstate 对pinia开启持久话存储 3、vue-image-compressor 开启图压缩 4、vue-virtual-scroller 对滚动翻页得页面开启虚拟滚动 安全类： 1、dompurify 防止内容注入 2、xss 防止xss 攻击",
+    "summary": "系统精选 Vue 3 + Vite 现代化项目工程化高频插件：自动路由生成、按需自动导入、持久化状态管理、虚拟列表滚动、Gzip 压缩与 XSS 安全防御。",
+    "content": "Vue 3 生产级高频插件与生态工具库精选清单 > 在基于 Vue 3 + Vite 的企业级前端开发中，合理选用成熟的生态插件可以极大提升研发效率、缩短页面首屏加载耗时并保障应用安全。本文梳理生产环境高频必备库与配置清单。 --- 一、开发提效与工程化工具 1. 自动路由生成器： unplugin-vue-router 根据 src/pages 目录结构自动生成全类型安全（TypeScript）的 Vue Router 路由表，告别手写繁琐的 routes 数组。 bash npm i -D unplugin-vue-router 2. 核心 API 自动按需导入： unplugin-auto-import 自动按需引入 ref 、 reactive 、 computed 、 useRouter 、 useStore 等，无需在每个 SFC 头部手动 import ： bash npm i -D unplugin-auto-import javascript // vite.config.js 示例 import AutoImport from 'unplugin-auto-import/vite'; export default defineConfig { plugins: AutoImport { imports: 'vue', 'vue-router', 'pinia' , dts: 'src/auto-imports.d.ts' } } ; --- 二、首屏加载与性能优化类 | 插件名称 | 核心应用场景 | 快速安装 | | :--- | :--- | :--- | | vite-plugin-compression | 编译时自动生成 Gzip / Brotli 压缩包，显著减小部署体积。 | npm i -D vite-plugin-compression | | pinia-plugin-persistedstate | 为 Pinia 全局状态提供 LocalStorage / SessionStorage 自动持久化。 | npm i pinia-plugin-persistedstate | | vue-virtual-scroller | 针对超长列表（1000+ 数据项）开启虚拟滚动，仅渲染可视区 DOM。 | npm i vue-virtual-scroller | --- 三、Web 安全与防护类 1. 富文本 XSS 过滤防护： dompurify 在渲染用户输入的 HTML（ v-html ）时，有效清洗恶意脚本与注入代码： bash npm i dompurify @types/dompurify javascript import DOMPurify from 'dompurify'; const safeHtml = DOMPurify.sanitize userContent ; 2. 专用 XSS 白名单过滤库： xss 支持根据自定义标签白名单过滤输入字符串： bash npm i xss",
+    "fullText": "Vue 3 生产级高频插件与生态工具库精选清单 系统精选 Vue 3 + Vite 现代化项目工程化高频插件：自动路由生成、按需自动导入、持久化状态管理、虚拟列表滚动、Gzip 压缩与 XSS 安全防御。 前端开发 Vue Vite 开发提效 前端工程化 Vue 3 生产级高频插件与生态工具库精选清单 > 在基于 Vue 3 + Vite 的企业级前端开发中，合理选用成熟的生态插件可以极大提升研发效率、缩短页面首屏加载耗时并保障应用安全。本文梳理生产环境高频必备库与配置清单。 --- 一、开发提效与工程化工具 1. 自动路由生成器： unplugin-vue-router 根据 src/pages 目录结构自动生成全类型安全（TypeScript）的 Vue Router 路由表，告别手写繁琐的 routes 数组。 bash npm i -D unplugin-vue-router 2. 核心 API 自动按需导入： unplugin-auto-import 自动按需引入 ref 、 reactive 、 computed 、 useRouter 、 useStore 等，无需在每个 SFC 头部手动 import ： bash npm i -D unplugin-auto-import javascript // vite.config.js 示例 import AutoImport from 'unplugin-auto-import/vite'; export default defineConfig { plugins: AutoImport { imports: 'vue', 'vue-router', 'pinia' , dts: 'src/auto-imports.d.ts' } } ; --- 二、首屏加载与性能优化类 | 插件名称 | 核心应用场景 | 快速安装 | | :--- | :--- | :--- | | vite-plugin-compression | 编译时自动生成 Gzip / Brotli 压缩包，显著减小部署体积。 | npm i -D vite-plugin-compression | | pinia-plugin-persistedstate | 为 Pinia 全局状态提供 LocalStorage / SessionStorage 自动持久化。 | npm i pinia-plugin-persistedstate | | vue-virtual-scroller | 针对超长列表（1000+ 数据项）开启虚拟滚动，仅渲染可视区 DOM。 | npm i vue-virtual-scroller | --- 三、Web 安全与防护类 1. 富文本 XSS 过滤防护： dompurify 在渲染用户输入的 HTML（ v-html ）时，有效清洗恶意脚本与注入代码： bash npm i dompurify @types/dompurify javascript import DOMPurify from 'dompurify'; const safeHtml = DOMPurify.sanitize userContent ; 2. 专用 XSS 白名单过滤库： xss 支持根据自定义标签白名单过滤输入字符串： bash npm i xss",
     "sections": [
       {
-        "title": "vue 常用插件汇总",
-        "anchor": "#vue-常用插件汇总",
-        "id": "vue-常用插件汇总"
+        "title": "一、开发提效与工程化工具",
+        "anchor": "#一-开发提效与工程化工具",
+        "id": "一-开发提效与工程化工具"
       },
       {
-        "title": "开发工具类：",
-        "anchor": "#开发工具类",
-        "id": "开发工具类"
+        "title": "1. 自动路由生成器：`unplugin-vue-router`",
+        "anchor": "#1-自动路由生成器-unplugin-vue-router",
+        "id": "1-自动路由生成器-unplugin-vue-router"
       },
       {
-        "title": "性能优化类：",
-        "anchor": "#性能优化类",
-        "id": "性能优化类"
+        "title": "2. 核心 API 自动按需导入：`unplugin-auto-import`",
+        "anchor": "#2-核心-api-自动按需导入-unplugin-auto-import",
+        "id": "2-核心-api-自动按需导入-unplugin-auto-import"
       },
       {
-        "title": "安全类：",
-        "anchor": "#安全类",
-        "id": "安全类"
+        "title": "二、首屏加载与性能优化类",
+        "anchor": "#二-首屏加载与性能优化类",
+        "id": "二-首屏加载与性能优化类"
+      },
+      {
+        "title": "三、Web 安全与防护类",
+        "anchor": "#三-web-安全与防护类",
+        "id": "三-web-安全与防护类"
+      },
+      {
+        "title": "1. 富文本 XSS 过滤防护：`dompurify`",
+        "anchor": "#1-富文本-xss-过滤防护-dompurify",
+        "id": "1-富文本-xss-过滤防护-dompurify"
+      },
+      {
+        "title": "2. 专用 XSS 白名单过滤库：`xss`",
+        "anchor": "#2-专用-xss-白名单过滤库-xss",
+        "id": "2-专用-xss-白名单过滤库-xss"
       }
     ]
   },
@@ -1164,16 +1349,27 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
       "Linux",
       "网络协议",
       "DNS",
-      "路由优化"
+      "路由优化",
+      "Xray"
     ],
-    "summary": "配置 DoH / DoT 加密 DNS 解析，实现基于 GeoIP 与 Geosite 的国内外精准流量智能分流。",
-    "content": "xray dns防止污染配置 javascript \"dns\": { \"servers\": { \"address\": \"8.8.8.8\", \"port\": 53, \"domains\": \"geosite:google\", \"geosite:youtube\", \"geosite:netflix\", \"geosite:disney\", \"geosite:hulu\", \"geosite:primevideo\", \"geosite:openai\", \"geosite:anthropic\", \"geosite:github\", \"geosite:telegram\", \"geosite:twitter\", \"geosite:facebook\", \"geosite:instagram\", \"domain:lite.cn2gias.uk\" }, \"localhost\" , \"clientIp\": \"服务器ip\" },",
-    "fullText": "Xray DNS 分流防污染优化与国内外路由分流规则配置 配置 DoH / DoT 加密 DNS 解析，实现基于 GeoIP 与 Geosite 的国内外精准流量智能分流。 Linux 网络协议 DNS 路由优化 xray dns防止污染配置 javascript \"dns\": { \"servers\": { \"address\": \"8.8.8.8\", \"port\": 53, \"domains\": \"geosite:google\", \"geosite:youtube\", \"geosite:netflix\", \"geosite:disney\", \"geosite:hulu\", \"geosite:primevideo\", \"geosite:openai\", \"geosite:anthropic\", \"geosite:github\", \"geosite:telegram\", \"geosite:twitter\", \"geosite:facebook\", \"geosite:instagram\", \"domain:lite.cn2gias.uk\" }, \"localhost\" , \"clientIp\": \"服务器ip\" },",
+    "summary": "详解 Xray 核心 DNS 分流配置与防污染机制，基于 Geosite 域名列表实现境外加密 DNS 解析与境内直连智能分流。",
+    "content": "Xray DNS 分流防污染优化与国内外路由分流规则配置 > 在使用 Xray 时，DNS 污染往往会导致特定域名无法解析或解析到虚假 IP。通过配置内置的 dns 模块与 routing 路由协同，可以实现境外域名走远程安全 DNS、境内域名走本地 ISP 直连的高性能智能分流方案。 --- 一、DNS 防污染核心配置段 在 config.json 顶级节点中添加或替换 dns 配置： json { \"dns\": { \"servers\": { \"address\": \"8.8.8.8\", \"port\": 53, \"domains\": \"geosite:google\", \"geosite:youtube\", \"geosite:netflix\", \"geosite:disney\", \"geosite:hulu\", \"geosite:primevideo\", \"geosite:openai\", \"geosite:anthropic\", \"geosite:github\", \"geosite:telegram\", \"geosite:twitter\", \"geosite:facebook\", \"geosite:instagram\", \"geosite:geolocation-!cn\" }, { \"address\": \"223.5.5.5\", \"port\": 53, \"domains\": \"geosite:cn\" , \"expectIPs\": \"geoip:cn\" }, \"localhost\" , \"clientIp\": \"1.1.1.1\", \"queryStrategy\": \"UseIP\" } } --- 二、配置核心参数解析 | 参数项 | 说明 | 作用 | | :--- | :--- | :--- | | geosite:geolocation-!cn | 预置非中国大陆域名列表 | 命中这些域名的查询请求全部强制使用 8.8.8.8 安全解析，杜绝 DNS 污染。 | | geosite:cn | 预置中国大陆域名列表 | 国内域名直接走阿里 DNS（ 223.5.5.5 ），确保国内网站毫秒级秒开且 CDN 节点最优。 | | expectIPs | 预期返回 IP 范围 | 若国内 DNS 返回了非国内 IP，则丢弃并转由 fallback 处理，防止劫持。 | | queryStrategy | DNS 查询偏好策略 | 可选 UseIP / UseIPv4 / UseIPv6 ，避免双栈网络下因 IPv6 不稳定导致的缓慢。 | --- 三、配套路由规则（Routing Rules） 配合 DNS 分流，在 routing.rules 中添加出站标签绑定： json { \"routing\": { \"domainStrategy\": \"IPIfNonMatch\", \"rules\": { \"type\": \"field\", \"inboundTag\": \"dns-in\" , \"outboundTag\": \"direct\" }, { \"type\": \"field\", \"outboundTag\": \"direct\", \"domain\": \"geosite:cn\" }, { \"type\": \"field\", \"outboundTag\": \"proxy\", \"domain\": \"geosite:geolocation-!cn\" } } }",
+    "fullText": "Xray DNS 分流防污染优化与国内外路由分流规则配置 详解 Xray 核心 DNS 分流配置与防污染机制，基于 Geosite 域名列表实现境外加密 DNS 解析与境内直连智能分流。 Linux 网络协议 DNS 路由优化 Xray Xray DNS 分流防污染优化与国内外路由分流规则配置 > 在使用 Xray 时，DNS 污染往往会导致特定域名无法解析或解析到虚假 IP。通过配置内置的 dns 模块与 routing 路由协同，可以实现境外域名走远程安全 DNS、境内域名走本地 ISP 直连的高性能智能分流方案。 --- 一、DNS 防污染核心配置段 在 config.json 顶级节点中添加或替换 dns 配置： json { \"dns\": { \"servers\": { \"address\": \"8.8.8.8\", \"port\": 53, \"domains\": \"geosite:google\", \"geosite:youtube\", \"geosite:netflix\", \"geosite:disney\", \"geosite:hulu\", \"geosite:primevideo\", \"geosite:openai\", \"geosite:anthropic\", \"geosite:github\", \"geosite:telegram\", \"geosite:twitter\", \"geosite:facebook\", \"geosite:instagram\", \"geosite:geolocation-!cn\" }, { \"address\": \"223.5.5.5\", \"port\": 53, \"domains\": \"geosite:cn\" , \"expectIPs\": \"geoip:cn\" }, \"localhost\" , \"clientIp\": \"1.1.1.1\", \"queryStrategy\": \"UseIP\" } } --- 二、配置核心参数解析 | 参数项 | 说明 | 作用 | | :--- | :--- | :--- | | geosite:geolocation-!cn | 预置非中国大陆域名列表 | 命中这些域名的查询请求全部强制使用 8.8.8.8 安全解析，杜绝 DNS 污染。 | | geosite:cn | 预置中国大陆域名列表 | 国内域名直接走阿里 DNS（ 223.5.5.5 ），确保国内网站毫秒级秒开且 CDN 节点最优。 | | expectIPs | 预期返回 IP 范围 | 若国内 DNS 返回了非国内 IP，则丢弃并转由 fallback 处理，防止劫持。 | | queryStrategy | DNS 查询偏好策略 | 可选 UseIP / UseIPv4 / UseIPv6 ，避免双栈网络下因 IPv6 不稳定导致的缓慢。 | --- 三、配套路由规则（Routing Rules） 配合 DNS 分流，在 routing.rules 中添加出站标签绑定： json { \"routing\": { \"domainStrategy\": \"IPIfNonMatch\", \"rules\": { \"type\": \"field\", \"inboundTag\": \"dns-in\" , \"outboundTag\": \"direct\" }, { \"type\": \"field\", \"outboundTag\": \"direct\", \"domain\": \"geosite:cn\" }, { \"type\": \"field\", \"outboundTag\": \"proxy\", \"domain\": \"geosite:geolocation-!cn\" } } }",
     "sections": [
       {
-        "title": "xray dns防止污染配置",
-        "anchor": "#xray-dns防止污染配置",
-        "id": "xray-dns防止污染配置"
+        "title": "一、DNS 防污染核心配置段",
+        "anchor": "#一-dns-防污染核心配置段",
+        "id": "一-dns-防污染核心配置段"
+      },
+      {
+        "title": "二、配置核心参数解析",
+        "anchor": "#二-配置核心参数解析",
+        "id": "二-配置核心参数解析"
+      },
+      {
+        "title": "三、配套路由规则（Routing Rules）",
+        "anchor": "#三-配套路由规则-routing-rules",
+        "id": "三-配套路由规则-routing-rules"
       }
     ]
   },
@@ -1687,6 +1883,1164 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
         "title": "总结",
         "anchor": "#总结",
         "id": "总结"
+      }
+    ]
+  },
+  {
+    "id": "vscode-common-frontend-regex-replace",
+    "title": "VSCode 前端开发高频实用正则表达式查找与批量替换清单",
+    "url": "posts/vscode-common-frontend-regex-replace.html",
+    "category": "效率工具与软件",
+    "date": "2022-03-20",
+    "tags": [
+      "VSCode",
+      "正则表达式",
+      "Vue",
+      "前端技巧"
+    ],
+    "summary": "精选 VSCode 全局重构高频正则：快速批量将 v-model 改为 v-model.trim、清理行尾空格及修正多余空行。",
+    "content": "VSCode 前端开发高频实用正则表达式查找与批量替换清单 一、快捷操作指南 在 VSCode 中按下快捷键 Ctrl + Shift + F （全局搜索）或 Ctrl + Shift + H （全局替换），点击 . 开启正则表达式支持。 --- 二、高频常用正则匹配清单 1. 将所有 v-model 批量替换为 v-model.trim - 查找正则 （匹配带或不带空格的 v-model= ）： code v-model \\s+ ?= - 替换为 ： code v-model.trim= --- 2. 删除代码中所有的 console.log 调试输出 - 查找正则 （匹配整行 console.log）： code console\\.log\\ . \\ |; $ - 替换为 ： （留空） --- 3. 清除所有代码行尾的多余空格与 Tab - 查找正则 ： code \\t +$ - 替换为 ： （留空） --- 4. 压缩多个连续空行为单个空行 - 查找正则 ： code ^\\s \\r?\\n {2,} - 替换为 ： code \\n",
+    "fullText": "VSCode 前端开发高频实用正则表达式查找与批量替换清单 精选 VSCode 全局重构高频正则：快速批量将 v-model 改为 v-model.trim、清理行尾空格及修正多余空行。 VSCode 正则表达式 Vue 前端技巧 VSCode 前端开发高频实用正则表达式查找与批量替换清单 一、快捷操作指南 在 VSCode 中按下快捷键 Ctrl + Shift + F （全局搜索）或 Ctrl + Shift + H （全局替换），点击 . 开启正则表达式支持。 --- 二、高频常用正则匹配清单 1. 将所有 v-model 批量替换为 v-model.trim - 查找正则 （匹配带或不带空格的 v-model= ）： code v-model \\s+ ?= - 替换为 ： code v-model.trim= --- 2. 删除代码中所有的 console.log 调试输出 - 查找正则 （匹配整行 console.log）： code console\\.log\\ . \\ |; $ - 替换为 ： （留空） --- 3. 清除所有代码行尾的多余空格与 Tab - 查找正则 ： code \\t +$ - 替换为 ： （留空） --- 4. 压缩多个连续空行为单个空行 - 查找正则 ： code ^\\s \\r?\\n {2,} - 替换为 ： code \\n",
+    "sections": [
+      {
+        "title": "一、快捷操作指南",
+        "anchor": "#一-快捷操作指南",
+        "id": "一-快捷操作指南"
+      },
+      {
+        "title": "二、高频常用正则匹配清单",
+        "anchor": "#二-高频常用正则匹配清单",
+        "id": "二-高频常用正则匹配清单"
+      },
+      {
+        "title": "1. 将所有 `v-model` 批量替换为 `v-model.trim`",
+        "anchor": "#1-将所有-v-model-批量替换为-v-model-trim",
+        "id": "1-将所有-v-model-批量替换为-v-model-trim"
+      },
+      {
+        "title": "2. 删除代码中所有的 `console.log` 调试输出",
+        "anchor": "#2-删除代码中所有的-console-log-调试输出",
+        "id": "2-删除代码中所有的-console-log-调试输出"
+      },
+      {
+        "title": "3. 清除所有代码行尾的多余空格与 Tab",
+        "anchor": "#3-清除所有代码行尾的多余空格与-tab",
+        "id": "3-清除所有代码行尾的多余空格与-tab"
+      },
+      {
+        "title": "4. 压缩多个连续空行为单个空行",
+        "anchor": "#4-压缩多个连续空行为单个空行",
+        "id": "4-压缩多个连续空行为单个空行"
+      }
+    ]
+  },
+  {
+    "id": "javascript-mask-sensitive-id-card-phone",
+    "title": "JavaScript 身份证、手机号与敏感证件信息脱敏掩码处理",
+    "url": "posts/javascript-mask-sensitive-id-card-phone.html",
+    "category": "前端开发",
+    "date": "2022-03-01",
+    "tags": [
+      "JavaScript",
+      "数据脱敏",
+      "信息安全",
+      "工具函数"
+    ],
+    "summary": "前端数据展示安全规范：封装可自定义前置与后置保留位数的通用信息脱敏函数，将敏感数字快速替换为星号。",
+    "content": "JavaScript 身份证、手机号与敏感证件信息脱敏掩码处理 一、业务安全规范 在前端界面展示用户身份证号（18位）、手机号（11位）或银行卡号时，严禁直接明文全量展示，必须对中间核心位进行星号（ ）掩码脱敏。 --- 二、通用脱敏处理函数 javascript / 字符串关键信息脱敏隐藏 @param {String} str 原始字符串（如手机号、身份证） @param {Number} frontLen 前面保留明文位数 @param {Number} endLen 后面保留明文位数 @returns {String} 脱敏后的字符串 / function maskSensitiveInfo str, frontLen = 3, endLen = 4 { if !str return ''; const text = String str ; const totalLen = text.length; if frontLen + endLen >= totalLen { return text; } const maskLen = totalLen - frontLen - endLen; const stars = ' '.repeat maskLen ; return text.substring 0, frontLen + stars + text.substring totalLen - endLen ; } // 常见脱敏调用示例： // 1. 手机号脱敏 前3后4: 138 8888 console.log maskSensitiveInfo '13812348888', 3, 4 ; // 2. 18位身份证脱敏 前6后4: 370602 1234 console.log maskSensitiveInfo '370602199801011234', 6, 4 ; // 3. 姓名脱敏 前1后0: 张 console.log maskSensitiveInfo '张三', 1, 0 ;",
+    "fullText": "JavaScript 身份证、手机号与敏感证件信息脱敏掩码处理 前端数据展示安全规范：封装可自定义前置与后置保留位数的通用信息脱敏函数，将敏感数字快速替换为星号。 JavaScript 数据脱敏 信息安全 工具函数 JavaScript 身份证、手机号与敏感证件信息脱敏掩码处理 一、业务安全规范 在前端界面展示用户身份证号（18位）、手机号（11位）或银行卡号时，严禁直接明文全量展示，必须对中间核心位进行星号（ ）掩码脱敏。 --- 二、通用脱敏处理函数 javascript / 字符串关键信息脱敏隐藏 @param {String} str 原始字符串（如手机号、身份证） @param {Number} frontLen 前面保留明文位数 @param {Number} endLen 后面保留明文位数 @returns {String} 脱敏后的字符串 / function maskSensitiveInfo str, frontLen = 3, endLen = 4 { if !str return ''; const text = String str ; const totalLen = text.length; if frontLen + endLen >= totalLen { return text; } const maskLen = totalLen - frontLen - endLen; const stars = ' '.repeat maskLen ; return text.substring 0, frontLen + stars + text.substring totalLen - endLen ; } // 常见脱敏调用示例： // 1. 手机号脱敏 前3后4: 138 8888 console.log maskSensitiveInfo '13812348888', 3, 4 ; // 2. 18位身份证脱敏 前6后4: 370602 1234 console.log maskSensitiveInfo '370602199801011234', 6, 4 ; // 3. 姓名脱敏 前1后0: 张 console.log maskSensitiveInfo '张三', 1, 0 ;",
+    "sections": [
+      {
+        "title": "一、业务安全规范",
+        "anchor": "#一-业务安全规范",
+        "id": "一-业务安全规范"
+      },
+      {
+        "title": "二、通用脱敏处理函数",
+        "anchor": "#二-通用脱敏处理函数",
+        "id": "二-通用脱敏处理函数"
+      }
+    ]
+  },
+  {
+    "id": "javascript-calculate-exact-age-by-birthday",
+    "title": "JavaScript 根据出生年月日精准计算周岁年龄函数",
+    "url": "posts/javascript-calculate-exact-age-by-birthday.html",
+    "category": "前端开发",
+    "date": "2022-02-15",
+    "tags": [
+      "JavaScript",
+      "年龄计算",
+      "Date日期",
+      "算法"
+    ],
+    "summary": "严谨处理跨年、同月同日及生日未过情况，通过年月日时间差精准计算用户的实际周岁年龄并进行格式校验。",
+    "content": "JavaScript 根据出生年月日精准计算周岁年龄函数 一、实现思路 1. 解析传入的 YYYY-MM-DD 或 YYYY/MM/DD 日期字符串； 2. 计算当前年份与出生年份的差值； 3. 比对当前月份与生日月份（或同月下的日差），若今年生日未到，则周岁需要减 1。 --- 二、完整实现代码 javascript / 根据出生日期精准计算周岁年龄 @param {String} birthDate 出生日期 如 '1998-05-20' @returns {Number|String} 周岁年龄或错误提示 / function getExactAge birthDate { if !birthDate return '出生日期为空'; const parts = String birthDate .split / -/ / ; if parts.length < 3 return '日期格式不正确'; const birthYear = parseInt parts 0 , 10 ; const birthMonth = parseInt parts 1 , 10 ; const birthDay = parseInt parts 2 , 10 ; const now = new Date ; const currentYear = now.getFullYear ; const currentMonth = now.getMonth + 1; const currentDay = now.getDate ; let age = currentYear - birthYear; if age < 0 return '出生日期不能晚于今天'; // 生日月还未到，或生日月已到但生日还没过 if currentMonth < birthMonth || currentMonth === birthMonth && currentDay < birthDay { age--; } return age < 0 ? 0 : age; } // 调用示例 console.log getExactAge '1998-02-12' ; // 正确返回周岁 console.log getExactAge '2000/10/01' ; // 支持斜杠分隔",
+    "fullText": "JavaScript 根据出生年月日精准计算周岁年龄函数 严谨处理跨年、同月同日及生日未过情况，通过年月日时间差精准计算用户的实际周岁年龄并进行格式校验。 JavaScript 年龄计算 Date日期 算法 JavaScript 根据出生年月日精准计算周岁年龄函数 一、实现思路 1. 解析传入的 YYYY-MM-DD 或 YYYY/MM/DD 日期字符串； 2. 计算当前年份与出生年份的差值； 3. 比对当前月份与生日月份（或同月下的日差），若今年生日未到，则周岁需要减 1。 --- 二、完整实现代码 javascript / 根据出生日期精准计算周岁年龄 @param {String} birthDate 出生日期 如 '1998-05-20' @returns {Number|String} 周岁年龄或错误提示 / function getExactAge birthDate { if !birthDate return '出生日期为空'; const parts = String birthDate .split / -/ / ; if parts.length < 3 return '日期格式不正确'; const birthYear = parseInt parts 0 , 10 ; const birthMonth = parseInt parts 1 , 10 ; const birthDay = parseInt parts 2 , 10 ; const now = new Date ; const currentYear = now.getFullYear ; const currentMonth = now.getMonth + 1; const currentDay = now.getDate ; let age = currentYear - birthYear; if age < 0 return '出生日期不能晚于今天'; // 生日月还未到，或生日月已到但生日还没过 if currentMonth < birthMonth || currentMonth === birthMonth && currentDay < birthDay { age--; } return age < 0 ? 0 : age; } // 调用示例 console.log getExactAge '1998-02-12' ; // 正确返回周岁 console.log getExactAge '2000/10/01' ; // 支持斜杠分隔",
+    "sections": [
+      {
+        "title": "一、实现思路",
+        "anchor": "#一-实现思路",
+        "id": "一-实现思路"
+      },
+      {
+        "title": "二、完整实现代码",
+        "anchor": "#二-完整实现代码",
+        "id": "二-完整实现代码"
+      }
+    ]
+  },
+  {
+    "id": "javascript-get-month-start-end-date",
+    "title": "JavaScript 获取指定年份与月份的起始日期和结束日期",
+    "url": "posts/javascript-get-month-start-end-date.html",
+    "category": "前端开发",
+    "date": "2022-01-10",
+    "tags": [
+      "JavaScript",
+      "Date日期",
+      "前端工具函数",
+      "时间处理"
+    ],
+    "summary": "利用 JavaScript Date 构造函数的第 0 天特性巧妙获取当月最后一天，高效返回准确的 YYYY-MM-01 与 YYYY-MM-DD。",
+    "content": "JavaScript 获取指定年份与月份的起始日期和结束日期 一、核心原理 在 JavaScript 的 new Date year, month, 0 中，第三个参数传入 0 会自动获取到上一个月的最后一天。因此传入目标月份后，直接调用 getDate 即可精确获取当月的总天数（自动处理 28/29/30/31 天及闰年）。 --- 二、实现代码 javascript / 获取指定年月的首日与末日 @param {Number|String} year 年份 如 2022 @param {Number|String} month 月份 1-12 @returns {Object} 包含 startDate 与 endDate 的对象 / function getMonthStartEndDate year, month { const y = Number year ; const m = Number month ; // 巧妙获取该月总天数 const totalDays = new Date y, m, 0 .getDate ; const formatMonth = String m .padStart 2, '0' ; return { startDate: ${y}-${formatMonth}-01 , endDate: ${y}-${formatMonth}-${String totalDays .padStart 2, '0' } }; } // 调用示例 console.log getMonthStartEndDate 2022, 1 ; // 输出: { startDate: '2022-01-01', endDate: '2022-01-31' } console.log getMonthStartEndDate 2024, 2 ; // 闰年2月 // 输出: { startDate: '2024-02-01', endDate: '2024-02-29' }",
+    "fullText": "JavaScript 获取指定年份与月份的起始日期和结束日期 利用 JavaScript Date 构造函数的第 0 天特性巧妙获取当月最后一天，高效返回准确的 YYYY-MM-01 与 YYYY-MM-DD。 JavaScript Date日期 前端工具函数 时间处理 JavaScript 获取指定年份与月份的起始日期和结束日期 一、核心原理 在 JavaScript 的 new Date year, month, 0 中，第三个参数传入 0 会自动获取到上一个月的最后一天。因此传入目标月份后，直接调用 getDate 即可精确获取当月的总天数（自动处理 28/29/30/31 天及闰年）。 --- 二、实现代码 javascript / 获取指定年月的首日与末日 @param {Number|String} year 年份 如 2022 @param {Number|String} month 月份 1-12 @returns {Object} 包含 startDate 与 endDate 的对象 / function getMonthStartEndDate year, month { const y = Number year ; const m = Number month ; // 巧妙获取该月总天数 const totalDays = new Date y, m, 0 .getDate ; const formatMonth = String m .padStart 2, '0' ; return { startDate: ${y}-${formatMonth}-01 , endDate: ${y}-${formatMonth}-${String totalDays .padStart 2, '0' } }; } // 调用示例 console.log getMonthStartEndDate 2022, 1 ; // 输出: { startDate: '2022-01-01', endDate: '2022-01-31' } console.log getMonthStartEndDate 2024, 2 ; // 闰年2月 // 输出: { startDate: '2024-02-01', endDate: '2024-02-29' }",
+    "sections": [
+      {
+        "title": "一、核心原理",
+        "anchor": "#一-核心原理",
+        "id": "一-核心原理"
+      },
+      {
+        "title": "二、实现代码",
+        "anchor": "#二-实现代码",
+        "id": "二-实现代码"
+      }
+    ]
+  },
+  {
+    "id": "javascript-string-ellipsis-truncate",
+    "title": "JavaScript 字符串指定长度截断并自动追加省略号",
+    "url": "posts/javascript-string-ellipsis-truncate.html",
+    "category": "前端开发",
+    "date": "2022-01-05",
+    "tags": [
+      "JavaScript",
+      "文本截断",
+      "省略号",
+      "前端工具函数"
+    ],
+    "summary": "纯 JavaScript 实现可自定义最大字符长度的文本截断函数，超出部分智能替换为 ... 省略号，支持严格边界保护。",
+    "content": "JavaScript 字符串指定长度截断并自动追加省略号 一、实现代码 javascript / 字符串超出指定长度后自动追加省略号 @param {String} text 输入文本 @param {Number} maxLen 最大允许展示长度 -1 为不截断 @returns {String} 处理后的字符串 / function truncateWithEllipsis text, maxLen = 20 { if !text return ''; const str = String text ; const limit = Number maxLen ; if limit >= 0 && str.length > limit { return str.substring 0, limit + '...'; } return str; } // 调用示例 console.log truncateWithEllipsis '这是一篇关于Vue3组件设计的深度技术文章', 10 ; // 输出: '这是一篇关于Vue3...' console.log truncateWithEllipsis '短文本', 10 ; // 输出: '短文本'",
+    "fullText": "JavaScript 字符串指定长度截断并自动追加省略号 纯 JavaScript 实现可自定义最大字符长度的文本截断函数，超出部分智能替换为 ... 省略号，支持严格边界保护。 JavaScript 文本截断 省略号 前端工具函数 JavaScript 字符串指定长度截断并自动追加省略号 一、实现代码 javascript / 字符串超出指定长度后自动追加省略号 @param {String} text 输入文本 @param {Number} maxLen 最大允许展示长度 -1 为不截断 @returns {String} 处理后的字符串 / function truncateWithEllipsis text, maxLen = 20 { if !text return ''; const str = String text ; const limit = Number maxLen ; if limit >= 0 && str.length > limit { return str.substring 0, limit + '...'; } return str; } // 调用示例 console.log truncateWithEllipsis '这是一篇关于Vue3组件设计的深度技术文章', 10 ; // 输出: '这是一篇关于Vue3...' console.log truncateWithEllipsis '短文本', 10 ; // 输出: '短文本'",
+    "sections": [
+      {
+        "title": "一、实现代码",
+        "anchor": "#一-实现代码",
+        "id": "一-实现代码"
+      }
+    ]
+  },
+  {
+    "id": "shell-script-fetch-github-latest-version",
+    "title": "Shell 脚本自动获取 GitHub 开源项目最新 Releases 版本号",
+    "url": "posts/shell-script-fetch-github-latest-version.html",
+    "category": "Linux 与服务端",
+    "date": "2021-12-01",
+    "tags": [
+      "Linux",
+      "Shell",
+      "GitHub",
+      "自动化",
+      "版本获取"
+    ],
+    "summary": "编写通用 Bash 脚本，自动通过正则解析 GitHub Releases 或通用开源软件下载页面的最新 Release Tag 版本号。",
+    "content": "Shell 脚本自动获取 GitHub 开源项目最新 Releases 版本号 一、业务场景 在编写 Linux 自动化一键安装脚本（如自动安装最新版 Xray、frp 或 FFmpeg）时，需要动态抓取上游官方发布的最新版本号，避免每次版本更新都需要手动修改脚本硬编码。 --- 二、Shell 抓取脚本实现代码 bash !/usr/bin/env bash 获取 GitHub 仓库或指定软件的最新发布版本号 getLatestVersion { local targetUrl=\"$1\" local softwareName=\"$2\" if \"$targetUrl\" =~ \"github.com\" ; then 从 GitHub Releases 页面解析 tag wget --timeout=10 -qO- \"$targetUrl\" | grep -Po ' ?<=/tag/ vV ? 0-9 +\\. + 0-9 +' | head -n 1 else 从常规静态镜像列表解析 wget --timeout=10 -qO- \"$targetUrl\" | grep -Po \" ?<=${softwareName}. vV ? 0-9 +\\. + 0-9 +\" | tail -n 1 fi } 示例 1：获取 GitHub 仓库最新 tag 以 Xray 为例 LATEST_XRAY=$ getLatestVersion \"https://github.com/XTLS/Xray-core/releases\" echo \"Xray 最新版本为: $LATEST_XRAY\" 示例 2：获取 FFmpeg 官方镜像最新版本 LATEST_FFMPEG=$ getLatestVersion \"https://www.ffmpeg.org/releases/\" \"ffmpeg\" echo \"FFmpeg 最新版本为: $LATEST_FFMPEG\"",
+    "fullText": "Shell 脚本自动获取 GitHub 开源项目最新 Releases 版本号 编写通用 Bash 脚本，自动通过正则解析 GitHub Releases 或通用开源软件下载页面的最新 Release Tag 版本号。 Linux Shell GitHub 自动化 版本获取 Shell 脚本自动获取 GitHub 开源项目最新 Releases 版本号 一、业务场景 在编写 Linux 自动化一键安装脚本（如自动安装最新版 Xray、frp 或 FFmpeg）时，需要动态抓取上游官方发布的最新版本号，避免每次版本更新都需要手动修改脚本硬编码。 --- 二、Shell 抓取脚本实现代码 bash !/usr/bin/env bash 获取 GitHub 仓库或指定软件的最新发布版本号 getLatestVersion { local targetUrl=\"$1\" local softwareName=\"$2\" if \"$targetUrl\" =~ \"github.com\" ; then 从 GitHub Releases 页面解析 tag wget --timeout=10 -qO- \"$targetUrl\" | grep -Po ' ?<=/tag/ vV ? 0-9 +\\. + 0-9 +' | head -n 1 else 从常规静态镜像列表解析 wget --timeout=10 -qO- \"$targetUrl\" | grep -Po \" ?<=${softwareName}. vV ? 0-9 +\\. + 0-9 +\" | tail -n 1 fi } 示例 1：获取 GitHub 仓库最新 tag 以 Xray 为例 LATEST_XRAY=$ getLatestVersion \"https://github.com/XTLS/Xray-core/releases\" echo \"Xray 最新版本为: $LATEST_XRAY\" 示例 2：获取 FFmpeg 官方镜像最新版本 LATEST_FFMPEG=$ getLatestVersion \"https://www.ffmpeg.org/releases/\" \"ffmpeg\" echo \"FFmpeg 最新版本为: $LATEST_FFMPEG\"",
+    "sections": [
+      {
+        "title": "一、业务场景",
+        "anchor": "#一-业务场景",
+        "id": "一-业务场景"
+      },
+      {
+        "title": "二、Shell 抓取脚本实现代码",
+        "anchor": "#二-shell-抓取脚本实现代码",
+        "id": "二-shell-抓取脚本实现代码"
+      }
+    ]
+  },
+  {
+    "id": "shell-script-echo-colorful-text",
+    "title": "Shell 脚本中输出红/绿/黄多色格式化终端文本函数",
+    "url": "posts/shell-script-echo-colorful-text.html",
+    "category": "Linux 与服务端",
+    "date": "2021-11-15",
+    "tags": [
+      "Linux",
+      "Shell",
+      "Bash",
+      "ANSI转义",
+      "运维脚本"
+    ],
+    "summary": "封装基于 ANSI 转义码的通用 Shell 终端彩色文本打印函数，用于高亮显示部署脚本的成功、警告与错误日志。",
+    "content": "Shell 脚本中输出红/绿/黄多色格式化终端文本函数 一、ANSI 终端颜色代码原理 Linux 终端通过 \\033 3Xm 转义码定义文字前景色： - \\033 31m ：红色（常用于错误提示） - \\033 32m ：绿色（常用于成功提示） - \\033 33m ：黄色（常用于警告提示） - \\033 0m ：重置所有颜色样式 --- 二、通用 Shell 彩色输出函数 bash !/usr/bin/env bash 终端彩色文字打印函数 echoColor { local text=\"$1\" local color=\"${2:-green}\" case \"$color\" in red|1 echo -e \"\\033 31m ERROR ${text}\\033 0m\" ;; green|2 echo -e \"\\033 32m SUCCESS ${text}\\033 0m\" ;; yellow|3 echo -e \"\\033 33m WARNING ${text}\\033 0m\" ;; blue|4 echo -e \"\\033 34m INFO ${text}\\033 0m\" ;; echo -e \"${text}\" ;; esac } 调用示例 echoColor \"数据库连接失败！\" \"red\" echoColor \"服务自动化部署已圆满完成！\" \"green\" echoColor \"磁盘可用空间低于 15%，请及时清理\" \"yellow\"",
+    "fullText": "Shell 脚本中输出红/绿/黄多色格式化终端文本函数 封装基于 ANSI 转义码的通用 Shell 终端彩色文本打印函数，用于高亮显示部署脚本的成功、警告与错误日志。 Linux Shell Bash ANSI转义 运维脚本 Shell 脚本中输出红/绿/黄多色格式化终端文本函数 一、ANSI 终端颜色代码原理 Linux 终端通过 \\033 3Xm 转义码定义文字前景色： - \\033 31m ：红色（常用于错误提示） - \\033 32m ：绿色（常用于成功提示） - \\033 33m ：黄色（常用于警告提示） - \\033 0m ：重置所有颜色样式 --- 二、通用 Shell 彩色输出函数 bash !/usr/bin/env bash 终端彩色文字打印函数 echoColor { local text=\"$1\" local color=\"${2:-green}\" case \"$color\" in red|1 echo -e \"\\033 31m ERROR ${text}\\033 0m\" ;; green|2 echo -e \"\\033 32m SUCCESS ${text}\\033 0m\" ;; yellow|3 echo -e \"\\033 33m WARNING ${text}\\033 0m\" ;; blue|4 echo -e \"\\033 34m INFO ${text}\\033 0m\" ;; echo -e \"${text}\" ;; esac } 调用示例 echoColor \"数据库连接失败！\" \"red\" echoColor \"服务自动化部署已圆满完成！\" \"green\" echoColor \"磁盘可用空间低于 15%，请及时清理\" \"yellow\"",
+    "sections": [
+      {
+        "title": "一、ANSI 终端颜色代码原理",
+        "anchor": "#一-ansi-终端颜色代码原理",
+        "id": "一-ansi-终端颜色代码原理"
+      },
+      {
+        "title": "二、通用 Shell 彩色输出函数",
+        "anchor": "#二-通用-shell-彩色输出函数",
+        "id": "二-通用-shell-彩色输出函数"
+      }
+    ]
+  },
+  {
+    "id": "wordpress-wp-super-cache-nginx-rules",
+    "title": "WordPress WP Super Cache 插件高并发 Nginx 静态伪静态规则",
+    "url": "posts/wordpress-wp-super-cache-nginx-rules.html",
+    "category": "Linux 与服务端",
+    "date": "2021-11-05",
+    "tags": [
+      "WordPress",
+      "Nginx",
+      "WP Super Cache",
+      "动静分离",
+      "缓存"
+    ],
+    "summary": "配置 Nginx 直接绕过 PHP-FPM 直读 WP Super Cache 生成的静态 HTML 缓存文件，实现高并发极速响应。",
+    "content": "WordPress WP Super Cache 插件高并发 Nginx 静态伪静态规则 一、加速原理 常规 WordPress 请求需要经过 PHP-FPM 解释执行并多次查询 MySQL。WP Super Cache 开启 Expert 静态模式后，Nginx 可以直接在磁盘检查预生成的 .html 文件并直接发送给浏览器，吞吐量提升十倍以上。 --- 二、Nginx 完整配置代码 nginx WP Super Cache 核心 Nginx 匹配规则 set $cache_uri $request_uri; 针对 POST 请求、登录用户及带查询参数的请求绕过静态缓存 if $request_method = POST { set $cache_uri 'null cache'; } if $query_string != \"\" { set $cache_uri 'null cache'; } if $http_cookie ~ \"comment_author|wordpress_ a-f0-9 +|wp-postpass|wordpress_logged_in\" { set $cache_uri 'null cache'; } location / { try_files /wp-content/cache/supercache/$http_host/$cache_uri/index-https.html /wp-content/cache/supercache/$http_host/$cache_uri/index.html $uri $uri/ /index.php?$args; }",
+    "fullText": "WordPress WP Super Cache 插件高并发 Nginx 静态伪静态规则 配置 Nginx 直接绕过 PHP-FPM 直读 WP Super Cache 生成的静态 HTML 缓存文件，实现高并发极速响应。 WordPress Nginx WP Super Cache 动静分离 缓存 WordPress WP Super Cache 插件高并发 Nginx 静态伪静态规则 一、加速原理 常规 WordPress 请求需要经过 PHP-FPM 解释执行并多次查询 MySQL。WP Super Cache 开启 Expert 静态模式后，Nginx 可以直接在磁盘检查预生成的 .html 文件并直接发送给浏览器，吞吐量提升十倍以上。 --- 二、Nginx 完整配置代码 nginx WP Super Cache 核心 Nginx 匹配规则 set $cache_uri $request_uri; 针对 POST 请求、登录用户及带查询参数的请求绕过静态缓存 if $request_method = POST { set $cache_uri 'null cache'; } if $query_string != \"\" { set $cache_uri 'null cache'; } if $http_cookie ~ \"comment_author|wordpress_ a-f0-9 +|wp-postpass|wordpress_logged_in\" { set $cache_uri 'null cache'; } location / { try_files /wp-content/cache/supercache/$http_host/$cache_uri/index-https.html /wp-content/cache/supercache/$http_host/$cache_uri/index.html $uri $uri/ /index.php?$args; }",
+    "sections": [
+      {
+        "title": "一、加速原理",
+        "anchor": "#一-加速原理",
+        "id": "一-加速原理"
+      },
+      {
+        "title": "二、Nginx 完整配置代码",
+        "anchor": "#二-nginx-完整配置代码",
+        "id": "二-nginx-完整配置代码"
+      }
+    ]
+  },
+  {
+    "id": "wordpress-reset-admin-password-sql-php",
+    "title": "WordPress 忘记管理员密码时的应急重置与修复方法",
+    "url": "posts/wordpress-reset-admin-password-sql-php.html",
+    "category": "Linux 与服务端",
+    "date": "2021-10-20",
+    "tags": [
+      "WordPress",
+      "PHP",
+      "MySQL",
+      "密码重置",
+      "运维"
+    ],
+    "summary": "梳理 WordPress 管理员密码丢失后的两种快速重置手段：MySQL 数据库 MD5 哈希直接更新与临时 functions.php 代码注入。",
+    "content": "WordPress 忘记管理员密码时的应急重置与修复方法 一、方法一：MySQL 数据库一键更新（推荐） 通过 phpMyAdmin 或终端进入 MySQL，执行 SQL 语句直接将管理员密码重置（WordPress 密码基于 MD5 加盐算法）： sql -- 将用户名为 admin 的密码强制重置为 123456 UPDATE wp_users SET user_pass = MD5 '123456' WHERE user_login = 'admin'; --- 二、方法二：在主题 functions.php 中注入临时重置代码 如果无法直接连接数据库，可通过 FTP 或 SSH 编辑当前主题的 functions.php ，在顶部追加以下代码： php <?php // 临时重置用户 ID 为 1 的管理员密码为 new_password_123 wp_set_password 'new_password_123', 1 ; ?> > 重要提示 ：成功登录后台后，请 务必立即将 functions.php 中的上述代码删除 ，否则每次刷新页面都会重新重置密码。",
+    "fullText": "WordPress 忘记管理员密码时的应急重置与修复方法 梳理 WordPress 管理员密码丢失后的两种快速重置手段：MySQL 数据库 MD5 哈希直接更新与临时 functions.php 代码注入。 WordPress PHP MySQL 密码重置 运维 WordPress 忘记管理员密码时的应急重置与修复方法 一、方法一：MySQL 数据库一键更新（推荐） 通过 phpMyAdmin 或终端进入 MySQL，执行 SQL 语句直接将管理员密码重置（WordPress 密码基于 MD5 加盐算法）： sql -- 将用户名为 admin 的密码强制重置为 123456 UPDATE wp_users SET user_pass = MD5 '123456' WHERE user_login = 'admin'; --- 二、方法二：在主题 functions.php 中注入临时重置代码 如果无法直接连接数据库，可通过 FTP 或 SSH 编辑当前主题的 functions.php ，在顶部追加以下代码： php <?php // 临时重置用户 ID 为 1 的管理员密码为 new_password_123 wp_set_password 'new_password_123', 1 ; ?> > 重要提示 ：成功登录后台后，请 务必立即将 functions.php 中的上述代码删除 ，否则每次刷新页面都会重新重置密码。",
+    "sections": [
+      {
+        "title": "一、方法一：MySQL 数据库一键更新（推荐）",
+        "anchor": "#一-方法一-mysql-数据库一键更新-推荐",
+        "id": "一-方法一-mysql-数据库一键更新-推荐"
+      },
+      {
+        "title": "二、方法二：在主题 functions.php 中注入临时重置代码",
+        "anchor": "#二-方法二-在主题-functions-php-中注入临时重置代码",
+        "id": "二-方法二-在主题-functions-php-中注入临时重置代码"
+      }
+    ]
+  },
+  {
+    "id": "vue-dynamic-reset-data-initial-state",
+    "title": "Vue 优雅一键重置组件 data 到初始状态的技巧",
+    "url": "posts/vue-dynamic-reset-data-initial-state.html",
+    "category": "前端开发",
+    "date": "2021-10-10",
+    "tags": [
+      "Vue",
+      "组件状态",
+      "重置表单",
+      "this.$options"
+    ],
+    "summary": "告别繁琐的逐字段手动赋值，利用 this.$options.data() 结合 Object.assign 实现一行代码优雅重置 Vue 组件所有响应式数据。",
+    "content": "Vue 优雅一键重置组件 data 到初始状态的技巧 一、业务场景与痛点 在关闭弹窗或提交表单后，常常需要将组件内的 form 或全部 data 恢复到初始空值状态。如果字段很多，逐一写 this.form.a = ''; this.form.b = ''; 极其繁琐且易遗漏。 --- 二、一行代码优雅重置 在 Vue 实例中， this.$options.data 可以获取到该组件在定义阶段最原始的未被修改的数据函数： javascript // 1. 重置组件内的全部 data 数据 Object.assign this.$data, this.$options.data.call this ; // 2. 仅重置特定表单对象 如 this.formData this.formData = this.$options.data.call this .formData; --- 三、Vue 组件完整使用示例 html <script> export default { data { return { searchQuery: '', filterStatus: 1, userForm: { username: '', phone: '', address: '' } }; }, methods: { // 弹窗关闭或点击重置按钮时调用 handleResetForm { // 一键将 userForm 恢复为初始空值 this.userForm = this.$options.data.call this .userForm; console.log '表单已完全重置为初始状态' ; } } }; </script>",
+    "fullText": "Vue 优雅一键重置组件 data 到初始状态的技巧 告别繁琐的逐字段手动赋值，利用 this.$options.data() 结合 Object.assign 实现一行代码优雅重置 Vue 组件所有响应式数据。 Vue 组件状态 重置表单 this.$options Vue 优雅一键重置组件 data 到初始状态的技巧 一、业务场景与痛点 在关闭弹窗或提交表单后，常常需要将组件内的 form 或全部 data 恢复到初始空值状态。如果字段很多，逐一写 this.form.a = ''; this.form.b = ''; 极其繁琐且易遗漏。 --- 二、一行代码优雅重置 在 Vue 实例中， this.$options.data 可以获取到该组件在定义阶段最原始的未被修改的数据函数： javascript // 1. 重置组件内的全部 data 数据 Object.assign this.$data, this.$options.data.call this ; // 2. 仅重置特定表单对象 如 this.formData this.formData = this.$options.data.call this .formData; --- 三、Vue 组件完整使用示例 html <script> export default { data { return { searchQuery: '', filterStatus: 1, userForm: { username: '', phone: '', address: '' } }; }, methods: { // 弹窗关闭或点击重置按钮时调用 handleResetForm { // 一键将 userForm 恢复为初始空值 this.userForm = this.$options.data.call this .userForm; console.log '表单已完全重置为初始状态' ; } } }; </script>",
+    "sections": [
+      {
+        "title": "一、业务场景与痛点",
+        "anchor": "#一-业务场景与痛点",
+        "id": "一-业务场景与痛点"
+      },
+      {
+        "title": "二、一行代码优雅重置",
+        "anchor": "#二-一行代码优雅重置",
+        "id": "二-一行代码优雅重置"
+      },
+      {
+        "title": "三、Vue 组件完整使用示例",
+        "anchor": "#三-vue-组件完整使用示例",
+        "id": "三-vue-组件完整使用示例"
+      }
+    ]
+  },
+  {
+    "id": "nginx-hotlink-protection-security-config",
+    "title": "Nginx 媒体与静态资源防盗链配置实战（Valid Referers）",
+    "url": "posts/nginx-hotlink-protection-security-config.html",
+    "category": "Linux 与服务端",
+    "date": "2021-09-15",
+    "tags": [
+      "Nginx",
+      "防盗链",
+      "安全防护",
+      "Valid Referers",
+      "流量节省"
+    ],
+    "summary": "防止外部恶意网站盗用本站图片、视频与下载附件消耗服务器流量，利用 Nginx valid_referers 指令配置域名防盗链拦截。",
+    "content": "Nginx 媒体与静态资源防盗链配置实战（Valid Referers） 一、防盗链机制 当浏览器加载网页中的图片或资源时，会在 HTTP 请求头附带 Referer （来源网址）。通过校验 Referer 是否为白名单域名，即可精准拦截非授权网站的非法外链引用。 --- 二、Nginx 防盗链配置代码 nginx location ~ \\. jpg|jpeg|png|gif|webp|mp4|flv|zip|rar|tar|gz $ { expires 30d; access_log off; 配置白名单域名 none: 允许空 Referer 直接访问; blocked: 允许被防火墙伪装的请求 valid_referers none blocked .vmrey.com vmrey.github.io; 如果是非白名单来源，直接返回 403 拒绝或重定向至提示图 if $invalid_referer { return 403; 或者重写展示警告防盗链图片: rewrite ^/ https://vmrey.github.io/assets/images/forbidden.png break; } }",
+    "fullText": "Nginx 媒体与静态资源防盗链配置实战（Valid Referers） 防止外部恶意网站盗用本站图片、视频与下载附件消耗服务器流量，利用 Nginx valid_referers 指令配置域名防盗链拦截。 Nginx 防盗链 安全防护 Valid Referers 流量节省 Nginx 媒体与静态资源防盗链配置实战（Valid Referers） 一、防盗链机制 当浏览器加载网页中的图片或资源时，会在 HTTP 请求头附带 Referer （来源网址）。通过校验 Referer 是否为白名单域名，即可精准拦截非授权网站的非法外链引用。 --- 二、Nginx 防盗链配置代码 nginx location ~ \\. jpg|jpeg|png|gif|webp|mp4|flv|zip|rar|tar|gz $ { expires 30d; access_log off; 配置白名单域名 none: 允许空 Referer 直接访问; blocked: 允许被防火墙伪装的请求 valid_referers none blocked .vmrey.com vmrey.github.io; 如果是非白名单来源，直接返回 403 拒绝或重定向至提示图 if $invalid_referer { return 403; 或者重写展示警告防盗链图片: rewrite ^/ https://vmrey.github.io/assets/images/forbidden.png break; } }",
+    "sections": [
+      {
+        "title": "一、防盗链机制",
+        "anchor": "#一-防盗链机制",
+        "id": "一-防盗链机制"
+      },
+      {
+        "title": "二、Nginx 防盗链配置代码",
+        "anchor": "#二-nginx-防盗链配置代码",
+        "id": "二-nginx-防盗链配置代码"
+      }
+    ]
+  },
+  {
+    "id": "nginx-static-files-browser-cache-config",
+    "title": "Nginx 静态资源长效缓存与 Expires 性能优化配置",
+    "url": "posts/nginx-static-files-browser-cache-config.html",
+    "category": "Linux 与服务端",
+    "date": "2021-09-05",
+    "tags": [
+      "Nginx",
+      "浏览器缓存",
+      "Expires",
+      "性能优化",
+      "前端加速"
+    ],
+    "summary": "通过 Nginx 对 JS、CSS、图片、字体等静态资源配置 Cache-Control 与 Expires 头部，大幅降低服务器带宽与首屏加载耗时。",
+    "content": "Nginx 静态资源长效缓存与 Expires 性能优化配置 一、配置原理 利用 HTTP 1.1 的 Cache-Control: max-age 与 HTTP 1.0 的 Expires 响应头，通知浏览器在有效期内直接从本地 Disk Cache / Memory Cache 读取静态资源，无需向服务器发起重复请求。 --- 二、Nginx 核心配置代码 nginx 匹配常见静态资源文件扩展名 location ~ \\. jpg|jpeg|gif|png|webp|svg|ico|css|js|woff|woff2|ttf|eot $ { 设置静态缓存时间为 30 天 expires 30d; 开启静态资源强缓存策略 add_header Cache-Control \"public, no-transform\"; 关闭静态资源的访问日志与 404 错误日志，减轻磁盘 I/O access_log off; log_not_found off; }",
+    "fullText": "Nginx 静态资源长效缓存与 Expires 性能优化配置 通过 Nginx 对 JS、CSS、图片、字体等静态资源配置 Cache-Control 与 Expires 头部，大幅降低服务器带宽与首屏加载耗时。 Nginx 浏览器缓存 Expires 性能优化 前端加速 Nginx 静态资源长效缓存与 Expires 性能优化配置 一、配置原理 利用 HTTP 1.1 的 Cache-Control: max-age 与 HTTP 1.0 的 Expires 响应头，通知浏览器在有效期内直接从本地 Disk Cache / Memory Cache 读取静态资源，无需向服务器发起重复请求。 --- 二、Nginx 核心配置代码 nginx 匹配常见静态资源文件扩展名 location ~ \\. jpg|jpeg|gif|png|webp|svg|ico|css|js|woff|woff2|ttf|eot $ { 设置静态缓存时间为 30 天 expires 30d; 开启静态资源强缓存策略 add_header Cache-Control \"public, no-transform\"; 关闭静态资源的访问日志与 404 错误日志，减轻磁盘 I/O access_log off; log_not_found off; }",
+    "sections": [
+      {
+        "title": "一、配置原理",
+        "anchor": "#一-配置原理",
+        "id": "一-配置原理"
+      },
+      {
+        "title": "二、Nginx 核心配置代码",
+        "anchor": "#二-nginx-核心配置代码",
+        "id": "二-nginx-核心配置代码"
+      }
+    ]
+  },
+  {
+    "id": "linux-firewalld-common-commands-cheatsheet",
+    "title": "CentOS 7 / RHEL Firewalld 防火墙常用命令与端口放行速查",
+    "url": "posts/linux-firewalld-common-commands-cheatsheet.html",
+    "category": "Linux 与服务端",
+    "date": "2021-08-25",
+    "tags": [
+      "Linux",
+      "Firewalld",
+      "防火墙",
+      "安全防护",
+      "端口管理"
+    ],
+    "summary": "整理 Firewalld 核心操作指令：服务启停、开放/关闭指定 TCP/UDP 端口、查看放行清单及配置永久生效重载。",
+    "content": "CentOS 7 / RHEL Firewalld 防火墙常用命令与端口放行速查 一、Firewalld 基础服务管理 bash 启动防火墙 systemctl start firewalld 查看防火墙运行状态 systemctl status firewalld 或使用专用指令 firewall-cmd --state 设置开机自启 systemctl enable firewalld 关闭防火墙 systemctl stop firewalld 禁用开机自启 systemctl disable firewalld --- 二、端口放行与管理指令 > 注意 ：必须带有 --permanent 参数才能将规则持久化写入配置文件，否则服务器重启后失效。 bash 1. 开放指定端口 以 80 和 443 为例 firewall-cmd --zone=public --add-port=80/tcp --permanent firewall-cmd --zone=public --add-port=443/tcp --permanent 2. 开放连续端口范围 以 8000 到 9000 为例 firewall-cmd --zone=public --add-port=8000-9000/tcp --permanent 3. 移除/关闭已放行的端口 firewall-cmd --zone=public --remove-port=8080/tcp --permanent 4. 重新加载配置 使修改的规则立即生效，必执行！ firewall-cmd --reload --- 三、规则与放行状态查询 bash 查询指定端口是否已开放 返回 yes 或 no firewall-cmd --zone=public --query-port=80/tcp 查看当前区域开放的所有端口与服务列表 firewall-cmd --zone=public --list-all",
+    "fullText": "CentOS 7 / RHEL Firewalld 防火墙常用命令与端口放行速查 整理 Firewalld 核心操作指令：服务启停、开放/关闭指定 TCP/UDP 端口、查看放行清单及配置永久生效重载。 Linux Firewalld 防火墙 安全防护 端口管理 CentOS 7 / RHEL Firewalld 防火墙常用命令与端口放行速查 一、Firewalld 基础服务管理 bash 启动防火墙 systemctl start firewalld 查看防火墙运行状态 systemctl status firewalld 或使用专用指令 firewall-cmd --state 设置开机自启 systemctl enable firewalld 关闭防火墙 systemctl stop firewalld 禁用开机自启 systemctl disable firewalld --- 二、端口放行与管理指令 > 注意 ：必须带有 --permanent 参数才能将规则持久化写入配置文件，否则服务器重启后失效。 bash 1. 开放指定端口 以 80 和 443 为例 firewall-cmd --zone=public --add-port=80/tcp --permanent firewall-cmd --zone=public --add-port=443/tcp --permanent 2. 开放连续端口范围 以 8000 到 9000 为例 firewall-cmd --zone=public --add-port=8000-9000/tcp --permanent 3. 移除/关闭已放行的端口 firewall-cmd --zone=public --remove-port=8080/tcp --permanent 4. 重新加载配置 使修改的规则立即生效，必执行！ firewall-cmd --reload --- 三、规则与放行状态查询 bash 查询指定端口是否已开放 返回 yes 或 no firewall-cmd --zone=public --query-port=80/tcp 查看当前区域开放的所有端口与服务列表 firewall-cmd --zone=public --list-all",
+    "sections": [
+      {
+        "title": "一、Firewalld 基础服务管理",
+        "anchor": "#一-firewalld-基础服务管理",
+        "id": "一-firewalld-基础服务管理"
+      },
+      {
+        "title": "二、端口放行与管理指令",
+        "anchor": "#二-端口放行与管理指令",
+        "id": "二-端口放行与管理指令"
+      },
+      {
+        "title": "三、规则与放行状态查询",
+        "anchor": "#三-规则与放行状态查询",
+        "id": "三-规则与放行状态查询"
+      }
+    ]
+  },
+  {
+    "id": "linux-centos7-disable-ipv6-permanently",
+    "title": "CentOS 7 永久禁用 IPv6 网络协议的两种方法",
+    "url": "posts/linux-centos7-disable-ipv6-permanently.html",
+    "category": "Linux 与服务端",
+    "date": "2021-08-10",
+    "tags": [
+      "Linux",
+      "CentOS",
+      "IPv6",
+      "网络配置",
+      "Sysctl"
+    ],
+    "summary": "在仅需 IPv4 的服务器环境中，通过修改 sysctl 内核参数及网卡配置文件，彻底永久禁用 IPv6 避免网络请求异常超时。",
+    "content": "CentOS 7 永久禁用 IPv6 网络协议的两种方法 一、为什么需要禁用 IPv6？ 在某些纯 IPv4 网络或特定的代理/容器环境中，系统默认启用的 IPv6 协议栈可能会导致 DNS 优先解析 AAAA 记录，从而引发 curl 、 wget 或上游连接偶发性超时等待。 --- 二、方法一：修改 sysctl 内核参数（推荐） 通过在系统内核配置中追加禁用规则： bash 编辑 sysctl 配置文件 cat <<EOF >> /etc/sysctl.conf net.ipv6.conf.all.disable_ipv6 = 1 net.ipv6.conf.default.disable_ipv6 = 1 net.ipv6.conf.lo.disable_ipv6 = 1 EOF 立即刷新使配置生效 sysctl -p --- 三、方法二：修改网卡配置 编辑对应网卡配置文件（例如 /etc/sysconfig/network-scripts/ifcfg-eth0 ）： bash 将 IPV6INIT 修改为 no IPV6INIT=\"no\" 重启网络服务即可： bash systemctl restart network",
+    "fullText": "CentOS 7 永久禁用 IPv6 网络协议的两种方法 在仅需 IPv4 的服务器环境中，通过修改 sysctl 内核参数及网卡配置文件，彻底永久禁用 IPv6 避免网络请求异常超时。 Linux CentOS IPv6 网络配置 Sysctl CentOS 7 永久禁用 IPv6 网络协议的两种方法 一、为什么需要禁用 IPv6？ 在某些纯 IPv4 网络或特定的代理/容器环境中，系统默认启用的 IPv6 协议栈可能会导致 DNS 优先解析 AAAA 记录，从而引发 curl 、 wget 或上游连接偶发性超时等待。 --- 二、方法一：修改 sysctl 内核参数（推荐） 通过在系统内核配置中追加禁用规则： bash 编辑 sysctl 配置文件 cat <<EOF >> /etc/sysctl.conf net.ipv6.conf.all.disable_ipv6 = 1 net.ipv6.conf.default.disable_ipv6 = 1 net.ipv6.conf.lo.disable_ipv6 = 1 EOF 立即刷新使配置生效 sysctl -p --- 三、方法二：修改网卡配置 编辑对应网卡配置文件（例如 /etc/sysconfig/network-scripts/ifcfg-eth0 ）： bash 将 IPV6INIT 修改为 no IPV6INIT=\"no\" 重启网络服务即可： bash systemctl restart network",
+    "sections": [
+      {
+        "title": "一、为什么需要禁用 IPv6？",
+        "anchor": "#一-为什么需要禁用-ipv6",
+        "id": "一-为什么需要禁用-ipv6"
+      },
+      {
+        "title": "二、方法一：修改 sysctl 内核参数（推荐）",
+        "anchor": "#二-方法一-修改-sysctl-内核参数-推荐",
+        "id": "二-方法一-修改-sysctl-内核参数-推荐"
+      },
+      {
+        "title": "三、方法二：修改网卡配置",
+        "anchor": "#三-方法二-修改网卡配置",
+        "id": "三-方法二-修改网卡配置"
+      }
+    ]
+  },
+  {
+    "id": "frp-remote-desktop-deploy-guide",
+    "title": "轻量级高性能内网穿透：frp 远程桌面 RDP 搭建与系统服务配置",
+    "url": "posts/frp-remote-desktop-deploy-guide.html",
+    "category": "Linux 与服务端",
+    "date": "2021-05-18",
+    "tags": [
+      "Linux",
+      "frp",
+      "远程桌面",
+      "内网穿透",
+      "RDP"
+    ],
+    "summary": "基于 VPS 部署 frps 服务端并配置 systemd 守护进程开机自启，搭配 Windows 客户端通过 STCP 安全加密协议实现 3389 远程桌面穿透。",
+    "content": "轻量级高性能内网穿透：frp 远程桌面 RDP 搭建与系统服务配置 一、架构原理与优势 利用拥有公网 IP 的 VPS 作为中继服务端（ frps ），在公司/家庭 Windows 电脑运行被控客户端（ frpc ），配合 STCP（Secret TCP）端到端双向安全握手，实现无公网 IP 环境下流畅使用 Windows 原生远程桌面。 --- 二、VPS 服务端部署步骤 CentOS / Debian / Ubuntu bash 1. 下载解压 frp wget https://github.com/fatedier/frp/releases/download/v0.37.1/frp_0.37.1_linux_amd64.tar.gz tar -xzvf frp_0.37.1_linux_amd64.tar.gz mv frp_0.37.1_linux_amd64 /root/frps 2. 配置 frps.ini cat <<EOF > /root/frps/frps.ini common bind_port = 7000 token = your_secure_token_here EOF 3. 配置 systemd 系统开机守护服务 cat <<EOF > /etc/systemd/system/frps.service Unit Description=Frp Server Service After=network.target Service Type=simple ExecStart=/root/frps/frps -c /root/frps/frps.ini Restart=on-failure Install WantedBy=multi-user.target EOF 4. 启动并设置开机自启 systemctl daemon-reload systemctl enable --now frps systemctl status frps --- 三、被控端 Windows 客户端配置 frpc.ini ini common server_addr = 你的VPS公网IP server_port = 7000 token = your_secure_token_here rdp-target type = stcp sk = your_secret_password local_ip = 127.0.0.1 local_port = 3389 use_encryption = true use_compression = true --- 四、访问端 Windows 配置与一键连接 在访问端电脑的 frpc.ini 中配置 visitor 模式： ini common server_addr = 你的VPS公网IP server_port = 7000 token = your_secure_token_here rdp-visitor type = stcp role = visitor server_name = rdp-target sk = your_secret_password bind_addr = 127.0.0.1 bind_port = 33890 use_encryption = true use_compression = true 启动后打开远程桌面连接应用（ mstsc ），输入 127.0.0.1:33890 即可极速直连。",
+    "fullText": "轻量级高性能内网穿透：frp 远程桌面 RDP 搭建与系统服务配置 基于 VPS 部署 frps 服务端并配置 systemd 守护进程开机自启，搭配 Windows 客户端通过 STCP 安全加密协议实现 3389 远程桌面穿透。 Linux frp 远程桌面 内网穿透 RDP 轻量级高性能内网穿透：frp 远程桌面 RDP 搭建与系统服务配置 一、架构原理与优势 利用拥有公网 IP 的 VPS 作为中继服务端（ frps ），在公司/家庭 Windows 电脑运行被控客户端（ frpc ），配合 STCP（Secret TCP）端到端双向安全握手，实现无公网 IP 环境下流畅使用 Windows 原生远程桌面。 --- 二、VPS 服务端部署步骤 CentOS / Debian / Ubuntu bash 1. 下载解压 frp wget https://github.com/fatedier/frp/releases/download/v0.37.1/frp_0.37.1_linux_amd64.tar.gz tar -xzvf frp_0.37.1_linux_amd64.tar.gz mv frp_0.37.1_linux_amd64 /root/frps 2. 配置 frps.ini cat <<EOF > /root/frps/frps.ini common bind_port = 7000 token = your_secure_token_here EOF 3. 配置 systemd 系统开机守护服务 cat <<EOF > /etc/systemd/system/frps.service Unit Description=Frp Server Service After=network.target Service Type=simple ExecStart=/root/frps/frps -c /root/frps/frps.ini Restart=on-failure Install WantedBy=multi-user.target EOF 4. 启动并设置开机自启 systemctl daemon-reload systemctl enable --now frps systemctl status frps --- 三、被控端 Windows 客户端配置 frpc.ini ini common server_addr = 你的VPS公网IP server_port = 7000 token = your_secure_token_here rdp-target type = stcp sk = your_secret_password local_ip = 127.0.0.1 local_port = 3389 use_encryption = true use_compression = true --- 四、访问端 Windows 配置与一键连接 在访问端电脑的 frpc.ini 中配置 visitor 模式： ini common server_addr = 你的VPS公网IP server_port = 7000 token = your_secure_token_here rdp-visitor type = stcp role = visitor server_name = rdp-target sk = your_secret_password bind_addr = 127.0.0.1 bind_port = 33890 use_encryption = true use_compression = true 启动后打开远程桌面连接应用（ mstsc ），输入 127.0.0.1:33890 即可极速直连。",
+    "sections": [
+      {
+        "title": "一、架构原理与优势",
+        "anchor": "#一-架构原理与优势",
+        "id": "一-架构原理与优势"
+      },
+      {
+        "title": "二、VPS 服务端部署步骤 (CentOS / Debian / Ubuntu)",
+        "anchor": "#二-vps-服务端部署步骤-centos-debian-ubuntu",
+        "id": "二-vps-服务端部署步骤-centos-debian-ubuntu"
+      },
+      {
+        "title": "三、被控端 Windows 客户端配置 (frpc.ini)",
+        "anchor": "#三-被控端-windows-客户端配置-frpc-ini",
+        "id": "三-被控端-windows-客户端配置-frpc-ini"
+      },
+      {
+        "title": "四、访问端 Windows 配置与一键连接",
+        "anchor": "#四-访问端-windows-配置与一键连接",
+        "id": "四-访问端-windows-配置与一键连接"
+      }
+    ]
+  },
+  {
+    "id": "element-calendar-disabled-dates-style",
+    "title": "Element UI 中 el-calendar 日历组件禁用与灰色置灰点击处理",
+    "url": "posts/element-calendar-disabled-dates-style.html",
+    "category": "前端开发",
+    "date": "2021-05-12",
+    "tags": [
+      "Vue",
+      "ElementUI",
+      "el-calendar",
+      "组件实战"
+    ],
+    "summary": "针对 Element UI 的 el-calendar 日历组件，利用 slot 插槽与 CSS 禁用非本月或过期日期的点击操作并展示灰色状态。",
+    "content": "Element UI 中 el-calendar 日历组件禁用与灰色置灰点击处理 一、实现需求 在订房系统或考勤排班中，使用 Element UI 的 el-calendar 组件时，需要将非本月或不可选日期置灰并禁止用户点击触发事件。 --- 二、完整实现方案 html <template> <el-calendar> <template dateCell=\"{ data }\"> <div :class=\" 'calendar-custom-cell', { 'is-disabled': isDisabledDate data.day } \" @click.stop=\"handleCellClick data.day \" > <p>{{ data.day.split '-' .slice 1 .join '-' }}</p> </div> </template> </el-calendar> </template> <script> export default { methods: { isDisabledDate dayStr { // 禁用今天之前的历史日期 const today = new Date .toISOString .split 'T' 0 ; return dayStr < today; }, handleCellClick dayStr { if this.isDisabledDate dayStr return; console.log '用户选择了有效日期:', dayStr ; } } }; </script> <style scoped> .calendar-custom-cell.is-disabled { color: c0c4cc; pointer-events: none; cursor: not-allowed; background-color: f5f7fa; } </style>",
+    "fullText": "Element UI 中 el-calendar 日历组件禁用与灰色置灰点击处理 针对 Element UI 的 el-calendar 日历组件，利用 slot 插槽与 CSS 禁用非本月或过期日期的点击操作并展示灰色状态。 Vue ElementUI el-calendar 组件实战 Element UI 中 el-calendar 日历组件禁用与灰色置灰点击处理 一、实现需求 在订房系统或考勤排班中，使用 Element UI 的 el-calendar 组件时，需要将非本月或不可选日期置灰并禁止用户点击触发事件。 --- 二、完整实现方案 html <template> <el-calendar> <template dateCell=\"{ data }\"> <div :class=\" 'calendar-custom-cell', { 'is-disabled': isDisabledDate data.day } \" @click.stop=\"handleCellClick data.day \" > <p>{{ data.day.split '-' .slice 1 .join '-' }}</p> </div> </template> </el-calendar> </template> <script> export default { methods: { isDisabledDate dayStr { // 禁用今天之前的历史日期 const today = new Date .toISOString .split 'T' 0 ; return dayStr < today; }, handleCellClick dayStr { if this.isDisabledDate dayStr return; console.log '用户选择了有效日期:', dayStr ; } } }; </script> <style scoped> .calendar-custom-cell.is-disabled { color: c0c4cc; pointer-events: none; cursor: not-allowed; background-color: f5f7fa; } </style>",
+    "sections": [
+      {
+        "title": "一、实现需求",
+        "anchor": "#一-实现需求",
+        "id": "一-实现需求"
+      },
+      {
+        "title": "二、完整实现方案",
+        "anchor": "#二-完整实现方案",
+        "id": "二-完整实现方案"
+      }
+    ]
+  },
+  {
+    "id": "vscode-batch-clean-console-log-regex",
+    "title": "VSCode 中使用正则表达式批量清理 console.log 打印语句",
+    "url": "posts/vscode-batch-clean-console-log-regex.html",
+    "category": "效率工具与软件",
+    "date": "2021-05-08",
+    "tags": [
+      "VSCode",
+      "正则表达式",
+      "代码清洗",
+      "效率工具"
+    ],
+    "summary": "项目打包上线前，利用 VSCode 强大的正则查找与替换功能，一键安全快速清除所有调试用 console.log 语句。",
+    "content": "VSCode 中使用正则表达式批量清理 console.log 打印语句 一、使用场景 在日常前端开发联调中，代码中往往会残留大量用于调试的 console.log 打印。在生产打包前需要统一清理，避免泄露敏感业务数据或影响浏览器性能。 --- 二、单文件批量删除 1. 在 VSCode 当前文件中按下快捷键 Ctrl + H （macOS: Cmd + Option + F ）； 2. 开启搜索框右侧的 正则匹配模式图标 （快捷键 Alt + R ）； 3. 在查找框输入以下正则表达式： regex console\\.log\\ . \\ |; $ 4. 替换框留空，点击 全部替换（Ctrl + Alt + Enter） 即可。 --- 三、全工程文件夹全局批量清理 1. 按下全局查找替换快捷键 Ctrl + Shift + H （macOS: Cmd + Shift + H ）； 2. 查找内容输入： regex console\\. log|info|debug \\ . ?\\ ;? 3. 替换内容留空，点击一键替换即可。",
+    "fullText": "VSCode 中使用正则表达式批量清理 console.log 打印语句 项目打包上线前，利用 VSCode 强大的正则查找与替换功能，一键安全快速清除所有调试用 console.log 语句。 VSCode 正则表达式 代码清洗 效率工具 VSCode 中使用正则表达式批量清理 console.log 打印语句 一、使用场景 在日常前端开发联调中，代码中往往会残留大量用于调试的 console.log 打印。在生产打包前需要统一清理，避免泄露敏感业务数据或影响浏览器性能。 --- 二、单文件批量删除 1. 在 VSCode 当前文件中按下快捷键 Ctrl + H （macOS: Cmd + Option + F ）； 2. 开启搜索框右侧的 正则匹配模式图标 （快捷键 Alt + R ）； 3. 在查找框输入以下正则表达式： regex console\\.log\\ . \\ |; $ 4. 替换框留空，点击 全部替换（Ctrl + Alt + Enter） 即可。 --- 三、全工程文件夹全局批量清理 1. 按下全局查找替换快捷键 Ctrl + Shift + H （macOS: Cmd + Shift + H ）； 2. 查找内容输入： regex console\\. log|info|debug \\ . ?\\ ;? 3. 替换内容留空，点击一键替换即可。",
+    "sections": [
+      {
+        "title": "一、使用场景",
+        "anchor": "#一-使用场景",
+        "id": "一-使用场景"
+      },
+      {
+        "title": "二、单文件批量删除",
+        "anchor": "#二-单文件批量删除",
+        "id": "二-单文件批量删除"
+      },
+      {
+        "title": "三、全工程文件夹全局批量清理",
+        "anchor": "#三-全工程文件夹全局批量清理",
+        "id": "三-全工程文件夹全局批量清理"
+      }
+    ]
+  },
+  {
+    "id": "javascript-recursive-search-object-value",
+    "title": "JavaScript 递归检索深层对象与数组中是否包含某个值",
+    "url": "posts/javascript-recursive-search-object-value.html",
+    "category": "前端开发",
+    "date": "2021-04-25",
+    "tags": [
+      "JavaScript",
+      "递归检索",
+      "对象遍历",
+      "算法"
+    ],
+    "summary": "编写通用递归搜索函数，跨越任意深度嵌套的 JSON 对象与数组层级，快速判断某个基本类型值是否存在。",
+    "content": "JavaScript 递归检索深层对象与数组中是否包含某个值 一、函数设计需求 在处理复杂的多层树形数据时，我们常常需要快速判断一个数值或字符串（如 T恤 、 user_1024 ）是否存在于对象的任意深层属性中。 --- 二、通用递归检索实现代码 javascript / 递归判断对象或数组是否包含指定值 @param { } searchValue 要检索的目标值（基本数据类型） @param {Object|Array} targetObj 待遍历的对象或数组 @returns {Boolean} 是否存在 / function isValueExist searchValue, targetObj { if targetObj === null || targetObj === undefined return false; // 如果当前直接匹配 if targetObj === searchValue return true; if typeof targetObj === 'object' { for const key in targetObj { if Object.prototype.hasOwnProperty.call targetObj, key { if isValueExist searchValue, targetObj key { return true; } } } } return false; } // 调用示例 const complexUser = { user: { name: '张三', goods: { clothes: 'T恤', color: 'red', tags: '热卖', '新品' }, id: 5 } }; console.log isValueExist 'T恤', complexUser ; // true console.log isValueExist '新品', complexUser ; // true console.log isValueExist 'iPhone', complexUser ; // false",
+    "fullText": "JavaScript 递归检索深层对象与数组中是否包含某个值 编写通用递归搜索函数，跨越任意深度嵌套的 JSON 对象与数组层级，快速判断某个基本类型值是否存在。 JavaScript 递归检索 对象遍历 算法 JavaScript 递归检索深层对象与数组中是否包含某个值 一、函数设计需求 在处理复杂的多层树形数据时，我们常常需要快速判断一个数值或字符串（如 T恤 、 user_1024 ）是否存在于对象的任意深层属性中。 --- 二、通用递归检索实现代码 javascript / 递归判断对象或数组是否包含指定值 @param { } searchValue 要检索的目标值（基本数据类型） @param {Object|Array} targetObj 待遍历的对象或数组 @returns {Boolean} 是否存在 / function isValueExist searchValue, targetObj { if targetObj === null || targetObj === undefined return false; // 如果当前直接匹配 if targetObj === searchValue return true; if typeof targetObj === 'object' { for const key in targetObj { if Object.prototype.hasOwnProperty.call targetObj, key { if isValueExist searchValue, targetObj key { return true; } } } } return false; } // 调用示例 const complexUser = { user: { name: '张三', goods: { clothes: 'T恤', color: 'red', tags: '热卖', '新品' }, id: 5 } }; console.log isValueExist 'T恤', complexUser ; // true console.log isValueExist '新品', complexUser ; // true console.log isValueExist 'iPhone', complexUser ; // false",
+    "sections": [
+      {
+        "title": "一、函数设计需求",
+        "anchor": "#一-函数设计需求",
+        "id": "一-函数设计需求"
+      },
+      {
+        "title": "二、通用递归检索实现代码",
+        "anchor": "#二-通用递归检索实现代码",
+        "id": "二-通用递归检索实现代码"
+      }
+    ]
+  },
+  {
+    "id": "javascript-calculate-distance-between-coordinates",
+    "title": "JavaScript 根据经纬度计算两地直线距离算法实现",
+    "url": "posts/javascript-calculate-distance-between-coordinates.html",
+    "category": "前端开发",
+    "date": "2021-04-22",
+    "tags": [
+      "JavaScript",
+      "经纬度",
+      "LBS定位",
+      "数学公式"
+    ],
+    "summary": "基于 Haversine 球面大圆距离公式，使用 JavaScript 精确计算两个经纬度坐标点之间的实际千米/公里直线距离。",
+    "content": "JavaScript 根据经纬度计算两地直线距离算法实现 一、算法原理：Haversine 半正矢公式 地球近似为一个半径约为 $6378.137\\text{ km}$ 的球体。通过将两点的纬度（Latitude）与经度（Longitude）转换为弧度，即可利用三角函数计算出球面两点之间的最短距离。 --- 二、JavaScript 实现代码 javascript / 根据经纬度计算两点之间的距离 单位: km @param {Number} lat1 第一个点的纬度 -90 ~ 90 @param {Number} lng1 第一个点的经度 -180 ~ 180 @param {Number} lat2 第二个点的纬度 @param {Number} lng2 第二个点的经度 @returns {Number} 距离（保留两位小数，千米） / function getDistanceBetweenCoordinates lat1, lng1, lat2, lng2 { const EARTH_RADIUS = 6378.137; // 地球半径 km const radLat1 = lat1 Math.PI / 180.0; const radLat2 = lat2 Math.PI / 180.0; const a = radLat1 - radLat2; const b = lng1 Math.PI / 180.0 - lng2 Math.PI / 180.0 ; let distance = 2 Math.asin Math.sqrt Math.pow Math.sin a / 2 , 2 + Math.cos radLat1 Math.cos radLat2 Math.pow Math.sin b / 2 , 2 ; distance = distance EARTH_RADIUS; return Number distance.toFixed 2 ; } // 调用示例：计算烟台两地标距离 const dist = getDistanceBetweenCoordinates 37.48205260, 121.44577861, 37.48330837, 121.44820869 ; console.log 两地距离约为: ${dist} km ;",
+    "fullText": "JavaScript 根据经纬度计算两地直线距离算法实现 基于 Haversine 球面大圆距离公式，使用 JavaScript 精确计算两个经纬度坐标点之间的实际千米/公里直线距离。 JavaScript 经纬度 LBS定位 数学公式 JavaScript 根据经纬度计算两地直线距离算法实现 一、算法原理：Haversine 半正矢公式 地球近似为一个半径约为 $6378.137\\text{ km}$ 的球体。通过将两点的纬度（Latitude）与经度（Longitude）转换为弧度，即可利用三角函数计算出球面两点之间的最短距离。 --- 二、JavaScript 实现代码 javascript / 根据经纬度计算两点之间的距离 单位: km @param {Number} lat1 第一个点的纬度 -90 ~ 90 @param {Number} lng1 第一个点的经度 -180 ~ 180 @param {Number} lat2 第二个点的纬度 @param {Number} lng2 第二个点的经度 @returns {Number} 距离（保留两位小数，千米） / function getDistanceBetweenCoordinates lat1, lng1, lat2, lng2 { const EARTH_RADIUS = 6378.137; // 地球半径 km const radLat1 = lat1 Math.PI / 180.0; const radLat2 = lat2 Math.PI / 180.0; const a = radLat1 - radLat2; const b = lng1 Math.PI / 180.0 - lng2 Math.PI / 180.0 ; let distance = 2 Math.asin Math.sqrt Math.pow Math.sin a / 2 , 2 + Math.cos radLat1 Math.cos radLat2 Math.pow Math.sin b / 2 , 2 ; distance = distance EARTH_RADIUS; return Number distance.toFixed 2 ; } // 调用示例：计算烟台两地标距离 const dist = getDistanceBetweenCoordinates 37.48205260, 121.44577861, 37.48330837, 121.44820869 ; console.log 两地距离约为: ${dist} km ;",
+    "sections": [
+      {
+        "title": "一、算法原理：Haversine 半正矢公式",
+        "anchor": "#一-算法原理-haversine-半正矢公式",
+        "id": "一-算法原理-haversine-半正矢公式"
+      },
+      {
+        "title": "二、JavaScript 实现代码",
+        "anchor": "#二-javascript-实现代码",
+        "id": "二-javascript-实现代码"
+      }
+    ]
+  },
+  {
+    "id": "vue-input-only-email-filter",
+    "title": "Vue 中 input 输入框实时校验与过滤邮箱格式输入",
+    "url": "posts/vue-input-only-email-filter.html",
+    "category": "前端开发",
+    "date": "2021-04-20",
+    "tags": [
+      "Vue",
+      "表单校验",
+      "邮箱验证",
+      "输入拦截"
+    ],
+    "summary": "针对登录与注册表单，实现 Vue 输入框实时拦截非法特殊符号，保证仅能输入符合规范的 Email 邮箱字符。",
+    "content": "Vue 中 input 输入框实时校验与过滤邮箱格式输入 一、实现思路 1. 移除非法字符（仅保留字母、数字、 @ 、 . 与 _ ）； 2. 限制 @ 符号全局唯一出现； 3. 限制 @ 之后不能直接紧随 . ； 4. 限制顶级域名后缀长度（通常为 2~4 位字符）。 --- 二、Vue 核心实现代码 html <template> <div class=\"email-input-wrapper\"> <input v-model=\"email\" placeholder=\"请输入您的邮箱地址\" class=\"email-input\" @input=\"handleEmailInput\" /> </div> </template> <script> export default { data { return { email: '' }; }, methods: { handleEmailInput { let val = this.email.replace / ^\\d\\w@._- /g, '' ; if val.indexOf '@' !== -1 { const parts = val.split '@' ; // 只允许一个 @ 符号 if parts.length > 2 { val = parts 0 + '@' + parts.slice 1 .join '' ; } // 防止 @. 紧挨 val = val.replace /@\\./g, '@' ; } this.email = val; } } }; </script>",
+    "fullText": "Vue 中 input 输入框实时校验与过滤邮箱格式输入 针对登录与注册表单，实现 Vue 输入框实时拦截非法特殊符号，保证仅能输入符合规范的 Email 邮箱字符。 Vue 表单校验 邮箱验证 输入拦截 Vue 中 input 输入框实时校验与过滤邮箱格式输入 一、实现思路 1. 移除非法字符（仅保留字母、数字、 @ 、 . 与 _ ）； 2. 限制 @ 符号全局唯一出现； 3. 限制 @ 之后不能直接紧随 . ； 4. 限制顶级域名后缀长度（通常为 2~4 位字符）。 --- 二、Vue 核心实现代码 html <template> <div class=\"email-input-wrapper\"> <input v-model=\"email\" placeholder=\"请输入您的邮箱地址\" class=\"email-input\" @input=\"handleEmailInput\" /> </div> </template> <script> export default { data { return { email: '' }; }, methods: { handleEmailInput { let val = this.email.replace / ^\\d\\w@._- /g, '' ; if val.indexOf '@' !== -1 { const parts = val.split '@' ; // 只允许一个 @ 符号 if parts.length > 2 { val = parts 0 + '@' + parts.slice 1 .join '' ; } // 防止 @. 紧挨 val = val.replace /@\\./g, '@' ; } this.email = val; } } }; </script>",
+    "sections": [
+      {
+        "title": "一、实现思路",
+        "anchor": "#一-实现思路",
+        "id": "一-实现思路"
+      },
+      {
+        "title": "二、Vue 核心实现代码",
+        "anchor": "#二-vue-核心实现代码",
+        "id": "二-vue-核心实现代码"
+      }
+    ]
+  },
+  {
+    "id": "javascript-simulate-baidu-search-ranking",
+    "title": "JavaScript 字符串即时搜索与智能匹配排序算法",
+    "url": "posts/javascript-simulate-baidu-search-ranking.html",
+    "category": "前端开发",
+    "date": "2021-04-18",
+    "tags": [
+      "JavaScript",
+      "搜索匹配",
+      "字符串算法",
+      "排序"
+    ],
+    "summary": "模拟百度搜索关键词智能匹配，基于字符匹配位置、命中度与插入排序对搜索结果列表进行动态权重排序。",
+    "content": "JavaScript 字符串即时搜索与智能匹配排序算法 一、实现原理 当用户输入搜索关键词时，根据以下权重进行动态排序： 1. 完全匹配 / 前缀匹配 ：优先级最高； 2. 包含匹配 ：根据字符在目标串中的出现索引位置升序排列； 3. 模糊命中 ：过滤无相关项。 --- 二、核心搜索与排序算法 javascript / 模拟百度搜索结果权重匹配排序 @param {String} keyword 搜索关键词 @param {Array<String>} dataList 待检索的数据列表 @returns {Array<String>} 按匹配度排序后的搜索结果 / function searchAndRank keyword, dataList = { if !keyword || !keyword.trim return dataList; const kw = keyword.trim .toLowerCase ; // 1. 过滤并计算命中权重 const matched = ; for const item of dataList { const text = String item .toLowerCase ; const index = text.indexOf kw ; if index !== -1 { matched.push { raw: item, score: index // 越靠前 index 越小，匹配度越高 } ; } } // 2. 插入排序进行权重排列 for let i = 1; i < matched.length; i++ { let current = matched i ; let j = i - 1; while j >= 0 && matched j .score > current.score { matched j + 1 = matched j ; j--; } matched j + 1 = current; } return matched.map m => m.raw ; } // 调用示例 const searchDatabase = 'JavaScript 权威指南', 'Vue3 源码与组件设计', 'JavaScript 异步编程', '现代 JavaScript 教程', 'Linux Nginx 运维实战' ; console.log searchAndRank 'JavaScript', searchDatabase ; // 优先返回以 JavaScript 开头的条目，再返回中间包含的条目",
+    "fullText": "JavaScript 字符串即时搜索与智能匹配排序算法 模拟百度搜索关键词智能匹配，基于字符匹配位置、命中度与插入排序对搜索结果列表进行动态权重排序。 JavaScript 搜索匹配 字符串算法 排序 JavaScript 字符串即时搜索与智能匹配排序算法 一、实现原理 当用户输入搜索关键词时，根据以下权重进行动态排序： 1. 完全匹配 / 前缀匹配 ：优先级最高； 2. 包含匹配 ：根据字符在目标串中的出现索引位置升序排列； 3. 模糊命中 ：过滤无相关项。 --- 二、核心搜索与排序算法 javascript / 模拟百度搜索结果权重匹配排序 @param {String} keyword 搜索关键词 @param {Array<String>} dataList 待检索的数据列表 @returns {Array<String>} 按匹配度排序后的搜索结果 / function searchAndRank keyword, dataList = { if !keyword || !keyword.trim return dataList; const kw = keyword.trim .toLowerCase ; // 1. 过滤并计算命中权重 const matched = ; for const item of dataList { const text = String item .toLowerCase ; const index = text.indexOf kw ; if index !== -1 { matched.push { raw: item, score: index // 越靠前 index 越小，匹配度越高 } ; } } // 2. 插入排序进行权重排列 for let i = 1; i < matched.length; i++ { let current = matched i ; let j = i - 1; while j >= 0 && matched j .score > current.score { matched j + 1 = matched j ; j--; } matched j + 1 = current; } return matched.map m => m.raw ; } // 调用示例 const searchDatabase = 'JavaScript 权威指南', 'Vue3 源码与组件设计', 'JavaScript 异步编程', '现代 JavaScript 教程', 'Linux Nginx 运维实战' ; console.log searchAndRank 'JavaScript', searchDatabase ; // 优先返回以 JavaScript 开头的条目，再返回中间包含的条目",
+    "sections": [
+      {
+        "title": "一、实现原理",
+        "anchor": "#一-实现原理",
+        "id": "一-实现原理"
+      },
+      {
+        "title": "二、核心搜索与排序算法",
+        "anchor": "#二-核心搜索与排序算法",
+        "id": "二-核心搜索与排序算法"
+      }
+    ]
+  },
+  {
+    "id": "vue-input-only-float-currency-filter",
+    "title": "Vue 中限制 input 输入框仅允许输入浮点数或金额格式",
+    "url": "posts/vue-input-only-float-currency-filter.html",
+    "category": "前端开发",
+    "date": "2021-04-15",
+    "tags": [
+      "Vue",
+      "表单验证",
+      "金额输入",
+      "正则过滤"
+    ],
+    "summary": "在 Vue 表单中通过 watch 监听与精确正则，限制用户输入金额时仅能输入数字与最多两位小数，杜绝非法字符。",
+    "content": "Vue 中限制 input 输入框仅允许输入浮点数或金额格式 一、实现思路 使用 Vue 的 watch 机制或 @input 事件监听，在用户键盘输入时实时通过正则表达式校验。如果输入了非法字符或超过两位小数，自动回退到上一次的合法值。 --- 二、Vue 完整实现代码 html <template> <div class=\"money-input-container\"> <input v-model=\"inputMoney\" placeholder=\"请输入金额 最多两位小数 \" class=\"custom-input\" /> </div> </template> <script> export default { data { return { inputMoney: '' }; }, watch: { inputMoney newVal, oldVal { if !newVal return; // 允许最多5位整数、最多2位小数的金额格式 const reg = /^ \\d{0,5} \\. \\d{0,2} ?$/; if !reg.test newVal { this.inputMoney = oldVal; } } } }; </script>",
+    "fullText": "Vue 中限制 input 输入框仅允许输入浮点数或金额格式 在 Vue 表单中通过 watch 监听与精确正则，限制用户输入金额时仅能输入数字与最多两位小数，杜绝非法字符。 Vue 表单验证 金额输入 正则过滤 Vue 中限制 input 输入框仅允许输入浮点数或金额格式 一、实现思路 使用 Vue 的 watch 机制或 @input 事件监听，在用户键盘输入时实时通过正则表达式校验。如果输入了非法字符或超过两位小数，自动回退到上一次的合法值。 --- 二、Vue 完整实现代码 html <template> <div class=\"money-input-container\"> <input v-model=\"inputMoney\" placeholder=\"请输入金额 最多两位小数 \" class=\"custom-input\" /> </div> </template> <script> export default { data { return { inputMoney: '' }; }, watch: { inputMoney newVal, oldVal { if !newVal return; // 允许最多5位整数、最多2位小数的金额格式 const reg = /^ \\d{0,5} \\. \\d{0,2} ?$/; if !reg.test newVal { this.inputMoney = oldVal; } } } }; </script>",
+    "sections": [
+      {
+        "title": "一、实现思路",
+        "anchor": "#一-实现思路",
+        "id": "一-实现思路"
+      },
+      {
+        "title": "二、Vue 完整实现代码",
+        "anchor": "#二-vue-完整实现代码",
+        "id": "二-vue-完整实现代码"
+      }
+    ]
+  },
+  {
+    "id": "javascript-flatten-nested-json-and-array",
+    "title": "JavaScript 递归扁平化深层嵌套数组与 JSON 结构实战",
+    "url": "posts/javascript-flatten-nested-json-and-array.html",
+    "category": "前端开发",
+    "date": "2021-04-12",
+    "tags": [
+      "JavaScript",
+      "扁平化",
+      "递归",
+      "数据处理"
+    ],
+    "summary": "掌握多维数组扁平化为一维数组，以及将多层嵌套树形 JSON 数据结构展平成单层键值映射的通用算法。",
+    "content": "JavaScript 递归扁平化深层嵌套数组与 JSON 结构实战 一、多维数组扁平化为一维数组 javascript / 递归将多维数组扁平化为一维数组 @param {Array} arr 多维嵌套数组 @returns {Array} 展平后的一维数组 / function flattenArray arr { let result = ; for let i = 0; i < arr.length; i++ { if Array.isArray arr i { result = result.concat flattenArray arr i ; } else { result.push arr i ; } } return result; } // 现代浏览器原生方案 ES2019 const nestedArr = 1, 2, 3, 4, 5 , 6 ; console.log nestedArr.flat Infinity ; // 1, 2, 3, 4, 5, 6 --- 二、多层嵌套 JSON 扁平化展开 javascript / 递归将多层 JSON 展平成单层键值对 @param {Object} jsonObj 嵌套 JSON 对象 @param {String} prefix 键名前缀 @param {Object} result 结果容器 / function flattenJson jsonObj, prefix = '', result = {} { for const key in jsonObj { if Object.prototype.hasOwnProperty.call jsonObj, key { const fullKey = prefix ? ${prefix}.${key} : key; if typeof jsonObj key === 'object' && jsonObj key !== null && !Array.isArray jsonObj key { flattenJson jsonObj key , fullKey, result ; } else { result fullKey = jsonObj key ; } } } return result; } // 调用示例 const userProfile = { user: { name: '张三', detail: { email: 'zhangsan@example.com', city: '北京' } }, status: 'active' }; console.log flattenJson userProfile ; // 输出: { 'user.name': '张三', 'user.detail.email': '...', 'user.detail.city': '北京', status: 'active' }",
+    "fullText": "JavaScript 递归扁平化深层嵌套数组与 JSON 结构实战 掌握多维数组扁平化为一维数组，以及将多层嵌套树形 JSON 数据结构展平成单层键值映射的通用算法。 JavaScript 扁平化 递归 数据处理 JavaScript 递归扁平化深层嵌套数组与 JSON 结构实战 一、多维数组扁平化为一维数组 javascript / 递归将多维数组扁平化为一维数组 @param {Array} arr 多维嵌套数组 @returns {Array} 展平后的一维数组 / function flattenArray arr { let result = ; for let i = 0; i < arr.length; i++ { if Array.isArray arr i { result = result.concat flattenArray arr i ; } else { result.push arr i ; } } return result; } // 现代浏览器原生方案 ES2019 const nestedArr = 1, 2, 3, 4, 5 , 6 ; console.log nestedArr.flat Infinity ; // 1, 2, 3, 4, 5, 6 --- 二、多层嵌套 JSON 扁平化展开 javascript / 递归将多层 JSON 展平成单层键值对 @param {Object} jsonObj 嵌套 JSON 对象 @param {String} prefix 键名前缀 @param {Object} result 结果容器 / function flattenJson jsonObj, prefix = '', result = {} { for const key in jsonObj { if Object.prototype.hasOwnProperty.call jsonObj, key { const fullKey = prefix ? ${prefix}.${key} : key; if typeof jsonObj key === 'object' && jsonObj key !== null && !Array.isArray jsonObj key { flattenJson jsonObj key , fullKey, result ; } else { result fullKey = jsonObj key ; } } } return result; } // 调用示例 const userProfile = { user: { name: '张三', detail: { email: 'zhangsan@example.com', city: '北京' } }, status: 'active' }; console.log flattenJson userProfile ; // 输出: { 'user.name': '张三', 'user.detail.email': '...', 'user.detail.city': '北京', status: 'active' }",
+    "sections": [
+      {
+        "title": "一、多维数组扁平化为一维数组",
+        "anchor": "#一-多维数组扁平化为一维数组",
+        "id": "一-多维数组扁平化为一维数组"
+      },
+      {
+        "title": "二、多层嵌套 JSON 扁平化展开",
+        "anchor": "#二-多层嵌套-json-扁平化展开",
+        "id": "二-多层嵌套-json-扁平化展开"
+      }
+    ]
+  },
+  {
+    "id": "el-tree-unique-index-parent-backtracking",
+    "title": "Element UI 中 el-tree 树形结构生成唯一索引与父级回溯",
+    "url": "posts/el-tree-unique-index-parent-backtracking.html",
+    "category": "前端开发",
+    "date": "2021-04-10",
+    "tags": [
+      "Vue",
+      "ElementUI",
+      "el-tree",
+      "递归算法"
+    ],
+    "summary": "通过递归遍历为 Element UI 的 el-tree 节点动态生成带层级深度的唯一全局索引，并支持通过子索引快速回溯父级链条。",
+    "content": "Element UI 中 el-tree 树形结构生成唯一索引与父级回溯 一、业务场景与需求 在开发 Element UI 复杂的 el-tree 树形菜单或权限配置时，常常需要： 1. 依据节点层级深度动态生成全局唯一的索引路径（如 0-1-2 ）； 2. 用户选中某一子节点时，能够快速逆向回溯提取其所有上级父节点链条。 --- 二、递归生成唯一索引算法 javascript / 递归为树形数据生成带有层级路径的唯一索引 如 0, 0-0, 0-1-0 @param {Array} treeData 树形节点数组 @param {String} parentIndex 父级索引前缀 / function generateTreeUniqueIndex treeData, parentIndex = '' { return treeData.map node, index => { const currentIndex = parentIndex === '' ? ${index} : ${parentIndex}-${index} ; const newNode = { ...node, uniqueIndex: currentIndex }; if node.children && Array.isArray node.children && node.children.length > 0 { newNode.children = generateTreeUniqueIndex node.children, currentIndex ; } return newNode; } ; } --- 三、根据索引值回溯父级节点链 javascript / 通过子节点的 uniqueIndex 回溯其所属的所有上层索引列表 @param {String} uniqueIndex 节点索引（如 '0-1-2'） @returns {Array} 父级索引数组（如 '0', '0-1', '0-1-2' ） / function backtrackParentIndexes uniqueIndex { const parts = uniqueIndex.split '-' ; const parentIndexes = ; let current = ''; for let i = 0; i < parts.length; i++ { current = i === 0 ? parts i : ${current}-${parts i } ; parentIndexes.push current ; } return parentIndexes; } // 调用示例 console.log backtrackParentIndexes '0-1-2' ; // 输出: '0', '0-1', '0-1-2'",
+    "fullText": "Element UI 中 el-tree 树形结构生成唯一索引与父级回溯 通过递归遍历为 Element UI 的 el-tree 节点动态生成带层级深度的唯一全局索引，并支持通过子索引快速回溯父级链条。 Vue ElementUI el-tree 递归算法 Element UI 中 el-tree 树形结构生成唯一索引与父级回溯 一、业务场景与需求 在开发 Element UI 复杂的 el-tree 树形菜单或权限配置时，常常需要： 1. 依据节点层级深度动态生成全局唯一的索引路径（如 0-1-2 ）； 2. 用户选中某一子节点时，能够快速逆向回溯提取其所有上级父节点链条。 --- 二、递归生成唯一索引算法 javascript / 递归为树形数据生成带有层级路径的唯一索引 如 0, 0-0, 0-1-0 @param {Array} treeData 树形节点数组 @param {String} parentIndex 父级索引前缀 / function generateTreeUniqueIndex treeData, parentIndex = '' { return treeData.map node, index => { const currentIndex = parentIndex === '' ? ${index} : ${parentIndex}-${index} ; const newNode = { ...node, uniqueIndex: currentIndex }; if node.children && Array.isArray node.children && node.children.length > 0 { newNode.children = generateTreeUniqueIndex node.children, currentIndex ; } return newNode; } ; } --- 三、根据索引值回溯父级节点链 javascript / 通过子节点的 uniqueIndex 回溯其所属的所有上层索引列表 @param {String} uniqueIndex 节点索引（如 '0-1-2'） @returns {Array} 父级索引数组（如 '0', '0-1', '0-1-2' ） / function backtrackParentIndexes uniqueIndex { const parts = uniqueIndex.split '-' ; const parentIndexes = ; let current = ''; for let i = 0; i < parts.length; i++ { current = i === 0 ? parts i : ${current}-${parts i } ; parentIndexes.push current ; } return parentIndexes; } // 调用示例 console.log backtrackParentIndexes '0-1-2' ; // 输出: '0', '0-1', '0-1-2'",
+    "sections": [
+      {
+        "title": "一、业务场景与需求",
+        "anchor": "#一-业务场景与需求",
+        "id": "一-业务场景与需求"
+      },
+      {
+        "title": "二、递归生成唯一索引算法",
+        "anchor": "#二-递归生成唯一索引算法",
+        "id": "二-递归生成唯一索引算法"
+      },
+      {
+        "title": "三、根据索引值回溯父级节点链",
+        "anchor": "#三-根据索引值回溯父级节点链",
+        "id": "三-根据索引值回溯父级节点链"
+      }
+    ]
+  },
+  {
+    "id": "javascript-replace-json-keys-recursive",
+    "title": "JavaScript 递归批量重命名 JSON 对象中的键名 (Key)",
+    "url": "posts/javascript-replace-json-keys-recursive.html",
+    "category": "前端开发",
+    "date": "2021-04-05",
+    "tags": [
+      "JavaScript",
+      "JSON处理",
+      "递归算法",
+      "数据清洗"
+    ],
+    "summary": "支持单键或多键批量映射替换，递归深度遍历树形 JSON 数据结构，自动将后端下发的驼峰或下划线字段重命名。",
+    "content": "JavaScript 递归批量重命名 JSON 对象中的键名 Key 一、业务痛点 在前后端接口数据对接中，后端经常返回下划线命名字段（如 group_id 、 pid ），或者需要将多层嵌套树形菜单的 child 统一重命名为组件所需要的 children 。 --- 二、递归替换 Key 核心函数 javascript / 递归替换 JSON 对象中的 Key 键名 @param {String|Array} oldKey 旧的 key 或旧 key 数组 @param {String|Array} newKey 新的 key 或新 key 数组 @param {Object|Array} targetObj 待处理的目标对象 @returns {Object|Array} 处理后的数据对象 / function replaceJsonKey oldKey, newKey, targetObj { if !targetObj || typeof targetObj !== 'object' { return targetObj; } if Array.isArray targetObj { return targetObj.map item => replaceJsonKey oldKey, newKey, item ; } const result = {}; const isArrayMap = Array.isArray oldKey && Array.isArray newKey ; for const key in targetObj { if Object.prototype.hasOwnProperty.call targetObj, key { let currentKey = key; if isArrayMap { const matchIndex = oldKey.indexOf key ; if matchIndex !== -1 && newKey matchIndex { currentKey = newKey matchIndex ; } } else if typeof oldKey === 'string' && key === oldKey { currentKey = newKey; } // 递归处理子属性 result currentKey = replaceJsonKey oldKey, newKey, targetObj key ; } } return result; } // 调用示例 const mockData = { id: 1, group_id: 101, pid: 0, name: '研发部', child: { id: 2, group_id: 101, pid: 1, name: '前端组' } } ; // 单键替换 console.log replaceJsonKey 'pid', 'parentId', mockData ; // 多键批量映射替换 console.log replaceJsonKey 'group_id', 'child' , 'groupId', 'children' , mockData ;",
+    "fullText": "JavaScript 递归批量重命名 JSON 对象中的键名 (Key) 支持单键或多键批量映射替换，递归深度遍历树形 JSON 数据结构，自动将后端下发的驼峰或下划线字段重命名。 JavaScript JSON处理 递归算法 数据清洗 JavaScript 递归批量重命名 JSON 对象中的键名 Key 一、业务痛点 在前后端接口数据对接中，后端经常返回下划线命名字段（如 group_id 、 pid ），或者需要将多层嵌套树形菜单的 child 统一重命名为组件所需要的 children 。 --- 二、递归替换 Key 核心函数 javascript / 递归替换 JSON 对象中的 Key 键名 @param {String|Array} oldKey 旧的 key 或旧 key 数组 @param {String|Array} newKey 新的 key 或新 key 数组 @param {Object|Array} targetObj 待处理的目标对象 @returns {Object|Array} 处理后的数据对象 / function replaceJsonKey oldKey, newKey, targetObj { if !targetObj || typeof targetObj !== 'object' { return targetObj; } if Array.isArray targetObj { return targetObj.map item => replaceJsonKey oldKey, newKey, item ; } const result = {}; const isArrayMap = Array.isArray oldKey && Array.isArray newKey ; for const key in targetObj { if Object.prototype.hasOwnProperty.call targetObj, key { let currentKey = key; if isArrayMap { const matchIndex = oldKey.indexOf key ; if matchIndex !== -1 && newKey matchIndex { currentKey = newKey matchIndex ; } } else if typeof oldKey === 'string' && key === oldKey { currentKey = newKey; } // 递归处理子属性 result currentKey = replaceJsonKey oldKey, newKey, targetObj key ; } } return result; } // 调用示例 const mockData = { id: 1, group_id: 101, pid: 0, name: '研发部', child: { id: 2, group_id: 101, pid: 1, name: '前端组' } } ; // 单键替换 console.log replaceJsonKey 'pid', 'parentId', mockData ; // 多键批量映射替换 console.log replaceJsonKey 'group_id', 'child' , 'groupId', 'children' , mockData ;",
+    "sections": [
+      {
+        "title": "一、业务痛点",
+        "anchor": "#一-业务痛点",
+        "id": "一-业务痛点"
+      },
+      {
+        "title": "二、递归替换 Key 核心函数",
+        "anchor": "#二-递归替换-key-核心函数",
+        "id": "二-递归替换-key-核心函数"
+      }
+    ]
+  },
+  {
+    "id": "javascript-get-textarea-cursor-position",
+    "title": "JavaScript 获取与控制 input 及 textarea 文本框光标位置",
+    "url": "posts/javascript-get-textarea-cursor-position.html",
+    "category": "前端开发",
+    "date": "2021-03-28",
+    "tags": [
+      "JavaScript",
+      "DOM操作",
+      "光标位置",
+      "文本框"
+    ],
+    "summary": "兼容现代标准浏览器与传统 IE 环境，获取 input / textarea 中光标的精确字符位置，并在指定位置插入文本。",
+    "content": "JavaScript 获取与控制 input 及 textarea 文本框光标位置 一、获取光标所在索引位置 javascript / 获取输入框或文本域的光标位置 @param {HTMLElement|String} el 目标 DOM 元素或 ID @returns {Number} 光标所在索引值 / function getCursorPosition el { const oElement = typeof el === 'string' ? document.getElementById el : el; if !oElement return 0; let cursorPos = 0; if document.selection { // 兼容 IE 传统模式 const selectRange = document.selection.createRange ; selectRange.moveStart 'character', -oElement.value.length ; cursorPos = selectRange.text.length; } else if oElement.selectionStart !== undefined { // 标准浏览器 Chrome / Firefox / Safari / Edge cursorPos = oElement.selectionStart; } return cursorPos; } --- 二、在光标当前位置插入特定文本 javascript / 在输入框光标所在处插入文本并重置光标 @param {HTMLInputElement} inputEl @param {String} textToInsert / function insertTextAtCursor inputEl, textToInsert { const startPos = inputEl.selectionStart || 0; const endPos = inputEl.selectionEnd || 0; const value = inputEl.value; inputEl.value = value.substring 0, startPos + textToInsert + value.substring endPos ; // 重新聚焦并将光标移动至插入内容末尾 inputEl.focus ; inputEl.selectionStart = inputEl.selectionEnd = startPos + textToInsert.length; }",
+    "fullText": "JavaScript 获取与控制 input 及 textarea 文本框光标位置 兼容现代标准浏览器与传统 IE 环境，获取 input / textarea 中光标的精确字符位置，并在指定位置插入文本。 JavaScript DOM操作 光标位置 文本框 JavaScript 获取与控制 input 及 textarea 文本框光标位置 一、获取光标所在索引位置 javascript / 获取输入框或文本域的光标位置 @param {HTMLElement|String} el 目标 DOM 元素或 ID @returns {Number} 光标所在索引值 / function getCursorPosition el { const oElement = typeof el === 'string' ? document.getElementById el : el; if !oElement return 0; let cursorPos = 0; if document.selection { // 兼容 IE 传统模式 const selectRange = document.selection.createRange ; selectRange.moveStart 'character', -oElement.value.length ; cursorPos = selectRange.text.length; } else if oElement.selectionStart !== undefined { // 标准浏览器 Chrome / Firefox / Safari / Edge cursorPos = oElement.selectionStart; } return cursorPos; } --- 二、在光标当前位置插入特定文本 javascript / 在输入框光标所在处插入文本并重置光标 @param {HTMLInputElement} inputEl @param {String} textToInsert / function insertTextAtCursor inputEl, textToInsert { const startPos = inputEl.selectionStart || 0; const endPos = inputEl.selectionEnd || 0; const value = inputEl.value; inputEl.value = value.substring 0, startPos + textToInsert + value.substring endPos ; // 重新聚焦并将光标移动至插入内容末尾 inputEl.focus ; inputEl.selectionStart = inputEl.selectionEnd = startPos + textToInsert.length; }",
+    "sections": [
+      {
+        "title": "一、获取光标所在索引位置",
+        "anchor": "#一-获取光标所在索引位置",
+        "id": "一-获取光标所在索引位置"
+      },
+      {
+        "title": "二、在光标当前位置插入特定文本",
+        "anchor": "#二-在光标当前位置插入特定文本",
+        "id": "二-在光标当前位置插入特定文本"
+      }
+    ]
+  },
+  {
+    "id": "javascript-array-string-deduplication",
+    "title": "JavaScript 数组与字符串去重深度实战（支持嵌套对象去重）",
+    "url": "posts/javascript-array-string-deduplication.html",
+    "category": "前端开发",
+    "date": "2021-03-25",
+    "tags": [
+      "JavaScript",
+      "去重",
+      "Set",
+      "算法"
+    ],
+    "summary": "总结 JavaScript 中数组去重、字符串字符去重，以及支持包含嵌套 JSON 对象的深度去重完整解决方案。",
+    "content": "JavaScript 数组与字符串去重深度实战（支持嵌套对象去重） 一、基础数组与字符串极简去重 Set 对于基础数据类型的数组与字符串，ES6 的 Set 是最高效的去重方式： javascript // 1. 普通数组去重 const arr = 1, 2, 2, 3, 4, 4, 5 ; const uniqueArr = ...new Set arr ; console.log uniqueArr ; // 1, 2, 3, 4, 5 // 2. 字符串字符去重 const str = 'abbcccdddde'; const uniqueStr = ...new Set str .join '' ; console.log uniqueStr ; // 'abcde' --- 二、支持复杂 JSON 对象的全功能深度去重函数 javascript / 健壮的数组去重函数（支持内部包含 JSON 对象的深度比对） @param {Array|String|Number} target 需要去重的数据 @returns {Array|String} / function removeDuplicates target { if typeof target === 'string' || typeof target === 'number' { const chars = String target .split '' ; return ...new Set chars .join '' ; } if !Array.isArray target return target; const result = ; const stringCache = new Set ; for const item of target { // 将对象转为序列化字符串进行精准特征比对 const key = typeof item === 'object' && item !== null ? JSON.stringify item : item; if !stringCache.has key { stringCache.add key ; result.push item ; } } return result; } // 调用示例 const mixedList = 1, 5, 5, 6, { name: '张三', age: 18 }, { name: '李四', age: 20 }, { name: '张三', age: 18 } // 重复对象 ; console.log removeDuplicates mixedList ; // 输出: 1, 5, 6, { name: '张三', age: 18 }, { name: '李四', age: 20 }",
+    "fullText": "JavaScript 数组与字符串去重深度实战（支持嵌套对象去重） 总结 JavaScript 中数组去重、字符串字符去重，以及支持包含嵌套 JSON 对象的深度去重完整解决方案。 JavaScript 去重 Set 算法 JavaScript 数组与字符串去重深度实战（支持嵌套对象去重） 一、基础数组与字符串极简去重 Set 对于基础数据类型的数组与字符串，ES6 的 Set 是最高效的去重方式： javascript // 1. 普通数组去重 const arr = 1, 2, 2, 3, 4, 4, 5 ; const uniqueArr = ...new Set arr ; console.log uniqueArr ; // 1, 2, 3, 4, 5 // 2. 字符串字符去重 const str = 'abbcccdddde'; const uniqueStr = ...new Set str .join '' ; console.log uniqueStr ; // 'abcde' --- 二、支持复杂 JSON 对象的全功能深度去重函数 javascript / 健壮的数组去重函数（支持内部包含 JSON 对象的深度比对） @param {Array|String|Number} target 需要去重的数据 @returns {Array|String} / function removeDuplicates target { if typeof target === 'string' || typeof target === 'number' { const chars = String target .split '' ; return ...new Set chars .join '' ; } if !Array.isArray target return target; const result = ; const stringCache = new Set ; for const item of target { // 将对象转为序列化字符串进行精准特征比对 const key = typeof item === 'object' && item !== null ? JSON.stringify item : item; if !stringCache.has key { stringCache.add key ; result.push item ; } } return result; } // 调用示例 const mixedList = 1, 5, 5, 6, { name: '张三', age: 18 }, { name: '李四', age: 20 }, { name: '张三', age: 18 } // 重复对象 ; console.log removeDuplicates mixedList ; // 输出: 1, 5, 6, { name: '张三', age: 18 }, { name: '李四', age: 20 }",
+    "sections": [
+      {
+        "title": "一、基础数组与字符串极简去重 (Set)",
+        "anchor": "#一-基础数组与字符串极简去重-set",
+        "id": "一-基础数组与字符串极简去重-set"
+      },
+      {
+        "title": "二、支持复杂 JSON 对象的全功能深度去重函数",
+        "anchor": "#二-支持复杂-json-对象的全功能深度去重函数",
+        "id": "二-支持复杂-json-对象的全功能深度去重函数"
+      }
+    ]
+  },
+  {
+    "id": "javascript-array-object-selection-sort",
+    "title": "JavaScript 数组与对象数组自定义排序算法实战",
+    "url": "posts/javascript-array-object-selection-sort.html",
+    "category": "前端开发",
+    "date": "2021-03-20",
+    "tags": [
+      "JavaScript",
+      "选择排序",
+      "数组排序",
+      "算法"
+    ],
+    "summary": "实现通用选择排序算法，支持对普通数值数组及包含特定 key 键的对象数组进行正序与逆序灵活排列。",
+    "content": "JavaScript 数组与对象数组自定义排序算法实战 一、通用数组选择排序算法 javascript / 基础数组选择排序 @param {Array} arr 待排序数组 @param {Number} order 1 为从小到大，-1 为从大到小 @returns {Array} 排序后的全新副本 / function selectionSort arr = , order = 1 { const result = ...arr ; const len = result.length; for let i = 0; i < len - 1; i++ { for let j = i + 1; j < len; j++ { if order === 1 && result i > result j { result i , result j = result j , result i ; } else if order === -1 && result i < result j { result i , result j = result j , result i ; } } } return result; } // 调用示例 const numbers = 1, 8, 96, 666, 2, 3, 5, 68, 567 ; console.log '从小到大:', selectionSort numbers, 1 ; console.log '从大到小:', selectionSort numbers, -1 ; --- 二、对象数组根据 Key 键动态排序 javascript / 对象数组根据属性 key 排序 @param {Array} arrObj 对象数组 @param {Number} order 1 为从小到大，-1 为从大到小 @param {String} key 参与比较的对象属性字段 / function sortObjByKey arrObj = , order = 1, key { const result = JSON.parse JSON.stringify arrObj ; const len = result.length; for let i = 0; i < len - 1; i++ { for let j = i + 1; j < len; j++ { if order === 1 && result i key > result j key { result i , result j = result j , result i ; } else if order === -1 && result i key < result j key { result i , result j = result j , result i ; } } } return result; } // 调用示例 const userList = { id: 265, name: '张三' }, { id: 0, name: '李四' }, { id: 2, name: '王五' }, { id: 999, name: '赵六' } ; console.log '按 id 正序:', sortObjByKey userList, 1, 'id' ; console.log '按 id 倒序:', sortObjByKey userList, -1, 'id' ;",
+    "fullText": "JavaScript 数组与对象数组自定义排序算法实战 实现通用选择排序算法，支持对普通数值数组及包含特定 key 键的对象数组进行正序与逆序灵活排列。 JavaScript 选择排序 数组排序 算法 JavaScript 数组与对象数组自定义排序算法实战 一、通用数组选择排序算法 javascript / 基础数组选择排序 @param {Array} arr 待排序数组 @param {Number} order 1 为从小到大，-1 为从大到小 @returns {Array} 排序后的全新副本 / function selectionSort arr = , order = 1 { const result = ...arr ; const len = result.length; for let i = 0; i < len - 1; i++ { for let j = i + 1; j < len; j++ { if order === 1 && result i > result j { result i , result j = result j , result i ; } else if order === -1 && result i < result j { result i , result j = result j , result i ; } } } return result; } // 调用示例 const numbers = 1, 8, 96, 666, 2, 3, 5, 68, 567 ; console.log '从小到大:', selectionSort numbers, 1 ; console.log '从大到小:', selectionSort numbers, -1 ; --- 二、对象数组根据 Key 键动态排序 javascript / 对象数组根据属性 key 排序 @param {Array} arrObj 对象数组 @param {Number} order 1 为从小到大，-1 为从大到小 @param {String} key 参与比较的对象属性字段 / function sortObjByKey arrObj = , order = 1, key { const result = JSON.parse JSON.stringify arrObj ; const len = result.length; for let i = 0; i < len - 1; i++ { for let j = i + 1; j < len; j++ { if order === 1 && result i key > result j key { result i , result j = result j , result i ; } else if order === -1 && result i key < result j key { result i , result j = result j , result i ; } } } return result; } // 调用示例 const userList = { id: 265, name: '张三' }, { id: 0, name: '李四' }, { id: 2, name: '王五' }, { id: 999, name: '赵六' } ; console.log '按 id 正序:', sortObjByKey userList, 1, 'id' ; console.log '按 id 倒序:', sortObjByKey userList, -1, 'id' ;",
+    "sections": [
+      {
+        "title": "一、通用数组选择排序算法",
+        "anchor": "#一-通用数组选择排序算法",
+        "id": "一-通用数组选择排序算法"
+      },
+      {
+        "title": "二、对象数组根据 Key 键动态排序",
+        "anchor": "#二-对象数组根据-key-键动态排序",
+        "id": "二-对象数组根据-key-键动态排序"
+      }
+    ]
+  },
+  {
+    "id": "css-vertical-horizontal-center-methods",
+    "title": "CSS 元素水平垂直居中的常用核心方案总结",
+    "url": "posts/css-vertical-horizontal-center-methods.html",
+    "category": "前端开发",
+    "date": "2021-03-15",
+    "tags": [
+      "CSS",
+      "前端排版",
+      "居中对齐",
+      "Flexbox"
+    ],
+    "summary": "系统总结 Flexbox 弹性盒、绝对定位搭配 transform 偏移以及行内块级元素在内的核心 CSS 垂直水平居中技巧。",
+    "content": "CSS 元素水平垂直居中的常用核心方案总结 一、Flexbox 弹性盒居中（现代前端推荐） 使用弹性盒布局是最简单、兼容性良好且最推荐的水平垂直居中方式： css .parent { display: flex; justify-content: center; / 水平居中 / align-items: center; / 垂直居中 / } --- 二、绝对定位配合 transform 负位移 适用于父级具有相对定位，子元素宽度或高度未知/动态的场景： css .parent { position: relative; } .child { position: absolute; top: 50%; left: 50%; transform: translate -50%, -50% ; } --- 三、绝对定位搭配 margin: auto 适用于子元素具有固定宽度和高度的场景： css .parent { position: relative; } .child { position: absolute; top: 0; bottom: 0; left: 0; right: 0; margin: auto; width: 200px; height: 200px; }",
+    "fullText": "CSS 元素水平垂直居中的常用核心方案总结 系统总结 Flexbox 弹性盒、绝对定位搭配 transform 偏移以及行内块级元素在内的核心 CSS 垂直水平居中技巧。 CSS 前端排版 居中对齐 Flexbox CSS 元素水平垂直居中的常用核心方案总结 一、Flexbox 弹性盒居中（现代前端推荐） 使用弹性盒布局是最简单、兼容性良好且最推荐的水平垂直居中方式： css .parent { display: flex; justify-content: center; / 水平居中 / align-items: center; / 垂直居中 / } --- 二、绝对定位配合 transform 负位移 适用于父级具有相对定位，子元素宽度或高度未知/动态的场景： css .parent { position: relative; } .child { position: absolute; top: 50%; left: 50%; transform: translate -50%, -50% ; } --- 三、绝对定位搭配 margin: auto 适用于子元素具有固定宽度和高度的场景： css .parent { position: relative; } .child { position: absolute; top: 0; bottom: 0; left: 0; right: 0; margin: auto; width: 200px; height: 200px; }",
+    "sections": [
+      {
+        "title": "一、Flexbox 弹性盒居中（现代前端推荐）",
+        "anchor": "#一-flexbox-弹性盒居中-现代前端推荐",
+        "id": "一-flexbox-弹性盒居中-现代前端推荐"
+      },
+      {
+        "title": "二、绝对定位配合 transform 负位移",
+        "anchor": "#二-绝对定位配合-transform-负位移",
+        "id": "二-绝对定位配合-transform-负位移"
+      },
+      {
+        "title": "三、绝对定位搭配 margin: auto",
+        "anchor": "#三-绝对定位搭配-margin-auto",
+        "id": "三-绝对定位搭配-margin-auto"
+      }
+    ]
+  },
+  {
+    "id": "javascript-unicode-string-crypto-encode",
+    "title": "基于 Unicode 编码的原生 JavaScript 字符串加解密方法",
+    "url": "posts/javascript-unicode-string-crypto-encode.html",
+    "category": "前端开发",
+    "date": "2021-03-05",
+    "tags": [
+      "JavaScript",
+      "加密解密",
+      "Unicode",
+      "安全"
+    ],
+    "summary": "利用 charCodeAt 与 fromCharCode 算法实现跨语言通用的轻量级字符串加密与解密函数。",
+    "content": "基于 Unicode 编码的原生 JavaScript 字符串加解密方法 一、原理与设计思路 基于原生 JavaScript 的 charCodeAt 与 fromCharCode ，将字符串中每个字符转化为 Unicode 数值并应用异或位移变换，解密时再按原算法反向还原。 核心优势 ：零第三方库依赖，算法跨平台跨语言通用，执行效率极高。 --- 二、加解密完整实现代码 javascript / 字符串轻量可逆加密 @param {String} str 待加密原文 @param {Number} salt 混淆盐值 默认为 13 @returns {String} 加密后的密文 / function encryptString str, salt = 13 { if !str return ''; let encrypted = ''; for let i = 0; i < str.length; i++ { const code = str.charCodeAt i ^ salt; encrypted += code.toString 16 .padStart 4, '0' ; } return encrypted; } / 密文解密还原 @param {String} cipher 密文 @param {Number} salt 混淆盐值 @returns {String} 解密后的明文 / function decryptString cipher, salt = 13 { if !cipher return ''; let decrypted = ''; for let i = 0; i < cipher.length; i += 4 { const hex = cipher.substr i, 4 ; const code = parseInt hex, 16 ^ salt; decrypted += String.fromCharCode code ; } return decrypted; } // 测试示例 const originalText = \"Hello vmrey.github.io! 密码123456\"; const cipher = encryptString originalText ; console.log '加密后:', cipher ; const plain = decryptString cipher ; console.log '解密后:', plain ; console.log '还原匹配成功:', originalText === plain ;",
+    "fullText": "基于 Unicode 编码的原生 JavaScript 字符串加解密方法 利用 charCodeAt 与 fromCharCode 算法实现跨语言通用的轻量级字符串加密与解密函数。 JavaScript 加密解密 Unicode 安全 基于 Unicode 编码的原生 JavaScript 字符串加解密方法 一、原理与设计思路 基于原生 JavaScript 的 charCodeAt 与 fromCharCode ，将字符串中每个字符转化为 Unicode 数值并应用异或位移变换，解密时再按原算法反向还原。 核心优势 ：零第三方库依赖，算法跨平台跨语言通用，执行效率极高。 --- 二、加解密完整实现代码 javascript / 字符串轻量可逆加密 @param {String} str 待加密原文 @param {Number} salt 混淆盐值 默认为 13 @returns {String} 加密后的密文 / function encryptString str, salt = 13 { if !str return ''; let encrypted = ''; for let i = 0; i < str.length; i++ { const code = str.charCodeAt i ^ salt; encrypted += code.toString 16 .padStart 4, '0' ; } return encrypted; } / 密文解密还原 @param {String} cipher 密文 @param {Number} salt 混淆盐值 @returns {String} 解密后的明文 / function decryptString cipher, salt = 13 { if !cipher return ''; let decrypted = ''; for let i = 0; i < cipher.length; i += 4 { const hex = cipher.substr i, 4 ; const code = parseInt hex, 16 ^ salt; decrypted += String.fromCharCode code ; } return decrypted; } // 测试示例 const originalText = \"Hello vmrey.github.io! 密码123456\"; const cipher = encryptString originalText ; console.log '加密后:', cipher ; const plain = decryptString cipher ; console.log '解密后:', plain ; console.log '还原匹配成功:', originalText === plain ;",
+    "sections": [
+      {
+        "title": "一、原理与设计思路",
+        "anchor": "#一-原理与设计思路",
+        "id": "一-原理与设计思路"
+      },
+      {
+        "title": "二、加解密完整实现代码",
+        "anchor": "#二-加解密完整实现代码",
+        "id": "二-加解密完整实现代码"
+      }
+    ]
+  },
+  {
+    "id": "javascript-settimeout-simulate-setinterval",
+    "title": "深入浅出：使用 setTimeout 精准模拟 setInterval 及其核心优势",
+    "url": "posts/javascript-settimeout-simulate-setinterval.html",
+    "category": "前端开发",
+    "date": "2021-03-01",
+    "tags": [
+      "JavaScript",
+      "定时器",
+      "事件循环",
+      "性能优化"
+    ],
+    "summary": "为什么生产环境不推荐原生 setInterval？分析事件堆叠排队机制，使用递归 setTimeout 实现精确无阻塞的周期执行。",
+    "content": "深入浅出：使用 setTimeout 精准模拟 setInterval 及其核心优势 一、为什么原生 setInterval 存在缺陷？ 在复杂的前端任务或网络请求场景中，使用原生 setInterval 会遇到以下痛点： 1. 执行时间堆叠 ：如果回调函数的执行耗时超过了设定的间隔时间，多个定时器回调会紧挨着执行，产生卡顿； 2. 误差累计 ：浏览器主线程阻塞时，可能会跳过部分周期的执行。 --- 二、使用递归 setTimeout 优雅实现 使用链式/递归 setTimeout 能够保证前一次异步任务完全执行完毕后，再精确等待指定毫秒数开启下一次执行： javascript / 基于 setTimeout 实现的精准定时轮询器 @param {Function} callback 待执行回调函数 @param {Number} interval 轮询间隔毫秒数 @returns {Object} 包含 cancel 方法的定时器控制器 / function mySetInterval callback, interval { let timerId = null; let isCancelled = false; function loop { if isCancelled return; timerId = setTimeout => { callback ; loop ; }, interval ; } loop ; return { clear { isCancelled = true; clearTimeout timerId ; } }; } // 调用示例 const poller = mySetInterval => { console.log '周期执行:', new Date .toLocaleTimeString ; }, 1000 ; // 5秒后停止轮询 setTimeout => { poller.clear ; console.log '定时器已安全销毁' ; }, 5000 ;",
+    "fullText": "深入浅出：使用 setTimeout 精准模拟 setInterval 及其核心优势 为什么生产环境不推荐原生 setInterval？分析事件堆叠排队机制，使用递归 setTimeout 实现精确无阻塞的周期执行。 JavaScript 定时器 事件循环 性能优化 深入浅出：使用 setTimeout 精准模拟 setInterval 及其核心优势 一、为什么原生 setInterval 存在缺陷？ 在复杂的前端任务或网络请求场景中，使用原生 setInterval 会遇到以下痛点： 1. 执行时间堆叠 ：如果回调函数的执行耗时超过了设定的间隔时间，多个定时器回调会紧挨着执行，产生卡顿； 2. 误差累计 ：浏览器主线程阻塞时，可能会跳过部分周期的执行。 --- 二、使用递归 setTimeout 优雅实现 使用链式/递归 setTimeout 能够保证前一次异步任务完全执行完毕后，再精确等待指定毫秒数开启下一次执行： javascript / 基于 setTimeout 实现的精准定时轮询器 @param {Function} callback 待执行回调函数 @param {Number} interval 轮询间隔毫秒数 @returns {Object} 包含 cancel 方法的定时器控制器 / function mySetInterval callback, interval { let timerId = null; let isCancelled = false; function loop { if isCancelled return; timerId = setTimeout => { callback ; loop ; }, interval ; } loop ; return { clear { isCancelled = true; clearTimeout timerId ; } }; } // 调用示例 const poller = mySetInterval => { console.log '周期执行:', new Date .toLocaleTimeString ; }, 1000 ; // 5秒后停止轮询 setTimeout => { poller.clear ; console.log '定时器已安全销毁' ; }, 5000 ;",
+    "sections": [
+      {
+        "title": "一、为什么原生 setInterval 存在缺陷？",
+        "anchor": "#一-为什么原生-setinterval-存在缺陷",
+        "id": "一-为什么原生-setinterval-存在缺陷"
+      },
+      {
+        "title": "二、使用递归 setTimeout 优雅实现",
+        "anchor": "#二-使用递归-settimeout-优雅实现",
+        "id": "二-使用递归-settimeout-优雅实现"
+      }
+    ]
+  },
+  {
+    "id": "javascript-swap-two-variables-methods",
+    "title": "JavaScript 中交换两个变量值的五种经典实现方法",
+    "url": "posts/javascript-swap-two-variables-methods.html",
+    "category": "前端开发",
+    "date": "2021-02-20",
+    "tags": [
+      "JavaScript",
+      "ES6",
+      "解构赋值",
+      "基础算法"
+    ],
+    "summary": "盘点 JavaScript 中对调两个变量的 5 种方式：临时变量法、ES6 解构赋值、算术加减法、异或运算与数组索引互换。",
+    "content": "JavaScript 中交换两个变量值的五种经典实现方法 一、ES6 解构赋值（现代推荐） ES6 提供了优雅的数组解构语法，一行代码即可完成两个变量的值对调，且无需开辟显式临时变量： javascript let a = 1; let b = 2; a, b = b, a ; console.log a, b ; // 输出: 2, 1 --- 二、经典临时中间变量法 最稳健直观、兼容所有浏览器环境的标准实现： javascript var a = 1; var b = 2; var temp = a; a = b; b = temp; console.log a, b ; // 输出: 2, 1 --- 三、数值加减运算法（仅限数值类型） 无需借助临时变量，通过数学求和与求差完成互换（需注意大数溢出风险）： javascript var a = 10; var b = 20; a = a + b; // a = 30 b = a - b; // b = 10 a = a - b; // a = 20 console.log a, b ; // 输出: 20, 10 --- 四、位异或运算法 XOR 仅限整数 利用二进制异或性质进行原地无额外空间交换： javascript var a = 5; // 二进制 0101 var b = 9; // 二进制 1001 a = a ^ b; b = a ^ b; a = a ^ b; console.log a, b ; // 输出: 9, 5",
+    "fullText": "JavaScript 中交换两个变量值的五种经典实现方法 盘点 JavaScript 中对调两个变量的 5 种方式：临时变量法、ES6 解构赋值、算术加减法、异或运算与数组索引互换。 JavaScript ES6 解构赋值 基础算法 JavaScript 中交换两个变量值的五种经典实现方法 一、ES6 解构赋值（现代推荐） ES6 提供了优雅的数组解构语法，一行代码即可完成两个变量的值对调，且无需开辟显式临时变量： javascript let a = 1; let b = 2; a, b = b, a ; console.log a, b ; // 输出: 2, 1 --- 二、经典临时中间变量法 最稳健直观、兼容所有浏览器环境的标准实现： javascript var a = 1; var b = 2; var temp = a; a = b; b = temp; console.log a, b ; // 输出: 2, 1 --- 三、数值加减运算法（仅限数值类型） 无需借助临时变量，通过数学求和与求差完成互换（需注意大数溢出风险）： javascript var a = 10; var b = 20; a = a + b; // a = 30 b = a - b; // b = 10 a = a - b; // a = 20 console.log a, b ; // 输出: 20, 10 --- 四、位异或运算法 XOR 仅限整数 利用二进制异或性质进行原地无额外空间交换： javascript var a = 5; // 二进制 0101 var b = 9; // 二进制 1001 a = a ^ b; b = a ^ b; a = a ^ b; console.log a, b ; // 输出: 9, 5",
+    "sections": [
+      {
+        "title": "一、ES6 解构赋值（现代推荐）",
+        "anchor": "#一-es6-解构赋值-现代推荐",
+        "id": "一-es6-解构赋值-现代推荐"
+      },
+      {
+        "title": "二、经典临时中间变量法",
+        "anchor": "#二-经典临时中间变量法",
+        "id": "二-经典临时中间变量法"
+      },
+      {
+        "title": "三、数值加减运算法（仅限数值类型）",
+        "anchor": "#三-数值加减运算法-仅限数值类型",
+        "id": "三-数值加减运算法-仅限数值类型"
+      },
+      {
+        "title": "四、位异或运算法 (XOR 仅限整数)",
+        "anchor": "#四-位异或运算法-xor-仅限整数",
+        "id": "四-位异或运算法-xor-仅限整数"
+      }
+    ]
+  },
+  {
+    "id": "javascript-json-serialization-deep-clone",
+    "title": "JavaScript 引用类型对象深拷贝与 JSON 序列化技巧",
+    "url": "posts/javascript-json-serialization-deep-clone.html",
+    "category": "前端开发",
+    "date": "2021-02-15",
+    "tags": [
+      "JavaScript",
+      "深拷贝",
+      "JSON",
+      "引用类型"
+    ],
+    "summary": "深入分析 JavaScript 中引用类型的浅拷贝与深拷贝，探讨 JSON.parse(JSON.stringify()) 序列化方案与递归深克隆的边界处理。",
+    "content": "JavaScript 引用类型对象深拷贝与 JSON 序列化技巧 一、引用类型的引用传递问题 在 JavaScript 中，对象和数组均属于引用数据类型。如果直接使用赋值符 const copy = obj ，修改新对象的同时会直接污染原对象。 --- 二、基于 JSON 序列化的极简深拷贝 对于纯数据（没有函数、 undefined 、Symbol 或循环引用）的对象，JSON 序列化是最轻量的深克隆方式： javascript const original = { id: 1, user: { name: 'admin', roles: 'editor', 'viewer' } }; // 极简深克隆 const cloned = JSON.parse JSON.stringify original ; cloned.user.name = 'super_admin'; console.log original.user.name ; // 输出: 'admin' 原对象未被污染 console.log cloned.user.name ; // 输出: 'super_admin' --- 三、通用深度递归克隆函数 支持数组、嵌套对象、日期等完整类型的递归拷贝： javascript / 健壮的深度克隆函数 @param { } target 目标对象 @returns { } 克隆后的新副本 / function deepClone target { if target === null || typeof target !== 'object' { return target; } if target instanceof Date return new Date target ; if target instanceof RegExp return new RegExp target ; const cloneTarget = Array.isArray target ? : {}; for let key in target { if Object.prototype.hasOwnProperty.call target, key { cloneTarget key = deepClone target key ; } } return cloneTarget; }",
+    "fullText": "JavaScript 引用类型对象深拷贝与 JSON 序列化技巧 深入分析 JavaScript 中引用类型的浅拷贝与深拷贝，探讨 JSON.parse(JSON.stringify()) 序列化方案与递归深克隆的边界处理。 JavaScript 深拷贝 JSON 引用类型 JavaScript 引用类型对象深拷贝与 JSON 序列化技巧 一、引用类型的引用传递问题 在 JavaScript 中，对象和数组均属于引用数据类型。如果直接使用赋值符 const copy = obj ，修改新对象的同时会直接污染原对象。 --- 二、基于 JSON 序列化的极简深拷贝 对于纯数据（没有函数、 undefined 、Symbol 或循环引用）的对象，JSON 序列化是最轻量的深克隆方式： javascript const original = { id: 1, user: { name: 'admin', roles: 'editor', 'viewer' } }; // 极简深克隆 const cloned = JSON.parse JSON.stringify original ; cloned.user.name = 'super_admin'; console.log original.user.name ; // 输出: 'admin' 原对象未被污染 console.log cloned.user.name ; // 输出: 'super_admin' --- 三、通用深度递归克隆函数 支持数组、嵌套对象、日期等完整类型的递归拷贝： javascript / 健壮的深度克隆函数 @param { } target 目标对象 @returns { } 克隆后的新副本 / function deepClone target { if target === null || typeof target !== 'object' { return target; } if target instanceof Date return new Date target ; if target instanceof RegExp return new RegExp target ; const cloneTarget = Array.isArray target ? : {}; for let key in target { if Object.prototype.hasOwnProperty.call target, key { cloneTarget key = deepClone target key ; } } return cloneTarget; }",
+    "sections": [
+      {
+        "title": "一、引用类型的引用传递问题",
+        "anchor": "#一-引用类型的引用传递问题",
+        "id": "一-引用类型的引用传递问题"
+      },
+      {
+        "title": "二、基于 JSON 序列化的极简深拷贝",
+        "anchor": "#二-基于-json-序列化的极简深拷贝",
+        "id": "二-基于-json-序列化的极简深拷贝"
+      },
+      {
+        "title": "三、通用深度递归克隆函数",
+        "anchor": "#三-通用深度递归克隆函数",
+        "id": "三-通用深度递归克隆函数"
+      }
+    ]
+  },
+  {
+    "id": "javascript-get-url-query-parameters",
+    "title": "JavaScript 获取当前页面 URL 查询参数的高效解析方案",
+    "url": "posts/javascript-get-url-query-parameters.html",
+    "category": "前端开发",
+    "date": "2021-01-25",
+    "tags": [
+      "JavaScript",
+      "URL参数",
+      "URLSearchParams",
+      "浏览器"
+    ],
+    "summary": "详细解析获取 URL Query 参数的多种方案：现代 URLSearchParams 原生 API、正则表达式提取与字符串分割转换。",
+    "content": "JavaScript 获取当前页面 URL 查询参数的高效解析方案 一、现代原生 API：URLSearchParams（强烈推荐） 现代主流浏览器均内置了 URLSearchParams ，无需自行编写复杂正则： javascript // 示例 URL: https://example.com/index.html?name=vmrey&lang=zh-CN const urlParams = new URLSearchParams window.location.search ; // 获取单个参数 const name = urlParams.get 'name' ; // 'vmrey' const lang = urlParams.get 'lang' ; // 'zh-CN' // 转换为完整 JSON 对象 const paramsObj = Object.fromEntries urlParams.entries ; console.log paramsObj ; // { name: 'vmrey', lang: 'zh-CN' } --- 二、经典通用字符串分割解析法（全环境兼容） javascript / 提取 URL 查询参数并转换为键值对象 @param {String} customUrl 可选自定义 URL @returns {Object} 参数键值对 / function getUrlParams customUrl { const url = customUrl || window.location.href; const queryIndex = url.indexOf '?' ; if queryIndex === -1 return {}; const queryString = url.slice queryIndex + 1 ; const pairs = queryString.split '&' ; const result = {}; pairs.forEach pair => { if !pair return; const key, value = pair.split '=' ; result decodeURIComponent key = decodeURIComponent value || '' ; } ; return result; } // 调用示例 console.log getUrlParams 'https://vmrey.github.io/?tag=Vue&page=2' ; // 输出: { tag: 'Vue', page: '2' }",
+    "fullText": "JavaScript 获取当前页面 URL 查询参数的高效解析方案 详细解析获取 URL Query 参数的多种方案：现代 URLSearchParams 原生 API、正则表达式提取与字符串分割转换。 JavaScript URL参数 URLSearchParams 浏览器 JavaScript 获取当前页面 URL 查询参数的高效解析方案 一、现代原生 API：URLSearchParams（强烈推荐） 现代主流浏览器均内置了 URLSearchParams ，无需自行编写复杂正则： javascript // 示例 URL: https://example.com/index.html?name=vmrey&lang=zh-CN const urlParams = new URLSearchParams window.location.search ; // 获取单个参数 const name = urlParams.get 'name' ; // 'vmrey' const lang = urlParams.get 'lang' ; // 'zh-CN' // 转换为完整 JSON 对象 const paramsObj = Object.fromEntries urlParams.entries ; console.log paramsObj ; // { name: 'vmrey', lang: 'zh-CN' } --- 二、经典通用字符串分割解析法（全环境兼容） javascript / 提取 URL 查询参数并转换为键值对象 @param {String} customUrl 可选自定义 URL @returns {Object} 参数键值对 / function getUrlParams customUrl { const url = customUrl || window.location.href; const queryIndex = url.indexOf '?' ; if queryIndex === -1 return {}; const queryString = url.slice queryIndex + 1 ; const pairs = queryString.split '&' ; const result = {}; pairs.forEach pair => { if !pair return; const key, value = pair.split '=' ; result decodeURIComponent key = decodeURIComponent value || '' ; } ; return result; } // 调用示例 console.log getUrlParams 'https://vmrey.github.io/?tag=Vue&page=2' ; // 输出: { tag: 'Vue', page: '2' }",
+    "sections": [
+      {
+        "title": "一、现代原生 API：URLSearchParams（强烈推荐）",
+        "anchor": "#一-现代原生-api-urlsearchparams-强烈推荐",
+        "id": "一-现代原生-api-urlsearchparams-强烈推荐"
+      },
+      {
+        "title": "二、经典通用字符串分割解析法（全环境兼容）",
+        "anchor": "#二-经典通用字符串分割解析法-全环境兼容",
+        "id": "二-经典通用字符串分割解析法-全环境兼容"
+      }
+    ]
+  },
+  {
+    "id": "wechat-miniprogram-custom-loading-animation",
+    "title": "微信小程序自定义高颜值 Loading 加载动画组件",
+    "url": "posts/wechat-miniprogram-custom-loading-animation.html",
+    "category": "前端开发",
+    "date": "2021-01-20",
+    "tags": [
+      "微信小程序",
+      "Loading",
+      "CSS3动画",
+      "UI设计"
+    ],
+    "summary": "告别默认 wx.showLoading 灰暗样式，使用纯 CSS3 关键帧动画打造现代多点旋转数据加载组件。",
+    "content": "微信小程序自定义高颜值 Loading 加载动画组件 一、效果预览 ! Loading 效果图 ../assets/images/loading.png --- 二、WXML 骨架 html <view class=\"loading-mask\" wx:if=\"{{loading}}\"> <view class=\"loading-spinner\"> <view class=\"dot\" wx:for=\"{{8}}\" wx:key=\"index\" style=\"--i: {{index}}\"></view> </view> <view class=\"loading-text\">{{loadingText || '数据加载中...'}}</view> </view> --- 三、WXSS 纯 CSS3 旋转动画 css .loading-mask { position: fixed; inset: 0; background: rgba 0, 0, 0, 0.75 ; display: flex; flex-direction: column; align-items: center; justify-content: center; z-index: 99999; } .loading-spinner { position: relative; width: 60rpx; height: 60rpx; margin-bottom: 20rpx; } .loading-spinner .dot { position: absolute; width: 6rpx; height: 6rpx; border-radius: 50%; background: ffffff; animation: pulse 0.8s linear infinite; } @keyframes pulse { 0%, 100% { transform: scale 1 ; opacity: 0.3; } 50% { transform: scale 2.5 ; opacity: 1; } } .loading-text { color: ffffff; font-size: 26rpx; }",
+    "fullText": "微信小程序自定义高颜值 Loading 加载动画组件 告别默认 wx.showLoading 灰暗样式，使用纯 CSS3 关键帧动画打造现代多点旋转数据加载组件。 微信小程序 Loading CSS3动画 UI设计 微信小程序自定义高颜值 Loading 加载动画组件 一、效果预览 ! Loading 效果图 ../assets/images/loading.png --- 二、WXML 骨架 html <view class=\"loading-mask\" wx:if=\"{{loading}}\"> <view class=\"loading-spinner\"> <view class=\"dot\" wx:for=\"{{8}}\" wx:key=\"index\" style=\"--i: {{index}}\"></view> </view> <view class=\"loading-text\">{{loadingText || '数据加载中...'}}</view> </view> --- 三、WXSS 纯 CSS3 旋转动画 css .loading-mask { position: fixed; inset: 0; background: rgba 0, 0, 0, 0.75 ; display: flex; flex-direction: column; align-items: center; justify-content: center; z-index: 99999; } .loading-spinner { position: relative; width: 60rpx; height: 60rpx; margin-bottom: 20rpx; } .loading-spinner .dot { position: absolute; width: 6rpx; height: 6rpx; border-radius: 50%; background: ffffff; animation: pulse 0.8s linear infinite; } @keyframes pulse { 0%, 100% { transform: scale 1 ; opacity: 0.3; } 50% { transform: scale 2.5 ; opacity: 1; } } .loading-text { color: ffffff; font-size: 26rpx; }",
+    "sections": [
+      {
+        "title": "一、效果预览",
+        "anchor": "#一-效果预览",
+        "id": "一-效果预览"
+      },
+      {
+        "title": "二、WXML 骨架",
+        "anchor": "#二-wxml-骨架",
+        "id": "二-wxml-骨架"
+      },
+      {
+        "title": "三、WXSS 纯 CSS3 旋转动画",
+        "anchor": "#三-wxss-纯-css3-旋转动画",
+        "id": "三-wxss-纯-css3-旋转动画"
+      }
+    ]
+  },
+  {
+    "id": "wechat-miniprogram-coupon-modal-dialog-component",
+    "title": "微信小程序新手专属优惠券领取弹框组件封装实战",
+    "url": "posts/wechat-miniprogram-coupon-modal-dialog-component.html",
+    "category": "前端开发",
+    "date": "2021-01-15",
+    "tags": [
+      "微信小程序",
+      "组件封装",
+      "优惠券弹框",
+      "UI组件"
+    ],
+    "summary": "封装高转化率的微信小程序优惠券弹框组件，支持防页面滚动穿透、动态金额展示与一键领取交互。",
+    "content": "微信小程序新手专属优惠券领取弹框组件封装实战 一、组件设计特性 1. 防滚动穿透 ：通过 catchtouchmove=\"preventTouch\" 防止弹框唤起时底层页面意外滑动； 2. 响应式自适应 ：使用 rpx 单位适配不同尺寸移动设备屏幕； 3. 动画进入 ：遮罩层淡入与弹框缩放弹性进入。 --- 二、WXML 模板代码 html <view class=\"coupon-mask\" wx:if=\"{{visible}}\" catchtouchmove=\"preventTouch\"> <view class=\"coupon-dialog\"> <image class=\"coupon-bg\" src=\"../../assets/images/couponbg.png\" mode=\"widthFix\"></image> <view class=\"coupon-body\"> <view class=\"coupon-title\">新人专属红包</view> <view class=\"coupon-amount\"> <text class=\"symbol\">¥</text> <text class=\"num\">{{couponData.amount || 50}}</text> </view> <button class=\"coupon-btn\" bindtap=\"handleReceive\">立即领取</button> </view> <view class=\"close-icon\" bindtap=\"handleClose\">✕</view> </view> </view> --- 三、WXSS 样式核心 css .coupon-mask { position: fixed; inset: 0; background: rgba 0, 0, 0, 0.7 ; z-index: 9999; display: flex; align-items: center; justify-content: center; } .coupon-dialog { width: 580rpx; position: relative; text-align: center; } .coupon-btn { background: linear-gradient 135deg, ff5722, ff9800 ; color: fff; border-radius: 40rpx; font-weight: bold; }",
+    "fullText": "微信小程序新手专属优惠券领取弹框组件封装实战 封装高转化率的微信小程序优惠券弹框组件，支持防页面滚动穿透、动态金额展示与一键领取交互。 微信小程序 组件封装 优惠券弹框 UI组件 微信小程序新手专属优惠券领取弹框组件封装实战 一、组件设计特性 1. 防滚动穿透 ：通过 catchtouchmove=\"preventTouch\" 防止弹框唤起时底层页面意外滑动； 2. 响应式自适应 ：使用 rpx 单位适配不同尺寸移动设备屏幕； 3. 动画进入 ：遮罩层淡入与弹框缩放弹性进入。 --- 二、WXML 模板代码 html <view class=\"coupon-mask\" wx:if=\"{{visible}}\" catchtouchmove=\"preventTouch\"> <view class=\"coupon-dialog\"> <image class=\"coupon-bg\" src=\"../../assets/images/couponbg.png\" mode=\"widthFix\"></image> <view class=\"coupon-body\"> <view class=\"coupon-title\">新人专属红包</view> <view class=\"coupon-amount\"> <text class=\"symbol\">¥</text> <text class=\"num\">{{couponData.amount || 50}}</text> </view> <button class=\"coupon-btn\" bindtap=\"handleReceive\">立即领取</button> </view> <view class=\"close-icon\" bindtap=\"handleClose\">✕</view> </view> </view> --- 三、WXSS 样式核心 css .coupon-mask { position: fixed; inset: 0; background: rgba 0, 0, 0, 0.7 ; z-index: 9999; display: flex; align-items: center; justify-content: center; } .coupon-dialog { width: 580rpx; position: relative; text-align: center; } .coupon-btn { background: linear-gradient 135deg, ff5722, ff9800 ; color: fff; border-radius: 40rpx; font-weight: bold; }",
+    "sections": [
+      {
+        "title": "一、组件设计特性",
+        "anchor": "#一-组件设计特性",
+        "id": "一-组件设计特性"
+      },
+      {
+        "title": "二、WXML 模板代码",
+        "anchor": "#二-wxml-模板代码",
+        "id": "二-wxml-模板代码"
+      },
+      {
+        "title": "三、WXSS 样式核心",
+        "anchor": "#三-wxss-样式核心",
+        "id": "三-wxss-样式核心"
+      }
+    ]
+  },
+  {
+    "id": "wechat-miniprogram-bubble-sort-array-objects",
+    "title": "微信小程序中对象数组冒泡排序算法实现与实战",
+    "url": "posts/wechat-miniprogram-bubble-sort-array-objects.html",
+    "category": "前端开发",
+    "date": "2021-01-10",
+    "tags": [
+      "微信小程序",
+      "冒泡排序",
+      "数组对象",
+      "算法"
+    ],
+    "summary": "详细解析在微信小程序环境下，对复杂对象数组根据价格、销量或 ID 字段进行冒泡升序与降序排序的稳定实现。",
+    "content": "微信小程序中对象数组冒泡排序算法实现与实战 一、算法原理 冒泡排序（Bubble Sort）通过依次比较相邻两个元素的值，如果顺序不符合预期则交换位置。多次循环后，最值元素将如气泡般逐渐“浮”到数列顶端。 --- 二、小程序对象数组排序函数 javascript / 微信小程序对象数组排序 @param {Array} arr 数据数组 @param {Number} sortOrder 1 为升序，-1 为降序 @param {String} key 比较的字段名称 / function bubbleSortObjects arr = , sortOrder = 1, key { const result = JSON.parse JSON.stringify arr ; const len = result.length; for let i = 0; i < len - 1; i++ { for let j = 0; j < len - 1 - i; j++ { const valA = result j key ; const valB = result j + 1 key ; if sortOrder === 1 && valA > valB { result j , result j + 1 = result j + 1 , result j ; } else if sortOrder === -1 && valA < valB { result j , result j + 1 = result j + 1 , result j ; } } } return result; } // 示例：按商品价格从低到高排序 const goodsList = { id: 1, name: '机械键盘', price: 299 }, { id: 2, name: '无线鼠标', price: 99 }, { id: 3, name: '4K显示器', price: 1899 } ; console.log bubbleSortObjects goodsList, 1, 'price' ;",
+    "fullText": "微信小程序中对象数组冒泡排序算法实现与实战 详细解析在微信小程序环境下，对复杂对象数组根据价格、销量或 ID 字段进行冒泡升序与降序排序的稳定实现。 微信小程序 冒泡排序 数组对象 算法 微信小程序中对象数组冒泡排序算法实现与实战 一、算法原理 冒泡排序（Bubble Sort）通过依次比较相邻两个元素的值，如果顺序不符合预期则交换位置。多次循环后，最值元素将如气泡般逐渐“浮”到数列顶端。 --- 二、小程序对象数组排序函数 javascript / 微信小程序对象数组排序 @param {Array} arr 数据数组 @param {Number} sortOrder 1 为升序，-1 为降序 @param {String} key 比较的字段名称 / function bubbleSortObjects arr = , sortOrder = 1, key { const result = JSON.parse JSON.stringify arr ; const len = result.length; for let i = 0; i < len - 1; i++ { for let j = 0; j < len - 1 - i; j++ { const valA = result j key ; const valB = result j + 1 key ; if sortOrder === 1 && valA > valB { result j , result j + 1 = result j + 1 , result j ; } else if sortOrder === -1 && valA < valB { result j , result j + 1 = result j + 1 , result j ; } } } return result; } // 示例：按商品价格从低到高排序 const goodsList = { id: 1, name: '机械键盘', price: 299 }, { id: 2, name: '无线鼠标', price: 99 }, { id: 3, name: '4K显示器', price: 1899 } ; console.log bubbleSortObjects goodsList, 1, 'price' ;",
+    "sections": [
+      {
+        "title": "一、算法原理",
+        "anchor": "#一-算法原理",
+        "id": "一-算法原理"
+      },
+      {
+        "title": "二、小程序对象数组排序函数",
+        "anchor": "#二-小程序对象数组排序函数",
+        "id": "二-小程序对象数组排序函数"
+      }
+    ]
+  },
+  {
+    "id": "wechat-miniprogram-canvas-smooth-curve-chart",
+    "title": "微信小程序原生 Canvas 绘制平滑贝塞尔曲线图组件",
+    "url": "posts/wechat-miniprogram-canvas-smooth-curve-chart.html",
+    "category": "前端开发",
+    "date": "2020-12-31",
+    "tags": [
+      "微信小程序",
+      "Canvas",
+      "曲线图",
+      "数据可视化"
+    ],
+    "summary": "无需引入重量级图表库，利用微信小程序原生 Canvas 2D 绘制轻量、高帧率且支持动态数据折线/平滑曲线图。",
+    "content": "微信小程序原生 Canvas 绘制平滑贝塞尔曲线图组件 一、效果预览 利用原生 Canvas 的 bezierCurveTo 贝塞尔曲线算法，绘制出柔和渐变填充的高性能趋势曲线图： ! 曲线图效果图 ../assets/images/202012312228845.png --- 二、WXML 布局代码 html <view class=\"chart-container\"> <canvas type=\"2d\" id=\"curveCanvas\" class=\"curve-canvas\"></canvas> </view> --- 三、JS 核心平滑曲线绘制算法 javascript Page { onReady { const query = wx.createSelectorQuery ; query.select ' curveCanvas' .fields { node: true, size: true } .exec res => { if !res 0 return; const canvas = res 0 .node; const ctx = canvas.getContext '2d' ; const dpr = wx.getSystemInfoSync .pixelRatio; canvas.width = res 0 .width dpr; canvas.height = res 0 .height dpr; ctx.scale dpr, dpr ; this.drawCurve ctx, res 0 .width, res 0 .height ; } ; }, drawCurve ctx, width, height { const points = { x: 30, y: 120 }, { x: 90, y: 50 }, { x: 150, y: 80 }, { x: 210, y: 30 }, { x: 270, y: 90 } ; ctx.clearRect 0, 0, width, height ; ctx.beginPath ; ctx.moveTo points 0 .x, points 0 .y ; // 计算三阶贝塞尔曲线控制点 for let i = 0; i < points.length - 1; i++ { const xc = points i .x + points i + 1 .x / 2; const yc = points i .y + points i + 1 .y / 2; ctx.quadraticCurveTo points i .x, points i .y, xc, yc ; } ctx.strokeStyle = ' 0284c7'; ctx.lineWidth = 3; ctx.stroke ; } } ;",
+    "fullText": "微信小程序原生 Canvas 绘制平滑贝塞尔曲线图组件 无需引入重量级图表库，利用微信小程序原生 Canvas 2D 绘制轻量、高帧率且支持动态数据折线/平滑曲线图。 微信小程序 Canvas 曲线图 数据可视化 微信小程序原生 Canvas 绘制平滑贝塞尔曲线图组件 一、效果预览 利用原生 Canvas 的 bezierCurveTo 贝塞尔曲线算法，绘制出柔和渐变填充的高性能趋势曲线图： ! 曲线图效果图 ../assets/images/202012312228845.png --- 二、WXML 布局代码 html <view class=\"chart-container\"> <canvas type=\"2d\" id=\"curveCanvas\" class=\"curve-canvas\"></canvas> </view> --- 三、JS 核心平滑曲线绘制算法 javascript Page { onReady { const query = wx.createSelectorQuery ; query.select ' curveCanvas' .fields { node: true, size: true } .exec res => { if !res 0 return; const canvas = res 0 .node; const ctx = canvas.getContext '2d' ; const dpr = wx.getSystemInfoSync .pixelRatio; canvas.width = res 0 .width dpr; canvas.height = res 0 .height dpr; ctx.scale dpr, dpr ; this.drawCurve ctx, res 0 .width, res 0 .height ; } ; }, drawCurve ctx, width, height { const points = { x: 30, y: 120 }, { x: 90, y: 50 }, { x: 150, y: 80 }, { x: 210, y: 30 }, { x: 270, y: 90 } ; ctx.clearRect 0, 0, width, height ; ctx.beginPath ; ctx.moveTo points 0 .x, points 0 .y ; // 计算三阶贝塞尔曲线控制点 for let i = 0; i < points.length - 1; i++ { const xc = points i .x + points i + 1 .x / 2; const yc = points i .y + points i + 1 .y / 2; ctx.quadraticCurveTo points i .x, points i .y, xc, yc ; } ctx.strokeStyle = ' 0284c7'; ctx.lineWidth = 3; ctx.stroke ; } } ;",
+    "sections": [
+      {
+        "title": "一、效果预览",
+        "anchor": "#一-效果预览",
+        "id": "一-效果预览"
+      },
+      {
+        "title": "二、WXML 布局代码",
+        "anchor": "#二-wxml-布局代码",
+        "id": "二-wxml-布局代码"
+      },
+      {
+        "title": "三、JS 核心平滑曲线绘制算法",
+        "anchor": "#三-js-核心平滑曲线绘制算法",
+        "id": "三-js-核心平滑曲线绘制算法"
       }
     ]
   }

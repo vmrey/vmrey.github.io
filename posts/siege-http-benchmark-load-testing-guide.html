@@ -38,29 +38,36 @@
     <!-- 左侧常驻导航 -->
     <aside class="app-sidebar" id="app-sidebar">
       <div class="sidebar-inner">
-        <a href="../index.html" class="sidebar-brand">
-          <div class="sidebar-avatar" title="vmrey.github.io 博客">
-            <svg class="sidebar-avatar-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path>
-              <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path>
-              <line x1="9" y1="7" x2="15" y2="7"></line>
-              <line x1="9" y1="11" x2="13" y2="11"></line>
+        <div class="sidebar-header-row">
+          <a href="../index.html" class="sidebar-brand">
+            <div class="sidebar-avatar" title="vmrey.github.io 博客">
+              <svg class="sidebar-avatar-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path>
+                <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path>
+                <line x1="9" y1="7" x2="15" y2="7"></line>
+                <line x1="9" y1="11" x2="13" y2="11"></line>
+              </svg>
+            </div>
+            <div class="sidebar-info">
+              <div class="sidebar-name">vmrey.github.io</div>
+              <div class="sidebar-tagline">构建工具，写干净的代码</div>
+            </div>
+          </a>
+          <button type="button" id="sidebar-collapse-btn" class="sidebar-collapse-btn" title="折叠/展开侧边栏 (PC)" aria-label="折叠侧边栏">
+            <svg class="collapse-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="15 18 9 12 15 6"></polyline>
             </svg>
-          </div>
-          <div class="sidebar-info">
-            <div class="sidebar-name">vmrey.github.io</div>
-            <div class="sidebar-tagline">构建工具，写干净的代码</div>
-          </div>
-        </a>
+          </button>
+        </div>
 
         <!-- 左侧全局搜索快捷入口 (支持 ⌘K) -->
         <button class="sidebar-search-btn open-search-modal" type="button" title="全站深度全文搜索 (Cmd+K)">
           <span class="search-btn-left">
-            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <svg class="search-icon" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
               <circle cx="11" cy="11" r="8"></circle>
               <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
             </svg>
-            <span>全文搜索...</span>
+            <span class="search-btn-text">全文搜索...</span>
           </span>
           <kbd class="kbd-badge">⌘K</kbd>
         </button>
@@ -70,49 +77,44 @@
           <div class="nav-group-title">文章专栏</div>
           
           <!-- 全部文章 -->
-          <a href="../index.html" class="sidebar-nav-item  category-filter-btn" data-tag="all" data-label="全部文章">
+          <a href="../index.html" class="sidebar-nav-item  category-filter-btn" data-tag="all" data-label="全部文章" title="全部文章">
             <span class="nav-item-left">
               <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg>
-              <span>全部文章</span>
+              <span class="nav-item-text">全部文章</span>
             </span>
-            <span class="nav-badge">27</span>
           </a>
 
           <!-- 专栏：前端开发 -->
           <div class="nav-item-tree open">
             <div class="tree-header-row">
-              <a href="../index.html?tag=%E5%89%8D%E7%AB%AF%E5%BC%80%E5%8F%91" class="sidebar-nav-item category-filter-btn" data-tag="前端开发" data-label="前端开发">
+              <a href="../index.html?tag=%E5%89%8D%E7%AB%AF%E5%BC%80%E5%8F%91" class="sidebar-nav-item category-filter-btn" data-tag="前端开发" data-label="前端开发" title="前端开发">
                 <span class="nav-item-left">
                   <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"></polyline><polyline points="8 6 2 12 8 18"></polyline></svg>
-                  <span>前端开发</span>
+                  <span class="nav-item-text">前端开发</span>
                 </span>
-                <span class="nav-badge">11</span>
               </a>
-              <button type="button" class="subtree-toggle-btn" aria-label="展开或折叠前端开发子菜单">
+              <button type="button" class="subtree-toggle-btn" aria-label="展开或折叠前端开发子菜单" title="展开或折叠前端开发">
                 <svg class="chevron-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
               </button>
             </div>
             <div class="nav-subtree">
-              <a href="../index.html?tag=Vue" class="subtree-item category-filter-btn" data-tag="Vue" data-label="Vue 与组件">
+              <a href="../index.html?tag=Vue" class="subtree-item category-filter-btn" data-tag="Vue" data-label="Vue 与组件" title="Vue 与组件">
                 <span class="subtree-item-left">
                   <span class="subtree-item-dot"></span>
                   <span class="subtree-item-name">Vue 与组件</span>
                 </span>
-                <span class="subtree-badge">4</span>
               </a>
-              <a href="../index.html?tag=JavaScript" class="subtree-item category-filter-btn" data-tag="JavaScript" data-label="JS 与工具函数">
+              <a href="../index.html?tag=JavaScript" class="subtree-item category-filter-btn" data-tag="JavaScript" data-label="JS 与工具函数" title="JS 与工具函数">
                 <span class="subtree-item-left">
                   <span class="subtree-item-dot"></span>
                   <span class="subtree-item-name">JS 与工具函数</span>
                 </span>
-                <span class="subtree-badge">6</span>
               </a>
-              <a href="../index.html?tag=%E5%BE%AE%E4%BF%A1%E5%B0%8F%E7%A8%8B%E5%BA%8F" class="subtree-item category-filter-btn" data-tag="微信小程序" data-label="微信小程序">
+              <a href="../index.html?tag=%E5%BE%AE%E4%BF%A1%E5%B0%8F%E7%A8%8B%E5%BA%8F" class="subtree-item category-filter-btn" data-tag="微信小程序" data-label="微信小程序" title="微信小程序">
                 <span class="subtree-item-left">
                   <span class="subtree-item-dot"></span>
                   <span class="subtree-item-name">微信小程序</span>
                 </span>
-                <span class="subtree-badge">2</span>
               </a>
             </div>
           </div>
@@ -120,38 +122,34 @@
           <!-- 专栏：Linux 与服务端 -->
           <div class="nav-item-tree open">
             <div class="tree-header-row">
-              <a href="../index.html?tag=Linux" class="sidebar-nav-item category-filter-btn" data-tag="Linux" data-label="Linux 与服务端">
+              <a href="../index.html?tag=Linux" class="sidebar-nav-item category-filter-btn" data-tag="Linux" data-label="Linux 与服务端" title="Linux 与服务端">
                 <span class="nav-item-left">
                   <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="8" rx="2" ry="2"></rect><rect x="2" y="14" width="20" height="8" rx="2" ry="2"></rect><line x1="6" y1="6" x2="6.01" y2="6"></line><line x1="6" y1="18" x2="6.01" y2="18"></line></svg>
-                  <span>Linux 与服务端</span>
+                  <span class="nav-item-text">Linux 与服务端</span>
                 </span>
-                <span class="nav-badge">9</span>
               </a>
-              <button type="button" class="subtree-toggle-btn" aria-label="展开或折叠Linux 与服务端子菜单">
+              <button type="button" class="subtree-toggle-btn" aria-label="展开或折叠Linux 与服务端子菜单" title="展开或折叠Linux 与服务端">
                 <svg class="chevron-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
               </button>
             </div>
             <div class="nav-subtree">
-              <a href="../index.html?tag=Docker" class="subtree-item category-filter-btn" data-tag="Docker" data-label="Docker 与容器">
+              <a href="../index.html?tag=Docker" class="subtree-item category-filter-btn" data-tag="Docker" data-label="Docker 与容器" title="Docker 与容器">
                 <span class="subtree-item-left">
                   <span class="subtree-item-dot"></span>
                   <span class="subtree-item-name">Docker 与容器</span>
                 </span>
-                <span class="subtree-badge">3</span>
               </a>
-              <a href="../index.html?tag=Nginx" class="subtree-item category-filter-btn" data-tag="Nginx" data-label="网络与反代">
+              <a href="../index.html?tag=Nginx" class="subtree-item category-filter-btn" data-tag="Nginx" data-label="网络与反代" title="网络与反代">
                 <span class="subtree-item-left">
                   <span class="subtree-item-dot"></span>
                   <span class="subtree-item-name">网络与反代</span>
                 </span>
-                <span class="subtree-badge">3</span>
               </a>
-              <a href="../index.html?tag=%E5%8E%8B%E5%8A%9B%E6%B5%8B%E8%AF%95" class="subtree-item category-filter-btn" data-tag="压力测试" data-label="性能与压测">
+              <a href="../index.html?tag=%E5%8E%8B%E5%8A%9B%E6%B5%8B%E8%AF%95" class="subtree-item category-filter-btn" data-tag="压力测试" data-label="性能与压测" title="性能与压测">
                 <span class="subtree-item-left">
                   <span class="subtree-item-dot"></span>
                   <span class="subtree-item-name">性能与压测</span>
                 </span>
-                <span class="subtree-badge">3</span>
               </a>
             </div>
           </div>
@@ -159,38 +157,34 @@
           <!-- 专栏：效率工具与软件 -->
           <div class="nav-item-tree open">
             <div class="tree-header-row">
-              <a href="../index.html?tag=%E6%95%88%E7%8E%87%E5%B7%A5%E5%85%B7" class="sidebar-nav-item category-filter-btn" data-tag="效率工具" data-label="效率工具与软件">
+              <a href="../index.html?tag=%E6%95%88%E7%8E%87%E5%B7%A5%E5%85%B7" class="sidebar-nav-item category-filter-btn" data-tag="效率工具" data-label="效率工具与软件" title="效率工具与软件">
                 <span class="nav-item-left">
                   <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"></path></svg>
-                  <span>效率工具与软件</span>
+                  <span class="nav-item-text">效率工具与软件</span>
                 </span>
-                <span class="nav-badge">7</span>
               </a>
-              <button type="button" class="subtree-toggle-btn" aria-label="展开或折叠效率工具与软件子菜单">
+              <button type="button" class="subtree-toggle-btn" aria-label="展开或折叠效率工具与软件子菜单" title="展开或折叠效率工具与软件">
                 <svg class="chevron-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
               </button>
             </div>
             <div class="nav-subtree">
-              <a href="../index.html?tag=Git" class="subtree-item category-filter-btn" data-tag="Git" data-label="Git 与 SVN">
+              <a href="../index.html?tag=Git" class="subtree-item category-filter-btn" data-tag="Git" data-label="Git 与 SVN" title="Git 与 SVN">
                 <span class="subtree-item-left">
                   <span class="subtree-item-dot"></span>
                   <span class="subtree-item-name">Git 与 SVN</span>
                 </span>
-                <span class="subtree-badge">1</span>
               </a>
-              <a href="../index.html?tag=%E8%BD%AF%E4%BB%B6" class="subtree-item category-filter-btn" data-tag="软件" data-label="开源软件与脚本">
+              <a href="../index.html?tag=%E8%BD%AF%E4%BB%B6" class="subtree-item category-filter-btn" data-tag="软件" data-label="开源软件与脚本" title="开源软件与脚本">
                 <span class="subtree-item-left">
                   <span class="subtree-item-dot"></span>
                   <span class="subtree-item-name">开源软件与脚本</span>
                 </span>
-                <span class="subtree-badge">1</span>
               </a>
-              <a href="../index.html?tag=Claude" class="subtree-item category-filter-btn" data-tag="Claude" data-label="Claude 与 AI">
+              <a href="../index.html?tag=Claude" class="subtree-item category-filter-btn" data-tag="Claude" data-label="Claude 与 AI" title="Claude 与 AI">
                 <span class="subtree-item-left">
                   <span class="subtree-item-dot"></span>
                   <span class="subtree-item-name">Claude 与 AI</span>
                 </span>
-                <span class="subtree-badge">1</span>
               </a>
             </div>
           </div>
@@ -198,23 +192,22 @@
 
         <div class="sidebar-nav-group">
           <div class="nav-group-title">导航与资源</div>
-          <a href="../files.html" class="sidebar-nav-item ">
+          <a href="../files.html" class="sidebar-nav-item " title="资源文件库">
             <span class="nav-item-left">
               <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path><line x1="12" y1="11" x2="12" y2="17"></line><line x1="9" y1="14" x2="15" y2="14"></line></svg>
-              <span>资源文件库</span>
+              <span class="nav-item-text">资源文件库</span>
             </span>
-            <span class="nav-badge">10</span>
           </a>
-          <a href="../about.html" class="sidebar-nav-item ">
+          <a href="../about.html" class="sidebar-nav-item " title="关于本站">
             <span class="nav-item-left">
               <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
-              <span>关于本站</span>
+              <span class="nav-item-text">关于本站</span>
             </span>
           </a>
-          <a href="https://github.com/vmrey/vmrey.github.io" target="_blank" rel="noopener noreferrer" class="sidebar-nav-item">
+          <a href="https://github.com/vmrey/vmrey.github.io" target="_blank" rel="noopener noreferrer" class="sidebar-nav-item" title="GitHub 源码">
             <span class="nav-item-left">
               <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0 9 18.13V22"></path></svg>
-              <span>GitHub 源码</span>
+              <span class="nav-item-text">GitHub 源码</span>
             </span>
           </a>
         </div>
@@ -233,112 +226,117 @@
 
     <!-- 主内容区 -->
     <main class="app-main">
-      <!-- 文章标题与元数据头部 -->
-      <header class="article-header">
-        <a href="../index.html" class="back-link">
-          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
-          <span>返回文章列表</span>
-        </a>
-        <h1 class="article-title">开源 HTTP 压力测试工具 Siege 从安装到生产实战指南</h1>
-        <div class="article-meta">
-          <span class="post-block-tag">Linux与服务端</span>
-          <span>·</span>
-          <time datetime="2026-05-25">2026-05-25</time>
-          <span>·</span>
-          <span>6 分钟阅读</span>
-        </div>
-      </header>
+      <div class="article-container">
+        <!-- 文章标题与元数据头部 -->
+        <header class="article-header">
+          <a href="../index.html" class="back-link">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
+            <span>返回文章列表</span>
+          </a>
+          <h1 class="article-title">开源 HTTP 压力测试工具 Siege 从安装到生产实战指南</h1>
+          <div class="article-meta">
+            <span class="post-block-tag">Linux与服务端</span>
+            <span>·</span>
+            <time datetime="2026-05-25">2026-05-25</time>
+            <span>·</span>
+            <span>6 分钟阅读</span>
+          </div>
+        </header>
 
-      <!-- 正文与目录两栏并排布局 -->
-      <div class="article-layout">
-        <article class="article-content" id="main-content">
-          <div class="prose">
-
-
+        <!-- 正文内容区 -->
+        <div class="article-layout">
+          <article class="article-content" id="main-content">
+            <div class="prose">
 <p><strong>当前环境（CentOS 7+）</strong></p>
-
 <h2 id="安装步骤">安装步骤</h2>
-
 <h3 id="第一步-更新系统">第一步：更新系统</h3>
-
 <pre><code class="language-bash">sudo yum -y update</code></pre>
-
 <h3 id="第二步-安装依赖包">第二步：安装依赖包</h3>
-
 <pre><code class="language-bash">sudo yum install -y gcc make openssl-devel</code></pre>
-
 <h3 id="第三步-下载-siege-软件包">第三步：下载 siege 软件包</h3>
-
 <pre><code class="language-bash">wget http://download.joedog.org/siege/siege-latest.tar.gz</code></pre>
-
 <p><strong>注意</strong>：如果上述链接失效，可以使用以下备用下载方式：</p>
-
 <pre><code class="language-bash"># 从 GitHub 下载最新版本
 wget https://github.com/JoeDog/siege/releases/latest/download/siege-latest.tar.gz</code></pre>
-
 <h3 id="第四步-解压软件包">第四步：解压软件包</h3>
-
 <pre><code class="language-bash">tar zxvf siege-latest.tar.gz</code></pre>
-
 <h3 id="第五步-删除安装包-可选">第五步：删除安装包（可选）</h3>
-
 <pre><code class="language-bash">rm -f siege-latest.tar.gz</code></pre>
-
 <h3 id="第六步-进入解压后的目录">第六步：进入解压后的目录</h3>
-
 <pre><code class="language-bash"># 进入解压后的目录（注意：版本号可能不同，请根据实际情况调整）
 cd siege-*/</code></pre>
-
 <p><strong>说明</strong>：使用 <code>siege-*/</code> 通配符可以自动匹配版本号，避免硬编码版本号的问题。</p>
-
 <h3 id="第七步-编译安装">第七步：编译安装</h3>
-
 <pre><code class="language-bash">./configure &amp;&amp; make</code></pre>
-
 <h3 id="第八步-安装到系统">第八步：安装到系统</h3>
-
 <pre><code class="language-bash">sudo make install</code></pre>
-
 <h3 id="第九步-创建配置文件">第九步：创建配置文件</h3>
-
 <pre><code class="language-bash"># 复制配置文件到用户目录
 cp doc/siegerc ~/.siegerc</code></pre>
-
 <p><strong>注意</strong>：如果 <code>doc/siegerc</code> 不存在，可以手动创建配置文件：</p>
-
 <pre><code class="language-bash"># 创建配置文件
 touch ~/.siegerc</code></pre>
-
 <h3 id="第十步-验证安装">第十步：验证安装</h3>
-
 <pre><code class="language-bash">siege -V</code></pre>
-
 <p><strong>预期输出</strong>：</p>
 <pre><code class="language-bash">SIEGE 4.1.3
 Copyright (C) 2025 by Jeffrey Fulmer, et al.
 ...</code></pre>
-
 <h2 id="使用示例">使用示例</h2>
-
 <h3 id="基本压力测试">基本压力测试</h3>
-
 <pre><code class="language-bash"># 10个客户端并发，每个客户端发起10个请求
 siege -c 10 -r 10 --log=./siege.log https://www.baidu.com</code></pre>
-
 <h3 id="常用参数说明">常用参数说明</h3>
-
-<p>| 参数 | 说明 | 示例 |</p>
-<p>|------|------|------|</p>
-<p>| <code>-c</code> | 并发用户数 | <code>-c 10</code> (10个并发用户) |</p>
-<p>| <code>-r</code> | 重复次数 | <code>-r 10</code> (每个用户重复10次) |</p>
-<p>| <code>-t</code> | 持续时间 | <code>-t 30S</code> (持续30秒) |</p>
-<p>| <code>-d</code> | 延迟时间 | <code>-d 1</code> (每个请求延迟1秒) |</p>
-<p>| <code>-i</code> | 互联网模式（随机访问） | <code>-i</code> |</p>
-<p>| <code>-b</code> | 基准测试模式（无延迟） | <code>-b</code> |</p>
-<p>| <code>--log</code> | 日志文件路径 | <code>--log=./siege.log</code> |</p>
+<div class="table-container">
+<table class="markdown-table">
+  <thead>
+    <tr>
+      <th style="text-align: left">参数</th>
+      <th style="text-align: left">说明</th>
+      <th style="text-align: left">示例</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: left"><code>-c</code></td>
+      <td style="text-align: left">并发用户数</td>
+      <td style="text-align: left"><code>-c 10</code> (10个并发用户)</td>
+    </tr>
+    <tr>
+      <td style="text-align: left"><code>-r</code></td>
+      <td style="text-align: left">重复次数</td>
+      <td style="text-align: left"><code>-r 10</code> (每个用户重复10次)</td>
+    </tr>
+    <tr>
+      <td style="text-align: left"><code>-t</code></td>
+      <td style="text-align: left">持续时间</td>
+      <td style="text-align: left"><code>-t 30S</code> (持续30秒)</td>
+    </tr>
+    <tr>
+      <td style="text-align: left"><code>-d</code></td>
+      <td style="text-align: left">延迟时间</td>
+      <td style="text-align: left"><code>-d 1</code> (每个请求延迟1秒)</td>
+    </tr>
+    <tr>
+      <td style="text-align: left"><code>-i</code></td>
+      <td style="text-align: left">互联网模式（随机访问）</td>
+      <td style="text-align: left"><code>-i</code></td>
+    </tr>
+    <tr>
+      <td style="text-align: left"><code>-b</code></td>
+      <td style="text-align: left">基准测试模式（无延迟）</td>
+      <td style="text-align: left"><code>-b</code></td>
+    </tr>
+    <tr>
+      <td style="text-align: left"><code>--log</code></td>
+      <td style="text-align: left">日志文件路径</td>
+      <td style="text-align: left"><code>--log=./siege.log</code></td>
+    </tr>
+  </tbody>
+</table>
+</div>
 
 <h3 id="更多使用示例">更多使用示例</h3>
-
 <pre><code class="language-bash"># 持续30秒的压力测试
 siege -c 20 -t 30S https://www.example.com
 
@@ -347,30 +345,18 @@ siege -c 10 -r 5 -f urls.txt
 
 # 基准测试模式（无延迟，最大压力）
 siege -c 50 -r 100 -b https://www.example.com</code></pre>
-
 <h2 id="常见问题">常见问题</h2>
-
 <h3 id="1-编译错误">1. 编译错误</h3>
-
 <p>如果出现 <code>openssl</code> 相关错误，请确保已安装 <code>openssl-devel</code>：</p>
-
 <pre><code class="language-bash">sudo yum install -y openssl-devel</code></pre>
-
 <h3 id="2-权限问题">2. 权限问题</h3>
-
 <p>如果安装时遇到权限问题，确保使用 <code>sudo</code>：</p>
-
 <pre><code class="language-bash">sudo make install</code></pre>
-
 <h3 id="3-配置文件不存在">3. 配置文件不存在</h3>
-
 <p>如果 <code>~/.siegerc</code> 不存在，可以手动创建：</p>
-
 <pre><code class="language-bash">mkdir -p ~/.siege
 touch ~/.siegerc</code></pre>
-
 <h2 id="卸载方法">卸载方法</h2>
-
 <pre><code class="language-bash"># 进入源码目录
 cd siege-*/
 
@@ -379,23 +365,25 @@ sudo make uninstall
 
 # 删除配置文件
 rm -rf ~/.siegerc</code></pre>
-
 <h2 id="参考资源">参考资源</h2>
-
 <ul>
-<li>官方网站：https://www.joedog.org/siege-home/</li>
-<li>GitHub 仓库：https://github.com/JoeDog/siege</li>
-<li>官方文档：https://www.joedog.org/siege-manual/</li>
+<li>官方网站：https://www.joedog.org/siege-home/
+</li>
+<li>GitHub 仓库：https://github.com/JoeDog/siege
+</li>
+<li>官方文档：https://www.joedog.org/siege-manual/
+</li>
 </ul>
+            </div>
 
-          </div>
-
-          <div class="post-block-footer" style="margin-top: 3.5rem; padding-top: 1.5rem;">
-            <a href="../index.html" class="read-more-text">
-              <span>← 返回文章专栏</span>
-            </a>
-          </div>
-        </article>
+            <div class="post-block-footer" style="margin-top: 3.5rem; padding-top: 1.5rem;">
+              <a href="../index.html" class="read-more-text">
+                <span>← 返回文章专栏</span>
+              </a>
+            </div>
+          </article>
+        </div>
+      </div>
 
         <!-- 右侧文章大纲 TOC -->
         <aside class="article-toc-panel" aria-label="文章目录大纲">
@@ -468,10 +456,16 @@ rm -rf ~/.siegerc</code></pre>
             </ul>
           </div>
         </aside>
-      </div>
     </main>
 
   </div>
+
+  <!-- 全局回到顶部按钮 (右下角固定) -->
+  <button id="back-to-top-btn" class="back-to-top-btn" type="button" title="回到顶部" aria-label="回到顶部">
+    <svg class="back-to-top-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+      <polyline points="18 15 12 9 6 15"></polyline>
+    </svg>
+  </button>
 
   <script src="../js/config.js"></script>
   <script src="../data/search-index.js"></script>
