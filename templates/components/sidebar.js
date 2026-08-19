@@ -92,7 +92,8 @@ ${childrenHtml}
 
   return `    <!-- 左侧常驻导航 -->
     <aside class="app-sidebar" id="app-sidebar">
-      <div class="sidebar-inner">
+      <!-- 顶部固定区域：Logo、标题与全局搜索 -->
+      <div class="sidebar-header-section">
         <div class="sidebar-header-row">
           <a href="${homeUrl}" class="sidebar-brand">
             <div class="sidebar-avatar" title="${blogConfig.siteName} 博客">
@@ -126,7 +127,10 @@ ${childrenHtml}
           </span>
           <kbd class="kbd-badge">⌘K</kbd>
         </button>
+      </div>
 
+      <!-- 中间独立上下滚动区域：文章分类专栏与导航列表 -->
+      <div class="sidebar-nav-scroll">
 ${navCategoriesHtml}
 
         <div class="sidebar-nav-group">
@@ -152,6 +156,7 @@ ${navCategoriesHtml}
         </div>
       </div>
 
+      <!-- 底部常驻固定区域：主题切换与版权声明 (永远可见，不随菜单滚动) -->
       <div class="sidebar-footer">
         <div class="theme-toggle-row">
           <span id="theme-mode-text">深色模式</span>
