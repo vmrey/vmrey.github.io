@@ -71,6 +71,7 @@ npm run deploy                 # 或 git add . && git commit -m "feat: 发布新
 │       ├── files.js             # 资源文件库装配模板 (files.html)
 │       ├── nav.js               # GitHub 开源导航页装配模板 (nav.html)
 │       ├── tools.js             # 实用工具导航页装配模板 (tools.html)
+│       ├── ai.js                # 顶级 AI 导航页装配模板 (ai.html)
 │       └── about.js             # 关于本站页装配模板 (about.html)
 │
 ├── assets/                      # 静态资源目录
@@ -82,6 +83,7 @@ npm run deploy                 # 或 git add . && git commit -m "feat: 发布新
 │   ├── search-index.js          # 全局全文深度检索索引数据库 (由 build.js 自动生成)
 │   ├── github-nav.json          # GitHub 优质开源项目导航数据源 (分类、仓库、标签)
 │   ├── tools-nav.json           # 实用在线开发工具导航数据源 (分类、工具、描述)
+│   ├── ai-nav.json              # 顶级 AI 导航数据源 (大模型、Agent、多模态、API网关)
 │   └── files-meta.json          # 资源附件详细元数据（描述、分类、专属徽标色）
 │
 ├── js/                          # 客户端核心交互脚本

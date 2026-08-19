@@ -1,0 +1,1113 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI 导航 · vmrey.github.io</title>
+  <meta name="description" content="精选收录全球顶尖前沿大语言模型、Gemini、ChatGPT、DeepSeek、Claude 与 AI 编程智能体">
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <!-- 移动端顶部标题导航条 -->
+  <div class="mobile-header">
+    <div class="mobile-title-wrap">
+      <svg class="mobile-book-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path>
+        <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path>
+        <line x1="9" y1="7" x2="15" y2="7"></line>
+        <line x1="9" y1="11" x2="13" y2="11"></line>
+      </svg>
+      <div class="mobile-title">vmrey.github.io</div>
+    </div>
+    <button id="menu-toggle-btn" class="menu-toggle-btn" aria-label="切换侧边栏菜单">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <line x1="3" y1="12" x2="21" y2="12"></line>
+        <line x1="3" y1="6" x2="21" y2="6"></line>
+        <line x1="3" y1="18" x2="21" y2="18"></line>
+      </svg>
+    </button>
+  </div>
+
+  <div id="sidebar-overlay" class="sidebar-overlay"></div>
+
+  <div class="app-layout">
+    
+    <!-- 左侧常驻导航 -->
+    <aside class="app-sidebar" id="app-sidebar">
+      <!-- 顶部固定区域：Logo、标题与全局搜索 -->
+      <div class="sidebar-header-section">
+        <div class="sidebar-header-row">
+          <a href="index.html" class="sidebar-brand">
+            <div class="sidebar-avatar" title="vmrey.github.io 博客">
+              <svg class="sidebar-avatar-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path>
+                <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path>
+                <line x1="9" y1="7" x2="15" y2="7"></line>
+                <line x1="9" y1="11" x2="13" y2="11"></line>
+              </svg>
+            </div>
+            <div class="sidebar-info">
+              <div class="sidebar-name">vmrey.github.io</div>
+              <div class="sidebar-tagline">构建工具，写干净的代码</div>
+            </div>
+          </a>
+          <button type="button" id="sidebar-collapse-btn" class="sidebar-collapse-btn" title="折叠/展开侧边栏 (PC)" aria-label="折叠侧边栏">
+            <svg class="collapse-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="15 18 9 12 15 6"></polyline>
+            </svg>
+          </button>
+        </div>
+
+        <!-- 左侧全局搜索快捷入口 (支持 ⌘K) -->
+        <button class="sidebar-search-btn open-search-modal" type="button" title="全站深度全文搜索 (Cmd+K)">
+          <span class="search-btn-left">
+            <svg class="search-icon" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="11" cy="11" r="8"></circle>
+              <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+            </svg>
+            <span class="search-btn-text">全文搜索...</span>
+          </span>
+          <kbd class="kbd-badge">⌘K</kbd>
+        </button>
+      </div>
+
+      <!-- 侧边栏菜单列表 -->
+      <div class="sidebar-nav-body">
+        <!-- 导航分组 1：分类专栏 (支持多层级子专栏) -->
+        <div class="sidebar-nav-group">
+          <div class="nav-group-title">文章专栏</div>
+          
+          <!-- 全部文章 -->
+          <a href="index.html" class="sidebar-nav-item  category-filter-btn" data-tag="all" data-label="全部文章" title="全部文章">
+            <span class="nav-item-left">
+              <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg>
+              <span class="nav-item-text">全部文章</span>
+            </span>
+          </a>
+
+          <!-- 专栏：前端开发 -->
+          <div class="nav-item-tree">
+            <div class="tree-header-row">
+              <a href="index.html?tag=%E5%89%8D%E7%AB%AF%E5%BC%80%E5%8F%91" class="sidebar-nav-item category-filter-btn" data-tag="前端开发" data-label="前端开发" title="前端开发">
+                <span class="nav-item-left">
+                  <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"></polyline><polyline points="8 6 2 12 8 18"></polyline></svg>
+                  <span class="nav-item-text">前端开发</span>
+                </span>
+              </a>
+              <button type="button" class="subtree-toggle-btn" aria-label="展开或折叠前端开发子菜单" title="展开或折叠前端开发">
+                <svg class="chevron-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+              </button>
+            </div>
+            <div class="nav-subtree">
+              <a href="index.html?tag=Vue" class="subtree-item category-filter-btn" data-tag="Vue" data-label="Vue 与组件" title="Vue 与组件">
+                <span class="subtree-item-left">
+                  <span class="subtree-item-dot"></span>
+                  <span class="subtree-item-name">Vue 与组件</span>
+                </span>
+              </a>
+              <a href="index.html?tag=JavaScript" class="subtree-item category-filter-btn" data-tag="JavaScript" data-label="JS 与工具函数" title="JS 与工具函数">
+                <span class="subtree-item-left">
+                  <span class="subtree-item-dot"></span>
+                  <span class="subtree-item-name">JS 与工具函数</span>
+                </span>
+              </a>
+              <a href="index.html?tag=%E5%BE%AE%E4%BF%A1%E5%B0%8F%E7%A8%8B%E5%BA%8F" class="subtree-item category-filter-btn" data-tag="微信小程序" data-label="微信小程序" title="微信小程序">
+                <span class="subtree-item-left">
+                  <span class="subtree-item-dot"></span>
+                  <span class="subtree-item-name">微信小程序</span>
+                </span>
+              </a>
+            </div>
+          </div>
+
+          <!-- 专栏：Linux 与服务端 -->
+          <div class="nav-item-tree">
+            <div class="tree-header-row">
+              <a href="index.html?tag=Linux" class="sidebar-nav-item category-filter-btn" data-tag="Linux" data-label="Linux 与服务端" title="Linux 与服务端">
+                <span class="nav-item-left">
+                  <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="8" rx="2" ry="2"></rect><rect x="2" y="14" width="20" height="8" rx="2" ry="2"></rect><line x1="6" y1="6" x2="6.01" y2="6"></line><line x1="6" y1="18" x2="6.01" y2="18"></line></svg>
+                  <span class="nav-item-text">Linux 与服务端</span>
+                </span>
+              </a>
+              <button type="button" class="subtree-toggle-btn" aria-label="展开或折叠Linux 与服务端子菜单" title="展开或折叠Linux 与服务端">
+                <svg class="chevron-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+              </button>
+            </div>
+            <div class="nav-subtree">
+              <a href="index.html?tag=Docker" class="subtree-item category-filter-btn" data-tag="Docker" data-label="Docker 与容器" title="Docker 与容器">
+                <span class="subtree-item-left">
+                  <span class="subtree-item-dot"></span>
+                  <span class="subtree-item-name">Docker 与容器</span>
+                </span>
+              </a>
+              <a href="index.html?tag=Nginx" class="subtree-item category-filter-btn" data-tag="Nginx" data-label="网络与反代" title="网络与反代">
+                <span class="subtree-item-left">
+                  <span class="subtree-item-dot"></span>
+                  <span class="subtree-item-name">网络与反代</span>
+                </span>
+              </a>
+              <a href="index.html?tag=%E5%8E%8B%E5%8A%9B%E6%B5%8B%E8%AF%95" class="subtree-item category-filter-btn" data-tag="压力测试" data-label="性能与压测" title="性能与压测">
+                <span class="subtree-item-left">
+                  <span class="subtree-item-dot"></span>
+                  <span class="subtree-item-name">性能与压测</span>
+                </span>
+              </a>
+            </div>
+          </div>
+
+          <!-- 专栏：效率工具与软件 -->
+          <div class="nav-item-tree">
+            <div class="tree-header-row">
+              <a href="index.html?tag=%E6%95%88%E7%8E%87%E5%B7%A5%E5%85%B7" class="sidebar-nav-item category-filter-btn" data-tag="效率工具" data-label="效率工具与软件" title="效率工具与软件">
+                <span class="nav-item-left">
+                  <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"></path></svg>
+                  <span class="nav-item-text">效率工具与软件</span>
+                </span>
+              </a>
+              <button type="button" class="subtree-toggle-btn" aria-label="展开或折叠效率工具与软件子菜单" title="展开或折叠效率工具与软件">
+                <svg class="chevron-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+              </button>
+            </div>
+            <div class="nav-subtree">
+              <a href="index.html?tag=Git" class="subtree-item category-filter-btn" data-tag="Git" data-label="Git 与 SVN" title="Git 与 SVN">
+                <span class="subtree-item-left">
+                  <span class="subtree-item-dot"></span>
+                  <span class="subtree-item-name">Git 与 SVN</span>
+                </span>
+              </a>
+              <a href="index.html?tag=Claude" class="subtree-item category-filter-btn" data-tag="Claude" data-label="Claude 与 AI" title="Claude 与 AI">
+                <span class="subtree-item-left">
+                  <span class="subtree-item-dot"></span>
+                  <span class="subtree-item-name">Claude 与 AI</span>
+                </span>
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <div class="sidebar-nav-group">
+          <div class="nav-group-title">导航与资源</div>
+          <a href="nav.html" class="sidebar-nav-item " title="GitHub 导航">
+            <span class="nav-item-left">
+              <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"></polygon></svg>
+              <span class="nav-item-text">GitHub 导航</span>
+            </span>
+          </a>
+          <a href="tools.html" class="sidebar-nav-item " title="工具导航">
+            <span class="nav-item-left">
+              <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"></path></svg>
+              <span class="nav-item-text">工具导航</span>
+            </span>
+          </a>
+          <a href="ai.html" class="sidebar-nav-item active" title="AI 导航">
+            <span class="nav-item-left">
+              <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+              <span class="nav-item-text">AI 导航</span>
+            </span>
+          </a>
+          <a href="files.html" class="sidebar-nav-item " title="资源文件库">
+            <span class="nav-item-left">
+              <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path><line x1="12" y1="11" x2="12" y2="17"></line><line x1="9" y1="14" x2="15" y2="14"></line></svg>
+              <span class="nav-item-text">资源文件库</span>
+            </span>
+          </a>
+          <a href="about.html" class="sidebar-nav-item " title="关于本站">
+            <span class="nav-item-left">
+              <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+              <span class="nav-item-text">关于本站</span>
+            </span>
+          </a>
+          <a href="https://github.com/vmrey/vmrey.github.io" target="_blank" rel="noopener noreferrer" class="sidebar-nav-item" title="GitHub 源码">
+            <span class="nav-item-left">
+              <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0 9 18.13V22"></path></svg>
+              <span class="nav-item-text">GitHub 源码</span>
+            </span>
+          </a>
+        </div>
+      </div>
+
+      <!-- 底部区域：主题切换与版权声明 -->
+      <div class="sidebar-footer">
+        <div class="theme-toggle-row">
+          <span id="theme-mode-text">深色模式</span>
+          <button id="theme-toggle" class="theme-toggle-btn" type="button" title="切换主题外观"></button>
+        </div>
+        <div class="sidebar-copyright">
+          © 2018-<span class="current-year">2026</span> vmrey.github.io<br>用代码与文字记录探索
+        </div>
+      </div>
+    </aside>
+
+    <!-- 主内容区 -->
+    <main class="app-main">
+      <!-- 顶部头部与即时搜索框 -->
+      <header class="feed-header">
+        <div class="feed-title-wrap">
+          <div class="feed-title-row">
+            <h1>AI 导航</h1>
+            <div class="feed-stats-pills">
+              <span class="stat-pill highlight" id="ai-count-badge">共 4 个分类 · 16 个顶尖 AI 工具</span>
+              <span class="stat-pill">前沿大模型与智能体精选</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="search-box-wrap">
+          <svg class="search-box-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="11" cy="11" r="8"></circle>
+            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+          </svg>
+          <input 
+            type="text" 
+            id="ai-filter-input" 
+            class="search-input" 
+            placeholder="输入大模型、厂商、Agent、功能描述即时定位 AI 工具..." 
+            aria-label="检索 AI 工具"
+            autocomplete="off"
+          >
+        </div>
+      </header>
+
+      
+      <div class="nav-quick-filters">
+        <button type="button" class="nav-pill-btn active" data-filter-cat="all">
+          <span>全部 AI 工具</span>
+          <span class="nav-pill-count">16</span>
+        </button>
+        
+        <button type="button" class="nav-pill-btn" data-filter-cat="前沿大模型与对话平台">
+          <span>前沿大模型与对话平台</span>
+          <span class="nav-pill-count">6</span>
+        </button>
+        
+
+        <button type="button" class="nav-pill-btn" data-filter-cat="AI 智能体与自主编程">
+          <span>AI 智能体与自主编程</span>
+          <span class="nav-pill-count">4</span>
+        </button>
+        
+
+        <button type="button" class="nav-pill-btn" data-filter-cat="AI 图像与多模态创作">
+          <span>AI 图像与多模态创作</span>
+          <span class="nav-pill-count">3</span>
+        </button>
+        
+
+        <button type="button" class="nav-pill-btn" data-filter-cat="AI 聚合平台与 API 服务">
+          <span>AI 聚合平台与 API 服务</span>
+          <span class="nav-pill-count">3</span>
+        </button>
+        
+      </div>
+  
+
+      <!-- AI 卡片展示流 -->
+      <div class="nav-sections-container" id="ai-sections-container">
+      <!-- 分类矩阵：前沿大模型与对话平台 -->
+      <section class="nav-category-section" data-cat-name="前沿大模型与对话平台">
+        <div class="nav-category-header">
+          <div class="nav-cat-title-left">
+            <div class="nav-cat-icon">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
+              </svg>
+            </div>
+            <h2 class="nav-cat-title">前沿大模型与对话平台</h2>
+            <span class="nav-cat-desc">全球顶尖通用大模型、多模态智能对话与长上下文推理利器</span>
+          </div>
+          <span class="nav-cat-count">6 个工具</span>
+        </div>
+
+        <div class="nav-repo-grid">
+          <!-- AI Card: Google Gemini -->
+          <div class="nav-repo-card" data-name="google gemini" data-desc="google 旗舰原生多模态大模型，具备百万超长上下文与深度理解 google 最强大的多模态大语言模型，支持文本、代码、图像、音频与视频原生理解，拥有业界领先的超长上下文窗口与 google 生态深度协同。" data-tags="gemini,google,多模态,超长上下文,llm" data-cat="前沿大模型与对话平台">
+            <div class="repo-card-top">
+              <div class="repo-header-info">
+                <div class="repo-icon-badge">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
+                  </svg>
+                </div>
+                <div class="repo-title-meta">
+                  <div class="repo-name-line">
+                    <a href="https://gemini.google.com/" target="_blank" rel="noopener noreferrer" class="repo-main-name" title="前往 Google Gemini 官网">
+                      Google Gemini
+                    </a>
+                    <span class="repo-badge">Google 旗舰</span>
+                  </div>
+                  <div class="repo-fullname">gemini.google.com/</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="repo-tagline-text">Google 旗舰原生多模态大模型，具备百万超长上下文与深度理解</div>
+            <p class="repo-desc-text">Google 最强大的多模态大语言模型，支持文本、代码、图像、音频与视频原生理解，拥有业界领先的超长上下文窗口与 Google 生态深度协同。</p>
+
+            <div class="repo-card-bottom">
+              <div class="repo-tags-wrap">
+                <span class="repo-tag">#Gemini</span><span class="repo-tag">#Google</span><span class="repo-tag">#多模态</span><span class="repo-tag">#超长上下文</span><span class="repo-tag">#LLM</span>
+              </div>
+              <a href="https://gemini.google.com/" target="_blank" rel="noopener noreferrer" class="repo-visit-btn" title="在新窗口立即直达 Google Gemini">
+                <span>直达访问</span>
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
+                  <polyline points="15 3 21 3 21 9"></polyline>
+                  <line x1="10" y1="14" x2="21" y2="3"></line>
+                </svg>
+              </a>
+            </div>
+          </div>
+          <!-- AI Card: ChatGPT -->
+          <div class="nav-repo-card" data-name="chatgpt" data-desc="openai 全球领先的 ai 智能助手，搭载 gpt-4o 与深度推理模型 引领生成式 ai 浪潮的代表作。集成 gpt-4o 实时多模态交互、o1/o3 复杂数学代码深度思考能力、网络搜索与全能高级数据分析。" data-tags="chatgpt,openai,gpt-4o,深度思考,ai助手" data-cat="前沿大模型与对话平台">
+            <div class="repo-card-top">
+              <div class="repo-header-info">
+                <div class="repo-icon-badge">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
+                  </svg>
+                </div>
+                <div class="repo-title-meta">
+                  <div class="repo-name-line">
+                    <a href="https://chatgpt.com/" target="_blank" rel="noopener noreferrer" class="repo-main-name" title="前往 ChatGPT 官网">
+                      ChatGPT
+                    </a>
+                    <span class="repo-badge">OpenAI 标杆</span>
+                  </div>
+                  <div class="repo-fullname">chatgpt.com/</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="repo-tagline-text">OpenAI 全球领先的 AI 智能助手，搭载 GPT-4o 与深度推理模型</div>
+            <p class="repo-desc-text">引领生成式 AI 浪潮的代表作。集成 GPT-4o 实时多模态交互、o1/o3 复杂数学代码深度思考能力、网络搜索与全能高级数据分析。</p>
+
+            <div class="repo-card-bottom">
+              <div class="repo-tags-wrap">
+                <span class="repo-tag">#ChatGPT</span><span class="repo-tag">#OpenAI</span><span class="repo-tag">#GPT-4o</span><span class="repo-tag">#深度思考</span><span class="repo-tag">#AI助手</span>
+              </div>
+              <a href="https://chatgpt.com/" target="_blank" rel="noopener noreferrer" class="repo-visit-btn" title="在新窗口立即直达 ChatGPT">
+                <span>直达访问</span>
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
+                  <polyline points="15 3 21 3 21 9"></polyline>
+                  <line x1="10" y1="14" x2="21" y2="3"></line>
+                </svg>
+              </a>
+            </div>
+          </div>
+          <!-- AI Card: Claude -->
+          <div class="nav-repo-card" data-name="claude" data-desc="anthropic 出品的高智能、强逻辑与卓越编程能力的旗舰 ai 以超强代码编写、自然文字表达与严谨逻辑推理闻名的顶尖模型（claude 3.5 sonnet / opus），支持 projects 项目上下文管理与 artifacts 即时交互。" data-tags="claude,anthropic,编程神器,长文本,sonnet" data-cat="前沿大模型与对话平台">
+            <div class="repo-card-top">
+              <div class="repo-header-info">
+                <div class="repo-icon-badge">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
+                  </svg>
+                </div>
+                <div class="repo-title-meta">
+                  <div class="repo-name-line">
+                    <a href="https://claude.ai/" target="_blank" rel="noopener noreferrer" class="repo-main-name" title="前往 Claude 官网">
+                      Claude
+                    </a>
+                    <span class="repo-badge">Anthropic 顶尖</span>
+                  </div>
+                  <div class="repo-fullname">claude.ai/</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="repo-tagline-text">Anthropic 出品的高智能、强逻辑与卓越编程能力的旗舰 AI</div>
+            <p class="repo-desc-text">以超强代码编写、自然文字表达与严谨逻辑推理闻名的顶尖模型（Claude 3.5 Sonnet / Opus），支持 Projects 项目上下文管理与 Artifacts 即时交互。</p>
+
+            <div class="repo-card-bottom">
+              <div class="repo-tags-wrap">
+                <span class="repo-tag">#Claude</span><span class="repo-tag">#Anthropic</span><span class="repo-tag">#编程神器</span><span class="repo-tag">#长文本</span><span class="repo-tag">#Sonnet</span>
+              </div>
+              <a href="https://claude.ai/" target="_blank" rel="noopener noreferrer" class="repo-visit-btn" title="在新窗口立即直达 Claude">
+                <span>直达访问</span>
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
+                  <polyline points="15 3 21 3 21 9"></polyline>
+                  <line x1="10" y1="14" x2="21" y2="3"></line>
+                </svg>
+              </a>
+            </div>
+          </div>
+          <!-- AI Card: DeepSeek (深度求索) -->
+          <div class="nav-repo-card" data-name="deepseek (深度求索)" data-desc="国产顶尖开源推理与通用大模型，以惊艳性能与高性价比享誉全球 深度求索推出的新一代国产顶尖开源模型，deepseek-r1 具备极强思维链深度推理能力，deepseek-v3 在多语言、代码与数学上达到世界一流水平。" data-tags="deepseek,r1推理,开源模型,代码生成,深度求索" data-cat="前沿大模型与对话平台">
+            <div class="repo-card-top">
+              <div class="repo-header-info">
+                <div class="repo-icon-badge">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
+                  </svg>
+                </div>
+                <div class="repo-title-meta">
+                  <div class="repo-name-line">
+                    <a href="https://chat.deepseek.com/" target="_blank" rel="noopener noreferrer" class="repo-main-name" title="前往 DeepSeek (深度求索) 官网">
+                      DeepSeek (深度求索)
+                    </a>
+                    <span class="repo-badge">国产之光</span>
+                  </div>
+                  <div class="repo-fullname">chat.deepseek.com/</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="repo-tagline-text">国产顶尖开源推理与通用大模型，以惊艳性能与高性价比享誉全球</div>
+            <p class="repo-desc-text">深度求索推出的新一代国产顶尖开源模型，DeepSeek-R1 具备极强思维链深度推理能力，DeepSeek-V3 在多语言、代码与数学上达到世界一流水平。</p>
+
+            <div class="repo-card-bottom">
+              <div class="repo-tags-wrap">
+                <span class="repo-tag">#DeepSeek</span><span class="repo-tag">#R1推理</span><span class="repo-tag">#开源模型</span><span class="repo-tag">#代码生成</span><span class="repo-tag">#深度求索</span>
+              </div>
+              <a href="https://chat.deepseek.com/" target="_blank" rel="noopener noreferrer" class="repo-visit-btn" title="在新窗口立即直达 DeepSeek (深度求索)">
+                <span>直达访问</span>
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
+                  <polyline points="15 3 21 3 21 9"></polyline>
+                  <line x1="10" y1="14" x2="21" y2="3"></line>
+                </svg>
+              </a>
+            </div>
+          </div>
+          <!-- AI Card: Kimi (月之暗面) -->
+          <div class="nav-repo-card" data-name="kimi (月之暗面)" data-desc="国内领先的超长文本 ai 搜索与知识助手，支持长文档深度精读 月之暗面推出的高智能知识助手，支持百万字长文档、多篇研报与网页即时深度检索，具备强大的联网搜索与精准信息提炼能力。" data-tags="kimi,月之暗面,联网搜索,长文本,研报分析" data-cat="前沿大模型与对话平台">
+            <div class="repo-card-top">
+              <div class="repo-header-info">
+                <div class="repo-icon-badge">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
+                  </svg>
+                </div>
+                <div class="repo-title-meta">
+                  <div class="repo-name-line">
+                    <a href="https://kimi.moonshot.cn/" target="_blank" rel="noopener noreferrer" class="repo-main-name" title="前往 Kimi (月之暗面) 官网">
+                      Kimi (月之暗面)
+                    </a>
+                    <span class="repo-badge">超长文本</span>
+                  </div>
+                  <div class="repo-fullname">kimi.moonshot.cn/</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="repo-tagline-text">国内领先的超长文本 AI 搜索与知识助手，支持长文档深度精读</div>
+            <p class="repo-desc-text">月之暗面推出的高智能知识助手，支持百万字长文档、多篇研报与网页即时深度检索，具备强大的联网搜索与精准信息提炼能力。</p>
+
+            <div class="repo-card-bottom">
+              <div class="repo-tags-wrap">
+                <span class="repo-tag">#Kimi</span><span class="repo-tag">#月之暗面</span><span class="repo-tag">#联网搜索</span><span class="repo-tag">#长文本</span><span class="repo-tag">#研报分析</span>
+              </div>
+              <a href="https://kimi.moonshot.cn/" target="_blank" rel="noopener noreferrer" class="repo-visit-btn" title="在新窗口立即直达 Kimi (月之暗面)">
+                <span>直达访问</span>
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
+                  <polyline points="15 3 21 3 21 9"></polyline>
+                  <line x1="10" y1="14" x2="21" y2="3"></line>
+                </svg>
+              </a>
+            </div>
+          </div>
+          <!-- AI Card: Grok -->
+          <div class="nav-repo-card" data-name="grok" data-desc="xai 出品的幽默智能大模型，深度整合全球实时资讯脉搏 elon musk 创立的 xai 推出的全新一代智能大模型，具备敏锐的实时事件感知、卓越的视觉图像理解与自然直接的对话风格。" data-tags="grok,xai,elonmusk,实时资讯,多模态" data-cat="前沿大模型与对话平台">
+            <div class="repo-card-top">
+              <div class="repo-header-info">
+                <div class="repo-icon-badge">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
+                  </svg>
+                </div>
+                <div class="repo-title-meta">
+                  <div class="repo-name-line">
+                    <a href="https://grok.com/" target="_blank" rel="noopener noreferrer" class="repo-main-name" title="前往 Grok 官网">
+                      Grok
+                    </a>
+                    <span class="repo-badge">xAI 旗舰</span>
+                  </div>
+                  <div class="repo-fullname">grok.com/</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="repo-tagline-text">xAI 出品的幽默智能大模型，深度整合全球实时资讯脉搏</div>
+            <p class="repo-desc-text">Elon Musk 创立的 xAI 推出的全新一代智能大模型，具备敏锐的实时事件感知、卓越的视觉图像理解与自然直接的对话风格。</p>
+
+            <div class="repo-card-bottom">
+              <div class="repo-tags-wrap">
+                <span class="repo-tag">#Grok</span><span class="repo-tag">#xAI</span><span class="repo-tag">#ElonMusk</span><span class="repo-tag">#实时资讯</span><span class="repo-tag">#多模态</span>
+              </div>
+              <a href="https://grok.com/" target="_blank" rel="noopener noreferrer" class="repo-visit-btn" title="在新窗口立即直达 Grok">
+                <span>直达访问</span>
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
+                  <polyline points="15 3 21 3 21 9"></polyline>
+                  <line x1="10" y1="14" x2="21" y2="3"></line>
+                </svg>
+              </a>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 分类矩阵：AI 智能体与自主编程 -->
+      <section class="nav-category-section" data-cat-name="AI 智能体与自主编程">
+        <div class="nav-category-header">
+          <div class="nav-cat-title-left">
+            <div class="nav-cat-icon">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="16 18 22 12 16 6"></polyline><polyline points="8 6 2 12 8 18"></polyline>
+              </svg>
+            </div>
+            <h2 class="nav-cat-title">AI 智能体与自主编程</h2>
+            <span class="nav-cat-desc">全自主代码生成、IDE 智能辅助、UI 界面秒级生成与全栈 Agent</span>
+          </div>
+          <span class="nav-cat-count">4 个工具</span>
+        </div>
+
+        <div class="nav-repo-grid">
+          <!-- AI Card: Claude Code -->
+          <div class="nav-repo-card" data-name="claude code" data-desc="anthropic 官方终端自主 ai 智能体，直接读写并排查工程代码 运行在终端里的新一代智能编程 agent，能够自主理解大型复杂代码库、执行文件编辑、运行测试用例、排查 git 差异并一键提交。" data-tags="claudecode,ai编程,agent,智能体,cli工具" data-cat="AI 智能体与自主编程">
+            <div class="repo-card-top">
+              <div class="repo-header-info">
+                <div class="repo-icon-badge">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
+                  </svg>
+                </div>
+                <div class="repo-title-meta">
+                  <div class="repo-name-line">
+                    <a href="https://github.com/anthropics/claude-code" target="_blank" rel="noopener noreferrer" class="repo-main-name" title="前往 Claude Code 官网">
+                      Claude Code
+                    </a>
+                    <span class="repo-badge">官方终端Agent</span>
+                  </div>
+                  <div class="repo-fullname">github.com/anthropics/claude-code</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="repo-tagline-text">Anthropic 官方终端自主 AI 智能体，直接读写并排查工程代码</div>
+            <p class="repo-desc-text">运行在终端里的新一代智能编程 Agent，能够自主理解大型复杂代码库、执行文件编辑、运行测试用例、排查 Git 差异并一键提交。</p>
+
+            <div class="repo-card-bottom">
+              <div class="repo-tags-wrap">
+                <span class="repo-tag">#ClaudeCode</span><span class="repo-tag">#AI编程</span><span class="repo-tag">#Agent</span><span class="repo-tag">#智能体</span><span class="repo-tag">#CLI工具</span>
+              </div>
+              <a href="https://github.com/anthropics/claude-code" target="_blank" rel="noopener noreferrer" class="repo-visit-btn" title="在新窗口立即直达 Claude Code">
+                <span>直达访问</span>
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
+                  <polyline points="15 3 21 3 21 9"></polyline>
+                  <line x1="10" y1="14" x2="21" y2="3"></line>
+                </svg>
+              </a>
+            </div>
+          </div>
+          <!-- AI Card: Cursor -->
+          <div class="nav-repo-card" data-name="cursor" data-desc="重新定义生产力的新一代 ai 驱动代码编辑器，全球开发者狂赞 基于 vs code 深度定制的顶尖 ai ide。内置全局代码库语义索引、多文件智能协同编辑 composer、行间智能预测 tab 与一键 bug 修复。" data-tags="cursor,vscode,ai编程,composer,生产力" data-cat="AI 智能体与自主编程">
+            <div class="repo-card-top">
+              <div class="repo-header-info">
+                <div class="repo-icon-badge">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
+                  </svg>
+                </div>
+                <div class="repo-title-meta">
+                  <div class="repo-name-line">
+                    <a href="https://www.cursor.com/" target="_blank" rel="noopener noreferrer" class="repo-main-name" title="前往 Cursor 官网">
+                      Cursor
+                    </a>
+                    <span class="repo-badge">AI IDE标杆</span>
+                  </div>
+                  <div class="repo-fullname">www.cursor.com/</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="repo-tagline-text">重新定义生产力的新一代 AI 驱动代码编辑器，全球开发者狂赞</div>
+            <p class="repo-desc-text">基于 VS Code 深度定制的顶尖 AI IDE。内置全局代码库语义索引、多文件智能协同编辑 Composer、行间智能预测 Tab 与一键 Bug 修复。</p>
+
+            <div class="repo-card-bottom">
+              <div class="repo-tags-wrap">
+                <span class="repo-tag">#Cursor</span><span class="repo-tag">#VSCode</span><span class="repo-tag">#AI编程</span><span class="repo-tag">#Composer</span><span class="repo-tag">#生产力</span>
+              </div>
+              <a href="https://www.cursor.com/" target="_blank" rel="noopener noreferrer" class="repo-visit-btn" title="在新窗口立即直达 Cursor">
+                <span>直达访问</span>
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
+                  <polyline points="15 3 21 3 21 9"></polyline>
+                  <line x1="10" y1="14" x2="21" y2="3"></line>
+                </svg>
+              </a>
+            </div>
+          </div>
+          <!-- AI Card: v0 by Vercel -->
+          <div class="nav-repo-card" data-name="v0 by vercel" data-desc="基于自然语言提示词秒级生成高质量现代化 react / tailwind ui vercel 出品的 ui 生成神器，通过简单对话即刻产出符合现代设计美学的 react 组件代码，支持一键复制代码或无缝部署到 next.js 项目。" data-tags="v0,vercel,react,tailwindcss,前端生成" data-cat="AI 智能体与自主编程">
+            <div class="repo-card-top">
+              <div class="repo-header-info">
+                <div class="repo-icon-badge">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
+                  </svg>
+                </div>
+                <div class="repo-title-meta">
+                  <div class="repo-name-line">
+                    <a href="https://v0.dev/" target="_blank" rel="noopener noreferrer" class="repo-main-name" title="前往 v0 by Vercel 官网">
+                      v0 by Vercel
+                    </a>
+                    <span class="repo-badge">Vercel 出品</span>
+                  </div>
+                  <div class="repo-fullname">v0.dev/</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="repo-tagline-text">基于自然语言提示词秒级生成高质量现代化 React / Tailwind UI</div>
+            <p class="repo-desc-text">Vercel 出品的 UI 生成神器，通过简单对话即刻产出符合现代设计美学的 React 组件代码，支持一键复制代码或无缝部署到 Next.js 项目。</p>
+
+            <div class="repo-card-bottom">
+              <div class="repo-tags-wrap">
+                <span class="repo-tag">#v0</span><span class="repo-tag">#Vercel</span><span class="repo-tag">#React</span><span class="repo-tag">#TailwindCSS</span><span class="repo-tag">#前端生成</span>
+              </div>
+              <a href="https://v0.dev/" target="_blank" rel="noopener noreferrer" class="repo-visit-btn" title="在新窗口立即直达 v0 by Vercel">
+                <span>直达访问</span>
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
+                  <polyline points="15 3 21 3 21 9"></polyline>
+                  <line x1="10" y1="14" x2="21" y2="3"></line>
+                </svg>
+              </a>
+            </div>
+          </div>
+          <!-- AI Card: Bolt.new -->
+          <div class="nav-repo-card" data-name="bolt.new" data-desc="在浏览器端全自动生成、安装依赖与即时部署全栈应用的 ai agent 基于 webcontainers 技术的端到端全栈开发智能体，用户只需描述需求即可在浏览器内自动搭建框架、编写后端 api、安装 npm 包并实时运行。" data-tags="bolt.new,全栈开发,webcontainers,即时部署,agent" data-cat="AI 智能体与自主编程">
+            <div class="repo-card-top">
+              <div class="repo-header-info">
+                <div class="repo-icon-badge">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
+                  </svg>
+                </div>
+                <div class="repo-title-meta">
+                  <div class="repo-name-line">
+                    <a href="https://bolt.new/" target="_blank" rel="noopener noreferrer" class="repo-main-name" title="前往 Bolt.new 官网">
+                      Bolt.new
+                    </a>
+                    <span class="repo-badge">全栈秒开</span>
+                  </div>
+                  <div class="repo-fullname">bolt.new/</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="repo-tagline-text">在浏览器端全自动生成、安装依赖与即时部署全栈应用的 AI Agent</div>
+            <p class="repo-desc-text">基于 WebContainers 技术的端到端全栈开发智能体，用户只需描述需求即可在浏览器内自动搭建框架、编写后端 API、安装 npm 包并实时运行。</p>
+
+            <div class="repo-card-bottom">
+              <div class="repo-tags-wrap">
+                <span class="repo-tag">#Bolt.new</span><span class="repo-tag">#全栈开发</span><span class="repo-tag">#WebContainers</span><span class="repo-tag">#即时部署</span><span class="repo-tag">#Agent</span>
+              </div>
+              <a href="https://bolt.new/" target="_blank" rel="noopener noreferrer" class="repo-visit-btn" title="在新窗口立即直达 Bolt.new">
+                <span>直达访问</span>
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
+                  <polyline points="15 3 21 3 21 9"></polyline>
+                  <line x1="10" y1="14" x2="21" y2="3"></line>
+                </svg>
+              </a>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 分类矩阵：AI 图像与多模态创作 -->
+      <section class="nav-category-section" data-cat-name="AI 图像与多模态创作">
+        <div class="nav-category-header">
+          <div class="nav-cat-title-left">
+            <div class="nav-cat-icon">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
+              </svg>
+            </div>
+            <h2 class="nav-cat-title">AI 图像与多模态创作</h2>
+            <span class="nav-cat-desc">高精画质艺术绘画、开源生图模型与前沿 AI 影视级视频生成</span>
+          </div>
+          <span class="nav-cat-count">3 个工具</span>
+        </div>
+
+        <div class="nav-repo-grid">
+          <!-- AI Card: Midjourney -->
+          <div class="nav-repo-card" data-name="midjourney" data-desc="全球公认顶尖的 ai 艺术图像生成工具，电影级光影与质感 行业首屈一指的文本生成图像平台，以无与伦比的艺术美感、逼真的写实光影、细腻的材质纹理与丰富的风格掌控力闻名于世。" data-tags="midjourney,ai绘画,艺术创作,图像生成,设计" data-cat="AI 图像与多模态创作">
+            <div class="repo-card-top">
+              <div class="repo-header-info">
+                <div class="repo-icon-badge">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
+                  </svg>
+                </div>
+                <div class="repo-title-meta">
+                  <div class="repo-name-line">
+                    <a href="https://www.midjourney.com/" target="_blank" rel="noopener noreferrer" class="repo-main-name" title="前往 Midjourney 官网">
+                      Midjourney
+                    </a>
+                    <span class="repo-badge">绘画霸主</span>
+                  </div>
+                  <div class="repo-fullname">www.midjourney.com/</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="repo-tagline-text">全球公认顶尖的 AI 艺术图像生成工具，电影级光影与质感</div>
+            <p class="repo-desc-text">行业首屈一指的文本生成图像平台，以无与伦比的艺术美感、逼真的写实光影、细腻的材质纹理与丰富的风格掌控力闻名于世。</p>
+
+            <div class="repo-card-bottom">
+              <div class="repo-tags-wrap">
+                <span class="repo-tag">#Midjourney</span><span class="repo-tag">#AI绘画</span><span class="repo-tag">#艺术创作</span><span class="repo-tag">#图像生成</span><span class="repo-tag">#设计</span>
+              </div>
+              <a href="https://www.midjourney.com/" target="_blank" rel="noopener noreferrer" class="repo-visit-btn" title="在新窗口立即直达 Midjourney">
+                <span>直达访问</span>
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
+                  <polyline points="15 3 21 3 21 9"></polyline>
+                  <line x1="10" y1="14" x2="21" y2="3"></line>
+                </svg>
+              </a>
+            </div>
+          </div>
+          <!-- AI Card: FLUX.1 (Black Forest Labs) -->
+          <div class="nav-repo-card" data-name="flux.1 (black forest labs)" data-desc="原 sd 核心团队创立的顶尖开源生图模型，文字渲染与画质绝佳 新一代革命性开源图像生成模型，具备卓越的自然语言提示词遵循度、高精细度复杂人体手部还原以及精准清晰的英文字母直接排版渲染能力。" data-tags="flux.1,开源模型,文字排版,生图利器,bfl" data-cat="AI 图像与多模态创作">
+            <div class="repo-card-top">
+              <div class="repo-header-info">
+                <div class="repo-icon-badge">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
+                  </svg>
+                </div>
+                <div class="repo-title-meta">
+                  <div class="repo-name-line">
+                    <a href="https://blackforestlabs.ai/" target="_blank" rel="noopener noreferrer" class="repo-main-name" title="前往 FLUX.1 (Black Forest Labs) 官网">
+                      FLUX.1 (Black Forest Labs)
+                    </a>
+                    <span class="repo-badge">开源生图王</span>
+                  </div>
+                  <div class="repo-fullname">blackforestlabs.ai/</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="repo-tagline-text">原 SD 核心团队创立的顶尖开源生图模型，文字渲染与画质绝佳</div>
+            <p class="repo-desc-text">新一代革命性开源图像生成模型，具备卓越的自然语言提示词遵循度、高精细度复杂人体手部还原以及精准清晰的英文字母直接排版渲染能力。</p>
+
+            <div class="repo-card-bottom">
+              <div class="repo-tags-wrap">
+                <span class="repo-tag">#FLUX.1</span><span class="repo-tag">#开源模型</span><span class="repo-tag">#文字排版</span><span class="repo-tag">#生图利器</span><span class="repo-tag">#BFL</span>
+              </div>
+              <a href="https://blackforestlabs.ai/" target="_blank" rel="noopener noreferrer" class="repo-visit-btn" title="在新窗口立即直达 FLUX.1 (Black Forest Labs)">
+                <span>直达访问</span>
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
+                  <polyline points="15 3 21 3 21 9"></polyline>
+                  <line x1="10" y1="14" x2="21" y2="3"></line>
+                </svg>
+              </a>
+            </div>
+          </div>
+          <!-- AI Card: Runway Gen-3 -->
+          <div class="nav-repo-card" data-name="runway gen-3" data-desc="电影工业级高保真 ai 视频生成与多模态创意渲染套件 领先的视频生成与视觉特效平台，支持文本生视频、图片生视频、精准运镜控制与动态画笔，广泛应用于影视创意、广告与短视频制作。" data-tags="runway,gen-3,ai视频,动态渲染,创意设计" data-cat="AI 图像与多模态创作">
+            <div class="repo-card-top">
+              <div class="repo-header-info">
+                <div class="repo-icon-badge">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
+                  </svg>
+                </div>
+                <div class="repo-title-meta">
+                  <div class="repo-name-line">
+                    <a href="https://runwayml.com/" target="_blank" rel="noopener noreferrer" class="repo-main-name" title="前往 Runway Gen-3 官网">
+                      Runway Gen-3
+                    </a>
+                    <span class="repo-badge">影视级视频</span>
+                  </div>
+                  <div class="repo-fullname">runwayml.com/</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="repo-tagline-text">电影工业级高保真 AI 视频生成与多模态创意渲染套件</div>
+            <p class="repo-desc-text">领先的视频生成与视觉特效平台，支持文本生视频、图片生视频、精准运镜控制与动态画笔，广泛应用于影视创意、广告与短视频制作。</p>
+
+            <div class="repo-card-bottom">
+              <div class="repo-tags-wrap">
+                <span class="repo-tag">#Runway</span><span class="repo-tag">#Gen-3</span><span class="repo-tag">#AI视频</span><span class="repo-tag">#动态渲染</span><span class="repo-tag">#创意设计</span>
+              </div>
+              <a href="https://runwayml.com/" target="_blank" rel="noopener noreferrer" class="repo-visit-btn" title="在新窗口立即直达 Runway Gen-3">
+                <span>直达访问</span>
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
+                  <polyline points="15 3 21 3 21 9"></polyline>
+                  <line x1="10" y1="14" x2="21" y2="3"></line>
+                </svg>
+              </a>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 分类矩阵：AI 聚合平台与 API 服务 -->
+      <section class="nav-category-section" data-cat-name="AI 聚合平台与 API 服务">
+        <div class="nav-category-header">
+          <div class="nav-cat-title-left">
+            <div class="nav-cat-icon">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="2" y="2" width="20" height="8" rx="2" ry="2"></rect><rect x="2" y="14" width="20" height="8" rx="2" ry="2"></rect><line x1="6" y1="6" x2="6.01" y2="6"></line><line x1="6" y1="18" x2="6.01" y2="18"></line>
+              </svg>
+            </div>
+            <h2 class="nav-cat-title">AI 聚合平台与 API 服务</h2>
+            <span class="nav-cat-desc">模型路由网关、开源模型生态托管与高性能国产加速推理服务</span>
+          </div>
+          <span class="nav-cat-count">3 个工具</span>
+        </div>
+
+        <div class="nav-repo-grid">
+          <!-- AI Card: OpenRouter -->
+          <div class="nav-repo-card" data-name="openrouter" data-desc="全球统一的大模型 api 路由聚合网关，低门槛调用上百款大模型 极具性价比的统一大模型接入平台。仅需一个 api key 即可低延迟调用包括 claude 3.5、gpt-4o、deepseek、llama 3 等全球所有主流模型。" data-tags="openrouter,模型网关,api聚合,低成本,开发者" data-cat="AI 聚合平台与 API 服务">
+            <div class="repo-card-top">
+              <div class="repo-header-info">
+                <div class="repo-icon-badge">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
+                  </svg>
+                </div>
+                <div class="repo-title-meta">
+                  <div class="repo-name-line">
+                    <a href="https://openrouter.ai/" target="_blank" rel="noopener noreferrer" class="repo-main-name" title="前往 OpenRouter 官网">
+                      OpenRouter
+                    </a>
+                    <span class="repo-badge">聚合神器</span>
+                  </div>
+                  <div class="repo-fullname">openrouter.ai/</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="repo-tagline-text">全球统一的大模型 API 路由聚合网关，低门槛调用上百款大模型</div>
+            <p class="repo-desc-text">极具性价比的统一大模型接入平台。仅需一个 API Key 即可低延迟调用包括 Claude 3.5、GPT-4o、DeepSeek、Llama 3 等全球所有主流模型。</p>
+
+            <div class="repo-card-bottom">
+              <div class="repo-tags-wrap">
+                <span class="repo-tag">#OpenRouter</span><span class="repo-tag">#模型网关</span><span class="repo-tag">#API聚合</span><span class="repo-tag">#低成本</span><span class="repo-tag">#开发者</span>
+              </div>
+              <a href="https://openrouter.ai/" target="_blank" rel="noopener noreferrer" class="repo-visit-btn" title="在新窗口立即直达 OpenRouter">
+                <span>直达访问</span>
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
+                  <polyline points="15 3 21 3 21 9"></polyline>
+                  <line x1="10" y1="14" x2="21" y2="3"></line>
+                </svg>
+              </a>
+            </div>
+          </div>
+          <!-- AI Card: Hugging Face -->
+          <div class="nav-repo-card" data-name="hugging face" data-desc="全球最大的开源 ai 模型、数据集与 web 演示应用社区中心 ai 领域的 github。聚集了全球最新开源权重（transformers/diffusers）、开源数据集与 spaces 云端演示，是探索与部署开源 ai 的首选地。" data-tags="huggingface,开源社区,transformers,模型下载,spaces" data-cat="AI 聚合平台与 API 服务">
+            <div class="repo-card-top">
+              <div class="repo-header-info">
+                <div class="repo-icon-badge">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
+                  </svg>
+                </div>
+                <div class="repo-title-meta">
+                  <div class="repo-name-line">
+                    <a href="https://huggingface.co/" target="_blank" rel="noopener noreferrer" class="repo-main-name" title="前往 Hugging Face 官网">
+                      Hugging Face
+                    </a>
+                    <span class="repo-badge">开源AI中心</span>
+                  </div>
+                  <div class="repo-fullname">huggingface.co/</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="repo-tagline-text">全球最大的开源 AI 模型、数据集与 Web 演示应用社区中心</div>
+            <p class="repo-desc-text">AI 领域的 GitHub。聚集了全球最新开源权重（Transformers/Diffusers）、开源数据集与 Spaces 云端演示，是探索与部署开源 AI 的首选地。</p>
+
+            <div class="repo-card-bottom">
+              <div class="repo-tags-wrap">
+                <span class="repo-tag">#HuggingFace</span><span class="repo-tag">#开源社区</span><span class="repo-tag">#Transformers</span><span class="repo-tag">#模型下载</span><span class="repo-tag">#Spaces</span>
+              </div>
+              <a href="https://huggingface.co/" target="_blank" rel="noopener noreferrer" class="repo-visit-btn" title="在新窗口立即直达 Hugging Face">
+                <span>直达访问</span>
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
+                  <polyline points="15 3 21 3 21 9"></polyline>
+                  <line x1="10" y1="14" x2="21" y2="3"></line>
+                </svg>
+              </a>
+            </div>
+          </div>
+          <!-- AI Card: SiliconFlow (硅基流动) -->
+          <div class="nav-repo-card" data-name="siliconflow (硅基流动)" data-desc="极致性能的国产大模型云服务与推理加速平台，提供稳定 api 专注大模型高效推理的云服务平台，深度优化开源模型推理并发与吞吐，提供 deepseek-r1/v3、flux 等顶级模型的低延迟、高可用 api 接入。" data-tags="siliconflow,硅基流动,deepseek,极速api,国产云" data-cat="AI 聚合平台与 API 服务">
+            <div class="repo-card-top">
+              <div class="repo-header-info">
+                <div class="repo-icon-badge">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
+                  </svg>
+                </div>
+                <div class="repo-title-meta">
+                  <div class="repo-name-line">
+                    <a href="https://siliconflow.cn/" target="_blank" rel="noopener noreferrer" class="repo-main-name" title="前往 SiliconFlow (硅基流动) 官网">
+                      SiliconFlow (硅基流动)
+                    </a>
+                    <span class="repo-badge">极速推理</span>
+                  </div>
+                  <div class="repo-fullname">siliconflow.cn/</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="repo-tagline-text">极致性能的国产大模型云服务与推理加速平台，提供稳定 API</div>
+            <p class="repo-desc-text">专注大模型高效推理的云服务平台，深度优化开源模型推理并发与吞吐，提供 DeepSeek-R1/V3、FLUX 等顶级模型的低延迟、高可用 API 接入。</p>
+
+            <div class="repo-card-bottom">
+              <div class="repo-tags-wrap">
+                <span class="repo-tag">#SiliconFlow</span><span class="repo-tag">#硅基流动</span><span class="repo-tag">#DeepSeek</span><span class="repo-tag">#极速API</span><span class="repo-tag">#国产云</span>
+              </div>
+              <a href="https://siliconflow.cn/" target="_blank" rel="noopener noreferrer" class="repo-visit-btn" title="在新窗口立即直达 SiliconFlow (硅基流动)">
+                <span>直达访问</span>
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
+                  <polyline points="15 3 21 3 21 9"></polyline>
+                  <line x1="10" y1="14" x2="21" y2="3"></line>
+                </svg>
+              </a>
+            </div>
+          </div>
+        </div>
+      </section>
+      </div>
+
+      <!-- 搜索空状态 -->
+      <div class="empty-state" id="ai-empty-state" style="display: none;">
+        <div class="empty-icon-wrap">
+          <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="11" cy="11" r="8"></circle>
+            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+          </svg>
+        </div>
+        <div class="empty-title">未匹配到相关 AI 工具</div>
+        <p class="empty-desc">未能找到包含关键词的 AI 产品，请尝试更换关键词或切换分类筛选。</p>
+        <button type="button" class="empty-action-btn primary" id="ai-empty-reset-btn">清空搜索条件</button>
+      </div>
+
+      <!-- AI 导航页面交互脚本 -->
+      <script>
+      (function() {
+        const filterInput = document.getElementById('ai-filter-input');
+        const pillBtns = document.querySelectorAll('.nav-pill-btn');
+        const aiCards = Array.from(document.querySelectorAll('.nav-repo-card'));
+        const categorySections = Array.from(document.querySelectorAll('.nav-category-section'));
+        const emptyState = document.getElementById('ai-empty-state');
+        const emptyResetBtn = document.getElementById('ai-empty-reset-btn');
+        const countBadge = document.getElementById('ai-count-badge');
+
+        let activeCat = 'all';
+        let searchQuery = '';
+
+        function filterAi() {
+          let visibleCount = 0;
+          let visibleCats = 0;
+
+          categorySections.forEach(section => {
+            const sectionCat = section.getAttribute('data-cat-name');
+            const catMatches = activeCat === 'all' || activeCat === sectionCat;
+            const sectionCards = section.querySelectorAll('.nav-repo-card');
+            let sectionVisibleCount = 0;
+
+            sectionCards.forEach(card => {
+              const name = card.getAttribute('data-name') || '';
+              const desc = card.getAttribute('data-desc') || '';
+              const tags = card.getAttribute('data-tags') || '';
+              
+              const matchesSearch = !searchQuery || 
+                name.includes(searchQuery) || 
+                desc.includes(searchQuery) || 
+                tags.includes(searchQuery);
+
+              if (catMatches && matchesSearch) {
+                card.style.display = 'flex';
+                sectionVisibleCount++;
+                visibleCount++;
+              } else {
+                card.style.display = 'none';
+              }
+            });
+
+            if (sectionVisibleCount > 0) {
+              section.style.display = 'block';
+              visibleCats++;
+            } else {
+              section.style.display = 'none';
+            }
+          });
+
+          if (emptyState) {
+            emptyState.style.display = visibleCount === 0 ? 'flex' : 'none';
+          }
+
+          if (countBadge) {
+            countBadge.textContent = '共 ' + visibleCats + ' 个分类 · ' + visibleCount + ' 个顶尖 AI 工具';
+          }
+        }
+
+        if (filterInput) {
+          filterInput.addEventListener('input', (e) => {
+            searchQuery = e.target.value.trim().toLowerCase();
+            filterAi();
+          });
+        }
+
+        pillBtns.forEach(btn => {
+          btn.addEventListener('click', () => {
+            pillBtns.forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            activeCat = btn.getAttribute('data-filter-cat') || 'all';
+            filterAi();
+          });
+        });
+
+        if (emptyResetBtn) {
+          emptyResetBtn.addEventListener('click', () => {
+            if (filterInput) filterInput.value = '';
+            searchQuery = '';
+            activeCat = 'all';
+            pillBtns.forEach(b => b.classList.toggle('active', b.getAttribute('data-filter-cat') === 'all'));
+            filterAi();
+          });
+        }
+      })();
+      </script>
+  
+    </main>
+
+  </div>
+
+  <!-- 全局回到顶部按钮 (右下角固定) -->
+  <button id="back-to-top-btn" class="back-to-top-btn" type="button" title="回到顶部" aria-label="回到顶部">
+    <svg class="back-to-top-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+      <polyline points="18 15 12 9 6 15"></polyline>
+    </svg>
+  </button>
+
+  <script src="js/config.js"></script>
+  <script src="data/search-index.js"></script>
+  <script src="js/main.js"></script>
+  <script src="js/prism.js"></script>
+  <script src="js/search.js"></script>
+  <script src="js/file-preview.js"></script>
+
+</body>
+</html>

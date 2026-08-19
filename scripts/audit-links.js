@@ -13,6 +13,7 @@ const htmlFiles = [
   path.join(ROOT_DIR, 'files.html'),
   path.join(ROOT_DIR, 'nav.html'),
   path.join(ROOT_DIR, 'tools.html'),
+  path.join(ROOT_DIR, 'ai.html'),
   ...fs.readdirSync(POSTS_DIR).filter(f => f.endsWith('.html')).map(f => path.join(POSTS_DIR, f))
 ];
 
