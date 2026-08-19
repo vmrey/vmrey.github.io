@@ -1,11 +1,11 @@
 ---
 name: nav-manager
-description: 全站导航站点自动化运维技能 (AI导航/工具导航/GitHub导航)，专用于导航网站的添加、修改、删除与严格跨库实时查重检测。
+description: 全站导航站点自动化运维技能 (AI导航/工具导航/GitHub导航)，专用于导航网站的添加、修改、删除、严格跨库查重与全量死链探测自动熔断清理。
 ---
 
 # 🧭 vmrey.github.io 导航站点自动化管理技能 (Nav Manager Skill)
 
-本技能专用于 **vmrey.github.io** 导航生态系统（**AI 导航**、**工具导航** 与 **GitHub 优质开源导航**）的全生命周期管理。提供标准化的 **添加、修改、删除** 操作规范，并在每次操作前/后执行**跨库实时查重检测**与全自动化静态编译。
+本技能专用于 **vmrey.github.io** 导航生态系统（**AI 导航**、**工具导航** 与 **GitHub 优质开源导航**）的全生命周期管理。提供标准化的 **添加、修改、删除** 操作规范，并在每次操作前/后执行**跨库实时查重检测**、**真实网络可访问性探测**与**全自动化死链熔断清理**。
 
 ---
 
@@ -24,19 +24,17 @@ description: 全站导航站点自动化运维技能 (AI导航/工具导航/GitH
 
 ---
 
-## 🔍 2. 跨库查重核心规则 (Duplicate Detection Rules)
+## 🔍 2. 跨库查重与链接可达性检测规则 (Verification & Health Rules)
 
-为了保持导航系统的高质量、精简度与数据严谨性，每次添加或修改站点时必须遵守以下**三层查重机制**：
+### ① 跨库三层查重机制 (Duplicate Detection)
+1. **URL 规范化比对**：自动去除协议 (`http/https`)、`www.` 二级域、结尾斜杠 `/` 与杂项参数，跨 AI/工具/GitHub 三大库进行全局唯一性校验；
+2. **名称模糊与拼音比对**：去除空格、下划线、中划线并统一转小写，杜绝重复录入；
+3. **自动分类判定**：根据 AI大模型/Agent、在线实用工具、开源仓库等特征自动收录至对应导航库。
 
-1. **URL 规范化比对 (Normalized URL Collision)**：
-   - 自动去除协议前缀 (`http://`, `https://`)、`www.` 二级域名、URL 结尾斜杠 `/` 与多余锚点；
-   - 跨库检查该站点是否已在 `data/ai-nav.json`、`data/tools-nav.json` 或 `data/github-nav.json` 中存在。
-2. **名称拼音与去空比对 (Normalized Name Collision)**：
-   - 去除空格、下划线、中划线并统一转小写，防止同一产品因大小写或符号差异重复录入。
-3. **分类与定位判定**：
-   - 若产品属于 AI Agent / 大模型生态，优先录入 **AI 导航**；
-   - 若产品属于在线工具 / 独立软件，优先录入 **工具导航**；
-   - 若重点推荐其 GitHub 源码仓库，优先录入 **GitHub 导航**。
+### ② 实时网络可达性验证与死链熔断 (Health Check & Prune)
+1. **添加前强校验 (Pre-Add Verification)**：添加新站点时，系统会先发起 HTTP 真实可访问性探测，若目标站点 DNS 失败、连接超时或返回 404/410，**将直接拒绝收录**；
+2. **定期全量巡检 (Batch Health Ping)**：支持并发扫描全站所有已收录的导航站点；
+3. **死链自动熔断清理 (Auto-Prune)**：当检测到已有站点因域名过期、服务器下线或 404 无法访问时，**自动从 JSON 库中物理删除并重构全站**，确保全站导航 100% 畅通。
 
 ---
 
@@ -44,41 +42,39 @@ description: 全站导航站点自动化运维技能 (AI导航/工具导航/GitH
 
 可以使用本技能内置的专用脚本 `manage-nav.js` 进行一键安全操作：
 
-### 1️⃣ 全库智能查重与巡检
+### 1️⃣ 全库智能查重检测
 ```bash
 node .agents/skills/nav-manager/scripts/manage-nav.js check
 ```
 
-### 2️⃣ 查看当前全站导航汇总清单
+### 2️⃣ 全站可访问性健康巡检 (仅检测报告，不删除)
+```bash
+node .agents/skills/nav-manager/scripts/manage-nav.js check-alive
+```
+
+### 3️⃣ 全站死链自动熔断清理 (检测并直接删除所有打不开的失效链接)
+```bash
+node .agents/skills/nav-manager/scripts/manage-nav.js prune
+```
+
+### 4️⃣ 查看当前全站导航汇总清单
 ```bash
 node .agents/skills/nav-manager/scripts/manage-nav.js list
 ```
 
-### 3️⃣ 添加新站点 (自动触发查重与全站构建)
+### 5️⃣ 添加新站点 (自动查重 + 自动测试可访问性 + 全自动构建)
 ```bash
 node .agents/skills/nav-manager/scripts/manage-nav.js add <ai|tools|github> <分类名称> <站点名称> <URL> [一句话介绍] [详细说明] [标签1,标签2] [徽标文字]
 ```
-*示例：*
-```bash
-node .agents/skills/nav-manager/scripts/manage-nav.js add tools "实用生成与办公工具" "草料二维码" "https://cli.im/" "专业二维码在线生成平台" "支持文本链接扫码生成..." "二维码,生成器" "二维码首选"
-```
 
-### 4️⃣ 修改已有站点字段
+### 6️⃣ 修改已有站点字段
 ```bash
 node .agents/skills/nav-manager/scripts/manage-nav.js modify <搜索关键词> <name|url|tagline|desc|tags|badge> <新值>
 ```
-*示例：*
-```bash
-node .agents/skills/nav-manager/scripts/manage-nav.js modify "草料二维码" tagline "国内领先的二维码在线生成与美化平台"
-```
 
-### 5️⃣ 删除导航站点 (自动清理空分类并重构)
+### 7️⃣ 删除导航站点 (自动清理空分类并重构)
 ```bash
 node .agents/skills/nav-manager/scripts/manage-nav.js delete <名称或URL关键词>
-```
-*示例：*
-```bash
-node .agents/skills/nav-manager/scripts/manage-nav.js delete "草料二维码"
 ```
 
 ---
@@ -99,8 +95,6 @@ node .agents/skills/nav-manager/scripts/manage-nav.js delete "草料二维码"
 }
 ```
 
-*(若为 GitHub 仓库，额外增加 `"repo": "owner/repo"` 与 `"language": "Rust/Shell/C"` 字段)*
-
 ---
 
 ## 🚀 5. 全流程标准化作业 SOP
@@ -119,6 +113,6 @@ node .agents/skills/nav-manager/scripts/manage-nav.js check
 
 # 4. 提交并同步至远程仓库
 git add .
-git commit -m "feat(nav): 更新导航站点数据并完成查重验证"
+git commit -m "feat(nav): 更新导航站点数据并完成查重与死链清理"
 git push origin main
 ```

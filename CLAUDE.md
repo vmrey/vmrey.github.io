@@ -177,11 +177,13 @@ readTime: 6 分钟阅读
 
 ### 🧭 4.3 全站导航生态运维与查重技能 (nav-manager Skill SOP)
 
-全站导航数据完全由 JSON 单一数据源驱动（`data/ai-nav.json`、`data/tools-nav.json`、`data/github-nav.json`）。AI 在维护导航时必须遵循**跨库智能查重**与标准生命周期：
+全站导航数据完全由 JSON 单一数据源驱动（`data/ai-nav.json`、`data/tools-nav.json`、`data/github-nav.json`）。AI 在维护导航时必须遵循**跨库智能查重**、**真实网络可访问性探测**与**失效死链自动熔断清理**标准：
 
-#### 🔍 核心查重规则 (Duplicate Detection Rules)
+#### 🔍 核心查重与可达性检测规则
 - **URL 规范化碰撞检测**：自动剥离协议 (`http/https`)、`www.` 二级域、结尾斜杠 `/` 与杂项参数，跨 AI/工具/GitHub 三大库进行唯一性检测；
 - **名称模糊排重**：去除空格、符号并统一转小写，防止不同写法导致重复收录；
+- **添加前真实网络连通性探测 (Pre-Add Connectivity Check)**：添加新站点前必须通过真实的 HTTP 请求验证，若目标站点 DNS 失败、连接超时或返回 404/410，**严禁收录并立即终止**；
+- **失效死链自动熔断清理 (Dead Link Auto-Pruning)**：全站巡检时发现任何打不开、域名失效或 404 的站点，**必须自动从 JSON 数据源物理删除并重新编译整站**；
 - **自动归类原则**：
   - AI 大模型、Prompt 工具、Agent 智能体 ➔ 归入 **AI 导航** (`data/ai-nav.json`)；
   - 在线工具、格式转换、网络检测、效率辅助 ➔ 归入 **工具导航** (`data/tools-nav.json`)；
@@ -192,16 +194,22 @@ readTime: 6 分钟阅读
 # 1. 全库智能查重检测
 node .agents/skills/nav-manager/scripts/manage-nav.js check
 
-# 2. 查看全站导航分类与收录汇总
+# 2. 全站导航可达性健康巡检 (仅报告不删除)
+node .agents/skills/nav-manager/scripts/manage-nav.js check-alive
+
+# 3. 全站死链自动熔断清理 (检测并直接删除打不开的失效链接)
+node .agents/skills/nav-manager/scripts/manage-nav.js prune
+
+# 4. 查看全站导航分类与收录汇总
 node .agents/skills/nav-manager/scripts/manage-nav.js list
 
-# 3. 添加新站点 (自动触发跨库查重，重复则直接拦截并报警)
+# 5. 添加新站点 (自动触发跨库查重 + 真实网络可达性测试，重复或死链直接拦截)
 node .agents/skills/nav-manager/scripts/manage-nav.js add <ai|tools|github> <分类名称> <站点名称> <URL> [一句话介绍] [详细说明] [标签1,标签2] [徽标文字]
 
-# 4. 修改已有站点信息 (name/url/tagline/desc/tags/badge)
+# 6. 修改已有站点信息 (name/url/tagline/desc/tags/badge)
 node .agents/skills/nav-manager/scripts/manage-nav.js modify <搜索关键词> <字段名> <新值>
 
-# 5. 删除导航站点 (自动清理空分类并触发重构)
+# 7. 删除导航站点 (自动清理空分类并触发重构)
 node .agents/skills/nav-manager/scripts/manage-nav.js delete <名称或URL关键词>
 ```
 
