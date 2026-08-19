@@ -129,8 +129,8 @@ ${childrenHtml}
         </button>
       </div>
 
-      <!-- 中间独立上下滚动区域：文章分类专栏与导航列表 -->
-      <div class="sidebar-nav-scroll">
+      <!-- 侧边栏菜单列表 -->
+      <div class="sidebar-nav-body">
 ${navCategoriesHtml}
 
         <div class="sidebar-nav-group">
@@ -156,7 +156,7 @@ ${navCategoriesHtml}
         </div>
       </div>
 
-      <!-- 底部常驻固定区域：主题切换与版权声明 (永远可见，不随菜单滚动) -->
+      <!-- 底部区域：主题切换与版权声明 -->
       <div class="sidebar-footer">
         <div class="theme-toggle-row">
           <span id="theme-mode-text">深色模式</span>
