@@ -2933,6 +2933,305 @@ del {
 }
 
 /* ==========================================================================
+   GitHub 优质开源导航系统样式 (GitHub Navigation System Styles)
+   ========================================================================== */
+
+/* 快捷分类筛选胶囊栏 */
+.nav-quick-filters {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  padding-bottom: 0.5rem;
+  margin-bottom: 1.75rem;
+  scrollbar-width: none;
+}
+
+.nav-quick-filters::-webkit-scrollbar {
+  display: none;
+}
+
+.nav-pill-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  padding: 0.45rem 0.9rem;
+  border-radius: var(--radius-full);
+  border: 1px solid var(--border);
+  background: var(--surface);
+  color: var(--text-muted);
+  font-size: 0.85rem;
+  font-weight: 500;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: var(--transition);
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+.nav-pill-btn:hover {
+  border-color: var(--border-focus);
+  color: var(--text-main);
+  background: var(--surface-hover);
+}
+
+.nav-pill-btn.active {
+  background: var(--primary);
+  border-color: var(--primary);
+  color: white;
+}
+
+.nav-pill-count {
+  font-size: 0.75rem;
+  padding: 0.05rem 0.45rem;
+  border-radius: var(--radius-full);
+  background: var(--bg-subtle);
+  color: var(--text-muted);
+  transition: var(--transition);
+}
+
+.nav-pill-btn.active .nav-pill-count {
+  background: rgba(255, 255, 255, 0.25);
+  color: white;
+}
+
+/* 分类板块容器 */
+.nav-sections-container {
+  display: flex;
+  flex-direction: column;
+  gap: 2.25rem;
+}
+
+.nav-category-section {
+  display: flex;
+  flex-direction: column;
+  gap: 1.15rem;
+}
+
+.nav-category-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-bottom: 0.75rem;
+  border-bottom: 1px solid var(--border);
+}
+
+.nav-cat-title-left {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  flex-wrap: wrap;
+}
+
+.nav-cat-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  border-radius: var(--radius-sm);
+  background: var(--primary-soft);
+  color: var(--primary);
+}
+
+.nav-cat-title {
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: var(--text-main);
+  margin: 0;
+}
+
+.nav-cat-desc {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  margin-left: 0.25rem;
+}
+
+.nav-cat-count {
+  font-size: 0.775rem;
+  padding: 0.2rem 0.65rem;
+  border-radius: var(--radius-full);
+  background: var(--bg-subtle);
+  color: var(--text-subtle);
+  border: 1px solid var(--border);
+}
+
+/* 仓库卡片网格布局 */
+.nav-repo-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+  gap: 1.25rem;
+}
+
+/* 仓库卡片 */
+.nav-repo-card {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 1.35rem;
+  box-shadow: var(--card-shadow);
+  transition: var(--transition);
+  position: relative;
+}
+
+.nav-repo-card:hover {
+  transform: translateY(-3px);
+  border-color: var(--border-focus);
+  box-shadow: var(--card-shadow-hover);
+}
+
+.repo-card-top {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  margin-bottom: 0.85rem;
+}
+
+.repo-header-info {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+  width: 100%;
+}
+
+.repo-icon-badge {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: var(--radius-md);
+  background: var(--bg-subtle);
+  border: 1px solid var(--border);
+  color: var(--text-main);
+  flex-shrink: 0;
+  transition: var(--transition);
+}
+
+.nav-repo-card:hover .repo-icon-badge {
+  background: var(--primary-soft);
+  color: var(--primary);
+  border-color: var(--primary);
+}
+
+.repo-title-meta {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+  flex: 1;
+  min-width: 0;
+}
+
+.repo-name-line {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.repo-main-name {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--text-main);
+  transition: var(--transition);
+}
+
+.repo-main-name:hover {
+  color: var(--primary);
+}
+
+.repo-badge {
+  font-size: 0.725rem;
+  padding: 0.1rem 0.5rem;
+  border-radius: var(--radius-full);
+  background: var(--primary-soft);
+  color: var(--primary-soft-text);
+  font-weight: 600;
+  border: 1px solid var(--border);
+}
+
+.repo-fullname {
+  font-family: var(--font-mono);
+  font-size: 0.775rem;
+  color: var(--text-subtle);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.repo-tagline-text {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--text-main);
+  margin-bottom: 0.5rem;
+  line-height: 1.45;
+}
+
+.repo-desc-text {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  line-height: 1.55;
+  margin-bottom: 1.15rem;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.repo-card-bottom {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-top: 0.85rem;
+  border-top: 1px solid var(--border);
+  gap: 0.75rem;
+  margin-top: auto;
+}
+
+.repo-tags-wrap {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  flex-wrap: wrap;
+  flex: 1;
+}
+
+.repo-tag {
+  font-size: 0.725rem;
+  padding: 0.1rem 0.45rem;
+  border-radius: var(--radius-sm);
+  background: var(--bg-subtle);
+  color: var(--text-subtle);
+}
+
+.repo-visit-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-size: 0.825rem;
+  font-weight: 600;
+  padding: 0.35rem 0.75rem;
+  border-radius: var(--radius-md);
+  background: var(--primary-soft);
+  color: var(--primary-soft-text);
+  border: 1px solid transparent;
+  transition: var(--transition);
+  white-space: nowrap;
+  flex-shrink: 0;
+  text-decoration: none;
+}
+
+.repo-visit-btn:hover {
+  background: var(--primary);
+  color: white;
+  transform: translateX(2px);
+}
+
+/* ==========================================================================
    Responsive Breakpoints (PC / 平板 / 手机多端全场景自适应优化)
    ========================================================================== */
 
@@ -3152,6 +3451,14 @@ del {
   .file-action-btn {
     flex: 1;
   }
+
+  /* GitHub 导航移动端适配 */
+  .nav-repo-grid {
+    grid-template-columns: 1fr;
+  }
+  .nav-cat-desc {
+    display: none;
+  }
 }
 
 /* 超窄屏手机优化 (<= 480px) */
@@ -3216,6 +3523,18 @@ del {
     padding: 0;
     width: 32px;
     height: 32px;
+    justify-content: center;
+  }
+  .nav-repo-card {
+    padding: 1.1rem;
+  }
+  .repo-card-bottom {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0.65rem;
+  }
+  .repo-visit-btn {
+    width: 100%;
     justify-content: center;
   }
 }

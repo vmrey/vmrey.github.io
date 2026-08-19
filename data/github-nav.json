@@ -1,0 +1,41 @@
+[
+  {
+    "category": "Node.js 版本管理",
+    "description": "跨平台多版本 Node.js 运行时快速切换与开发环境管理利器",
+    "icon": "terminal",
+    "items": [
+      {
+        "name": "fnm",
+        "repo": "Schniz/fnm",
+        "url": "https://github.com/Schniz/fnm",
+        "tagline": "🚀 基于 Rust 编写的高性能、轻量级跨平台 Node.js 版本管理器",
+        "description": "极速且原生的 Node.js 版本管理器。原生支持 .node-version 和 .nvmrc 自动环境感知切换，支持 Bash、Zsh、Fish、PowerShell，启动与切换性能极其优异。",
+        "language": "Rust",
+        "badge": "Rust / 极速原生",
+        "tags": [
+          "Rust",
+          "Node.js",
+          "CLI",
+          "版本管理",
+          "跨平台"
+        ]
+      },
+      {
+        "name": "nvm",
+        "repo": "nvm-sh/nvm",
+        "url": "https://github.com/nvm-sh/nvm",
+        "tagline": "POSIX 兼容的标准 Node.js 多版本环境管理脚本",
+        "description": "业界最流行、应用最广泛的 Node.js 版本管理解决方案。通过 Bash 脚本为每个版本独立隔离 node/npm 环境，完美解决多项目 Node 版本依赖冲突。",
+        "language": "Shell",
+        "badge": "Shell / 行业标杆",
+        "tags": [
+          "Shell",
+          "Bash",
+          "Node.js",
+          "环境配置",
+          "经典工具"
+        ]
+      }
+    ]
+  }
+]

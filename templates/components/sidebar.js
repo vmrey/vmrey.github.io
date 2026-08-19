@@ -11,6 +11,7 @@ function renderSidebar({
   const homeUrl = isSubfolder ? '../index.html' : 'index.html';
   const aboutUrl = isSubfolder ? '../about.html' : 'about.html';
   const filesUrl = isSubfolder ? '../files.html' : 'files.html';
+  const navUrl = isSubfolder ? '../nav.html' : 'nav.html';
 
   const iconSvgs = {
     '前端开发': `<polyline points="16 18 22 12 16 6"></polyline><polyline points="8 6 2 12 8 18"></polyline>`,
@@ -135,6 +136,12 @@ ${navCategoriesHtml}
 
         <div class="sidebar-nav-group">
           <div class="nav-group-title">导航与资源</div>
+          <a href="${navUrl}" class="sidebar-nav-item ${activePage === 'nav' ? 'active' : ''}" title="GitHub 导航">
+            <span class="nav-item-left">
+              <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"></polygon></svg>
+              <span class="nav-item-text">GitHub 导航</span>
+            </span>
+          </a>
           <a href="${filesUrl}" class="sidebar-nav-item ${activePage === 'files' ? 'active' : ''}" title="资源文件库">
             <span class="nav-item-left">
               <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path><line x1="12" y1="11" x2="12" y2="17"></line><line x1="9" y1="14" x2="15" y2="14"></line></svg>

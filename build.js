@@ -14,6 +14,7 @@ const { renderHomeLayout } = require('./templates/layouts/home');
 const { renderPostLayout } = require('./templates/layouts/post');
 const { renderFilesLayout } = require('./templates/layouts/files');
 const { renderAboutLayout } = require('./templates/layouts/about');
+const { renderNavLayout } = require('./templates/layouts/nav');
 
 const ROOT_DIR = __dirname;
 const DRAFTS_DIR = path.join(ROOT_DIR, 'markdown_drafts');
@@ -22,9 +23,11 @@ const SEARCH_INDEX_PATH = path.join(ROOT_DIR, 'data', 'search-index.js');
 const INDEX_HTML_PATH = path.join(ROOT_DIR, 'index.html');
 const ABOUT_HTML_PATH = path.join(ROOT_DIR, 'about.html');
 const FILES_HTML_PATH = path.join(ROOT_DIR, 'files.html');
+const NAV_HTML_PATH = path.join(ROOT_DIR, 'nav.html');
 const CONFIG_PATH = path.join(ROOT_DIR, 'js', 'config.js');
 const FILES_DIR = path.join(ROOT_DIR, 'assets', 'files');
 const FILES_META_PATH = path.join(ROOT_DIR, 'data', 'files-meta.json');
+const NAV_DATA_PATH = path.join(ROOT_DIR, 'data', 'github-nav.json');
 
 if (!fs.existsSync(DRAFTS_DIR)) fs.mkdirSync(DRAFTS_DIR, { recursive: true });
 if (!fs.existsSync(POSTS_DIR)) fs.mkdirSync(POSTS_DIR, { recursive: true });
@@ -763,4 +766,34 @@ const aboutPageHtml = renderAboutLayout({
 fs.writeFileSync(ABOUT_HTML_PATH, aboutPageHtml, 'utf-8');
 console.log(`📄 已同步更新关于页侧边栏: about.html`);
 
-console.log(`\n✨ 全部构建成功！共发布 ${postsList.length} 篇正式文章 & ${resourceFiles.length} 个资源文件！随时可以运行 npm run serve 本地预览或 git push 部署！\n`);
+// ==============================================================================
+// 10. 编译生成 nav.html GitHub 开源导航页
+// ==============================================================================
+let navCategories = [];
+if (fs.existsSync(NAV_DATA_PATH)) {
+  try {
+    navCategories = JSON.parse(fs.readFileSync(NAV_DATA_PATH, 'utf-8'));
+  } catch (e) {
+    console.warn('⚠️ 读取 data/github-nav.json 失败:', e.message);
+  }
+}
+
+const navSidebarHtml = renderSidebar({
+  isSubfolder: false,
+  activePage: 'nav',
+  blogConfig: blogConfig,
+  categoryStats: categoryStats,
+  resourceFilesCount: resourceFiles.length
+});
+
+const navPageHtml = renderNavLayout({
+  sidebarHtml: navSidebarHtml,
+  navCategories: navCategories,
+  blogConfig: blogConfig
+});
+
+fs.writeFileSync(NAV_HTML_PATH, navPageHtml, 'utf-8');
+const totalNavRepos = navCategories.reduce((acc, cat) => acc + (cat.items ? cat.items.length : 0), 0);
+console.log(`🧭 已成功生成 GitHub 开源导航中心: nav.html (${totalNavRepos} 个项目)`);
+
+console.log(`\n✨ 全部构建成功！共发布 ${postsList.length} 篇正式文章、${resourceFiles.length} 个资源文件 & ${totalNavRepos} 个 GitHub 开源项目！随时可以运行 npm run serve 本地预览或 git push 部署！\n`);
