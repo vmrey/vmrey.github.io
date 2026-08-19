@@ -124,6 +124,22 @@
           "格式转换",
           "网站图标"
         ]
+      },
+      {
+        "name": "Tinify (TinyPNG 中文网)",
+        "url": "https://tinify.cn/",
+        "tagline": "智能 WebP、PNG 与 JPEG 图像高保真无损压缩与批量处理平台",
+        "description": "业内最负盛名的智能图像压缩服务，采用先进的量化算法精准减少颜色位数，大幅精简图片体积并保留完美视觉画质，网站提速必备利器。",
+        "category": "图片压缩",
+        "badge": "高保真压缩",
+        "tags": [
+          "Tinify",
+          "TinyPNG",
+          "图片压缩",
+          "WebP",
+          "PNG",
+          "性能优化"
+        ]
       }
     ]
   },
