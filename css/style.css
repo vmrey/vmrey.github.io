@@ -2181,6 +2181,32 @@ del {
   transform: scale(1) translateY(0);
 }
 
+/* 全屏模式样式 */
+.file-preview-modal.is-fullscreen {
+  padding: 0 !important;
+}
+
+.file-preview-modal.is-fullscreen .preview-dialog {
+  width: 100vw !important;
+  height: 100vh !important;
+  max-width: 100vw !important;
+  max-height: 100vh !important;
+  border-radius: 0 !important;
+  border: none !important;
+  box-shadow: none !important;
+  transform: scale(1) translateY(0) !important;
+}
+
+.file-preview-modal.is-fullscreen .preview-header {
+  border-radius: 0;
+  padding: 0.9rem 1.5rem;
+}
+
+.file-preview-modal.is-fullscreen .preview-body {
+  padding: 1.5rem 2rem;
+  height: 100%;
+}
+
 .preview-header {
   display: flex;
   align-items: center;
@@ -2273,6 +2299,7 @@ del {
   border-color: var(--primary-hover);
 }
 
+.preview-fullscreen-btn,
 .preview-close-btn {
   display: inline-flex;
   align-items: center;
@@ -2285,12 +2312,36 @@ del {
   color: var(--text-muted);
   cursor: pointer;
   transition: var(--transition);
+  flex-shrink: 0;
 }
 
+.preview-fullscreen-btn:hover,
 .preview-close-btn:hover {
   background: var(--bg-subtle);
   border-color: var(--border);
   color: var(--text-main);
+}
+
+.preview-fullscreen-btn:focus-visible,
+.preview-close-btn:focus-visible {
+  outline: 2px solid var(--primary);
+  outline-offset: 1px;
+}
+
+.preview-fullscreen-btn .icon-minimize {
+  display: none;
+}
+
+.preview-fullscreen-btn .icon-maximize {
+  display: block;
+}
+
+.file-preview-modal.is-fullscreen .preview-fullscreen-btn .icon-maximize {
+  display: none;
+}
+
+.file-preview-modal.is-fullscreen .preview-fullscreen-btn .icon-minimize {
+  display: block;
 }
 
 .preview-body {
@@ -2491,6 +2542,22 @@ del {
   background: var(--bg-subtle);
   border-color: var(--border-focus);
   color: var(--primary);
+}
+
+.tree-action-btn .icon-expand {
+  display: none;
+}
+
+.tree-action-btn .icon-collapse {
+  display: block;
+}
+
+.tree-action-btn.is-collapsed .icon-collapse {
+  display: none;
+}
+
+.tree-action-btn.is-collapsed .icon-expand {
+  display: block;
 }
 
 .explorer-folders-container {
@@ -2982,6 +3049,20 @@ del {
     padding: 0.9rem;
     font-size: 0.825rem;
   }
+  .file-preview-modal.is-fullscreen {
+    padding: 0 !important;
+  }
+  .file-preview-modal.is-fullscreen .preview-dialog {
+    border-radius: 0 !important;
+    max-height: 100vh !important;
+    max-width: 100vw !important;
+  }
+  .file-preview-modal.is-fullscreen .preview-header {
+    padding: 0.75rem 0.9rem;
+  }
+  .file-preview-modal.is-fullscreen .preview-body {
+    padding: 0.9rem;
+  }
 
   /* 资源管理器文件行移动端排版 */
   .nested-file-row {
@@ -3062,5 +3143,14 @@ del {
   }
   .preview-file-name {
     max-width: 130px;
+  }
+  .preview-btn span {
+    display: none;
+  }
+  .preview-btn {
+    padding: 0.45rem;
+    width: 32px;
+    height: 32px;
+    justify-content: center;
   }
 }

@@ -45,7 +45,11 @@
               <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
               <span>下载文件</span>
             </a>
-            <button class="preview-close-btn" id="preview-close-btn" type="button" aria-label="关闭预览">
+            <button class="preview-fullscreen-btn" id="preview-fullscreen-btn" type="button" aria-label="全屏显示" title="全屏显示">
+              <svg class="icon-maximize" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 3 21 3 21 9"></polyline><polyline points="9 21 3 21 3 15"></polyline><line x1="21" y1="3" x2="14" y2="10"></line><line x1="3" y1="21" x2="10" y2="14"></line></svg>
+              <svg class="icon-minimize" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="4 14 10 14 10 20"></polyline><polyline points="20 10 14 10 14 4"></polyline><line x1="14" y1="10" x2="21" y2="3"></line><line x1="10" y1="14" x2="3" y2="21"></line></svg>
+            </button>
+            <button class="preview-close-btn" id="preview-close-btn" type="button" aria-label="关闭预览" title="关闭预览">
               <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
             </button>
           </div>
@@ -81,9 +85,30 @@
     if (closeBtn) closeBtn.addEventListener('click', closePreviewModal);
     if (backdrop) backdrop.addEventListener('click', closePreviewModal);
 
+    // 绑定全屏切换事件
+    const fullscreenBtn = document.getElementById('preview-fullscreen-btn');
+    if (fullscreenBtn) {
+      fullscreenBtn.addEventListener('click', toggleFullscreen);
+    }
+
+    // 双击弹窗头部快捷切换全屏
+    const headerEl = modalEl.querySelector('.preview-header');
+    if (headerEl) {
+      headerEl.addEventListener('dblclick', (e) => {
+        if (!e.target.closest('button') && !e.target.closest('a')) {
+          toggleFullscreen();
+        }
+      });
+    }
+
+    // 绑定 ESC 退出全屏 / 关闭预览
     document.addEventListener('keydown', (e) => {
       if (e.key === 'Escape' && modalEl && modalEl.classList.contains('active')) {
-        closePreviewModal();
+        if (modalEl.classList.contains('is-fullscreen')) {
+          toggleFullscreen();
+        } else {
+          closePreviewModal();
+        }
       }
     });
 
@@ -110,9 +135,26 @@
     }
   }
 
+  function toggleFullscreen() {
+    if (!modalEl) return;
+    const isFullscreen = modalEl.classList.toggle('is-fullscreen');
+    const fullscreenBtn = document.getElementById('preview-fullscreen-btn');
+    if (fullscreenBtn) {
+      const label = isFullscreen ? '退出全屏' : '全屏显示';
+      fullscreenBtn.setAttribute('title', label);
+      fullscreenBtn.setAttribute('aria-label', label);
+    }
+  }
+
   function closePreviewModal() {
     if (modalEl) {
       modalEl.classList.remove('active');
+      modalEl.classList.remove('is-fullscreen');
+      const fullscreenBtn = document.getElementById('preview-fullscreen-btn');
+      if (fullscreenBtn) {
+        fullscreenBtn.setAttribute('title', '全屏显示');
+        fullscreenBtn.setAttribute('aria-label', '全屏显示');
+      }
       document.body.style.overflow = '';
     }
   }

@@ -268,13 +268,10 @@
         </div>
 
         <div class="explorer-tree-actions">
-          <button type="button" class="tree-action-btn" id="btn-expand-all" title="展开所有文件夹">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
-            <span>全部展开</span>
-          </button>
-          <button type="button" class="tree-action-btn" id="btn-collapse-all" title="折叠所有文件夹">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
-            <span>全部折叠</span>
+          <button type="button" class="tree-action-btn" id="btn-toggle-all" title="折叠所有文件夹">
+            <svg class="icon-collapse" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="18 15 12 9 6 15"></polyline></svg>
+            <svg class="icon-expand" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+            <span id="btn-toggle-all-text">全部折叠</span>
           </button>
         </div>
       </div>
@@ -642,10 +639,25 @@
     document.addEventListener('DOMContentLoaded', () => {
       const folderBlocks = Array.from(document.querySelectorAll('.explorer-folder-block'));
       const filterInput = document.getElementById('file-filter-input');
-      const btnExpandAll = document.getElementById('btn-expand-all');
-      const btnCollapseAll = document.getElementById('btn-collapse-all');
+      const btnToggleAll = document.getElementById('btn-toggle-all');
+      const btnToggleAllText = document.getElementById('btn-toggle-all-text');
       const noResults = document.getElementById('no-files-results');
       const countBadge = document.getElementById('files-count-badge');
+
+      // 同步全部展开/全部折叠按钮状态
+      function updateToggleAllButton() {
+        if (!btnToggleAll || !btnToggleAllText) return;
+        const anyOpen = folderBlocks.some(b => b.classList.contains('open'));
+        if (anyOpen) {
+          btnToggleAllText.textContent = '全部折叠';
+          btnToggleAll.setAttribute('title', '折叠所有文件夹');
+          btnToggleAll.classList.remove('is-collapsed');
+        } else {
+          btnToggleAllText.textContent = '全部展开';
+          btnToggleAll.setAttribute('title', '展开所有文件夹');
+          btnToggleAll.classList.add('is-collapsed');
+        }
+      }
 
       // 文件夹点击展开 / 折叠
       document.querySelectorAll('.folder-header-row').forEach(header => {
@@ -654,21 +666,21 @@
           const block = document.getElementById(targetId);
           if (block) {
             block.classList.toggle('open');
+            updateToggleAllButton();
           }
         });
       });
 
-      // 全部展开
-      if (btnExpandAll) {
-        btnExpandAll.addEventListener('click', () => {
-          folderBlocks.forEach(b => b.classList.add('open'));
-        });
-      }
-
-      // 全部折叠
-      if (btnCollapseAll) {
-        btnCollapseAll.addEventListener('click', () => {
-          folderBlocks.forEach(b => b.classList.remove('open'));
+      // 全部展开 / 全部折叠 一键切换
+      if (btnToggleAll) {
+        btnToggleAll.addEventListener('click', () => {
+          const anyOpen = folderBlocks.some(b => b.classList.contains('open'));
+          if (anyOpen) {
+            folderBlocks.forEach(b => b.classList.remove('open'));
+          } else {
+            folderBlocks.forEach(b => b.classList.add('open'));
+          }
+          updateToggleAllButton();
         });
       }
 
@@ -716,6 +728,8 @@
               ? '搜索结果: ' + totalVisibleFiles + ' 个文件 (' + visibleFolders + ' 个文件夹)'
               : '共 ' + folderBlocks.length + ' 个文件夹 · ' + totalVisibleFiles + ' 个附件';
           }
+
+          updateToggleAllButton();
         });
       }
     });
