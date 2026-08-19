@@ -223,28 +223,6 @@
     ]
   },
   {
-    "category": "编辑与写作工具",
-    "description": "Markdown 写作排版、文档双屏实时预览与格式导出编辑器",
-    "icon": "edit",
-    "items": [
-      {
-        "name": "MarkdownPad",
-        "url": "http://markdownpad.com/",
-        "tagline": "经典 Windows 平台专属 Markdown 写作与双屏实时预览编辑器",
-        "description": "提供所见即所得的双屏 HTML 渲染预览，支持自定义 CSS 渲染主题样式、丰富快捷键排版与 PDF/HTML 网页一键导出。",
-        "category": "文档编辑",
-        "badge": "Markdown写作",
-        "tags": [
-          "Markdown",
-          "编辑器",
-          "文档写作",
-          "Windows",
-          "HTML导出"
-        ]
-      }
-    ]
-  },
-  {
     "category": "网络诊断与安全检测",
     "description": "IP 纯净度检测、代理类型识别、网络连通性与欺诈风险评估",
     "icon": "shield",
