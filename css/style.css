@@ -121,14 +121,40 @@ button {
   border-right: 1px solid var(--border);
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
-  padding: 1.75rem 1.2rem;
+  padding: 1.75rem 1.2rem 1.25rem;
   flex-shrink: 0;
   z-index: 100;
   overflow-y: auto;
   overflow-x: hidden;
   -webkit-overflow-scrolling: touch;
+  scrollbar-width: thin;
+  scrollbar-color: var(--border-focus) transparent;
   transition: width 0.28s cubic-bezier(0.16, 1, 0.3, 1), transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), padding 0.28s ease;
+}
+
+/* 侧边栏精致上下滚动条 */
+.app-sidebar::-webkit-scrollbar {
+  width: 5px;
+}
+
+.app-sidebar::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.app-sidebar::-webkit-scrollbar-thumb {
+  background: var(--border-focus);
+  border-radius: var(--radius-full);
+}
+
+.app-sidebar::-webkit-scrollbar-thumb:hover {
+  background: var(--text-muted);
+}
+
+.sidebar-inner {
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+  flex: 1 0 auto;
 }
 
 .sidebar-header-row {
@@ -571,12 +597,14 @@ button {
 
 /* Sidebar Footer */
 .sidebar-footer {
+  margin-top: 1.5rem;
   padding-top: 1.25rem;
   border-top: 1px solid var(--border);
   display: flex;
   flex-direction: column;
   gap: 0.85rem;
   overflow: hidden;
+  flex-shrink: 0;
 }
 
 .theme-toggle-row {
