@@ -59,6 +59,23 @@
           "系统安装",
           "U盘"
         ]
+      },
+      {
+        "name": "LKY_OfficeTools",
+        "repo": "OdysseusYuan/LKY_OfficeTools",
+        "url": "https://github.com/OdysseusYuan/LKY_OfficeTools",
+        "tagline": "一键全自动快速下载、安装与配置正版 Office 部署神器",
+        "description": "极简实用的 Microsoft Office 一键快速下载安装与配置工具，支持自由选择组件版本、自定义安装路径、自动部署多语言包与系统环境初始化。",
+        "language": "Batchfile",
+        "badge": "Office部署神器",
+        "tags": [
+          "Office",
+          "LKY",
+          "办公工具",
+          "装机必备",
+          "一键安装",
+          "Windows"
+        ]
       }
     ]
   },
@@ -82,6 +99,23 @@
           "Python",
           "SSH防护",
           "防火墙"
+        ]
+      },
+      {
+        "name": "acme.sh",
+        "repo": "acmesh-official/acme.sh",
+        "url": "https://github.com/acmesh-official/acme.sh",
+        "tagline": "纯 Shell 编写的自动化免费 SSL/TLS 证书申请与一键续期脚本",
+        "description": "最流行、最轻量的 ACME 协议客户端。纯 Shell 编写且零第三方依赖，支持 Let's Encrypt / ZeroSSL 免费证书自动申请、DNS 自动化鉴权验证与 Web 服务器静默热重载。",
+        "language": "Shell",
+        "badge": "Shell / 证书神器",
+        "tags": [
+          "acme.sh",
+          "SSL证书",
+          "HTTPS",
+          "Let's Encrypt",
+          "Shell",
+          "自动化运维"
         ]
       }
     ]

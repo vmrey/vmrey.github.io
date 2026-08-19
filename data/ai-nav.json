@@ -160,6 +160,22 @@
           "即时部署",
           "Agent"
         ]
+      },
+      {
+        "name": "Agnes AI",
+        "url": "https://platform.agnes-ai.com/",
+        "tagline": "新一代自进化智能体与企业级自主工作流编排执行平台",
+        "description": "专注于复杂任务自动化与端到端工作流编排的高性能 AI Agent 平台，支持多模型智能调度、多智能体协同协作与深度业务场景落地。",
+        "category": "智能体平台",
+        "badge": "AI 智能体",
+        "tags": [
+          "AgnesAI",
+          "AI智能体",
+          "Agent",
+          "工作流",
+          "自动化",
+          "AI平台"
+        ]
       }
     ]
   },
