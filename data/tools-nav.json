@@ -18,6 +18,37 @@
           "常用工具",
           "图片"
         ]
+      },
+      {
+        "name": "1Password 强密码生成器",
+        "url": "https://1password.com/zh-cn/password-generator",
+        "tagline": "1Password 官方出品的免费高安全度随机强密码与密码短语生成器",
+        "description": "基于客户端加密安全随机数发生器，支持自定义密码长度、字符集组合（大小写/数字/符号）与易记密码短语生成，远离账号撞库与弱密码风险。",
+        "category": "密码安全",
+        "badge": "安全密码生成",
+        "tags": [
+          "1Password",
+          "密码生成器",
+          "安全工具",
+          "随机密码",
+          "信息安全"
+        ]
+      },
+      {
+        "name": "轻松传 (EasyChuan)",
+        "url": "https://easychuan.cn/",
+        "tagline": "极简纯净的免安装跨设备局域网与公网文件快传及文本同步工具",
+        "description": "无需登录、即开即用的多端文件传输神器。通过浏览器生成提取码或扫码即可实现手机与电脑间极速传输大文件、图片与剪贴板文本，安全不限速。",
+        "category": "跨端传输",
+        "badge": "免登录快传",
+        "tags": [
+          "轻松传",
+          "文件传输",
+          "快传",
+          "剪贴板同步",
+          "免安装",
+          "局域网"
+        ]
       }
     ]
   },
@@ -80,6 +111,22 @@
           "拓扑图",
           "免费开源"
         ]
+      },
+      {
+        "name": "PDManer (元数建模)",
+        "url": "https://www.pdmaas.cn/Download",
+        "tagline": "跨平台专业国产开源数据库 ER 建模与数据资产设计开发平台",
+        "description": "支持 MySQL、PostgreSQL、Oracle、达梦等多数据库方言，提供概念模型到物理模型全流程可视化设计、DDL 脚本一键生成与版本逆向工程。",
+        "category": "数据库建模",
+        "badge": "数据建模神器",
+        "tags": [
+          "PDManer",
+          "数据库建模",
+          "ER图",
+          "DDL生成",
+          "架构设计",
+          "MySQL"
+        ]
       }
     ]
   },
@@ -101,6 +148,22 @@
           "Windows",
           "注册表清理",
           "系统工具"
+        ]
+      },
+      {
+        "name": "KMS 在线激活服务 (KMS.cx)",
+        "url": "https://kms.cx/",
+        "tagline": "极简高速的公共 KMS 在线激活服务与 Windows / Office 一键脚本指南",
+        "description": "提供全天候高可用的正规企业 KMS 批量授权在线激活服务器地址、GVLK 密钥速查表以及纯原生无后门的命令行一键激活配置教程。",
+        "category": "KMS激活",
+        "badge": "KMS服务指南",
+        "tags": [
+          "KMS",
+          "Windows激活",
+          "Office激活",
+          "GVLK",
+          "系统工具",
+          "命令行"
         ]
       }
     ]
@@ -140,6 +203,22 @@
           "PNG",
           "性能优化"
         ]
+      },
+      {
+        "name": "Hills Lite (Emby / Jellyfin 客户端)",
+        "url": "https://apps.microsoft.com/detail/9nxnzfrllwzx?hl=zh-CN&gl=CN",
+        "tagline": "Windows 平台极简高颜值的 Emby 与 Jellyfin 媒体库第三方播放器",
+        "description": "微软商店极受好评的轻量级流媒体客户端，原生 Fluent 设计美学，完美连接个人 Emby / Jellyfin 影音服务器，支持高清硬件解码与杜比视界播放。",
+        "category": "流媒体播放器",
+        "badge": "高颜值播放器",
+        "tags": [
+          "HillsLite",
+          "Emby",
+          "Jellyfin",
+          "媒体播放器",
+          "Windows",
+          "流媒体"
+        ]
       }
     ]
   },
@@ -161,6 +240,29 @@
           "文档写作",
           "Windows",
           "HTML导出"
+        ]
+      }
+    ]
+  },
+  {
+    "category": "网络诊断与安全检测",
+    "description": "IP 纯净度检测、代理类型识别、网络连通性与欺诈风险评估",
+    "icon": "shield",
+    "items": [
+      {
+        "name": "IPPure (IP 纯净度检测)",
+        "url": "https://ippure.com/",
+        "tagline": "专业 IP 纯净度、代理类型识别与网络欺诈风险评分检测工具",
+        "description": "提供精准的 IP 归属地查询、原生/广播 IP 属性判定、数据中心/家庭宽带类型识别与网络欺诈风险分数评估，出海与网络诊断利器。",
+        "category": "IP纯净度检测",
+        "badge": "IP质量风控",
+        "tags": [
+          "IPPure",
+          "IP查询",
+          "纯净度",
+          "代理检测",
+          "网络诊断",
+          "安全风控"
         ]
       }
     ]
