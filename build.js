@@ -15,6 +15,7 @@ const { renderPostLayout } = require('./templates/layouts/post');
 const { renderFilesLayout } = require('./templates/layouts/files');
 const { renderAboutLayout } = require('./templates/layouts/about');
 const { renderNavLayout } = require('./templates/layouts/nav');
+const { renderToolsLayout } = require('./templates/layouts/tools');
 
 const ROOT_DIR = __dirname;
 const DRAFTS_DIR = path.join(ROOT_DIR, 'markdown_drafts');
@@ -24,10 +25,12 @@ const INDEX_HTML_PATH = path.join(ROOT_DIR, 'index.html');
 const ABOUT_HTML_PATH = path.join(ROOT_DIR, 'about.html');
 const FILES_HTML_PATH = path.join(ROOT_DIR, 'files.html');
 const NAV_HTML_PATH = path.join(ROOT_DIR, 'nav.html');
+const TOOLS_HTML_PATH = path.join(ROOT_DIR, 'tools.html');
 const CONFIG_PATH = path.join(ROOT_DIR, 'js', 'config.js');
 const FILES_DIR = path.join(ROOT_DIR, 'assets', 'files');
 const FILES_META_PATH = path.join(ROOT_DIR, 'data', 'files-meta.json');
 const NAV_DATA_PATH = path.join(ROOT_DIR, 'data', 'github-nav.json');
+const TOOLS_DATA_PATH = path.join(ROOT_DIR, 'data', 'tools-nav.json');
 
 if (!fs.existsSync(DRAFTS_DIR)) fs.mkdirSync(DRAFTS_DIR, { recursive: true });
 if (!fs.existsSync(POSTS_DIR)) fs.mkdirSync(POSTS_DIR, { recursive: true });
@@ -796,4 +799,34 @@ fs.writeFileSync(NAV_HTML_PATH, navPageHtml, 'utf-8');
 const totalNavRepos = navCategories.reduce((acc, cat) => acc + (cat.items ? cat.items.length : 0), 0);
 console.log(`🧭 已成功生成 GitHub 开源导航中心: nav.html (${totalNavRepos} 个项目)`);
 
-console.log(`\n✨ 全部构建成功！共发布 ${postsList.length} 篇正式文章、${resourceFiles.length} 个资源文件 & ${totalNavRepos} 个 GitHub 开源项目！随时可以运行 npm run serve 本地预览或 git push 部署！\n`);
+// ==============================================================================
+// 11. 编译生成 tools.html 实用工具导航页
+// ==============================================================================
+let toolsCategories = [];
+if (fs.existsSync(TOOLS_DATA_PATH)) {
+  try {
+    toolsCategories = JSON.parse(fs.readFileSync(TOOLS_DATA_PATH, 'utf-8'));
+  } catch (e) {
+    console.warn('⚠️ 读取 data/tools-nav.json 失败:', e.message);
+  }
+}
+
+const toolsSidebarHtml = renderSidebar({
+  isSubfolder: false,
+  activePage: 'tools',
+  blogConfig: blogConfig,
+  categoryStats: categoryStats,
+  resourceFilesCount: resourceFiles.length
+});
+
+const toolsPageHtml = renderToolsLayout({
+  sidebarHtml: toolsSidebarHtml,
+  toolsCategories: toolsCategories,
+  blogConfig: blogConfig
+});
+
+fs.writeFileSync(TOOLS_HTML_PATH, toolsPageHtml, 'utf-8');
+const totalTools = toolsCategories.reduce((acc, cat) => acc + (cat.items ? cat.items.length : 0), 0);
+console.log(`🛠️ 已成功生成实用工具导航中心: tools.html (${totalTools} 个工具)`);
+
+console.log(`\n✨ 全部构建成功！共发布 ${postsList.length} 篇正式文章、${resourceFiles.length} 个资源文件、${totalNavRepos} 个 GitHub 项目 & ${totalTools} 个实用在线工具！随时可以运行 npm run serve 本地预览或 git push 部署！\n`);

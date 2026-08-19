@@ -12,6 +12,7 @@ function renderSidebar({
   const aboutUrl = isSubfolder ? '../about.html' : 'about.html';
   const filesUrl = isSubfolder ? '../files.html' : 'files.html';
   const navUrl = isSubfolder ? '../nav.html' : 'nav.html';
+  const toolsUrl = isSubfolder ? '../tools.html' : 'tools.html';
 
   const iconSvgs = {
     '前端开发': `<polyline points="16 18 22 12 16 6"></polyline><polyline points="8 6 2 12 8 18"></polyline>`,
@@ -140,6 +141,12 @@ ${navCategoriesHtml}
             <span class="nav-item-left">
               <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"></polygon></svg>
               <span class="nav-item-text">GitHub 导航</span>
+            </span>
+          </a>
+          <a href="${toolsUrl}" class="sidebar-nav-item ${activePage === 'tools' ? 'active' : ''}" title="工具导航">
+            <span class="nav-item-left">
+              <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"></path></svg>
+              <span class="nav-item-text">工具导航</span>
             </span>
           </a>
           <a href="${filesUrl}" class="sidebar-nav-item ${activePage === 'files' ? 'active' : ''}" title="资源文件库">

@@ -1,0 +1,221 @@
+[
+  {
+    "category": "数据转换与格式化",
+    "description": "JSON 可视化、代码类型互转、正则表达式与数据格式处理利器",
+    "icon": "code",
+    "items": [
+      {
+        "name": "JSON Crack",
+        "url": "https://jsoncrack.com",
+        "tagline": "无缝将 JSON 数据转化为直观的树状与图表可视化",
+        "description": "颠覆传统纯文本阅读方式的高颜值 JSON 可视化工具，支持在节点间搜索、缩放、图表导出与即时在线编辑。",
+        "category": "数据可视化",
+        "badge": "可视化神器",
+        "tags": [
+          "JSON",
+          "可视化",
+          "调试",
+          "图表"
+        ]
+      },
+      {
+        "name": "Transform Tools",
+        "url": "https://transform.tools",
+        "tagline": "多语言代码、JSON、CSS、SVG 与类型定义一键互转工具箱",
+        "description": "前端与全栈工程师的多功能格式转换聚合神器，支持 JSON 转 TypeScript/Go/Rust Struct、HTML 转 JSX、CSS 转 JS 等几十种转换规则。",
+        "category": "代码转换",
+        "badge": "多格式转换",
+        "tags": [
+          "TypeScript",
+          "JSON",
+          "Rust",
+          "Go",
+          "代码生成"
+        ]
+      },
+      {
+        "name": "RegExr",
+        "url": "https://regexr.com",
+        "tagline": "正则表达式实时可视化调试、测试与语法速查参考",
+        "description": "直观友好的正则表达式在线工具，提供即时语法高亮匹配、捕获组分解、详细解释说明以及常用正则表达式社区库。",
+        "category": "正则调试",
+        "badge": "经典正则",
+        "tags": [
+          "Regex",
+          "正则表达式",
+          "测试",
+          "文本匹配"
+        ]
+      },
+      {
+        "name": "QuickType",
+        "url": "https://quicktype.io",
+        "tagline": "从任意 JSON 示例自动生成生产级类型与数据模型代码",
+        "description": "极速生成类型安全的序列化与反序列化代码，支持 TypeScript、Go、Rust、Java、C#、Swift、Python 等数十种主流语言。",
+        "category": "类型生成",
+        "badge": "类型安全",
+        "tags": [
+          "TypeScript",
+          "Go",
+          "Rust",
+          "模型生成",
+          "API"
+        ]
+      }
+    ]
+  },
+  {
+    "category": "图像与多媒体处理",
+    "description": "图片无损压缩、SVG 矢量精简、格式转换与多媒体在线处理工具",
+    "icon": "image",
+    "items": [
+      {
+        "name": "TinyPNG",
+        "url": "https://tinypng.com",
+        "tagline": "智能 WebP、PNG 与 JPEG 图像高保真无损压缩服务",
+        "description": "业界公认最优秀的智能有损压缩算法之一，大幅减小图片文件体积的同时保留完美视觉画质，极大提升网站加载速度。",
+        "category": "图片压缩",
+        "badge": "高保真压缩",
+        "tags": [
+          "WebP",
+          "PNG",
+          "JPG",
+          "性能优化",
+          "CDN"
+        ]
+      },
+      {
+        "name": "SVGOMG",
+        "url": "https://jakearchibald.github.io/svgomg/",
+        "tagline": "基于 SVGO 的 Web 端 SVG 矢量图形可视化优化与极简压缩",
+        "description": "Google 开发者 Jake Archibald 出品的 SVG 压缩利器，可视化移除冗余标签、精简路径坐标与属性，产出极致轻量的矢量代码。",
+        "category": "SVG优化",
+        "badge": "矢量精简",
+        "tags": [
+          "SVG",
+          "矢量图",
+          "代码精简",
+          "前端优化"
+        ]
+      },
+      {
+        "name": "Squoosh",
+        "url": "https://squoosh.app",
+        "tagline": "Google Chrome 团队出品的高级纯前端本地图片压缩应用",
+        "description": "基于 WebAssembly 的本地纯浏览器端图片压缩工具，支持实时左右分屏画质对比、WebP/AVIF/MozJPEG 格式精准调参，绝不上传服务器。",
+        "category": "本地压缩",
+        "badge": "Google出品",
+        "tags": [
+          "AVIF",
+          "WebP",
+          "Wasm",
+          "本地处理",
+          "隐私安全"
+        ]
+      }
+    ]
+  },
+  {
+    "category": "研发与运维工具链",
+    "description": "Crontab 定时任务、浏览器特性兼容性查询、Docker 镜像与徽章服务",
+    "icon": "terminal",
+    "items": [
+      {
+        "name": "Crontab Guru",
+        "url": "https://crontab.guru",
+        "tagline": "Linux Cron 定时任务表达式在线编辑器与人类自然语言解读",
+        "description": "优雅、清晰地解析复杂的 5 位 Cron 定时表达式，提供自然语言翻译、下一次触发时间预测以及常用时间间隔模板。",
+        "category": "Linux运维",
+        "badge": "Cron必备",
+        "tags": [
+          "Linux",
+          "Cron",
+          "定时任务",
+          "运维",
+          "Server"
+        ]
+      },
+      {
+        "name": "Can I use",
+        "url": "https://caniuse.com",
+        "tagline": "前端 HTML5、CSS3、JavaScript API 跨浏览器特性兼容性数据库",
+        "description": "现代 Web 开发必备权威参考，覆盖桌面端与移动端各大主流浏览器对于最新 Web 标准的实际支持版本与兼容性统计。",
+        "category": "兼容性查询",
+        "badge": "前端权威",
+        "tags": [
+          "CSS3",
+          "HTML5",
+          "浏览器兼容",
+          "WebAPI",
+          "标准"
+        ]
+      },
+      {
+        "name": "Shields.io",
+        "url": "https://shields.io",
+        "tagline": "高质量矢量徽章（Badge）元数据生成服务，README 必备标配",
+        "description": "为开源项目与个人主页生成统一风格的 SVG 状态徽章，支持 GitHub Release、NPM Downloads、CI/CD 状态、技术栈图标等数百种数据源。",
+        "category": "开源徽章",
+        "badge": "README神器",
+        "tags": [
+          "Badge",
+          "GitHub",
+          "开源项目",
+          "README",
+          "SVG"
+        ]
+      }
+    ]
+  },
+  {
+    "category": "在线开发与云端沙箱",
+    "description": "无需本地配置、即开即用的云端 IDE、TS 演练场与前端即时交互沙箱",
+    "icon": "monitor",
+    "items": [
+      {
+        "name": "TypeScript Playground",
+        "url": "https://www.typescriptlang.org/play",
+        "tagline": "微软官方 TypeScript 在线演练场与类型系统深度调试工具",
+        "description": "支持自由切换 TS 编译器版本、自定义 tsconfig 编译选项、查看生成的 JS 与声明文件 (.d.ts)，是学习与排查复杂类型的最佳场所。",
+        "category": "官方演练场",
+        "badge": "微软官方",
+        "tags": [
+          "TypeScript",
+          "Playground",
+          "类型体操",
+          "编译测试"
+        ]
+      },
+      {
+        "name": "StackBlitz",
+        "url": "https://stackblitz.com",
+        "tagline": "基于 WebContainers 技术的毫秒级秒开云端 Node.js 原生 IDE",
+        "description": "在浏览器内直接运行完整的 Node.js 环境与 Vite/Nuxt/Next 现代框架，支持 npm 依赖毫秒级安装与全功能 VS Code 编程体验。",
+        "category": "云端IDE",
+        "badge": "WebContainers",
+        "tags": [
+          "Node.js",
+          "Vite",
+          "Vue",
+          "React",
+          "在线IDE"
+        ]
+      },
+      {
+        "name": "CodePen",
+        "url": "https://codepen.io",
+        "tagline": "前端开发者最喜爱的 HTML、CSS、JavaScript 在线创作与灵感社区",
+        "description": "快速测试 CSS 动画特效、前端 UI 组件与灵感原型的最佳沙盒，汇聚全球顶尖前端工程师的高水平交互创意作品。",
+        "category": "前端创作",
+        "badge": "灵感社区",
+        "tags": [
+          "CSS动画",
+          "HTML",
+          "JS",
+          "UI组件",
+          "前端灵感"
+        ]
+      }
+    ]
+  }
+]
