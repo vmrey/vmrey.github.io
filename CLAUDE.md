@@ -224,7 +224,37 @@ node .agents/skills/nav-manager/scripts/manage-nav.js delete <名称或URL关键
 ```bash
 npm run audit
 ```
-确保全站 70+ 个 HTML 文件、2300+ 条链接与资源引用的死链数为 0，且 `robots.txt`、`sitemap.xml`、`feed.xml` 和 `llms.txt` 100% 完备。
+确保全站 70+ 个 HTML 文件、2300+ 条链接与资源引用的死链数为 0，且 `robots.txt`、`sitemap.xml`、`feed.xml`、`llms.txt` 和 `llms-full.txt` 100% 完备。
+
+---
+
+### 🌐 4.5 SEO、AI 智能体抓取与永久短链体系架构 (SEO, AI & Permalinks Architecture)
+
+构建引擎 [`build.js`](build.js) 在每次执行编译时，会自动闭环执行以下 4 大核心基建：
+
+#### 1. 永久短链体系 (Permanent Short Slug Architecture)
+- **命名结构**：`[语义短前缀]-[4位短Hash].html`（如 `vue3-file-upload-5890.html`、`claude-perms-08be.html`）；
+- **永久锁定**：URL 在文章创建时固化为 Permalink，后续无论修改正文、标题或修复 Bug 100 次，URL 永远锁定不变，杜绝外链失效与 SEO 权重流失；
+- **0 碰撞安全保障**：`build.js` 内置同名物理文件冲突检测与自增哈希安全锁，确保全站 URL 100% 绝对唯一。
+
+#### 2. 全自动化 SEO 闭环体系 (Automated SEO Pipeline)
+- **`sitemap.xml` 站点地图**：自动扫描全站 70+ 页面，精准生成 `<lastmod>`、`<priority>` 与 `<changefreq>`，便于 Google Search Console、百度与 Bing 极速收录；
+- **`robots.txt` 爬虫协议**：声明对所有搜索引擎蜘蛛与 AI 爬虫开放，显式指向 Sitemap 地址；
+- **`feed.xml` RSS 2.0 聚合订阅**：自动收录最新 30 篇文章，提供标准 XML 供技术社区与 RSS 阅读器聚合；
+- **OpenGraph & Twitter Card**：70 个 HTML 页面全量注入社交卡片元数据，在微信、QQ、Telegram、Twitter 分享时自动展示精美大卡片；
+- **Schema.org JSON-LD 结构化数据**：自动生成 `BlogPosting` 与 `WebSite` 结构模型，助力搜索引擎生成 Rich Snippets 富媒体卡片；
+- **Canonical 权威链接**：全站所有页面均注入 `<link rel="canonical">` 规范化 URL。
+
+#### 3. 面向 AI 智能体与大模型的抓取协议 (AI Agent & LLMs.txt Protocol)
+- **`llms.txt` 规范**：遵循全球最新 AI 智能体索引协议，将全站核心路由与 64 篇文章按专栏结构化整理，供 Cursor、Claude Code、ChatGPT 1 秒读懂整站知识；
+- **`llms-full.txt` 知识库快照**：包含全站所有文章的标题、URL、标签与核心技术要点大纲，专为大模型上下文加载与 RAG 向量知识库构建；
+- **零阻碍抓取友好**：100% 纯静态 SSG 预渲染、0 广告弹窗噪音、标准 `<pre><code class="...">` 代码块，AI 爬虫 GET 请求 0 毫秒直出全文。
+
+#### 4. 三大导航中心数据流与健康生态 (Three Navigation Centers)
+- **AI 导航中心 (`ai.html`)**：`data/ai-nav.json` 单一数据源驱动，收录 Gemini, ChatGPT, Claude, DeepSeek, Cursor 等顶尖 AI 工具；
+- **实用工具导航 (`tools.html`)**：`data/tools-nav.json` 单一数据源驱动，收录 FlyEnv, DBeaver, 草料二维码等开发者利器；
+- **GitHub 优质开源导航 (`nav.html`)**：`data/github-nav.json` 单一数据源驱动，收录 fnm, nvm, Ventoy, Fail2Ban 等开源项目；
+- **健康熔断机制**：`manage-nav.js` 提供跨库唯一性查重、入库前真实网络连通性探测 (`check-alive`) 与失效死链自动清理 (`prune`)。
 
 ---
 
