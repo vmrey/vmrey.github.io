@@ -127,6 +127,22 @@
           "架构设计",
           "MySQL"
         ]
+      },
+      {
+        "name": "DBeaver",
+        "url": "https://dbeaver.io/download/",
+        "tagline": "全球领先的免费开源通用全平台多数据库连接管理客户端",
+        "description": "功能极其强悍的通用数据库工具与 SQL 编辑器，支持 MySQL、PostgreSQL、SQLite、Oracle、Redis 等上百种数据库连接与数据可视化操作。",
+        "category": "架构设计与思维导图",
+        "badge": "全能数据库客户端",
+        "tags": [
+          "DBeaver",
+          "数据库管理",
+          "SQL编辑器",
+          "MySQL",
+          "PostgreSQL",
+          "开源客户端"
+        ]
       }
     ]
   },
@@ -164,6 +180,23 @@
           "GVLK",
           "系统工具",
           "命令行"
+        ]
+      },
+      {
+        "name": "FlyEnv",
+        "url": "https://flyenv.com/download.html",
+        "tagline": "全能现代化本地多语言开发环境与服务集成管理工具",
+        "description": "支持 PHP、Node.js、Python、Go、Java、MySQL、Redis、Nginx 等环境的一键安装与多版本极速切换，跨平台本地开发必备神器。",
+        "category": "系统优化与效率工具",
+        "badge": "开发环境管理器",
+        "tags": [
+          "FlyEnv",
+          "开发环境",
+          "PHP",
+          "NodeJS",
+          "MySQL",
+          "Redis",
+          "本地调试"
         ]
       }
     ]
