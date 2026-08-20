@@ -61,7 +61,6 @@ npm run deploy                 # 或 git add . && git commit -m "feat: 发布新
 │   │   ├── mobile-header.js     # 移动端顶部导航栏与抽屉遮罩
 │   │   ├── post-card.js         # 首页文章卡片（16:9 封面、胶囊时长、标签与阅读链接）
 │   │   ├── feed-header.js       # 列表流头部与即时搜索框
-│   │   ├── pagination.js        # 翻页控制器结构
 │   │   ├── toc.js               # 文章详情页右侧 Sticky 目录大纲
 │   │   └── empty-state.js       # 搜索/筛选无结果时的空状态插画
 │   └── layouts/                 # 页面级装配布局模板
