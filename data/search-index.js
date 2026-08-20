@@ -4,9 +4,9 @@
  */
 window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
   {
-    "id": "claude-code-bypass-permissions-configuration",
+    "id": "claude-perms-08be",
     "title": "Claude Code 开启 Bypass 免确认权限配置指南",
-    "url": "posts/claude-code-bypass-permissions-configuration.html",
+    "url": "posts/claude-perms-08be.html",
     "category": "效率工具与软件",
     "date": "2026-08-10",
     "tags": [
@@ -43,9 +43,9 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
     ]
   },
   {
-    "id": "git-common-commands-cheatsheet",
+    "id": "git-cheatsheet-c495",
     "title": "Git 常用高频命令与分支协同工作流速查清单",
-    "url": "posts/git-common-commands-cheatsheet.html",
+    "url": "posts/git-cheatsheet-c495.html",
     "category": "效率工具与软件",
     "date": "2026-08-05",
     "tags": [
@@ -102,9 +102,9 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
     ]
   },
   {
-    "id": "svn-subversion-commands-cheatsheet",
+    "id": "svn-cheatsheet-1d69",
     "title": "SVN (Subversion) 常用版本控制命令速查与批量清理指南",
-    "url": "posts/svn-subversion-commands-cheatsheet.html",
+    "url": "posts/svn-cheatsheet-1d69.html",
     "category": "效率工具与软件",
     "date": "2026-07-30",
     "tags": [
@@ -145,9 +145,9 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
     ]
   },
   {
-    "id": "docker-official-install-mirror-guide",
+    "id": "docker-mirror-5e12",
     "title": "Linux 生产环境 Docker 官方一键安装脚本与国内镜像加速配置",
-    "url": "posts/docker-official-install-mirror-guide.html",
+    "url": "posts/docker-mirror-5e12.html",
     "category": "Linux与服务端",
     "date": "2026-07-20",
     "tags": [
@@ -223,9 +223,9 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
     ]
   },
   {
-    "id": "image-compression-tools-comparison",
+    "id": "img-compress-tools-4c4a",
     "title": "高质量无损图片压缩工具与批量处理方案横向评测",
-    "url": "posts/image-compression-tools-comparison.html",
+    "url": "posts/img-compress-tools-4c4a.html",
     "category": "效率工具与软件",
     "date": "2026-07-15",
     "tags": [
@@ -330,9 +330,9 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
     ]
   },
   {
-    "id": "rustdesk-server-docker-deploy",
+    "id": "rustdesk-docker-6a97",
     "title": "使用 Docker Compose 快速搭建 RustDesk 自建远程桌面中继服务器（hbbs/hbbr）",
-    "url": "posts/rustdesk-server-docker-deploy.html",
+    "url": "posts/rustdesk-docker-6a97.html",
     "category": "Linux与服务端",
     "date": "2026-07-12",
     "tags": [
@@ -394,9 +394,9 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
     ]
   },
   {
-    "id": "photoshop-batch-compress-images-jsx-script",
+    "id": "ps-batch-compress-0ecc",
     "title": "Photoshop 批量压缩与图片重命名 ExtendScript (JSX) 脚本源码",
-    "url": "posts/photoshop-batch-compress-images-jsx-script.html",
+    "url": "posts/ps-batch-compress-0ecc.html",
     "category": "效率工具与软件",
     "date": "2026-07-05",
     "tags": [
@@ -472,9 +472,9 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
     ]
   },
   {
-    "id": "kodbox-cloud-disk-docker-install",
+    "id": "kodbox-docker-d549",
     "title": "Kodbox 可道云私有网盘部署实战指南（Docker 与源码双方案）",
-    "url": "posts/kodbox-cloud-disk-docker-install.html",
+    "url": "posts/kodbox-docker-d549.html",
     "category": "Linux与服务端",
     "date": "2026-07-02",
     "tags": [
@@ -551,9 +551,9 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
     ]
   },
   {
-    "id": "batch-rename-files-bat-script",
+    "id": "bat-rename-b2ae",
     "title": "Windows 批量修改文件名与字符替换批处理 (.bat) 脚本",
-    "url": "posts/batch-rename-files-bat-script.html",
+    "url": "posts/bat-rename-b2ae.html",
     "category": "效率工具与软件",
     "date": "2026-06-28",
     "tags": [
@@ -684,9 +684,9 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
     ]
   },
   {
-    "id": "nginx-reverse-proxy-emby-config",
+    "id": "nginx-emby-proxy-b140",
     "title": "Nginx 全站反向代理配置说明文档（Cloudflare CDN + 流媒体优化版）",
-    "url": "posts/nginx-reverse-proxy-emby-config.html",
+    "url": "posts/nginx-emby-proxy-b140.html",
     "category": "Linux 与服务端",
     "date": "2026-06-25",
     "tags": [
@@ -724,9 +724,9 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
     ]
   },
   {
-    "id": "ffmpeg-live-stream-rtmp-flv-cheatsheet",
+    "id": "ffmpeg-stream-5244",
     "title": "FFmpeg 常用音视频推流、转码与循环直播命令速查指南",
-    "url": "posts/ffmpeg-live-stream-rtmp-flv-cheatsheet.html",
+    "url": "posts/ffmpeg-stream-5244.html",
     "category": "Linux与服务端",
     "date": "2026-06-18",
     "tags": [
@@ -778,9 +778,9 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
     ]
   },
   {
-    "id": "vue3-file-upload-component",
+    "id": "vue3-file-upload-5890",
     "title": "Vue3 + Element Plus 文件上传组件封装：支持回显、批量与手动控制",
-    "url": "posts/vue3-file-upload-component.html",
+    "url": "posts/vue3-file-upload-5890.html",
     "category": "前端开发",
     "date": "2026-06-15",
     "tags": [
@@ -806,9 +806,9 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
     ]
   },
   {
-    "id": "ssl-acme-cert-auto-issue-script",
+    "id": "acme-ssl-issue-1dd8",
     "title": "Linux 使用 acme.sh 自动化申请 Let's Encrypt 免费 SSL 证书与续期脚本",
-    "url": "posts/ssl-acme-cert-auto-issue-script.html",
+    "url": "posts/acme-ssl-issue-1dd8.html",
     "category": "Linux与服务端",
     "date": "2026-06-10",
     "tags": [
@@ -849,9 +849,9 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
     ]
   },
   {
-    "id": "vue3-query-form-component",
+    "id": "vue3-query-form-53a0",
     "title": "Vue3 通用查询表单组件封装：JSON Schema 驱动与响应式联动",
-    "url": "posts/vue3-query-form-component.html",
+    "url": "posts/vue3-query-form-53a0.html",
     "category": "前端开发",
     "date": "2026-06-08",
     "tags": [
@@ -877,9 +877,9 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
     ]
   },
   {
-    "id": "vue-common-plugins-ecosystem",
+    "id": "vue-plugins-ecosystem-7e33",
     "title": "Vue 3 生产级高频插件与生态工具库精选清单",
-    "url": "posts/vue-common-plugins-ecosystem.html",
+    "url": "posts/vue-plugins-ecosystem-7e33.html",
     "category": "前端开发",
     "date": "2026-05-28",
     "tags": [
@@ -931,9 +931,9 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
     ]
   },
   {
-    "id": "siege-http-benchmark-load-testing-guide",
+    "id": "siege-benchmark-44e0",
     "title": "开源 HTTP 压力测试工具 Siege 从安装到生产实战指南",
-    "url": "posts/siege-http-benchmark-load-testing-guide.html",
+    "url": "posts/siege-benchmark-44e0.html",
     "category": "Linux与服务端",
     "date": "2026-05-25",
     "tags": [
@@ -1054,9 +1054,9 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
     ]
   },
   {
-    "id": "ruoyi-navigation-error-nextsibling",
+    "id": "ruoyi-nav-fix-3171",
     "title": "若依管理系统导航报错 reading 'nextSibling' 根因分析与解决方案",
-    "url": "posts/ruoyi-navigation-error-nextsibling.html",
+    "url": "posts/ruoyi-nav-fix-3171.html",
     "category": "前端开发",
     "date": "2026-05-20",
     "tags": [
@@ -1097,9 +1097,9 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
     ]
   },
   {
-    "id": "xray-core-install-script-configuration",
+    "id": "xray-core-script-c8e6",
     "title": "Xray-Core Linux 一键部署与自动化服务管理脚本",
-    "url": "posts/xray-core-install-script-configuration.html",
+    "url": "posts/xray-core-script-c8e6.html",
     "category": "Linux与服务端",
     "date": "2026-05-15",
     "tags": [
@@ -1139,9 +1139,9 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
     ]
   },
   {
-    "id": "javascript-debounce-throttle",
+    "id": "js-debounce-throttle-1d40",
     "title": "JavaScript 防抖与节流深度剖析：从原理实现到业务场景落地",
-    "url": "posts/javascript-debounce-throttle.html",
+    "url": "posts/js-debounce-throttle-1d40.html",
     "category": "前端开发",
     "date": "2026-05-12",
     "tags": [
@@ -1272,9 +1272,9 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
     ]
   },
   {
-    "id": "xray-dns-anti-pollution-routing-rules",
+    "id": "xray-dns-routing-b411",
     "title": "Xray DNS 分流防污染优化与国内外路由分流规则配置",
-    "url": "posts/xray-dns-anti-pollution-routing-rules.html",
+    "url": "posts/xray-dns-routing-b411.html",
     "category": "Linux与服务端",
     "date": "2026-05-08",
     "tags": [
@@ -1306,9 +1306,9 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
     ]
   },
   {
-    "id": "javascript-tree-recursion-utils",
+    "id": "js-tree-recursion-209b",
     "title": "常用树结构递归工具函数合集：树平铺、节点查找与层级过滤",
-    "url": "posts/javascript-tree-recursion-utils.html",
+    "url": "posts/js-tree-recursion-209b.html",
     "category": "前端开发",
     "date": "2026-05-02",
     "tags": [
@@ -1339,9 +1339,9 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
     ]
   },
   {
-    "id": "mini-javascript-template-engine",
+    "id": "mini-js-template-ee56",
     "title": "实现一个最优雅的微型 JavaScript 模板引擎：30 行代码解析核心原理",
-    "url": "posts/mini-javascript-template-engine.html",
+    "url": "posts/mini-js-template-ee56.html",
     "category": "前端开发",
     "date": "2026-04-22",
     "tags": [
@@ -1417,9 +1417,9 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
     ]
   },
   {
-    "id": "input-china-mobile-number-validation",
+    "id": "mobile-verify-635b",
     "title": "前端输入框严格限制只能输入中国手机号码的最佳实践",
-    "url": "posts/input-china-mobile-number-validation.html",
+    "url": "posts/mobile-verify-635b.html",
     "category": "前端开发",
     "date": "2026-04-15",
     "tags": [
@@ -1515,9 +1515,9 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
     ]
   },
   {
-    "id": "textarea-auto-height-contenteditable",
+    "id": "textarea-auto-height-8ea2",
     "title": "使用 contenteditable 与 div 完美模拟 Textarea 高度自适应效果",
-    "url": "posts/textarea-auto-height-contenteditable.html",
+    "url": "posts/textarea-auto-height-8ea2.html",
     "category": "前端开发",
     "date": "2026-04-08",
     "tags": [
@@ -1603,9 +1603,9 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
     ]
   },
   {
-    "id": "wechat-miniprogram-async-to-sync-promise",
+    "id": "wx-async-promise-806e",
     "title": "微信小程序将异步 API 封装为 Promise 同步调用（async/await）实战",
-    "url": "posts/wechat-miniprogram-async-to-sync-promise.html",
+    "url": "posts/wx-async-promise-806e.html",
     "category": "前端开发",
     "date": "2026-03-25",
     "tags": [
@@ -1686,9 +1686,9 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
     ]
   },
   {
-    "id": "wechat-miniprogram-property-observer-watch",
+    "id": "wx-property-watch-0b0e",
     "title": "微信小程序自定义组件监听 properties 属性变化的优雅实现",
-    "url": "posts/wechat-miniprogram-property-observer-watch.html",
+    "url": "posts/wx-property-watch-0b0e.html",
     "category": "前端开发",
     "date": "2026-03-18",
     "tags": [
@@ -1819,9 +1819,9 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
     ]
   },
   {
-    "id": "vscode-common-frontend-regex-replace",
+    "id": "vscode-regex-replace-df0f",
     "title": "VSCode 前端开发高频实用正则表达式查找与批量替换清单",
-    "url": "posts/vscode-common-frontend-regex-replace.html",
+    "url": "posts/vscode-regex-replace-df0f.html",
     "category": "效率工具与软件",
     "date": "2022-03-20",
     "tags": [
@@ -1867,9 +1867,9 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
     ]
   },
   {
-    "id": "javascript-mask-sensitive-id-card-phone",
+    "id": "mask-sensitive-data-8698",
     "title": "JavaScript 身份证、手机号与敏感证件信息脱敏掩码处理",
-    "url": "posts/javascript-mask-sensitive-id-card-phone.html",
+    "url": "posts/mask-sensitive-data-8698.html",
     "category": "前端开发",
     "date": "2022-03-01",
     "tags": [
@@ -1895,9 +1895,9 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
     ]
   },
   {
-    "id": "javascript-calculate-exact-age-by-birthday",
+    "id": "calc-exact-age-de3e",
     "title": "JavaScript 根据出生年月日精准计算周岁年龄函数",
-    "url": "posts/javascript-calculate-exact-age-by-birthday.html",
+    "url": "posts/calc-exact-age-de3e.html",
     "category": "前端开发",
     "date": "2022-02-15",
     "tags": [
@@ -1923,9 +1923,9 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
     ]
   },
   {
-    "id": "javascript-get-month-start-end-date",
+    "id": "calc-month-range-bd66",
     "title": "JavaScript 获取指定年份与月份的起始日期和结束日期",
-    "url": "posts/javascript-get-month-start-end-date.html",
+    "url": "posts/calc-month-range-bd66.html",
     "category": "前端开发",
     "date": "2022-01-10",
     "tags": [
@@ -1951,9 +1951,9 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
     ]
   },
   {
-    "id": "javascript-string-ellipsis-truncate",
+    "id": "js-string-ellipsis-d4cf",
     "title": "JavaScript 字符串指定长度截断并自动追加省略号",
-    "url": "posts/javascript-string-ellipsis-truncate.html",
+    "url": "posts/js-string-ellipsis-d4cf.html",
     "category": "前端开发",
     "date": "2022-01-05",
     "tags": [
@@ -1974,9 +1974,9 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
     ]
   },
   {
-    "id": "shell-script-fetch-github-latest-version",
+    "id": "shell-github-release-8d73",
     "title": "Shell 脚本自动获取 GitHub 开源项目最新 Releases 版本号",
-    "url": "posts/shell-script-fetch-github-latest-version.html",
+    "url": "posts/shell-github-release-8d73.html",
     "category": "Linux 与服务端",
     "date": "2021-12-01",
     "tags": [
@@ -2003,9 +2003,9 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
     ]
   },
   {
-    "id": "shell-script-echo-colorful-text",
+    "id": "shell-color-echo-31e2",
     "title": "Shell 脚本中输出红/绿/黄多色格式化终端文本函数",
-    "url": "posts/shell-script-echo-colorful-text.html",
+    "url": "posts/shell-color-echo-31e2.html",
     "category": "Linux 与服务端",
     "date": "2021-11-15",
     "tags": [
@@ -2032,9 +2032,9 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
     ]
   },
   {
-    "id": "wordpress-wp-super-cache-nginx-rules",
+    "id": "wp-super-cache-nginx-c033",
     "title": "WordPress WP Super Cache 插件高并发 Nginx 静态伪静态规则",
-    "url": "posts/wordpress-wp-super-cache-nginx-rules.html",
+    "url": "posts/wp-super-cache-nginx-c033.html",
     "category": "Linux 与服务端",
     "date": "2021-11-05",
     "tags": [
@@ -2061,9 +2061,9 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
     ]
   },
   {
-    "id": "wordpress-reset-admin-password-sql-php",
+    "id": "wp-reset-password-f1c8",
     "title": "WordPress 忘记管理员密码时的应急重置与修复方法",
-    "url": "posts/wordpress-reset-admin-password-sql-php.html",
+    "url": "posts/wp-reset-password-f1c8.html",
     "category": "Linux 与服务端",
     "date": "2021-10-20",
     "tags": [
@@ -2090,9 +2090,9 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
     ]
   },
   {
-    "id": "vue-dynamic-reset-data-initial-state",
+    "id": "vue-reset-data-46af",
     "title": "Vue 优雅一键重置组件 data 到初始状态的技巧",
-    "url": "posts/vue-dynamic-reset-data-initial-state.html",
+    "url": "posts/vue-reset-data-46af.html",
     "category": "前端开发",
     "date": "2021-10-10",
     "tags": [
@@ -2123,9 +2123,9 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
     ]
   },
   {
-    "id": "nginx-hotlink-protection-security-config",
+    "id": "nginx-hotlink-guard-c2f7",
     "title": "Nginx 媒体与静态资源防盗链配置实战（Valid Referers）",
-    "url": "posts/nginx-hotlink-protection-security-config.html",
+    "url": "posts/nginx-hotlink-guard-c2f7.html",
     "category": "Linux 与服务端",
     "date": "2021-09-15",
     "tags": [
@@ -2152,9 +2152,9 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
     ]
   },
   {
-    "id": "nginx-static-files-browser-cache-config",
+    "id": "nginx-cache-expires-16e0",
     "title": "Nginx 静态资源长效缓存与 Expires 性能优化配置",
-    "url": "posts/nginx-static-files-browser-cache-config.html",
+    "url": "posts/nginx-cache-expires-16e0.html",
     "category": "Linux 与服务端",
     "date": "2021-09-05",
     "tags": [
@@ -2181,9 +2181,9 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
     ]
   },
   {
-    "id": "linux-firewalld-common-commands-cheatsheet",
+    "id": "firewalld-cheat-e029",
     "title": "CentOS 7 / RHEL Firewalld 防火墙常用命令与端口放行速查",
-    "url": "posts/linux-firewalld-common-commands-cheatsheet.html",
+    "url": "posts/firewalld-cheat-e029.html",
     "category": "Linux 与服务端",
     "date": "2021-08-25",
     "tags": [
@@ -2215,9 +2215,9 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
     ]
   },
   {
-    "id": "linux-centos7-disable-ipv6-permanently",
+    "id": "centos-disable-ipv6-099b",
     "title": "CentOS 7 永久禁用 IPv6 网络协议的两种方法",
-    "url": "posts/linux-centos7-disable-ipv6-permanently.html",
+    "url": "posts/centos-disable-ipv6-099b.html",
     "category": "Linux 与服务端",
     "date": "2021-08-10",
     "tags": [
@@ -2249,9 +2249,9 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
     ]
   },
   {
-    "id": "frp-remote-desktop-deploy-guide",
+    "id": "frp-desktop-6af7",
     "title": "轻量级高性能内网穿透：frp 远程桌面 RDP 搭建与系统服务配置",
-    "url": "posts/frp-remote-desktop-deploy-guide.html",
+    "url": "posts/frp-desktop-6af7.html",
     "category": "Linux 与服务端",
     "date": "2021-05-18",
     "tags": [
@@ -2288,9 +2288,9 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
     ]
   },
   {
-    "id": "element-calendar-disabled-dates-style",
+    "id": "el-calendar-style-bb16",
     "title": "Element UI 中 el-calendar 日历组件禁用与灰色置灰点击处理",
-    "url": "posts/element-calendar-disabled-dates-style.html",
+    "url": "posts/el-calendar-style-bb16.html",
     "category": "前端开发",
     "date": "2021-05-12",
     "tags": [
@@ -2316,9 +2316,9 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
     ]
   },
   {
-    "id": "vscode-batch-clean-console-log-regex",
+    "id": "vscode-clean-log-8fb9",
     "title": "VSCode 中使用正则表达式批量清理 console.log 打印语句",
-    "url": "posts/vscode-batch-clean-console-log-regex.html",
+    "url": "posts/vscode-clean-log-8fb9.html",
     "category": "效率工具与软件",
     "date": "2021-05-08",
     "tags": [
@@ -2349,9 +2349,9 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
     ]
   },
   {
-    "id": "javascript-recursive-search-object-value",
+    "id": "js-tree-find-value-d75f",
     "title": "JavaScript 递归检索深层对象与数组中是否包含某个值",
-    "url": "posts/javascript-recursive-search-object-value.html",
+    "url": "posts/js-tree-find-value-d75f.html",
     "category": "前端开发",
     "date": "2021-04-25",
     "tags": [
@@ -2377,9 +2377,9 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
     ]
   },
   {
-    "id": "javascript-calculate-distance-between-coordinates",
+    "id": "calc-coords-distance-2f2e",
     "title": "JavaScript 根据经纬度计算两地直线距离算法实现",
-    "url": "posts/javascript-calculate-distance-between-coordinates.html",
+    "url": "posts/calc-coords-distance-2f2e.html",
     "category": "前端开发",
     "date": "2021-04-22",
     "tags": [
@@ -2405,9 +2405,9 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
     ]
   },
   {
-    "id": "vue-input-only-email-filter",
+    "id": "vue-email-filter-eb21",
     "title": "Vue 中 input 输入框实时校验与过滤邮箱格式输入",
-    "url": "posts/vue-input-only-email-filter.html",
+    "url": "posts/vue-email-filter-eb21.html",
     "category": "前端开发",
     "date": "2021-04-20",
     "tags": [
@@ -2433,9 +2433,9 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
     ]
   },
   {
-    "id": "javascript-simulate-baidu-search-ranking",
+    "id": "js-search-ranking-87fa",
     "title": "JavaScript 字符串即时搜索与智能匹配排序算法",
-    "url": "posts/javascript-simulate-baidu-search-ranking.html",
+    "url": "posts/js-search-ranking-87fa.html",
     "category": "前端开发",
     "date": "2021-04-18",
     "tags": [
@@ -2461,9 +2461,9 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
     ]
   },
   {
-    "id": "vue-input-only-float-currency-filter",
+    "id": "vue-currency-filter-0ab5",
     "title": "Vue 中限制 input 输入框仅允许输入浮点数或金额格式",
-    "url": "posts/vue-input-only-float-currency-filter.html",
+    "url": "posts/vue-currency-filter-0ab5.html",
     "category": "前端开发",
     "date": "2021-04-15",
     "tags": [
@@ -2489,9 +2489,9 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
     ]
   },
   {
-    "id": "javascript-flatten-nested-json-and-array",
+    "id": "js-flatten-json-4eca",
     "title": "JavaScript 递归扁平化深层嵌套数组与 JSON 结构实战",
-    "url": "posts/javascript-flatten-nested-json-and-array.html",
+    "url": "posts/js-flatten-json-4eca.html",
     "category": "前端开发",
     "date": "2021-04-12",
     "tags": [
@@ -2517,9 +2517,9 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
     ]
   },
   {
-    "id": "el-tree-unique-index-parent-backtracking",
+    "id": "el-tree-index-240e",
     "title": "Element UI 中 el-tree 树形结构生成唯一索引与父级回溯",
-    "url": "posts/el-tree-unique-index-parent-backtracking.html",
+    "url": "posts/el-tree-index-240e.html",
     "category": "前端开发",
     "date": "2021-04-10",
     "tags": [
@@ -2550,9 +2550,9 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
     ]
   },
   {
-    "id": "javascript-replace-json-keys-recursive",
+    "id": "js-rename-json-keys-eba7",
     "title": "JavaScript 递归批量重命名 JSON 对象中的键名 (Key)",
-    "url": "posts/javascript-replace-json-keys-recursive.html",
+    "url": "posts/js-rename-json-keys-eba7.html",
     "category": "前端开发",
     "date": "2021-04-05",
     "tags": [
@@ -2578,9 +2578,9 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
     ]
   },
   {
-    "id": "javascript-get-textarea-cursor-position",
+    "id": "textarea-cursor-pos-9496",
     "title": "JavaScript 获取与控制 input 及 textarea 文本框光标位置",
-    "url": "posts/javascript-get-textarea-cursor-position.html",
+    "url": "posts/textarea-cursor-pos-9496.html",
     "category": "前端开发",
     "date": "2021-03-28",
     "tags": [
@@ -2606,9 +2606,9 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
     ]
   },
   {
-    "id": "javascript-array-string-deduplication",
+    "id": "js-dedup-1e34",
     "title": "JavaScript 数组与字符串去重深度实战（支持嵌套对象去重）",
-    "url": "posts/javascript-array-string-deduplication.html",
+    "url": "posts/js-dedup-1e34.html",
     "category": "前端开发",
     "date": "2021-03-25",
     "tags": [
@@ -2634,9 +2634,9 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
     ]
   },
   {
-    "id": "javascript-array-object-selection-sort",
+    "id": "js-select-sort-267c",
     "title": "JavaScript 数组与对象数组自定义排序算法实战",
-    "url": "posts/javascript-array-object-selection-sort.html",
+    "url": "posts/js-select-sort-267c.html",
     "category": "前端开发",
     "date": "2021-03-20",
     "tags": [
@@ -2662,9 +2662,9 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
     ]
   },
   {
-    "id": "css-vertical-horizontal-center-methods",
+    "id": "css-center-8da2",
     "title": "CSS 元素水平垂直居中的常用核心方案总结",
-    "url": "posts/css-vertical-horizontal-center-methods.html",
+    "url": "posts/css-center-8da2.html",
     "category": "前端开发",
     "date": "2021-03-15",
     "tags": [
@@ -2695,9 +2695,9 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
     ]
   },
   {
-    "id": "javascript-unicode-string-crypto-encode",
+    "id": "unicode-crypto-str-16d8",
     "title": "基于 Unicode 编码的原生 JavaScript 字符串加解密方法",
-    "url": "posts/javascript-unicode-string-crypto-encode.html",
+    "url": "posts/unicode-crypto-str-16d8.html",
     "category": "前端开发",
     "date": "2021-03-05",
     "tags": [
@@ -2723,9 +2723,9 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
     ]
   },
   {
-    "id": "javascript-settimeout-simulate-setinterval",
+    "id": "settimeout-interval-ee29",
     "title": "深入浅出：使用 setTimeout 精准模拟 setInterval 及其核心优势",
-    "url": "posts/javascript-settimeout-simulate-setinterval.html",
+    "url": "posts/settimeout-interval-ee29.html",
     "category": "前端开发",
     "date": "2021-03-01",
     "tags": [
@@ -2751,9 +2751,9 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
     ]
   },
   {
-    "id": "javascript-swap-two-variables-methods",
+    "id": "js-swap-variables-3796",
     "title": "JavaScript 中交换两个变量值的五种经典实现方法",
-    "url": "posts/javascript-swap-two-variables-methods.html",
+    "url": "posts/js-swap-variables-3796.html",
     "category": "前端开发",
     "date": "2021-02-20",
     "tags": [
@@ -2789,9 +2789,9 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
     ]
   },
   {
-    "id": "javascript-json-serialization-deep-clone",
+    "id": "json-deep-clone-423f",
     "title": "JavaScript 引用类型对象深拷贝与 JSON 序列化技巧",
-    "url": "posts/javascript-json-serialization-deep-clone.html",
+    "url": "posts/json-deep-clone-423f.html",
     "category": "前端开发",
     "date": "2021-02-15",
     "tags": [
@@ -2822,9 +2822,9 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
     ]
   },
   {
-    "id": "javascript-get-url-query-parameters",
+    "id": "js-get-url-params-aa13",
     "title": "JavaScript 获取当前页面 URL 查询参数的高效解析方案",
-    "url": "posts/javascript-get-url-query-parameters.html",
+    "url": "posts/js-get-url-params-aa13.html",
     "category": "前端开发",
     "date": "2021-01-25",
     "tags": [
@@ -2850,9 +2850,9 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
     ]
   },
   {
-    "id": "wechat-miniprogram-custom-loading-animation",
+    "id": "wx-loading-anim-2498",
     "title": "微信小程序自定义高颜值 Loading 加载动画组件",
-    "url": "posts/wechat-miniprogram-custom-loading-animation.html",
+    "url": "posts/wx-loading-anim-2498.html",
     "category": "前端开发",
     "date": "2021-01-20",
     "tags": [
@@ -2883,9 +2883,9 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
     ]
   },
   {
-    "id": "wechat-miniprogram-coupon-modal-dialog-component",
+    "id": "wx-coupon-modal-b6eb",
     "title": "微信小程序新手专属优惠券领取弹框组件封装实战",
-    "url": "posts/wechat-miniprogram-coupon-modal-dialog-component.html",
+    "url": "posts/wx-coupon-modal-b6eb.html",
     "category": "前端开发",
     "date": "2021-01-15",
     "tags": [
@@ -2916,9 +2916,9 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
     ]
   },
   {
-    "id": "wechat-miniprogram-bubble-sort-array-objects",
+    "id": "wx-bubble-sort-6378",
     "title": "微信小程序中对象数组冒泡排序算法实现与实战",
-    "url": "posts/wechat-miniprogram-bubble-sort-array-objects.html",
+    "url": "posts/wx-bubble-sort-6378.html",
     "category": "前端开发",
     "date": "2021-01-10",
     "tags": [
@@ -2944,9 +2944,9 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
     ]
   },
   {
-    "id": "wechat-miniprogram-canvas-smooth-curve-chart",
+    "id": "wx-canvas-curve-75af",
     "title": "微信小程序原生 Canvas 绘制平滑贝塞尔曲线图组件",
-    "url": "posts/wechat-miniprogram-canvas-smooth-curve-chart.html",
+    "url": "posts/wx-canvas-curve-75af.html",
     "category": "前端开发",
     "date": "2020-12-31",
     "tags": [

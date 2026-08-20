@@ -26,11 +26,11 @@ description: Comprehensive management workflows for vmrey.github.io. Use wheneve
 
 #### 步骤 A：通过 CLI 命令快速脚手架（推荐）
 ```bash
-node build.js -n "你的文章标题"
+node build.js -n "你的文章标题" [可选英文短前缀]
 # 或
 npm run new "你的文章标题"
 ```
-这将在 `markdown_drafts/` 自动生成对应的 `slug.md` 骨架文件。
+这将在 `markdown_drafts/` 自动生成对应的 `[语义短前缀]-[4位Hash].md` 骨架文件（如 `vue3-comp-a7f3.md`，平均 15~18 字符），保证链接美观且永久唯一。
 
 #### 步骤 B：标准 FrontMatter 元数据格式
 确保文档顶部包含标准的 YAML FrontMatter：

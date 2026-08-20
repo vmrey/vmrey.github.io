@@ -7,6 +7,7 @@
 
 const fs = require('fs');
 const path = require('path');
+const crypto = require('crypto');
 
 // 导入公共组件与页面布局模板
 const { renderSidebar } = require('./templates/components/sidebar');
@@ -42,12 +43,21 @@ if (!fs.existsSync(POSTS_DIR)) fs.mkdirSync(POSTS_DIR, { recursive: true });
 const args = process.argv.slice(2);
 
 // ==============================================================================
-// 1. 命令：创建新文章草稿 (npm run new "标题")
+// 1. 命令：创建新文章草稿 (npm run new "标题" 或 node build.js -n "标题" [可选英文短前缀])
 // ==============================================================================
 if (args[0] === '--new' || args[0] === '-n') {
   const postTitle = args[1] || '我的新文章';
+  const customPrefix = args[2] || '';
   const today = new Date().toISOString().split('T')[0];
-  const slug = postTitle.toLowerCase().replace(/[^a-zA-Z0-9\u4e00-\u9fa5]+/g, '-').replace(/^-|-$/g, '') || `post-${Date.now()}`;
+  
+  // 提取语义前缀 (截断至 16 个字符) + 4 位唯一短 Hash
+  let basePrefix = customPrefix ? customPrefix.toLowerCase().replace(/[^a-z0-9]+/g, '-') : '';
+  if (!basePrefix) {
+    const rawClean = postTitle.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '');
+    basePrefix = rawClean.slice(0, 16).replace(/-+$/, '') || 'post';
+  }
+  const hash = crypto.createHash('sha256').update(postTitle + today + Date.now()).digest('hex').slice(0, 4);
+  const slug = `${basePrefix}-${hash}`;
   const targetMdFile = path.join(DRAFTS_DIR, `${slug}.md`);
 
   if (fs.existsSync(targetMdFile)) {

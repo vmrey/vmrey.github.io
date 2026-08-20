@@ -126,7 +126,7 @@ npm run deploy                 # 或 git add . && git commit -m "feat: 发布新
 ### 📝 4.1 文章全生命周期管理 (Article SOP)
 
 #### ➕ 步骤一：创建文章
-运行 `node build.js -n "文章标题"` 或直接在 `markdown_drafts/` 下创建 `.md` 文件，确保包含标准 YAML FrontMatter：
+运行 `node build.js -n "文章标题" [可选英文短前缀]`（或直接在 `markdown_drafts/` 下创建 `[语义短前缀]-[4位Hash].md`，如 `vue3-comp-a7f3.md`），确保文件名在 15~20 字符以内且永久唯一，并包含标准 YAML FrontMatter：
 
 ```markdown
 ---
