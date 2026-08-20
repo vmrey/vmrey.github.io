@@ -201,6 +201,24 @@
           "Shadowsocks",
           "Kotlin"
         ]
+      },
+      {
+        "name": "v2rayN",
+        "repo": "2dust/v2rayN",
+        "url": "https://github.com/2dust/v2rayN",
+        "tagline": "Windows 平台主流且强大的多协议通用网络代理 GUI 客户端",
+        "description": "基于 V2Ray / Xray / sing-box 核心开发的 Windows 桌面图形客户端，全面支持 VMess、VLESS、Shadowsocks、Trojan、Hysteria2 等主流协议与路由分流规则配置。",
+        "language": "C#",
+        "badge": "C# / Windows代理神器",
+        "tags": [
+          "v2rayN",
+          "Windows",
+          "代理工具",
+          "V2Ray",
+          "Xray",
+          "sing-box",
+          "C#"
+        ]
       }
     ]
   }
