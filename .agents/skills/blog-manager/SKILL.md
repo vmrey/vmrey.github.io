@@ -128,40 +128,10 @@ node build.js
 
 ## 🔍 3. 完整性审计与死链扫描 (Audit & Integrity Check)
 
-每次对文章或文件进行批量变动后，可运行以下内建脚本检查全站 0 死链：
+每次对文章或文件进行批量变动后，运行内建自动化审计命令：
 
 ```bash
-node -e '
-const fs = require("fs");
-const path = require("path");
-
-const htmlFiles = [
-  "index.html",
-  "about.html",
-  "files.html",
-  ...fs.readdirSync("posts").filter(f => f.endsWith(".html")).map(f => "posts/" + f)
-];
-
-let total = 0;
-let broken = [];
-
-htmlFiles.forEach(file => {
-  const content = fs.readFileSync(file, "utf-8");
-  const dir = path.dirname(file);
-
-  const hrefs = [...content.matchAll(/href=["\x27]([^"\x27]+)["\x27]/g)];
-  hrefs.forEach(m => {
-    total++;
-    const href = m[1].trim();
-    if (href.startsWith("http") || href.startsWith("#") || href.startsWith("mailto")) return;
-    const clean = href.split("?")[0].split("#")[0];
-    if (!clean) return;
-    const resolved = path.resolve(dir, clean);
-    if (!fs.existsSync(resolved)) broken.push({ file, href, resolved });
-  });
-});
-
-console.log(`✅ 扫描了 ${htmlFiles.length} 个页面共 ${total} 条链接，死链数: ${broken.length}`);
-if (broken.length > 0) console.error("❌ 发现死链:", broken);
-'
+npm run audit
 ```
+构建审计器将全量扫描全站 70+ 个 HTML 页面与 2300+ 条链接资源引用，并验证 `robots.txt`、`sitemap.xml`、`feed.xml` 与 `llms.txt` 的完整性。
+

@@ -22,21 +22,26 @@
 
 ## 2. 核心工作流与常用命令 (CLI Commands & Workflows)
 
-### 常用命令集
+### 常用命令集 (CLI Quick Reference)
 ```bash
-# 1. 快速创建一篇新文章草稿
-npm run new "文章标题"          # 或 node build.js -n "文章标题"
+# 1. 快速创建一篇新文章草稿 (自动生成语义短词 + 4位短Hash)
+npm run new "文章标题"          # 或 node build.js -n "文章标题" [可选英文短前缀]
 
-# 2. 全自动编译构建整站（更新所有 HTML、侧边栏、分类统计与全文搜索索引）
+# 2. 全自动编译构建整站（输出 HTML、SEO/AI 协议、检索索引与分类统计）
 npm run build                  # 或 node build.js
 
-# 3. 本地启动 HTTP 服务器实时预览
+# 3. 本地启动 HTTP 服务器实时预览 (0 缓存)
 npm run serve                  # 或 npx serve .
 
-# 4. 全站超链接完整性审计 (0 死链检测)
+# 4. 全站超链接完整性与 SEO/AI 基建自动化审计 (0 死链检测器)
 npm run audit                  # 或 node scripts/audit-links.js
 
-# 5. 提交部署至 GitHub Pages
+# 5. 🧭 导航站点智能运维 (查重 / 死链巡检 / 熔断清理)
+node .agents/skills/nav-manager/scripts/manage-nav.js check-alive  # 全站导航连通性巡检
+node .agents/skills/nav-manager/scripts/manage-nav.js prune        # 自动探测并清理失效死链
+node .agents/skills/nav-manager/scripts/manage-nav.js check        # 全库跨库唯一性查重
+
+# 6. 一键提交部署至 GitHub Pages
 npm run deploy                 # 或 git add . && git commit -m "feat: 发布新文章" && git push
 ```
 
@@ -274,7 +279,9 @@ npm run audit
 - **保护交互与类名一致性**：`css/style.css` 与 `templates/` 中的 CSS 类名有精密绑定，重构时必须保证选择器与 DOM 结构严格一致。
 
 ### 严禁的操作 (DON'Ts)
+- **严禁擅自修改已发布文章的 slug 文件名**：文章 URL 一经生成即为永久外链 (Permalink)，严禁在编辑或更新正文时随意重命名 `.md` 文件，以防破坏搜索引擎已收录索引与外部引用链接。
+- **严禁直接编辑 `posts/*.html`**：这些文件每次执行 `npm run build` 都会被全量重写。
 - **严禁破坏全设备响应式兼容**：无论新增组件、修改样式或调整排版，必须无条件通过 PC 宽屏、平板中屏与手机窄屏三端兼容验证，严禁任何破坏响应式的修改。
 - **严禁破坏 1:1 Markdown 阅读比例**：严禁将博客正文或标题放大为营销落地页风格的大字号，确保技术文档沉浸阅读体验。
-- **严禁直接编辑 `posts/*.html`**：这些文件每次执行 `npm run build` 都会被全量重写。
 - **严禁破坏深浅色主题适配**：所有新样式必须同时测试 `data-theme="dark"` 与 `data-theme="light"`。
+- **严禁在根目录堆放未归档临时脚本**：正式附件与脚本必须统一归档至 `assets/files/` 并在 `data/files-meta.json` 维护元数据。
