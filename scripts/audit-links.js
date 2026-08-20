@@ -50,7 +50,9 @@ htmlFiles.forEach(file => {
 const seoFiles = [
   { name: 'robots.txt', path: path.join(ROOT_DIR, 'robots.txt') },
   { name: 'sitemap.xml', path: path.join(ROOT_DIR, 'sitemap.xml') },
-  { name: 'feed.xml', path: path.join(ROOT_DIR, 'feed.xml') }
+  { name: 'feed.xml', path: path.join(ROOT_DIR, 'feed.xml') },
+  { name: 'llms.txt', path: path.join(ROOT_DIR, 'llms.txt') },
+  { name: 'llms-full.txt', path: path.join(ROOT_DIR, 'llms-full.txt') }
 ];
 
 let missingSeoFiles = [];
@@ -60,11 +62,11 @@ seoFiles.forEach(sf => {
   }
 });
 
-console.log(`\n🔍 全站超链接完整性与 SEO 基建审计报告:`);
+console.log(`\n🔍 全站超链接完整性与 SEO / AI 基建审计报告:`);
 console.log(`--------------------------------------------------`);
 console.log(`📄 审计页面总数: ${htmlFiles.length} 个 HTML 文件`);
 console.log(`🔗 验证超链接数: ${totalHrefs} 条内部链接与资源引用`);
-console.log(`🗺️ SEO 关键文件: robots.txt / sitemap.xml / feed.xml 全部就绪`);
+console.log(`🤖 SEO & AI 关键文件: robots.txt / sitemap.xml / feed.xml / llms.txt 全部就绪`);
 
 if (brokenLinks.length === 0 && missingSeoFiles.length === 0) {
   console.log(`✅ 结果: 完美无死链！全站所有链接 100% 畅通可用，SEO 基础设施 100% 完备！\n`);

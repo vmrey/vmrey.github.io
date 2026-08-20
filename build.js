@@ -38,6 +38,8 @@ const AI_DATA_PATH = path.join(ROOT_DIR, 'data', 'ai-nav.json');
 const ROBOTS_TXT_PATH = path.join(ROOT_DIR, 'robots.txt');
 const SITEMAP_XML_PATH = path.join(ROOT_DIR, 'sitemap.xml');
 const FEED_XML_PATH = path.join(ROOT_DIR, 'feed.xml');
+const LLMS_TXT_PATH = path.join(ROOT_DIR, 'llms.txt');
+const LLMS_FULL_TXT_PATH = path.join(ROOT_DIR, 'llms-full.txt');
 
 if (!fs.existsSync(DRAFTS_DIR)) fs.mkdirSync(DRAFTS_DIR, { recursive: true });
 if (!fs.existsSync(POSTS_DIR)) fs.mkdirSync(POSTS_DIR, { recursive: true });
@@ -967,5 +969,72 @@ ${rssItems}
 `;
 fs.writeFileSync(FEED_XML_PATH, feedXmlContent, 'utf-8');
 console.log(`📡 已全自动生成 RSS 2.0 聚合订阅源: feed.xml (收录最新 ${Math.min(postsList.length, 30)} 篇)`);
+
+// ==============================================================================
+// 16. 自动生成面向 AI 智能体与大模型的 llms.txt & llms-full.txt 协议
+// ==============================================================================
+// 按分类对文章进行整理
+const postsByCategory = {};
+postsList.forEach(p => {
+  const cat = p.category || '未分类';
+  if (!postsByCategory[cat]) postsByCategory[cat] = [];
+  postsByCategory[cat].push(p);
+});
+
+let llmsArticlesMarkdown = '';
+for (const [catName, cPosts] of Object.entries(postsByCategory)) {
+  llmsArticlesMarkdown += `### ${catName} (${cPosts.length} 篇)\n`;
+  cPosts.forEach(p => {
+    llmsArticlesMarkdown += `- [${p.title}](https://vmrey.github.io/posts/${p.slug}.html): ${p.summary || p.title}\n`;
+  });
+  llmsArticlesMarkdown += '\n';
+}
+
+const llmsTxtContent = `# vmrey.github.io
+
+> 专注于前端工程化、Vue 组件设计、Linux 系统运维与自动化脚本实战的技术博客与导航生态中心。
+
+## 站点核心结构与路由 (Core Site Structure)
+- [博客首页 (Blog Home)](https://vmrey.github.io/): 全部技术文章列表与专栏分类浏览
+- [AI 导航中心 (AI Navigation)](https://vmrey.github.io/ai.html): 精选收录 Gemini, ChatGPT, Claude, DeepSeek, Cursor 等 17+ 顶尖 AI 工具与智能体
+- [实用工具导航 (Developer Tools)](https://vmrey.github.io/tools.html): 精选收录 FlyEnv, DBeaver, 草料二维码, 1Password 等 15+ 开发者效率利器
+- [GitHub 导航中心 (GitHub Repos)](https://vmrey.github.io/nav.html): 精选收录 fnm, nvm, Ventoy, Fail2Ban, acme.sh 等优质开源仓库
+- [资源文件库 (Resource Files)](https://vmrey.github.io/files.html): Vue 组件源码、Shell 脚本与配置附件在线高亮预览与下载
+- [关于本站 (About Author)](https://vmrey.github.io/about.html): 博主个人简介、技术栈与工程理念
+- [完整知识库快照 (Full Knowledge Digest)](https://vmrey.github.io/llms-full.txt): 全站技术文章详细摘要与纯文本知识库
+
+## 技术文章全景大纲 (Technical Articles - 共 ${postsList.length} 篇)
+
+${llmsArticlesMarkdown}
+`;
+
+fs.writeFileSync(LLMS_TXT_PATH, llmsTxtContent, 'utf-8');
+console.log(`🤖 已全自动生成面向 AI 智能体的知识索引协议: llms.txt (收录 ${postsList.length} 篇文章大纲)`);
+
+// 生成 llms-full.txt 全量纯文本快照
+let llmsFullContent = `# vmrey.github.io 全量技术文章知识库快照 (Full Knowledge Base for LLMs & RAG)
+
+> 本文件专为 AI 智能体 (Claude Code, Cursor, ChatGPT, Gemini, DeepSeek) 与 RAG 向量知识库检索构建。
+> 包含全站 ${postsList.length} 篇技术文章的完整摘要与核心技术要点。
+
+`;
+
+postsList.forEach((p, idx) => {
+  llmsFullContent += `---
+## [${idx + 1}] ${p.title}
+- **永久链接 (URL)**: https://vmrey.github.io/posts/${p.slug}.html
+- **所属专栏 (Category)**: ${p.category}
+- **发布日期 (Date)**: ${p.date}
+- **技术标签 (Tags)**: ${Array.isArray(p.tags) ? p.tags.join(', ') : p.category}
+- **核心摘要**: ${p.summary || p.title}
+
+### 核心内容要点与大纲:
+${(p.sections || []).map(s => `- ${s.title}`).join('\n') || '- 详见正文实战代码与解析'}
+
+`;
+});
+
+fs.writeFileSync(LLMS_FULL_TXT_PATH, llmsFullContent, 'utf-8');
+console.log(`🧠 已全自动生成面向大模型的全量知识库快照: llms-full.txt (包含 ${postsList.length} 篇全量知识要点)`);
 
 console.log(`\n✨ 全部构建成功！共发布 ${postsList.length} 篇正式文章、${resourceFiles.length} 个资源文件、${totalNavRepos} 个 GitHub 项目、${totalTools} 个实用在线工具 & ${totalAi} 个顶尖 AI 产品！随时可以运行 npm run serve 本地预览或 git push 部署！\n`);

@@ -50,6 +50,7 @@ function renderBaseLayout({
   <meta name="robots" content="index, follow">
   <link rel="canonical" href="${fullCanonicalUrl}">
   <link rel="alternate" type="application/rss+xml" title="vmrey.github.io RSS 订阅源" href="${siteUrl}/feed.xml">
+  <link rel="alternate" type="text/plain" title="LLMs.txt AI 知识索引" href="${siteUrl}/llms.txt">
   <link rel="icon" type="image/svg+xml" href="${assetPrefix}favicon.svg">
 
   <!-- Open Graph 社交卡片 (微信/QQ/Telegram/GitHub) -->

@@ -107,7 +107,7 @@ npm run deploy                 # 或 git add . && git commit -m "feat: 发布新
 │       └── scripts/
 │           └── manage-nav.js    # 跨库查重、增删改查 CLI 自动化引擎
 │
-└── [输出静态与 SEO 产物]       # 由 build.js 全自动编译输出，无需手动维护
+└── [输出静态、SEO 与 AI 产物]   # 由 build.js 全自动编译输出，无需手动维护
     ├── index.html               # 博客首页
     ├── files.html               # 资源文件库
     ├── nav.html                 # GitHub 优质开源导航中心
@@ -117,6 +117,8 @@ npm run deploy                 # 或 git add . && git commit -m "feat: 发布新
     ├── sitemap.xml              # SEO 站点全景地图 (收录全站 70+ URL)
     ├── robots.txt               # 搜索引擎爬虫协议
     ├── feed.xml                 # RSS 2.0 订阅源
+    ├── llms.txt                 # 面向 AI 智能体的精简站点知识索引协议
+    ├── llms-full.txt            # 面向大模型与 RAG 的全量知识库快照
     └── posts/                   # 编译生成的独立静态文章详情页 (*.html)
 ```
 
@@ -218,12 +220,12 @@ node .agents/skills/nav-manager/scripts/manage-nav.js delete <名称或URL关键
 
 ---
 
-### 🔍 4.4 质量、死链与 SEO 自动化审计 (Audit SOP)
+### 🔍 4.4 质量、死链与 SEO / AI 自动化审计 (Audit SOP)
 在每次大规模增删改内容、导航或模板后，AI 必须主动运行：
 ```bash
 npm run audit
 ```
-确保全站 70+ 个 HTML 文件、2100+ 条链接与资源引用的死链数为 0，且 `robots.txt`、`sitemap.xml` 和 `feed.xml` 100% 完备。
+确保全站 70+ 个 HTML 文件、2300+ 条链接与资源引用的死链数为 0，且 `robots.txt`、`sitemap.xml`、`feed.xml` 和 `llms.txt` 100% 完备。
 
 ---
 
