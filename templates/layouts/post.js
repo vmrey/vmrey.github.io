@@ -45,10 +45,44 @@ ${post.bodyHtml}
 ${renderToc(post.headings)}`;
 
   const hasMermaid = post.bodyHtml.includes('class="mermaid"');
+  const postKeywords = Array.isArray(post.tags) ? post.tags.join(', ') : (post.category || '前端开发,技术博客');
+  const canonicalPath = `posts/${post.slug}.html`;
+
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "headline": post.title,
+    "description": post.summary || post.title,
+    "datePublished": post.date,
+    "dateModified": post.date,
+    "author": {
+      "@type": "Person",
+      "name": "vmrey",
+      "url": "https://vmrey.github.io/about.html"
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": blogConfig.siteName || "vmrey.github.io",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "https://vmrey.github.io/favicon.svg"
+      }
+    },
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": `https://vmrey.github.io/${canonicalPath}`
+    },
+    "keywords": postKeywords,
+    "articleSection": post.category
+  };
 
   return renderBaseLayout({
     title: `${post.title} - ${blogConfig.siteName}`,
     description: post.summary || post.title,
+    keywords: postKeywords,
+    canonicalPath: canonicalPath,
+    ogType: 'article',
+    jsonLd: jsonLd,
     isSubfolder: true,
     extraCss: ['css/prism.css'],
     extraScripts: hasMermaid ? ['https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js'] : [],

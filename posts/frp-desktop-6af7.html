@@ -5,7 +5,56 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>轻量级高性能内网穿透：frp 远程桌面 RDP 搭建与系统服务配置 - vmrey.github.io</title>
   <meta name="description" content="基于 VPS 部署 frps 服务端并配置 systemd 守护进程开机自启，搭配 Windows 客户端通过 STCP 安全加密协议实现 3389 远程桌面穿透。">
+  <meta name="keywords" content="Linux, frp, 远程桌面, 内网穿透, RDP">
+  <meta name="author" content="vmrey">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://vmrey.github.io/posts/frp-desktop-6af7.html">
+  <link rel="alternate" type="application/rss+xml" title="vmrey.github.io RSS 订阅源" href="https://vmrey.github.io/feed.xml">
   <link rel="icon" type="image/svg+xml" href="../favicon.svg">
+
+  <!-- Open Graph 社交卡片 (微信/QQ/Telegram/GitHub) -->
+  <meta property="og:site_name" content="vmrey's Blog">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="轻量级高性能内网穿透：frp 远程桌面 RDP 搭建与系统服务配置 - vmrey.github.io">
+  <meta property="og:description" content="基于 VPS 部署 frps 服务端并配置 systemd 守护进程开机自启，搭配 Windows 客户端通过 STCP 安全加密协议实现 3389 远程桌面穿透。">
+  <meta property="og:url" content="https://vmrey.github.io/posts/frp-desktop-6af7.html">
+  <meta property="og:image" content="https://vmrey.github.io/favicon.svg">
+
+  <!-- Twitter / X 社交卡片 -->
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="轻量级高性能内网穿透：frp 远程桌面 RDP 搭建与系统服务配置 - vmrey.github.io">
+  <meta name="twitter:description" content="基于 VPS 部署 frps 服务端并配置 systemd 守护进程开机自启，搭配 Windows 客户端通过 STCP 安全加密协议实现 3389 远程桌面穿透。">
+  <meta name="twitter:image" content="https://vmrey.github.io/favicon.svg">
+  
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "headline": "轻量级高性能内网穿透：frp 远程桌面 RDP 搭建与系统服务配置",
+    "description": "基于 VPS 部署 frps 服务端并配置 systemd 守护进程开机自启，搭配 Windows 客户端通过 STCP 安全加密协议实现 3389 远程桌面穿透。",
+    "datePublished": "2021-05-18",
+    "dateModified": "2021-05-18",
+    "author": {
+      "@type": "Person",
+      "name": "vmrey",
+      "url": "https://vmrey.github.io/about.html"
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "vmrey.github.io",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "https://vmrey.github.io/favicon.svg"
+      }
+    },
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": "https://vmrey.github.io/posts/frp-desktop-6af7.html"
+    },
+    "keywords": "Linux, frp, 远程桌面, 内网穿透, RDP",
+    "articleSection": "Linux 与服务端"
+  }
+  </script>
   <link rel="stylesheet" href="../css/style.css">
   <link rel="stylesheet" href="../css/prism.css">
 </head>

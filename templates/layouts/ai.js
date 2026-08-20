@@ -242,6 +242,7 @@ ${categoriesHtml}
     title: `AI 导航 · ${blogConfig.siteName}`,
     description: `精选收录全球顶尖前沿大语言模型、Gemini、ChatGPT、DeepSeek、Claude 与 AI 编程智能体`,
     keywords: `AI导航, Gemini, ChatGPT, DeepSeek, Claude, Cursor, AI智能体, 大模型, ${blogConfig.siteName}`,
+    canonicalPath: 'ai.html',
     sidebarHtml,
     activePage: 'ai',
     mainContentHtml,

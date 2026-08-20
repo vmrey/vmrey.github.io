@@ -248,6 +248,7 @@ ${categoriesHtml}
     title: `工具导航 · ${blogConfig.siteName}`,
     description: `精选收录高价值开发者在线工具、数据格式化、图像压缩与云端开发利器`,
     keywords: `工具导航, 在线工具, JSON格式化, 图片压缩, 开发效能, ${blogConfig.siteName}`,
+    canonicalPath: 'tools.html',
     sidebarHtml,
     activePage: 'tools',
     mainContentHtml,

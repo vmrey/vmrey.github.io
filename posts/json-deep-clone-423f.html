@@ -5,7 +5,56 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>JavaScript 引用类型对象深拷贝与 JSON 序列化技巧 - vmrey.github.io</title>
   <meta name="description" content="深入分析 JavaScript 中引用类型的浅拷贝与深拷贝，探讨 JSON.parse(JSON.stringify()) 序列化方案与递归深克隆的边界处理。">
+  <meta name="keywords" content="JavaScript, 深拷贝, JSON, 引用类型">
+  <meta name="author" content="vmrey">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://vmrey.github.io/posts/json-deep-clone-423f.html">
+  <link rel="alternate" type="application/rss+xml" title="vmrey.github.io RSS 订阅源" href="https://vmrey.github.io/feed.xml">
   <link rel="icon" type="image/svg+xml" href="../favicon.svg">
+
+  <!-- Open Graph 社交卡片 (微信/QQ/Telegram/GitHub) -->
+  <meta property="og:site_name" content="vmrey's Blog">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="JavaScript 引用类型对象深拷贝与 JSON 序列化技巧 - vmrey.github.io">
+  <meta property="og:description" content="深入分析 JavaScript 中引用类型的浅拷贝与深拷贝，探讨 JSON.parse(JSON.stringify()) 序列化方案与递归深克隆的边界处理。">
+  <meta property="og:url" content="https://vmrey.github.io/posts/json-deep-clone-423f.html">
+  <meta property="og:image" content="https://vmrey.github.io/favicon.svg">
+
+  <!-- Twitter / X 社交卡片 -->
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="JavaScript 引用类型对象深拷贝与 JSON 序列化技巧 - vmrey.github.io">
+  <meta name="twitter:description" content="深入分析 JavaScript 中引用类型的浅拷贝与深拷贝，探讨 JSON.parse(JSON.stringify()) 序列化方案与递归深克隆的边界处理。">
+  <meta name="twitter:image" content="https://vmrey.github.io/favicon.svg">
+  
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "headline": "JavaScript 引用类型对象深拷贝与 JSON 序列化技巧",
+    "description": "深入分析 JavaScript 中引用类型的浅拷贝与深拷贝，探讨 JSON.parse(JSON.stringify()) 序列化方案与递归深克隆的边界处理。",
+    "datePublished": "2021-02-15",
+    "dateModified": "2021-02-15",
+    "author": {
+      "@type": "Person",
+      "name": "vmrey",
+      "url": "https://vmrey.github.io/about.html"
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "vmrey.github.io",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "https://vmrey.github.io/favicon.svg"
+      }
+    },
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": "https://vmrey.github.io/posts/json-deep-clone-423f.html"
+    },
+    "keywords": "JavaScript, 深拷贝, JSON, 引用类型",
+    "articleSection": "前端开发"
+  }
+  </script>
   <link rel="stylesheet" href="../css/style.css">
   <link rel="stylesheet" href="../css/prism.css">
 </head>

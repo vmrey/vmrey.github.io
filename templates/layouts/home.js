@@ -33,9 +33,30 @@ ${renderEmptyState({
       <!-- 分页导航容器 -->
       <div id="pagination-container" class="pagination-container"></div>`;
 
+  const homeJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    "name": blogConfig.siteName || "vmrey.github.io",
+    "url": "https://vmrey.github.io/",
+    "description": "专注前端工程化、Vue组件设计、Linux系统运维与自动化脚本实战",
+    "author": {
+      "@type": "Person",
+      "name": "vmrey"
+    },
+    "potentialAction": {
+      "@type": "SearchAction",
+      "target": "https://vmrey.github.io/?q={search_term_string}",
+      "query-input": "required name=search_term_string"
+    }
+  };
+
   return renderBaseLayout({
     title: `${blogConfig.siteName} - ${blogConfig.tagline}`,
     description: '专注前端工程化、Vue组件设计、Linux系统运维与自动化脚本实战',
+    keywords: '前端开发,Vue3,Linux运维,Docker,Nginx,Shell脚本,自动化运维,技术博客',
+    canonicalPath: '',
+    ogType: 'website',
+    jsonLd: homeJsonLd,
     isSubfolder: false,
     extraCss: ['css/prism.css'],
     sidebarHtml: sidebarHtml,

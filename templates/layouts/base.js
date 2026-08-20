@@ -6,6 +6,10 @@ const { renderMobileHeader } = require('../components/mobile-header');
 function renderBaseLayout({
   title = 'vmrey.github.io',
   description = '专注前端工程化、Vue组件设计、Linux系统运维与自动化脚本实战',
+  keywords = '前端开发,Vue3,Linux,Docker,Nginx,自动化脚本,工程师博客',
+  canonicalPath = '',
+  ogType = 'website',
+  jsonLd = null,
   isSubfolder = false,
   extraCss = [],
   extraScripts = [],
@@ -14,6 +18,8 @@ function renderBaseLayout({
   inlineScripts = ''
 }) {
   const assetPrefix = isSubfolder ? '../' : '';
+  const siteUrl = 'https://vmrey.github.io';
+  const fullCanonicalUrl = canonicalPath ? `${siteUrl}/${canonicalPath.replace(/^\/+/, '')}` : siteUrl;
 
   const cssTags = [
     `${assetPrefix}css/style.css`,
@@ -30,6 +36,8 @@ function renderBaseLayout({
     ...extraScripts.map(s => s.startsWith('http') ? s : `${assetPrefix}${s}`)
   ].map(src => `<script src="${src}"></script>`).join('\n  ');
 
+  const jsonLdScript = jsonLd ? `\n  <script type="application/ld+json">\n  ${JSON.stringify(jsonLd, null, 2).replace(/\n/g, '\n  ')}\n  </script>` : '';
+
   return `<!DOCTYPE html>
 <html lang="zh-CN">
 <head>
@@ -37,7 +45,27 @@ function renderBaseLayout({
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>${title}</title>
   <meta name="description" content="${description}">
+  <meta name="keywords" content="${keywords}">
+  <meta name="author" content="vmrey">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="${fullCanonicalUrl}">
+  <link rel="alternate" type="application/rss+xml" title="vmrey.github.io RSS 订阅源" href="${siteUrl}/feed.xml">
   <link rel="icon" type="image/svg+xml" href="${assetPrefix}favicon.svg">
+
+  <!-- Open Graph 社交卡片 (微信/QQ/Telegram/GitHub) -->
+  <meta property="og:site_name" content="vmrey's Blog">
+  <meta property="og:type" content="${ogType}">
+  <meta property="og:title" content="${title}">
+  <meta property="og:description" content="${description}">
+  <meta property="og:url" content="${fullCanonicalUrl}">
+  <meta property="og:image" content="${siteUrl}/favicon.svg">
+
+  <!-- Twitter / X 社交卡片 -->
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="${title}">
+  <meta name="twitter:description" content="${description}">
+  <meta name="twitter:image" content="${siteUrl}/favicon.svg">
+  ${jsonLdScript}
   ${cssTags}
 </head>
 <body>

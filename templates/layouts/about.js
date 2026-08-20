@@ -85,6 +85,8 @@ ${renderToc(headings)}`;
   return renderBaseLayout({
     title: `关于 ${blogConfig.siteName} - 软件开发与工程实践`,
     description: '关于 vmrey.github.io：专注于软件开发与工程实践，用代码与文字记录探索，构建稳定可靠的工具与系统。',
+    keywords: '关于本站,vmrey,前端工程化,系统运维,开源精神,技术架构',
+    canonicalPath: 'about.html',
     isSubfolder: false,
     extraCss: ['css/prism.css'],
     sidebarHtml: sidebarHtml,

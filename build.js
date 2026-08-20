@@ -35,6 +35,9 @@ const FILES_META_PATH = path.join(ROOT_DIR, 'data', 'files-meta.json');
 const NAV_DATA_PATH = path.join(ROOT_DIR, 'data', 'github-nav.json');
 const TOOLS_DATA_PATH = path.join(ROOT_DIR, 'data', 'tools-nav.json');
 const AI_DATA_PATH = path.join(ROOT_DIR, 'data', 'ai-nav.json');
+const ROBOTS_TXT_PATH = path.join(ROOT_DIR, 'robots.txt');
+const SITEMAP_XML_PATH = path.join(ROOT_DIR, 'sitemap.xml');
+const FEED_XML_PATH = path.join(ROOT_DIR, 'feed.xml');
 
 if (!fs.existsSync(DRAFTS_DIR)) fs.mkdirSync(DRAFTS_DIR, { recursive: true });
 if (!fs.existsSync(POSTS_DIR)) fs.mkdirSync(POSTS_DIR, { recursive: true });
@@ -870,5 +873,99 @@ const aiPageHtml = renderAiLayout({
 fs.writeFileSync(AI_HTML_PATH, aiPageHtml, 'utf-8');
 const totalAi = aiCategories.reduce((acc, cat) => acc + (cat.items ? cat.items.length : 0), 0);
 console.log(`🤖 已成功生成顶级 AI 导航中心: ai.html (${totalAi} 个 AI 工具与模型)`);
+
+// ==============================================================================
+// 13. 自动生成 robots.txt 搜索引擎爬虫协议
+// ==============================================================================
+const robotsTxtContent = `User-agent: *
+Allow: /
+
+Sitemap: https://vmrey.github.io/sitemap.xml
+`;
+fs.writeFileSync(ROBOTS_TXT_PATH, robotsTxtContent, 'utf-8');
+console.log('🤖 已全自动生成搜索引擎爬虫协议: robots.txt');
+
+// ==============================================================================
+// 14. 自动生成全量 sitemap.xml 站点地图
+// ==============================================================================
+const todayDateStr = new Date().toISOString().split('T')[0];
+
+function escapeXml(unsafeStr) {
+  if (!unsafeStr) return '';
+  return String(unsafeStr)
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&apos;');
+}
+
+const staticPages = [
+  { loc: 'https://vmrey.github.io/', priority: '1.0', changefreq: 'daily', lastmod: todayDateStr },
+  { loc: 'https://vmrey.github.io/ai.html', priority: '0.9', changefreq: 'weekly', lastmod: todayDateStr },
+  { loc: 'https://vmrey.github.io/tools.html', priority: '0.9', changefreq: 'weekly', lastmod: todayDateStr },
+  { loc: 'https://vmrey.github.io/nav.html', priority: '0.8', changefreq: 'weekly', lastmod: todayDateStr },
+  { loc: 'https://vmrey.github.io/files.html', priority: '0.8', changefreq: 'weekly', lastmod: todayDateStr },
+  { loc: 'https://vmrey.github.io/about.html', priority: '0.7', changefreq: 'monthly', lastmod: todayDateStr }
+];
+
+const postUrlNodes = postsList.map(p => `  <url>
+    <loc>https://vmrey.github.io/posts/${p.slug}.html</loc>
+    <lastmod>${p.date || todayDateStr}</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>`).join('\n');
+
+const staticUrlNodes = staticPages.map(p => `  <url>
+    <loc>${p.loc}</loc>
+    <lastmod>${p.lastmod}</lastmod>
+    <changefreq>${p.changefreq}</changefreq>
+    <priority>${p.priority}</priority>
+  </url>`).join('\n');
+
+const sitemapXmlContent = `<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+${staticUrlNodes}
+${postUrlNodes}
+</urlset>
+`;
+fs.writeFileSync(SITEMAP_XML_PATH, sitemapXmlContent, 'utf-8');
+console.log(`🗺️ 已全自动生成 SEO 全站站点地图: sitemap.xml (收录 ${staticPages.length + postsList.length} 个页面)`);
+
+// ==============================================================================
+// 15. 自动生成标准 RSS 订阅源 feed.xml (RSS 2.0)
+// ==============================================================================
+const rssItems = postsList.slice(0, 30).map(p => {
+  let pubDateStr;
+  try {
+    pubDateStr = new Date(p.date).toUTCString();
+  } catch (e) {
+    pubDateStr = new Date().toUTCString();
+  }
+  return `    <item>
+      <title>${escapeXml(p.title)}</title>
+      <link>https://vmrey.github.io/posts/${p.slug}.html</link>
+      <guid isPermaLink="true">https://vmrey.github.io/posts/${p.slug}.html</guid>
+      <pubDate>${pubDateStr}</pubDate>
+      <category>${escapeXml(p.category)}</category>
+      <description>${escapeXml(p.summary || p.title)}</description>
+    </item>`;
+}).join('\n');
+
+const feedXmlContent = `<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>${escapeXml(blogConfig.siteName || 'vmrey.github.io')}</title>
+    <link>https://vmrey.github.io/</link>
+    <description>${escapeXml(blogConfig.tagline || '专注前端工程化、Vue组件设计、Linux系统运维与自动化脚本实战')}</description>
+    <language>zh-CN</language>
+    <lastBuildDate>${new Date().toUTCString()}</lastBuildDate>
+    <atom:link href="https://vmrey.github.io/feed.xml" rel="self" type="application/rss+xml"/>
+${rssItems}
+  </channel>
+</rss>
+`;
+fs.writeFileSync(FEED_XML_PATH, feedXmlContent, 'utf-8');
+console.log(`📡 已全自动生成 RSS 2.0 聚合订阅源: feed.xml (收录最新 ${Math.min(postsList.length, 30)} 篇)`);
 
 console.log(`\n✨ 全部构建成功！共发布 ${postsList.length} 篇正式文章、${resourceFiles.length} 个资源文件、${totalNavRepos} 个 GitHub 项目、${totalTools} 个实用在线工具 & ${totalAi} 个顶尖 AI 产品！随时可以运行 npm run serve 本地预览或 git push 部署！\n`);

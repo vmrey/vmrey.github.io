@@ -5,7 +5,56 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>深入浅出：使用 setTimeout 精准模拟 setInterval 及其核心优势 - vmrey.github.io</title>
   <meta name="description" content="为什么生产环境不推荐原生 setInterval？分析事件堆叠排队机制，使用递归 setTimeout 实现精确无阻塞的周期执行。">
+  <meta name="keywords" content="JavaScript, 定时器, 事件循环, 性能优化">
+  <meta name="author" content="vmrey">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://vmrey.github.io/posts/settimeout-interval-ee29.html">
+  <link rel="alternate" type="application/rss+xml" title="vmrey.github.io RSS 订阅源" href="https://vmrey.github.io/feed.xml">
   <link rel="icon" type="image/svg+xml" href="../favicon.svg">
+
+  <!-- Open Graph 社交卡片 (微信/QQ/Telegram/GitHub) -->
+  <meta property="og:site_name" content="vmrey's Blog">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="深入浅出：使用 setTimeout 精准模拟 setInterval 及其核心优势 - vmrey.github.io">
+  <meta property="og:description" content="为什么生产环境不推荐原生 setInterval？分析事件堆叠排队机制，使用递归 setTimeout 实现精确无阻塞的周期执行。">
+  <meta property="og:url" content="https://vmrey.github.io/posts/settimeout-interval-ee29.html">
+  <meta property="og:image" content="https://vmrey.github.io/favicon.svg">
+
+  <!-- Twitter / X 社交卡片 -->
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="深入浅出：使用 setTimeout 精准模拟 setInterval 及其核心优势 - vmrey.github.io">
+  <meta name="twitter:description" content="为什么生产环境不推荐原生 setInterval？分析事件堆叠排队机制，使用递归 setTimeout 实现精确无阻塞的周期执行。">
+  <meta name="twitter:image" content="https://vmrey.github.io/favicon.svg">
+  
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "headline": "深入浅出：使用 setTimeout 精准模拟 setInterval 及其核心优势",
+    "description": "为什么生产环境不推荐原生 setInterval？分析事件堆叠排队机制，使用递归 setTimeout 实现精确无阻塞的周期执行。",
+    "datePublished": "2021-03-01",
+    "dateModified": "2021-03-01",
+    "author": {
+      "@type": "Person",
+      "name": "vmrey",
+      "url": "https://vmrey.github.io/about.html"
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "vmrey.github.io",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "https://vmrey.github.io/favicon.svg"
+      }
+    },
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": "https://vmrey.github.io/posts/settimeout-interval-ee29.html"
+    },
+    "keywords": "JavaScript, 定时器, 事件循环, 性能优化",
+    "articleSection": "前端开发"
+  }
+  </script>
   <link rel="stylesheet" href="../css/style.css">
   <link rel="stylesheet" href="../css/prism.css">
 </head>

@@ -242,6 +242,8 @@ ${foldersHtml}
   return renderBaseLayout({
     title: `资源文件库 - ${blogConfig.siteName}`,
     description: '包含 Vue 组件源码、Shell 部署脚本、Windows 批处理以及项目压缩包附件，以文件夹嵌套树状结构呈现，支持全站免跳转在线代码高亮预览与高速直接下载。',
+    keywords: '资源文件库,Vue组件源码,Shell脚本,BAT脚本,代码高亮预览,资源下载',
+    canonicalPath: 'files.html',
     isSubfolder: false,
     extraCss: ['css/prism.css'],
     sidebarHtml: sidebarHtml,

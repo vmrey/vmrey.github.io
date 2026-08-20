@@ -244,6 +244,7 @@ ${categoriesHtml}
     title: `GitHub 导航 · ${blogConfig.siteName}`,
     description: `精选收录高价值 GitHub 开源项目、Node.js 版本管理器与优质工程工具链`,
     keywords: `GitHub, 开源导航, fnm, nvm, Ventoy, Fail2Ban, Node.js, 开发者工具, ${blogConfig.siteName}`,
+    canonicalPath: 'nav.html',
     sidebarHtml,
     activePage: 'nav',
     mainContentHtml,

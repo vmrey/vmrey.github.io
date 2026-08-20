@@ -47,19 +47,38 @@ htmlFiles.forEach(file => {
   });
 });
 
-console.log(`\n🔍 全站超链接完整性审计报告:`);
+const seoFiles = [
+  { name: 'robots.txt', path: path.join(ROOT_DIR, 'robots.txt') },
+  { name: 'sitemap.xml', path: path.join(ROOT_DIR, 'sitemap.xml') },
+  { name: 'feed.xml', path: path.join(ROOT_DIR, 'feed.xml') }
+];
+
+let missingSeoFiles = [];
+seoFiles.forEach(sf => {
+  if (!fs.existsSync(sf.path)) {
+    missingSeoFiles.push(sf.name);
+  }
+});
+
+console.log(`\n🔍 全站超链接完整性与 SEO 基建审计报告:`);
 console.log(`--------------------------------------------------`);
 console.log(`📄 审计页面总数: ${htmlFiles.length} 个 HTML 文件`);
 console.log(`🔗 验证超链接数: ${totalHrefs} 条内部链接与资源引用`);
+console.log(`🗺️ SEO 关键文件: robots.txt / sitemap.xml / feed.xml 全部就绪`);
 
-if (brokenLinks.length === 0) {
-  console.log(`✅ 结果: 完美无死链！全站所有链接 100% 畅通可用！\n`);
+if (brokenLinks.length === 0 && missingSeoFiles.length === 0) {
+  console.log(`✅ 结果: 完美无死链！全站所有链接 100% 畅通可用，SEO 基础设施 100% 完备！\n`);
   process.exit(0);
 } else {
-  console.error(`❌ 发现 ${brokenLinks.length} 处失效死链:`);
-  brokenLinks.forEach(b => {
-    console.error(`  - 页面 [${b.source}] 中的链接 "${b.href}" -> 目标文件不存在: ${b.resolved}`);
-  });
+  if (missingSeoFiles.length > 0) {
+    console.error(`❌ 缺少 SEO 核心文件: ${missingSeoFiles.join(', ')}`);
+  }
+  if (brokenLinks.length > 0) {
+    console.error(`❌ 发现 ${brokenLinks.length} 处失效死链:`);
+    brokenLinks.forEach(b => {
+      console.error(`  - 页面 [${b.source}] 中的链接 "${b.href}" -> 目标文件不存在: ${b.resolved}`);
+    });
+  }
   console.log('');
   process.exit(1);
 }

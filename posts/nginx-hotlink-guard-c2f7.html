@@ -5,7 +5,56 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Nginx 媒体与静态资源防盗链配置实战（Valid Referers） - vmrey.github.io</title>
   <meta name="description" content="防止外部恶意网站盗用本站图片、视频与下载附件消耗服务器流量，利用 Nginx valid_referers 指令配置域名防盗链拦截。">
+  <meta name="keywords" content="Nginx, 防盗链, 安全防护, Valid Referers, 流量节省">
+  <meta name="author" content="vmrey">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://vmrey.github.io/posts/nginx-hotlink-guard-c2f7.html">
+  <link rel="alternate" type="application/rss+xml" title="vmrey.github.io RSS 订阅源" href="https://vmrey.github.io/feed.xml">
   <link rel="icon" type="image/svg+xml" href="../favicon.svg">
+
+  <!-- Open Graph 社交卡片 (微信/QQ/Telegram/GitHub) -->
+  <meta property="og:site_name" content="vmrey's Blog">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="Nginx 媒体与静态资源防盗链配置实战（Valid Referers） - vmrey.github.io">
+  <meta property="og:description" content="防止外部恶意网站盗用本站图片、视频与下载附件消耗服务器流量，利用 Nginx valid_referers 指令配置域名防盗链拦截。">
+  <meta property="og:url" content="https://vmrey.github.io/posts/nginx-hotlink-guard-c2f7.html">
+  <meta property="og:image" content="https://vmrey.github.io/favicon.svg">
+
+  <!-- Twitter / X 社交卡片 -->
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Nginx 媒体与静态资源防盗链配置实战（Valid Referers） - vmrey.github.io">
+  <meta name="twitter:description" content="防止外部恶意网站盗用本站图片、视频与下载附件消耗服务器流量，利用 Nginx valid_referers 指令配置域名防盗链拦截。">
+  <meta name="twitter:image" content="https://vmrey.github.io/favicon.svg">
+  
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "headline": "Nginx 媒体与静态资源防盗链配置实战（Valid Referers）",
+    "description": "防止外部恶意网站盗用本站图片、视频与下载附件消耗服务器流量，利用 Nginx valid_referers 指令配置域名防盗链拦截。",
+    "datePublished": "2021-09-15",
+    "dateModified": "2021-09-15",
+    "author": {
+      "@type": "Person",
+      "name": "vmrey",
+      "url": "https://vmrey.github.io/about.html"
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "vmrey.github.io",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "https://vmrey.github.io/favicon.svg"
+      }
+    },
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": "https://vmrey.github.io/posts/nginx-hotlink-guard-c2f7.html"
+    },
+    "keywords": "Nginx, 防盗链, 安全防护, Valid Referers, 流量节省",
+    "articleSection": "Linux 与服务端"
+  }
+  </script>
   <link rel="stylesheet" href="../css/style.css">
   <link rel="stylesheet" href="../css/prism.css">
 </head>
