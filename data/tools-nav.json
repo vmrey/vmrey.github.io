@@ -49,6 +49,22 @@
           "免安装",
           "局域网"
         ]
+      },
+      {
+        "name": "Smallpdf (PDF 转 Word)",
+        "url": "https://smallpdf.com/cn/pdf-to-word",
+        "tagline": "专业高保真在线 PDF 转 Word (DOCX) 文档与格式转换平台",
+        "description": "全球知名的免安装在线 PDF 处理套件，支持将 PDF 文件极速无损转换为可自由编辑的 Word (DOCX) 文档，高精度保留原始排版与版面元素。",
+        "category": "实用生成与办公工具",
+        "badge": "PDF转换利器",
+        "tags": [
+          "Smallpdf",
+          "PDF转Word",
+          "格式转换",
+          "文档处理",
+          "办公工具",
+          "在线转换"
+        ]
       }
     ]
   },
@@ -88,6 +104,23 @@
           "SFTP",
           "Linux运维",
           "服务器管理"
+        ]
+      },
+      {
+        "name": "aaPanel (宝塔国际版)",
+        "url": "https://www.aapanel.com/new/download.html",
+        "tagline": "简单强大且纯净免绑定的 Linux / Windows 服务器可视化运维管理面板",
+        "description": "宝塔面板官方面向全球开发者的国际版本，提供 LNMP / LAMP 运行环境一键部署、网站管理、数据库、FTP、文件管理器与 SSL 证书自动续期。",
+        "category": "终端与远程运维工具",
+        "badge": "服务器运维面板",
+        "tags": [
+          "aaPanel",
+          "宝塔面板",
+          "服务器运维",
+          "Linux面板",
+          "LAMP",
+          "LNMP",
+          "建站工具"
         ]
       }
     ]
@@ -274,6 +307,22 @@
           "代理检测",
           "网络诊断",
           "安全风控"
+        ]
+      },
+      {
+        "name": "Cloudflare 优选 IP 节点库 (090227.xyz)",
+        "url": "https://cf.090227.xyz/",
+        "tagline": "实时自动化测速更新的 Cloudflare 与 CDN 优选 IP 节点在线平台",
+        "description": "提供全天候自动化实时测速与多线路优选筛选的 Cloudflare IP、反向代理节点及测速订阅源，助力网络加速与高可用稳定连接。",
+        "category": "网络诊断与安全检测",
+        "badge": "CF优选节点",
+        "tags": [
+          "Cloudflare",
+          "CF优选",
+          "IP优选",
+          "CDN加速",
+          "节点测速",
+          "网络工具"
         ]
       }
     ]

@@ -143,5 +143,65 @@
         ]
       }
     ]
+  },
+  {
+    "category": "网络加速与穿透工具",
+    "description": "多协议代理客户端、Cloudflare 优选测速与高性能反向代理内网穿透利器",
+    "icon": "globe",
+    "items": [
+      {
+        "name": "CloudflareSpeedTest",
+        "repo": "XIU2/CloudflareSpeedTest",
+        "url": "https://github.com/XIU2/CloudflareSpeedTest",
+        "tagline": "🌩 针对 Cloudflare CDN 的多线程高速测速与优选 IP 筛选工具",
+        "description": "国内最火爆的 Cloudflare CDN 优选测速利器。支持并发测试 Cloudflare 所有公开/自定义 IP 的延迟和下载速度，自动筛选出延迟最低、速度最快的最优 IP。",
+        "language": "Go",
+        "badge": "Go / IP优选神器",
+        "tags": [
+          "CloudflareSpeedTest",
+          "Cloudflare",
+          "CDN",
+          "测速",
+          "IP优选",
+          "Go",
+          "网络优化"
+        ]
+      },
+      {
+        "name": "frp",
+        "repo": "fatedier/frp",
+        "url": "https://github.com/fatedier/frp",
+        "tagline": "⚡ 高性能反向代理与内网穿透利器，轻松将内网服务暴露至公网",
+        "description": "业界应用最广泛的开源高性能反向代理与内网穿透应用。支持 TCP、UDP、HTTP、HTTPS、STCP 等多种协议，支持链路加密与多路复用，远程运维与私有云部署必备。",
+        "language": "Go",
+        "badge": "Go / 内网穿透标杆",
+        "tags": [
+          "frp",
+          "内网穿透",
+          "反向代理",
+          "Go",
+          "远程访问",
+          "NAT穿透"
+        ]
+      },
+      {
+        "name": "v2rayNG",
+        "repo": "2dust/v2rayNG",
+        "url": "https://github.com/2dust/v2rayNG",
+        "tagline": "Android 平台主流且强大的多协议通用网络代理客户端",
+        "description": "基于 V2Ray / Xray 核心开发的 Android 客户端，全面支持 VMess、VLESS、Shadowsocks、Trojan、Socks5 等主流网络协议与分流规则配置。",
+        "language": "Kotlin",
+        "badge": "Kotlin / Android代理神器",
+        "tags": [
+          "v2rayNG",
+          "Android",
+          "代理工具",
+          "V2Ray",
+          "Xray",
+          "Shadowsocks",
+          "Kotlin"
+        ]
+      }
+    ]
   }
 ]
