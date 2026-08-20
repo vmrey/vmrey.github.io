@@ -3006,7 +3006,6 @@ del {
 .nav-category-section {
   display: flex;
   flex-direction: column;
-  gap: 1.5rem;
 }
 
 .nav-category-header {
@@ -3014,7 +3013,7 @@ del {
   align-items: center;
   justify-content: space-between;
   padding-bottom: 0.95rem;
-  margin-bottom: 0.35rem;
+  margin-bottom: 1.5rem;
   border-bottom: 1px solid var(--border);
 }
 

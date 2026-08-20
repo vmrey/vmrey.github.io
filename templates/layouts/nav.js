@@ -195,7 +195,7 @@ ${categoriesHtml}
             });
 
             if (sectionVisibleCount > 0) {
-              section.style.display = 'block';
+              section.style.display = 'flex';
               visibleCats++;
             } else {
               section.style.display = 'none';
