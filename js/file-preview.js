@@ -257,21 +257,23 @@
       });
   };
 
-  // 2. 页面加载完成后自动接管文章中的文件下载/代码链接
+  // 2. 页面加载完成后自动接管文件预览按钮与文章内非直接下载链接
   document.addEventListener('DOMContentLoaded', () => {
     createPreviewModal();
 
-    // 接管所有指向 assets/files 的链接
-    document.querySelectorAll('a[href*="assets/files/"], a[data-preview-file], .file-preview-btn').forEach(link => {
+    // 接管显式预览按钮以及文章中未声明 download 属性的附件链接
+    document.querySelectorAll('.file-preview-btn, [data-preview-file], a[href*="assets/files/"]:not([download])').forEach(link => {
       link.addEventListener('click', (e) => {
-        const href = link.getAttribute('href') || link.getAttribute('data-preview-file');
+        // 若元素声明了 download 属性，保持浏览器原生直接下载，不拦截预览
+        if (link.hasAttribute('download')) return;
+
+        const href = link.getAttribute('data-preview-file') || link.getAttribute('href');
         if (!href) return;
 
-        // 如果是直接点击了下载链接但希望拦截预览
-        const fileName = href.split('/').pop().split('?')[0];
+        const fileName = link.getAttribute('data-file-name') || href.split('/').pop().split('?')[0];
         const ext = fileName.split('.').pop().toLowerCase();
         
-        // 如果文件不是普通网页链接，开启预览
+        // 如果文件属于受支持的预览/资源类型，开启预览弹窗
         const fileExts = ['vue', 'js', 'sh', 'bat', 'txt', 'json', 'md', 'css', 'zip', 'rar', '7z'];
         if (fileExts.includes(ext)) {
           e.preventDefault();
