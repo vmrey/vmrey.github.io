@@ -455,8 +455,9 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // 根据 URL 查询参数激活对应分类
+  // 根据 URL 查询参数激活对应分类 (仅在首页文章列表流有效)
   function applyCategoryFromUrl() {
+    if (postBlocks.length === 0) return;
     try {
       const urlParams = new URLSearchParams(window.location.search);
       const queryTag = (urlParams.get('tag') || urlParams.get('cat') || '').trim();
@@ -489,7 +490,7 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   // 分类与子分类点击筛选 (仅在有文章列表流的首页 index.html 启用就地无刷新筛选)
-  if (allFilterBtns.length > 0) {
+  if (postBlocks.length > 0) {
     applyCategoryFromUrl();
 
     // 监听浏览器前进/后退 (popstate) 保持视图与 URL 同步
@@ -637,10 +638,13 @@ document.addEventListener('DOMContentLoaded', () => {
   // 全局三大导航中心（AI/工具/GitHub）通用高效过滤控制器
   window.initNavFilter = function({ inputId, pillSelector, cardSelector, sectionSelector, emptyId, countId, typeName = '精选项目' }) {
     const filterInput = document.getElementById(inputId);
+    if (!filterInput || filterInput.dataset.navFilterInited) return;
+    filterInput.dataset.navFilterInited = 'true';
+
     const pillBtns = document.querySelectorAll(pillSelector);
     const categorySections = Array.from(document.querySelectorAll(sectionSelector));
     const emptyState = document.getElementById(emptyId);
-    const emptyResetBtn = emptyState ? (emptyState.querySelector('.empty-action-btn') || emptyState.querySelector('button')) : null;
+    const emptyResetBtn = emptyState ? (emptyState.querySelector('.empty-action-btn') || emptyState.querySelector('.empty-state-reset-btn') || emptyState.querySelector('button')) : null;
     const countBadge = document.getElementById(countId);
 
     let activeCat = 'all';
@@ -740,4 +744,37 @@ document.addEventListener('DOMContentLoaded', () => {
       });
     }
   };
+
+  // 自动侦测并初始化当前导航页面
+  if (document.getElementById('ai-filter-input')) {
+    window.initNavFilter({
+      inputId: 'ai-filter-input',
+      pillSelector: '.nav-pill-btn',
+      cardSelector: '.nav-repo-card',
+      sectionSelector: '.nav-category-section',
+      emptyId: 'ai-empty-state',
+      countId: 'ai-count-badge',
+      typeName: '顶尖 AI 工具'
+    });
+  } else if (document.getElementById('tools-filter-input')) {
+    window.initNavFilter({
+      inputId: 'tools-filter-input',
+      pillSelector: '.nav-pill-btn',
+      cardSelector: '.nav-repo-card',
+      sectionSelector: '.nav-category-section',
+      emptyId: 'tools-empty-state',
+      countId: 'tools-count-badge',
+      typeName: '实用工具'
+    });
+  } else if (document.getElementById('nav-filter-input')) {
+    window.initNavFilter({
+      inputId: 'nav-filter-input',
+      pillSelector: '.nav-pill-btn',
+      cardSelector: '.nav-repo-card',
+      sectionSelector: '.nav-category-section',
+      emptyId: 'nav-empty-state',
+      countId: 'nav-count-badge',
+      typeName: '精选项目'
+    });
+  }
 });
