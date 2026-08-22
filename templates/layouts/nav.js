@@ -42,7 +42,7 @@ function renderNavLayout({
       const tagsHtml = (item.tags || []).map(tag => `<span class="repo-tag">#${tag}</span>`).join('');
       
       return `          <!-- Repo Card: ${item.name} -->
-          <div class="nav-repo-card" data-name="${item.name.toLowerCase()}" data-repo="${item.repo.toLowerCase()}" data-desc="${(item.tagline + ' ' + item.description).toLowerCase()}" data-tags="${(item.tags || []).join(',').toLowerCase()}" data-cat="${cat.category}">
+          <div class="nav-repo-card" data-name="${item.name.toLowerCase()}" data-repo="${item.repo.toLowerCase()}" data-url="${(item.url || '').toLowerCase()}" data-desc="${(item.tagline + ' ' + item.description).toLowerCase()}" data-tags="${(item.tags || []).join(',').toLowerCase()}" data-cat="${cat.category}">
             <div class="repo-card-top">
               <div class="repo-header-info">
                 <div class="repo-icon-badge">

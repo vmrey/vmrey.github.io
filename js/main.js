@@ -637,12 +637,14 @@ document.addEventListener('DOMContentLoaded', () => {
         sectionCards.forEach(card => {
           const name = card.getAttribute('data-name') || '';
           const repo = card.getAttribute('data-repo') || '';
+          const url = card.getAttribute('data-url') || '';
           const desc = card.getAttribute('data-desc') || '';
           const tags = card.getAttribute('data-tags') || '';
 
           const matchesSearch = !searchQuery ||
             name.includes(searchQuery) ||
             repo.includes(searchQuery) ||
+            url.includes(searchQuery) ||
             desc.includes(searchQuery) ||
             tags.includes(searchQuery);
 
