@@ -378,7 +378,11 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     if (jumpInput) {
+      let isJumpComposing = false;
+      jumpInput.addEventListener('compositionstart', () => { isJumpComposing = true; });
+      jumpInput.addEventListener('compositionend', () => { isJumpComposing = false; });
       jumpInput.addEventListener('keydown', (e) => {
+        if (e.isComposing || isJumpComposing || e.keyCode === 229) return;
         if (e.key === 'Enter') {
           e.preventDefault();
           executeJump();
@@ -396,16 +400,27 @@ document.addEventListener('DOMContentLoaded', () => {
     };
   }
 
-  // 搜索框实时输入监听 (120ms 防抖)
+  // 搜索框实时输入监听 (120ms 防抖 + 中文输入法选字防误触)
   if (searchInput) {
+    let isSearchComposing = false;
+    searchInput.addEventListener('compositionstart', () => { isSearchComposing = true; });
+    searchInput.addEventListener('compositionend', (e) => {
+      isSearchComposing = false;
+      searchQuery = (e.target.value || '').trim().toLowerCase();
+      currentPage = 1;
+      renderPage();
+    });
+
     searchInput.addEventListener('input', debounce((e) => {
+      if (isSearchComposing) return;
       searchQuery = e.target.value.trim().toLowerCase();
       currentPage = 1;
       renderPage();
     }, 120));
 
-    // 按下回车键时立即同步执行过滤并平滑滚动到结果顶部
+    // 按下回车键时立即同步执行过滤（严格忽略中文输入法拼音确认回车）
     searchInput.addEventListener('keydown', (e) => {
+      if (e.isComposing || isSearchComposing || e.keyCode === 229) return;
       if (e.key === 'Enter') {
         e.preventDefault();
         searchQuery = e.target.value.trim().toLowerCase();
@@ -709,14 +724,24 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     if (filterInput) {
+      let isNavComposing = false;
+      filterInput.addEventListener('compositionstart', () => { isNavComposing = true; });
+      filterInput.addEventListener('compositionend', (e) => {
+        isNavComposing = false;
+        searchQuery = (e.target.value || '').trim().toLowerCase();
+        filterItems();
+      });
+
       filterInput.addEventListener('input', debounce((e) => {
+        if (isNavComposing) return;
         searchQuery = e.target.value.trim().toLowerCase();
         filterItems();
       }, 120));
 
-      // 按下回车键时立即同步执行过滤并收起移动端键盘
+      // 按下回车键时立即同步执行过滤（严格忽略中文输入法拼音确认回车）
       filterInput.addEventListener('keydown', (e) => {
         if (e.key === 'Enter') {
+          if (e.isComposing || isNavComposing || e.keyCode === 229) return;
           e.preventDefault();
           searchQuery = e.target.value.trim().toLowerCase();
           filterItems();

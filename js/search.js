@@ -94,6 +94,7 @@
 
     // 绑定全局快捷键 (Cmd+K / Ctrl+K / '/' / Esc)
     document.addEventListener('keydown', (e) => {
+      if (e.isComposing || e.keyCode === 229) return;
       // Cmd+K 或 Ctrl+K 打开
       if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === 'k') {
         e.preventDefault();
@@ -438,14 +439,23 @@
       };
     }
 
-    // 实时监听输入 (100ms 防抖)
+    // 实时监听输入 (100ms 防抖 + 中文输入法选字防误触)
     if (searchInput) {
+      let isInputComposing = false;
+      searchInput.addEventListener('compositionstart', () => { isInputComposing = true; });
+      searchInput.addEventListener('compositionend', (e) => {
+        isInputComposing = false;
+        performSearch(e.target.value);
+      });
+
       searchInput.addEventListener('input', debounce((e) => {
+        if (isInputComposing) return;
         performSearch(e.target.value);
       }, 100));
 
-      // 按下回车键时立即同步执行搜索并直达首条匹配项
+      // 按下回车键时立即同步执行搜索并直达首条匹配项（严格忽略中文输入法确认回车）
       searchInput.addEventListener('keydown', (e) => {
+        if (e.isComposing || isInputComposing || e.keyCode === 229) return;
         if (e.key === 'Enter') {
           e.preventDefault();
           const query = searchInput.value.trim();
