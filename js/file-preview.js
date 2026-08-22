@@ -257,7 +257,11 @@
         if (copyBtn) copyBtn.style.display = 'none';
         if (metaEl) metaEl.textContent = '无法在线读取文本';
         if (binaryTitle) binaryTitle.textContent = name;
-        if (binaryDesc) binaryDesc.textContent = `该文件当前无法直接在线加载文本内容（${err.message}），请点击下方按钮直接下载到本地查看。`;
+        const isFileProto = window.location.protocol === 'file:';
+        const tipMsg = isFileProto 
+          ? '（检测到当前处于本地 file:// 协议，受浏览器安全限制无法 fetch 附件，建议运行 npm run serve 或点击下方直接下载）'
+          : `（${err.message}）`;
+        if (binaryDesc) binaryDesc.textContent = `该文件当前无法直接在线加载文本内容${tipMsg}，请点击下方按钮直接下载到本地查看。`;
       });
   };
 

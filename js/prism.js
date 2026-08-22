@@ -57,20 +57,25 @@
       let content = Prism.stringify(o.content);
       return `<span class="token ${o.type}">${content}</span>`;
     },
+    highlightElement: function(codeBlock) {
+      if (!codeBlock) return;
+      let lang = 'javascript';
+      const classes = (codeBlock.className || '').split(' ');
+      for (let cls of classes) {
+        if (cls.startsWith('language-') || cls.startsWith('lang-')) {
+          lang = cls.replace(/^(language-|lang-)/, '').toLowerCase();
+          break;
+        }
+      }
+
+      const grammar = Prism.languages[lang] || Prism.languages.javascript;
+      const rawCode = codeBlock.textContent;
+      codeBlock.innerHTML = Prism.highlight(rawCode, grammar);
+    },
     highlightAll: function() {
       document.querySelectorAll('pre code').forEach(codeBlock => {
-        let lang = 'javascript';
-        const classes = codeBlock.className.split(' ');
-        for (let cls of classes) {
-          if (cls.startsWith('language-') || cls.startsWith('lang-')) {
-            lang = cls.replace(/^(language-|lang-)/, '').toLowerCase();
-            break;
-          }
-        }
-
-        const grammar = Prism.languages[lang] || Prism.languages.javascript;
+        Prism.highlightElement(codeBlock);
         const rawCode = codeBlock.textContent;
-        codeBlock.innerHTML = Prism.highlight(rawCode, grammar);
 
         // 如果父级 pre 尚未包装 code-block-wrapper，自动包装并添加语言标签与复制按钮
         const pre = codeBlock.parentElement;

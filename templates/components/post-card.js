@@ -79,7 +79,7 @@ function renderPostCard(post) {
   const tagSpans = (post.tags || []).slice(0, 2).map(t => `<span class="post-block-tag">${t}</span>`).join('\n              ');
 
   return `        <!-- 文章卡片: ${post.title} -->
-        <a href="${post.url}" class="post-block" data-title="${escapeHtml(post.title)}" data-summary="${escapeHtml(post.summary || '')}" data-tags="${tagsAttr}">
+        <a href="${post.url}" class="post-block" data-title="${escapeHtml(post.title)}" data-summary="${escapeHtml(post.summary || '')}" data-tags="${tagsAttr}" data-category="${escapeHtml(post.category || '')}" data-subcategory="${escapeHtml(post.subcategory || '')}">
           
           <!-- 16:9 封面缩略图质感层 -->
           <div class="post-thumb-wrap" style="background: ${thumb.grad};">

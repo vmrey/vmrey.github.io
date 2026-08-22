@@ -107,6 +107,7 @@ button {
 .app-layout {
   display: flex;
   min-height: 100vh;
+  min-height: 100dvh;
   width: 100%;
   background-color: var(--bg);
   position: relative;
@@ -116,6 +117,7 @@ button {
 .app-sidebar {
   width: var(--sidebar-w);
   height: 100vh;
+  height: 100dvh;
   position: fixed;
   left: 0;
   top: 0;
@@ -124,7 +126,7 @@ button {
   border-right: 1px solid var(--border);
   display: flex;
   flex-direction: column;
-  padding: 1.5rem 1.15rem 1.25rem;
+  padding: 1.5rem 1.15rem max(1.25rem, env(safe-area-inset-bottom));
   flex-shrink: 0;
   z-index: 100;
   overflow-y: auto;
@@ -3292,8 +3294,10 @@ del {
     left: 0;
     top: 0;
     bottom: 0;
+    height: 100vh;
+    height: 100dvh;
     width: 285px !important;
-    padding: 1.75rem 1.2rem !important;
+    padding: 1.75rem 1.2rem max(1.5rem, env(safe-area-inset-bottom)) !important;
     transform: translateX(-100%);
     box-shadow: 0 0 40px rgba(0, 0, 0, 0.45);
     z-index: 1000;

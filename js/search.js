@@ -130,6 +130,7 @@
           e.preventDefault();
           const selectedItem = currentResults[selectedResultIndex];
           if (selectedItem && selectedItem.targetUrl) {
+            closeSearchModal();
             window.location.href = pathPrefix + selectedItem.targetUrl;
           }
         }
@@ -141,6 +142,15 @@
     if (modalContainer) {
       modalContainer.addEventListener('click', (e) => {
         if (e.target === modalContainer) closeSearchModal();
+      });
+    }
+
+    // 点击搜索结果项时自动关闭弹窗（解决同页面锚点跳转卡死问题）
+    if (resultsContainer) {
+      resultsContainer.addEventListener('click', (e) => {
+        if (e.target.closest('.search-result-item')) {
+          closeSearchModal();
+        }
       });
     }
 
@@ -406,11 +416,20 @@
       });
     }
 
-    // 实时监听输入
+    // 轻量级防抖函数
+    function debounce(fn, delay = 100) {
+      let timer = null;
+      return function(...args) {
+        clearTimeout(timer);
+        timer = setTimeout(() => fn.apply(this, args), delay);
+      };
+    }
+
+    // 实时监听输入 (100ms 防抖)
     if (searchInput) {
-      searchInput.addEventListener('input', (e) => {
+      searchInput.addEventListener('input', debounce((e) => {
         performSearch(e.target.value);
-      });
+      }, 100));
     }
   });
 })();

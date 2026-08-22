@@ -200,22 +200,29 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     const matchedBlocks = postBlocks.filter(block => {
-      const title = block.getAttribute('data-title')?.toLowerCase() || '';
-      const summary = block.getAttribute('data-summary')?.toLowerCase() || '';
+      const title = (block.getAttribute('data-title') || '').toLowerCase();
+      const summary = (block.getAttribute('data-summary') || '').toLowerCase();
+      const category = (block.getAttribute('data-category') || '').toLowerCase();
+      const subcategory = (block.getAttribute('data-subcategory') || '').toLowerCase();
       const tags = (block.getAttribute('data-tags') || '').split(',').map(t => t.trim().toLowerCase());
-      const blockText = block.textContent.toLowerCase();
       
       const matchesSearch = !searchQuery || 
         title.includes(searchQuery) || 
         summary.includes(searchQuery) || 
-        tags.some(t => t.includes(searchQuery)) ||
-        blockText.includes(searchQuery);
+        category.includes(searchQuery) ||
+        subcategory.includes(searchQuery) ||
+        tags.some(t => t.includes(searchQuery));
 
-      const matchesTag = activeTag === 'all' || tags.some(t => {
-        const cleanT = t.toLowerCase();
-        const cleanActive = activeTag.toLowerCase();
-        return cleanT === cleanActive || (cleanActive.length >= 2 && cleanT.includes(cleanActive)) || (cleanT.length >= 2 && cleanActive.includes(cleanT));
-      });
+      const cleanActive = activeTag.toLowerCase();
+      const matchesTag = activeTag === 'all' || 
+        category === cleanActive || 
+        (cleanActive.length >= 2 && category.includes(cleanActive)) ||
+        subcategory === cleanActive ||
+        (cleanActive.length >= 2 && subcategory.includes(cleanActive)) ||
+        tags.some(t => {
+          const cleanT = t.toLowerCase();
+          return cleanT === cleanActive || (cleanActive.length >= 2 && cleanT.includes(cleanActive)) || (cleanT.length >= 2 && cleanActive.includes(cleanT));
+        });
 
       return matchesSearch && matchesTag;
     });
@@ -380,13 +387,22 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 
-  // 搜索框实时输入监听
+  // 轻量级通用防抖工具函数
+  function debounce(fn, delay = 120) {
+    let timer = null;
+    return function(...args) {
+      clearTimeout(timer);
+      timer = setTimeout(() => fn.apply(this, args), delay);
+    };
+  }
+
+  // 搜索框实时输入监听 (120ms 防抖)
   if (searchInput) {
-    searchInput.addEventListener('input', (e) => {
+    searchInput.addEventListener('input', debounce((e) => {
       searchQuery = e.target.value.trim().toLowerCase();
       currentPage = 1;
       renderPage();
-    });
+    }, 120));
   }
 
   // 同步专栏折叠树是否包含激活子项的状态（用于在折叠时精准高亮指示箭头）
@@ -417,33 +433,49 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // 分类与子分类点击筛选 (仅在有文章列表流的首页 index.html 启用就地无刷新筛选)
-  if (allFilterBtns.length > 0) {
-    // 页面加载时检查 URL 查询参数中的 ?tag= 或 ?cat=
+  // 根据 URL 查询参数激活对应分类
+  function applyCategoryFromUrl() {
     try {
       const urlParams = new URLSearchParams(window.location.search);
-      const queryTag = urlParams.get('tag') || urlParams.get('cat');
+      const queryTag = (urlParams.get('tag') || urlParams.get('cat') || '').trim();
+      let matchedBtn = null;
       if (queryTag) {
-        let matchedBtn = null;
         allFilterBtns.forEach(btn => {
-          const btnTag = btn.getAttribute('data-tag');
-          if (btnTag && btnTag.toLowerCase() === queryTag.toLowerCase()) {
+          const btnTag = (btn.getAttribute('data-tag') || '').toLowerCase();
+          const btnLabel = (btn.getAttribute('data-label') || '').toLowerCase();
+          const target = queryTag.toLowerCase();
+          if (btnTag === target || btnLabel === target) {
             matchedBtn = btn;
           }
         });
-        if (matchedBtn) {
-          allFilterBtns.forEach(b => b.classList.remove('active'));
-          matchedBtn.classList.add('active');
-          activeTag = matchedBtn.getAttribute('data-tag') || 'all';
-          const tree = matchedBtn.closest('.nav-item-tree');
-          if (tree) tree.classList.add('open');
-        }
       }
+      if (!matchedBtn) {
+        matchedBtn = document.querySelector('.category-filter-btn[data-tag="all"]');
+      }
+
+      if (matchedBtn) {
+        allFilterBtns.forEach(b => b.classList.remove('active'));
+        matchedBtn.classList.add('active');
+        activeTag = matchedBtn.getAttribute('data-tag') || 'all';
+        const tree = matchedBtn.closest('.nav-item-tree');
+        if (tree) tree.classList.add('open');
+      }
+      syncTreeActiveState();
     } catch (e) {
       console.warn('URLSearchParams parse error:', e);
     }
+  }
 
-    syncTreeActiveState();
+  // 分类与子分类点击筛选 (仅在有文章列表流的首页 index.html 启用就地无刷新筛选)
+  if (allFilterBtns.length > 0) {
+    applyCategoryFromUrl();
+
+    // 监听浏览器前进/后退 (popstate) 保持视图与 URL 同步
+    window.addEventListener('popstate', () => {
+      applyCategoryFromUrl();
+      currentPage = 1;
+      renderPage();
+    });
 
     allFilterBtns.forEach(btn => {
       btn.addEventListener('click', (e) => {
@@ -641,10 +673,10 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     if (filterInput) {
-      filterInput.addEventListener('input', (e) => {
+      filterInput.addEventListener('input', debounce((e) => {
         searchQuery = e.target.value.trim().toLowerCase();
         filterItems();
-      });
+      }, 120));
     }
 
     pillBtns.forEach(btn => {

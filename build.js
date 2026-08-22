@@ -450,6 +450,9 @@ function parseFrontMatterAndMarkdown(raw) {
       continue;
     }
 
+    // 遇到非列表内容，立即闭合未关闭的列表
+    closeList();
+
     // 8. 定义列表 (Definition List: 术语\n: 定义)
     if (line.startsWith(': ') && out.length > 0 && out[out.length - 1].startsWith('<p>')) {
       const prevParagraph = out.pop();
@@ -535,10 +538,13 @@ function formatInlineMarkdown(text) {
   res = res.replace(/\*(.*?)\*/g, '<em>$1</em>');
   res = res.replace(/(^|[^\w])_([^_]+)_(?=[^\w]|$)/g, '$1<em>$2</em>');
 
-  // 9. 还原所有被保护的占位符
-  placeholders.forEach(({ key, html }) => {
-    res = res.replace(key, html);
-  });
+  // 9. 循环还原所有被保护的占位符（彻底解决嵌套占位符泄漏问题）
+  let maxPasses = 10;
+  while (maxPasses-- > 0 && /%%MD_TOKEN_\d+%%/.test(res)) {
+    placeholders.forEach(({ key, html }) => {
+      res = res.replace(key, html);
+    });
+  }
 
   return res;
 }
@@ -726,7 +732,6 @@ console.log(`✅ 已全量生成 ${postsList.length} 篇静态 HTML 文章到 po
 // ==============================================================================
 const searchIndexItems = postsList.map(p => {
   const cleanBody = p.content.replace(/#|\*|`|\[|\]|\(|\)/g, ' ').replace(/\s+/g, ' ').trim();
-  const fullText = (p.title + ' ' + p.summary + ' ' + p.tags.join(' ') + ' ' + cleanBody).replace(/\s+/g, ' ').trim();
 
   return {
     id: p.slug,
@@ -737,7 +742,6 @@ const searchIndexItems = postsList.map(p => {
     tags: p.tags,
     summary: p.summary,
     content: cleanBody,
-    fullText: fullText,
     sections: p.headings.map(h => ({ title: h.title, anchor: `#${h.id}`, id: h.id }))
   };
 });
@@ -938,8 +942,8 @@ const staticPages = [
 ];
 
 const postUrlNodes = postsList.map(p => `  <url>
-    <loc>https://vmrey.github.io/posts/${p.slug}.html</loc>
-    <lastmod>${p.date || todayDateStr}</lastmod>
+    <loc>https://vmrey.github.io/posts/${escapeXml(p.slug)}.html</loc>
+    <lastmod>${escapeXml(p.date || todayDateStr)}</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>`).join('\n');
