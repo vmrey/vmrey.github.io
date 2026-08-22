@@ -24,12 +24,13 @@ function renderFeedHeader({
             <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
           </svg>
           <input 
-            type="text" 
+            type="search" 
             id="feed-search-input" 
             class="search-input" 
             placeholder="${placeholder}" 
             aria-label="过滤文章列表"
             autocomplete="off"
+            enterkeyhint="search"
           >
         </div>
       </header>`;

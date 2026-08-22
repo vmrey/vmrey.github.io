@@ -403,7 +403,29 @@ document.addEventListener('DOMContentLoaded', () => {
       currentPage = 1;
       renderPage();
     }, 120));
+
+    // 按下回车键时立即同步执行过滤并平滑滚动到结果顶部
+    searchInput.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter') {
+        e.preventDefault();
+        searchQuery = e.target.value.trim().toLowerCase();
+        currentPage = 1;
+        renderPage();
+        searchInput.blur();
+        scrollToFeedTop();
+      }
+    });
   }
+
+  // 点击搜索外框任意位置或放大镜图标自动聚焦输入框
+  document.querySelectorAll('.search-box-wrap').forEach(wrap => {
+    wrap.addEventListener('click', (e) => {
+      const input = wrap.querySelector('input');
+      if (input && e.target !== input) {
+        input.focus();
+      }
+    });
+  });
 
   // 同步专栏折叠树是否包含激活子项的状态（用于在折叠时精准高亮指示箭头）
   function syncTreeActiveState() {
@@ -667,6 +689,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
       if (emptyState) {
         emptyState.style.display = visibleCount === 0 ? 'flex' : 'none';
+        const globalSearchBtn = emptyState.querySelector('.open-search-modal-with-query');
+        if (globalSearchBtn) {
+          globalSearchBtn.setAttribute('data-query', searchQuery);
+          const querySpan = globalSearchBtn.querySelector('.search-query-text');
+          if (querySpan) {
+            querySpan.textContent = searchQuery ? `"${searchQuery}"` : '';
+          }
+        }
       }
 
       if (countBadge) {
@@ -679,6 +709,16 @@ document.addEventListener('DOMContentLoaded', () => {
         searchQuery = e.target.value.trim().toLowerCase();
         filterItems();
       }, 120));
+
+      // 按下回车键时立即同步执行过滤并收起移动端键盘
+      filterInput.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter') {
+          e.preventDefault();
+          searchQuery = e.target.value.trim().toLowerCase();
+          filterItems();
+          filterInput.blur();
+        }
+      });
     }
 
     pillBtns.forEach(btn => {

@@ -87,12 +87,13 @@ ${filesRowsHtml}
             <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
           </svg>
           <input 
-            type="text" 
+            type="search" 
             id="file-filter-input" 
             class="search-input" 
             placeholder="输入文件名、扩展名或功能描述即时定位文件..." 
             aria-label="过滤文件资源"
             autocomplete="off"
+            enterkeyhint="search"
           >
         </div>
       </header>

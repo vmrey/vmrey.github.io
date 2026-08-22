@@ -44,6 +44,8 @@ const LLMS_FULL_TXT_PATH = path.join(ROOT_DIR, 'llms-full.txt');
 if (!fs.existsSync(DRAFTS_DIR)) fs.mkdirSync(DRAFTS_DIR, { recursive: true });
 if (!fs.existsSync(POSTS_DIR)) fs.mkdirSync(POSTS_DIR, { recursive: true });
 
+const todayDateStr = new Date().toISOString().split('T')[0];
+
 // 获取命令行参数
 const args = process.argv.slice(2);
 
@@ -728,13 +730,26 @@ postsList.forEach(post => {
 console.log(`✅ 已全量生成 ${postsList.length} 篇静态 HTML 文章到 posts/ 目录！`);
 
 // ==============================================================================
-// 6. 同步更新 data/search-index.js 深度搜索库
+// 6. 同步更新 data/search-index.js 全站全量深度搜索库 (文章 + AI导航 + 工具 + GitHub + 资源库)
 // ==============================================================================
-const searchIndexItems = postsList.map(p => {
-  const cleanBody = p.content.replace(/#|\*|`|\[|\]|\(|\)/g, ' ').replace(/\s+/g, ' ').trim();
+let allNavGithub = [];
+if (fs.existsSync(NAV_DATA_PATH)) {
+  try { allNavGithub = JSON.parse(fs.readFileSync(NAV_DATA_PATH, 'utf-8')); } catch (e) {}
+}
+let allNavTools = [];
+if (fs.existsSync(TOOLS_DATA_PATH)) {
+  try { allNavTools = JSON.parse(fs.readFileSync(TOOLS_DATA_PATH, 'utf-8')); } catch (e) {}
+}
+let allNavAi = [];
+if (fs.existsSync(AI_DATA_PATH)) {
+  try { allNavAi = JSON.parse(fs.readFileSync(AI_DATA_PATH, 'utf-8')); } catch (e) {}
+}
 
+const postSearchItems = postsList.map(p => {
+  const cleanBody = p.content.replace(/#|\*|`|\[|\]|\(|\)/g, ' ').replace(/\s+/g, ' ').trim();
   return {
     id: p.slug,
+    type: 'post',
     title: p.title,
     url: p.url,
     category: p.category,
@@ -746,15 +761,90 @@ const searchIndexItems = postsList.map(p => {
   };
 });
 
+const aiSearchItems = [];
+allNavAi.forEach(cat => {
+  (cat.items || []).forEach(item => {
+    aiSearchItems.push({
+      id: `ai-${slugify(item.name)}`,
+      type: 'ai',
+      title: item.name,
+      url: 'ai.html',
+      category: `AI 导航 · ${cat.category}`,
+      date: todayDateStr,
+      tags: item.tags || [],
+      summary: `${item.tagline} — ${item.description}`,
+      content: `${item.name} ${item.url} ${item.tagline} ${item.description} ${(item.tags || []).join(' ')}`,
+      sections: []
+    });
+  });
+});
+
+const toolsSearchItems = [];
+allNavTools.forEach(cat => {
+  (cat.items || []).forEach(item => {
+    toolsSearchItems.push({
+      id: `tool-${slugify(item.name)}`,
+      type: 'tool',
+      title: item.name,
+      url: 'tools.html',
+      category: `工具导航 · ${cat.category}`,
+      date: todayDateStr,
+      tags: item.tags || [],
+      summary: `${item.tagline} — ${item.description}`,
+      content: `${item.name} ${item.url} ${item.tagline} ${item.description} ${(item.tags || []).join(' ')}`,
+      sections: []
+    });
+  });
+});
+
+const githubSearchItems = [];
+allNavGithub.forEach(cat => {
+  (cat.items || []).forEach(item => {
+    githubSearchItems.push({
+      id: `github-${slugify(item.name)}`,
+      type: 'github',
+      title: `${item.name} (${item.repo})`,
+      url: 'nav.html',
+      category: `GitHub 导航 · ${cat.category}`,
+      date: todayDateStr,
+      tags: item.tags || [],
+      summary: `${item.tagline} — ${item.description}`,
+      content: `${item.name} ${item.repo} ${item.url} ${item.tagline} ${item.description} ${(item.tags || []).join(' ')}`,
+      sections: []
+    });
+  });
+});
+
+const fileSearchItems = (resourceFiles || []).map(f => ({
+  id: `file-${slugify(f.name)}`,
+  type: 'file',
+  title: f.name,
+  url: 'files.html',
+  category: `资源文件 · ${f.category}`,
+  date: todayDateStr,
+  tags: [f.ext, f.category],
+  summary: `${f.desc} (${f.size}, ${f.lines} 行)`,
+  content: `${f.name} ${f.desc} ${f.category} ${f.ext}`,
+  sections: []
+}));
+
+const searchIndexItems = [
+  ...postSearchItems,
+  ...aiSearchItems,
+  ...toolsSearchItems,
+  ...githubSearchItems,
+  ...fileSearchItems
+];
+
 const searchIndexJsContent = `/**
  * vmrey.github.io 全局全文检索索引数据库
- * 由 build.js 自动生成构建
+ * 由 build.js 自动生成构建 (全量收录文章、AI导航、工具、GitHub与附件)
  */
 window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = ${JSON.stringify(searchIndexItems, null, 2)};
 `;
 
 fs.writeFileSync(SEARCH_INDEX_PATH, searchIndexJsContent, 'utf-8');
-console.log(`🔍 已全量更新全局全文搜索索引: data/search-index.js (${searchIndexItems.length} 篇文章)`);
+console.log(`🔍 已全量更新全局全文搜索索引: data/search-index.js (共 ${searchIndexItems.length} 个条目: ${postSearchItems.length} 文章 + ${aiSearchItems.length} AI + ${toolsSearchItems.length} 工具 + ${githubSearchItems.length} GitHub + ${fileSearchItems.length} 附件)`);
 
 // ==============================================================================
 // 7. 编译生成 files.html 资源文件库
@@ -920,8 +1010,6 @@ console.log('🤖 已全自动生成搜索引擎爬虫协议: robots.txt');
 // ==============================================================================
 // 14. 自动生成全量 sitemap.xml 站点地图
 // ==============================================================================
-const todayDateStr = new Date().toISOString().split('T')[0];
-
 function escapeXml(unsafeStr) {
   if (!unsafeStr) return '';
   return String(unsafeStr)

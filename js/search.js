@@ -81,6 +81,9 @@
       }
     }
 
+    // 暴露全局方法方便在各页面无缝唤起全站深度检索
+    window.openSearchModal = openSearchModal;
+
     function closeSearchModal() {
       modalContainer.style.display = 'none';
       modalContainer.setAttribute('aria-hidden', 'true');
@@ -160,6 +163,16 @@
         e.preventDefault();
         openSearchModal(el.value || '');
       });
+    });
+
+    // 绑定带预设关键词的全局搜索触发器 (如各页面空状态下的全站深度搜索按钮)
+    document.addEventListener('click', (e) => {
+      const queryTrigger = e.target.closest('.open-search-modal-with-query');
+      if (queryTrigger) {
+        e.preventDefault();
+        const query = queryTrigger.getAttribute('data-query') || '';
+        openSearchModal(query);
+      }
     });
 
     // 热门标签点击直达搜索
@@ -430,6 +443,25 @@
       searchInput.addEventListener('input', debounce((e) => {
         performSearch(e.target.value);
       }, 100));
+
+      // 按下回车键时立即同步执行搜索并直达首条匹配项
+      searchInput.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter') {
+          e.preventDefault();
+          const query = searchInput.value.trim();
+          if (query) {
+            performSearch(query);
+            if (currentResults.length > 0) {
+              const targetIdx = selectedResultIndex >= 0 ? selectedResultIndex : 0;
+              const selectedItem = currentResults[targetIdx];
+              if (selectedItem && selectedItem.targetUrl) {
+                closeSearchModal();
+                window.location.href = pathPrefix + selectedItem.targetUrl;
+              }
+            }
+          }
+        }
+      });
     }
   });
 })();

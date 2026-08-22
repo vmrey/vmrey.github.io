@@ -120,12 +120,13 @@ ${cardsHtml}
             <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
           </svg>
           <input 
-            type="text" 
+            type="search" 
             id="nav-filter-input" 
             class="search-input" 
             placeholder="输入项目名、语言、标签或描述即时检索开源项目..." 
             aria-label="检索开源项目"
             autocomplete="off"
+            enterkeyhint="search"
           >
         </div>
       </header>
@@ -148,10 +149,16 @@ ${categoriesHtml}
           </svg>
         </div>
         <h3 class="empty-state-title">未匹配到相关开源项目</h3>
-        <p class="empty-state-desc">未能找到包含关键词的 GitHub 项目，请尝试更换关键词或切换分类筛选。</p>
-        <button type="button" class="empty-state-reset-btn" id="nav-empty-reset-btn">
-          <span>清空搜索条件</span>
-        </button>
+        <p class="empty-state-desc">未能在此页面找到相关项目，可在全站深度搜索中查找文章、工具与代码。</p>
+        <div class="empty-actions-row" style="display: flex; gap: 0.75rem; flex-wrap: wrap; justify-content: center; margin-top: 1rem;">
+          <button type="button" class="empty-state-reset-btn" id="nav-empty-reset-btn">
+            <span>清空筛选条件</span>
+          </button>
+          <button type="button" class="empty-state-reset-btn open-search-modal-with-query" style="background: var(--primary); color: #fff; border-color: var(--primary);">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+            <span>在全站深度搜索 <span class="search-query-text"></span></span>
+          </button>
+        </div>
       </div>`;
 
   const inlineScripts = `    document.addEventListener('DOMContentLoaded', () => {

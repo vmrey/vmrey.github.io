@@ -1,10 +1,11 @@
 /**
  * vmrey.github.io 全局全文检索索引数据库
- * 由 build.js 自动生成构建
+ * 由 build.js 自动生成构建 (全量收录文章、AI导航、工具、GitHub与附件)
  */
 window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
   {
     "id": "claude-perms-08be",
+    "type": "post",
     "title": "Claude Code 开启 Bypass 免确认权限配置指南",
     "url": "posts/claude-perms-08be.html",
     "category": "效率工具与软件",
@@ -43,6 +44,7 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
   },
   {
     "id": "git-cheatsheet-c495",
+    "type": "post",
     "title": "Git 常用高频命令与分支协同工作流速查清单",
     "url": "posts/git-cheatsheet-c495.html",
     "category": "效率工具与软件",
@@ -101,6 +103,7 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
   },
   {
     "id": "svn-cheatsheet-1d69",
+    "type": "post",
     "title": "SVN (Subversion) 常用版本控制命令速查与批量清理指南",
     "url": "posts/svn-cheatsheet-1d69.html",
     "category": "效率工具与软件",
@@ -143,6 +146,7 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
   },
   {
     "id": "docker-mirror-5e12",
+    "type": "post",
     "title": "Linux 生产环境 Docker 官方一键安装脚本与国内镜像加速配置",
     "url": "posts/docker-mirror-5e12.html",
     "category": "Linux与服务端",
@@ -220,6 +224,7 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
   },
   {
     "id": "img-compress-tools-4c4a",
+    "type": "post",
     "title": "高质量无损图片压缩工具与批量处理方案横向评测",
     "url": "posts/img-compress-tools-4c4a.html",
     "category": "效率工具与软件",
@@ -326,6 +331,7 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
   },
   {
     "id": "rustdesk-docker-6a97",
+    "type": "post",
     "title": "使用 Docker Compose 快速搭建 RustDesk 自建远程桌面中继服务器（hbbs/hbbr）",
     "url": "posts/rustdesk-docker-6a97.html",
     "category": "Linux与服务端",
@@ -389,6 +395,7 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
   },
   {
     "id": "ps-batch-compress-0ecc",
+    "type": "post",
     "title": "Photoshop 批量压缩与图片重命名 ExtendScript (JSX) 脚本源码",
     "url": "posts/ps-batch-compress-0ecc.html",
     "category": "效率工具与软件",
@@ -466,6 +473,7 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
   },
   {
     "id": "kodbox-docker-d549",
+    "type": "post",
     "title": "Kodbox 可道云私有网盘部署实战指南（Docker 与源码双方案）",
     "url": "posts/kodbox-docker-d549.html",
     "category": "Linux与服务端",
@@ -544,6 +552,7 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
   },
   {
     "id": "bat-rename-b2ae",
+    "type": "post",
     "title": "Windows 批量修改文件名与字符替换批处理 (.bat) 脚本",
     "url": "posts/bat-rename-b2ae.html",
     "category": "效率工具与软件",
@@ -676,6 +685,7 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
   },
   {
     "id": "nginx-emby-proxy-b140",
+    "type": "post",
     "title": "Nginx 全站反向代理配置说明文档（Cloudflare CDN + 流媒体优化版）",
     "url": "posts/nginx-emby-proxy-b140.html",
     "category": "Linux 与服务端",
@@ -715,6 +725,7 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
   },
   {
     "id": "ffmpeg-stream-5244",
+    "type": "post",
     "title": "FFmpeg 常用音视频推流、转码与循环直播命令速查指南",
     "url": "posts/ffmpeg-stream-5244.html",
     "category": "Linux与服务端",
@@ -768,6 +779,7 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
   },
   {
     "id": "vue3-file-upload-5890",
+    "type": "post",
     "title": "Vue3 + Element Plus 文件上传组件封装：支持回显、批量与手动控制",
     "url": "posts/vue3-file-upload-5890.html",
     "category": "前端开发",
@@ -795,6 +807,7 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
   },
   {
     "id": "acme-ssl-issue-1dd8",
+    "type": "post",
     "title": "Linux 使用 acme.sh 自动化申请 Let's Encrypt 免费 SSL 证书与续期脚本",
     "url": "posts/acme-ssl-issue-1dd8.html",
     "category": "Linux与服务端",
@@ -837,6 +850,7 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
   },
   {
     "id": "vue3-query-form-53a0",
+    "type": "post",
     "title": "Vue3 通用查询表单组件封装：JSON Schema 驱动与响应式联动",
     "url": "posts/vue3-query-form-53a0.html",
     "category": "前端开发",
@@ -864,6 +878,7 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
   },
   {
     "id": "vue-plugins-ecosystem-7e33",
+    "type": "post",
     "title": "Vue 3 生产级高频插件与生态工具库精选清单",
     "url": "posts/vue-plugins-ecosystem-7e33.html",
     "category": "前端开发",
@@ -917,6 +932,7 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
   },
   {
     "id": "siege-benchmark-44e0",
+    "type": "post",
     "title": "开源 HTTP 压力测试工具 Siege 从安装到生产实战指南",
     "url": "posts/siege-benchmark-44e0.html",
     "category": "Linux与服务端",
@@ -1039,6 +1055,7 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
   },
   {
     "id": "ruoyi-nav-fix-3171",
+    "type": "post",
     "title": "若依管理系统导航报错 reading 'nextSibling' 根因分析与解决方案",
     "url": "posts/ruoyi-nav-fix-3171.html",
     "category": "前端开发",
@@ -1081,6 +1098,7 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
   },
   {
     "id": "xray-core-script-c8e6",
+    "type": "post",
     "title": "Xray-Core Linux 一键部署与自动化服务管理脚本",
     "url": "posts/xray-core-script-c8e6.html",
     "category": "Linux与服务端",
@@ -1122,6 +1140,7 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
   },
   {
     "id": "js-debounce-throttle-1d40",
+    "type": "post",
     "title": "JavaScript 防抖与节流深度剖析：从原理实现到业务场景落地",
     "url": "posts/js-debounce-throttle-1d40.html",
     "category": "前端开发",
@@ -1254,6 +1273,7 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
   },
   {
     "id": "xray-dns-routing-b411",
+    "type": "post",
     "title": "Xray DNS 分流防污染优化与国内外路由分流规则配置",
     "url": "posts/xray-dns-routing-b411.html",
     "category": "Linux与服务端",
@@ -1287,6 +1307,7 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
   },
   {
     "id": "js-tree-recursion-209b",
+    "type": "post",
     "title": "常用树结构递归工具函数合集：树平铺、节点查找与层级过滤",
     "url": "posts/js-tree-recursion-209b.html",
     "category": "前端开发",
@@ -1319,6 +1340,7 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
   },
   {
     "id": "mini-js-template-ee56",
+    "type": "post",
     "title": "实现一个最优雅的微型 JavaScript 模板引擎：30 行代码解析核心原理",
     "url": "posts/mini-js-template-ee56.html",
     "category": "前端开发",
@@ -1396,6 +1418,7 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
   },
   {
     "id": "mobile-verify-635b",
+    "type": "post",
     "title": "前端输入框严格限制只能输入中国手机号码的最佳实践",
     "url": "posts/mobile-verify-635b.html",
     "category": "前端开发",
@@ -1493,6 +1516,7 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
   },
   {
     "id": "textarea-auto-height-8ea2",
+    "type": "post",
     "title": "使用 contenteditable 与 div 完美模拟 Textarea 高度自适应效果",
     "url": "posts/textarea-auto-height-8ea2.html",
     "category": "前端开发",
@@ -1580,6 +1604,7 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
   },
   {
     "id": "wx-async-promise-806e",
+    "type": "post",
     "title": "微信小程序将异步 API 封装为 Promise 同步调用（async/await）实战",
     "url": "posts/wx-async-promise-806e.html",
     "category": "前端开发",
@@ -1662,6 +1687,7 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
   },
   {
     "id": "wx-property-watch-0b0e",
+    "type": "post",
     "title": "微信小程序自定义组件监听 properties 属性变化的优雅实现",
     "url": "posts/wx-property-watch-0b0e.html",
     "category": "前端开发",
@@ -1794,6 +1820,7 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
   },
   {
     "id": "vscode-regex-replace-df0f",
+    "type": "post",
     "title": "VSCode 前端开发高频实用正则表达式查找与批量替换清单",
     "url": "posts/vscode-regex-replace-df0f.html",
     "category": "效率工具与软件",
@@ -1841,6 +1868,7 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
   },
   {
     "id": "mask-sensitive-data-8698",
+    "type": "post",
     "title": "JavaScript 身份证、手机号与敏感证件信息脱敏掩码处理",
     "url": "posts/mask-sensitive-data-8698.html",
     "category": "前端开发",
@@ -1868,6 +1896,7 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
   },
   {
     "id": "calc-exact-age-de3e",
+    "type": "post",
     "title": "JavaScript 根据出生年月日精准计算周岁年龄函数",
     "url": "posts/calc-exact-age-de3e.html",
     "category": "前端开发",
@@ -1895,6 +1924,7 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
   },
   {
     "id": "calc-month-range-bd66",
+    "type": "post",
     "title": "JavaScript 获取指定年份与月份的起始日期和结束日期",
     "url": "posts/calc-month-range-bd66.html",
     "category": "前端开发",
@@ -1922,6 +1952,7 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
   },
   {
     "id": "js-string-ellipsis-d4cf",
+    "type": "post",
     "title": "JavaScript 字符串指定长度截断并自动追加省略号",
     "url": "posts/js-string-ellipsis-d4cf.html",
     "category": "前端开发",
@@ -1944,6 +1975,7 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
   },
   {
     "id": "shell-github-release-8d73",
+    "type": "post",
     "title": "Shell 脚本自动获取 GitHub 开源项目最新 Releases 版本号",
     "url": "posts/shell-github-release-8d73.html",
     "category": "Linux 与服务端",
@@ -1972,6 +2004,7 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
   },
   {
     "id": "shell-color-echo-31e2",
+    "type": "post",
     "title": "Shell 脚本中输出红/绿/黄多色格式化终端文本函数",
     "url": "posts/shell-color-echo-31e2.html",
     "category": "Linux 与服务端",
@@ -2000,6 +2033,7 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
   },
   {
     "id": "wp-super-cache-nginx-c033",
+    "type": "post",
     "title": "WordPress WP Super Cache 插件高并发 Nginx 静态伪静态规则",
     "url": "posts/wp-super-cache-nginx-c033.html",
     "category": "Linux 与服务端",
@@ -2028,6 +2062,7 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
   },
   {
     "id": "wp-reset-password-f1c8",
+    "type": "post",
     "title": "WordPress 忘记管理员密码时的应急重置与修复方法",
     "url": "posts/wp-reset-password-f1c8.html",
     "category": "Linux 与服务端",
@@ -2056,6 +2091,7 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
   },
   {
     "id": "vue-reset-data-46af",
+    "type": "post",
     "title": "Vue 优雅一键重置组件 data 到初始状态的技巧",
     "url": "posts/vue-reset-data-46af.html",
     "category": "前端开发",
@@ -2088,6 +2124,7 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
   },
   {
     "id": "nginx-hotlink-guard-c2f7",
+    "type": "post",
     "title": "Nginx 媒体与静态资源防盗链配置实战（Valid Referers）",
     "url": "posts/nginx-hotlink-guard-c2f7.html",
     "category": "Linux 与服务端",
@@ -2116,6 +2153,7 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
   },
   {
     "id": "nginx-cache-expires-16e0",
+    "type": "post",
     "title": "Nginx 静态资源长效缓存与 Expires 性能优化配置",
     "url": "posts/nginx-cache-expires-16e0.html",
     "category": "Linux 与服务端",
@@ -2144,6 +2182,7 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
   },
   {
     "id": "firewalld-cheat-e029",
+    "type": "post",
     "title": "CentOS 7 / RHEL Firewalld 防火墙常用命令与端口放行速查",
     "url": "posts/firewalld-cheat-e029.html",
     "category": "Linux 与服务端",
@@ -2177,6 +2216,7 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
   },
   {
     "id": "centos-disable-ipv6-099b",
+    "type": "post",
     "title": "CentOS 7 永久禁用 IPv6 网络协议的两种方法",
     "url": "posts/centos-disable-ipv6-099b.html",
     "category": "Linux 与服务端",
@@ -2210,6 +2250,7 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
   },
   {
     "id": "frp-desktop-6af7",
+    "type": "post",
     "title": "轻量级高性能内网穿透：frp 远程桌面 RDP 搭建与系统服务配置",
     "url": "posts/frp-desktop-6af7.html",
     "category": "Linux 与服务端",
@@ -2248,6 +2289,7 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
   },
   {
     "id": "el-calendar-style-bb16",
+    "type": "post",
     "title": "Element UI 中 el-calendar 日历组件禁用与灰色置灰点击处理",
     "url": "posts/el-calendar-style-bb16.html",
     "category": "前端开发",
@@ -2275,6 +2317,7 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
   },
   {
     "id": "vscode-clean-log-8fb9",
+    "type": "post",
     "title": "VSCode 中使用正则表达式批量清理 console.log 打印语句",
     "url": "posts/vscode-clean-log-8fb9.html",
     "category": "效率工具与软件",
@@ -2307,6 +2350,7 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
   },
   {
     "id": "js-tree-find-value-d75f",
+    "type": "post",
     "title": "JavaScript 递归检索深层对象与数组中是否包含某个值",
     "url": "posts/js-tree-find-value-d75f.html",
     "category": "前端开发",
@@ -2334,6 +2378,7 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
   },
   {
     "id": "calc-coords-distance-2f2e",
+    "type": "post",
     "title": "JavaScript 根据经纬度计算两地直线距离算法实现",
     "url": "posts/calc-coords-distance-2f2e.html",
     "category": "前端开发",
@@ -2361,6 +2406,7 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
   },
   {
     "id": "vue-email-filter-eb21",
+    "type": "post",
     "title": "Vue 中 input 输入框实时校验与过滤邮箱格式输入",
     "url": "posts/vue-email-filter-eb21.html",
     "category": "前端开发",
@@ -2388,6 +2434,7 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
   },
   {
     "id": "js-search-ranking-87fa",
+    "type": "post",
     "title": "JavaScript 字符串即时搜索与智能匹配排序算法",
     "url": "posts/js-search-ranking-87fa.html",
     "category": "前端开发",
@@ -2415,6 +2462,7 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
   },
   {
     "id": "vue-currency-filter-0ab5",
+    "type": "post",
     "title": "Vue 中限制 input 输入框仅允许输入浮点数或金额格式",
     "url": "posts/vue-currency-filter-0ab5.html",
     "category": "前端开发",
@@ -2442,6 +2490,7 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
   },
   {
     "id": "js-flatten-json-4eca",
+    "type": "post",
     "title": "JavaScript 递归扁平化深层嵌套数组与 JSON 结构实战",
     "url": "posts/js-flatten-json-4eca.html",
     "category": "前端开发",
@@ -2469,6 +2518,7 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
   },
   {
     "id": "el-tree-index-240e",
+    "type": "post",
     "title": "Element UI 中 el-tree 树形结构生成唯一索引与父级回溯",
     "url": "posts/el-tree-index-240e.html",
     "category": "前端开发",
@@ -2501,6 +2551,7 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
   },
   {
     "id": "js-rename-json-keys-eba7",
+    "type": "post",
     "title": "JavaScript 递归批量重命名 JSON 对象中的键名 (Key)",
     "url": "posts/js-rename-json-keys-eba7.html",
     "category": "前端开发",
@@ -2528,6 +2579,7 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
   },
   {
     "id": "textarea-cursor-pos-9496",
+    "type": "post",
     "title": "JavaScript 获取与控制 input 及 textarea 文本框光标位置",
     "url": "posts/textarea-cursor-pos-9496.html",
     "category": "前端开发",
@@ -2555,6 +2607,7 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
   },
   {
     "id": "js-dedup-1e34",
+    "type": "post",
     "title": "JavaScript 数组与字符串去重深度实战（支持嵌套对象去重）",
     "url": "posts/js-dedup-1e34.html",
     "category": "前端开发",
@@ -2582,6 +2635,7 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
   },
   {
     "id": "js-select-sort-267c",
+    "type": "post",
     "title": "JavaScript 数组与对象数组自定义排序算法实战",
     "url": "posts/js-select-sort-267c.html",
     "category": "前端开发",
@@ -2609,6 +2663,7 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
   },
   {
     "id": "css-center-8da2",
+    "type": "post",
     "title": "CSS 元素水平垂直居中的常用核心方案总结",
     "url": "posts/css-center-8da2.html",
     "category": "前端开发",
@@ -2641,6 +2696,7 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
   },
   {
     "id": "unicode-crypto-str-16d8",
+    "type": "post",
     "title": "基于 Unicode 编码的原生 JavaScript 字符串加解密方法",
     "url": "posts/unicode-crypto-str-16d8.html",
     "category": "前端开发",
@@ -2668,6 +2724,7 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
   },
   {
     "id": "settimeout-interval-ee29",
+    "type": "post",
     "title": "深入浅出：使用 setTimeout 精准模拟 setInterval 及其核心优势",
     "url": "posts/settimeout-interval-ee29.html",
     "category": "前端开发",
@@ -2695,6 +2752,7 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
   },
   {
     "id": "js-swap-variables-3796",
+    "type": "post",
     "title": "JavaScript 中交换两个变量值的五种经典实现方法",
     "url": "posts/js-swap-variables-3796.html",
     "category": "前端开发",
@@ -2732,6 +2790,7 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
   },
   {
     "id": "json-deep-clone-423f",
+    "type": "post",
     "title": "JavaScript 引用类型对象深拷贝与 JSON 序列化技巧",
     "url": "posts/json-deep-clone-423f.html",
     "category": "前端开发",
@@ -2764,6 +2823,7 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
   },
   {
     "id": "js-get-url-params-aa13",
+    "type": "post",
     "title": "JavaScript 获取当前页面 URL 查询参数的高效解析方案",
     "url": "posts/js-get-url-params-aa13.html",
     "category": "前端开发",
@@ -2791,6 +2851,7 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
   },
   {
     "id": "wx-loading-anim-2498",
+    "type": "post",
     "title": "微信小程序自定义高颜值 Loading 加载动画组件",
     "url": "posts/wx-loading-anim-2498.html",
     "category": "前端开发",
@@ -2823,6 +2884,7 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
   },
   {
     "id": "wx-coupon-modal-b6eb",
+    "type": "post",
     "title": "微信小程序新手专属优惠券领取弹框组件封装实战",
     "url": "posts/wx-coupon-modal-b6eb.html",
     "category": "前端开发",
@@ -2855,6 +2917,7 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
   },
   {
     "id": "wx-bubble-sort-6378",
+    "type": "post",
     "title": "微信小程序中对象数组冒泡排序算法实现与实战",
     "url": "posts/wx-bubble-sort-6378.html",
     "category": "前端开发",
@@ -2882,6 +2945,7 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
   },
   {
     "id": "wx-canvas-curve-75af",
+    "type": "post",
     "title": "微信小程序原生 Canvas 绘制平滑贝塞尔曲线图组件",
     "url": "posts/wx-canvas-curve-75af.html",
     "category": "前端开发",
@@ -2911,5 +2975,1046 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
         "id": "三-js-核心平滑曲线绘制算法"
       }
     ]
+  },
+  {
+    "id": "ai-google-gemini",
+    "type": "ai",
+    "title": "Google Gemini",
+    "url": "ai.html",
+    "category": "AI 导航 · 前沿大模型与对话平台",
+    "date": "2026-08-22",
+    "tags": [
+      "Gemini",
+      "Google",
+      "多模态",
+      "超长上下文",
+      "LLM"
+    ],
+    "summary": "Google 旗舰原生多模态大模型，具备百万超长上下文与深度理解 — Google 最强大的多模态大语言模型，支持文本、代码、图像、音频与视频原生理解，拥有业界领先的超长上下文窗口与 Google 生态深度协同。",
+    "content": "Google Gemini https://gemini.google.com/ Google 旗舰原生多模态大模型，具备百万超长上下文与深度理解 Google 最强大的多模态大语言模型，支持文本、代码、图像、音频与视频原生理解，拥有业界领先的超长上下文窗口与 Google 生态深度协同。 Gemini Google 多模态 超长上下文 LLM",
+    "sections": []
+  },
+  {
+    "id": "ai-chatgpt",
+    "type": "ai",
+    "title": "ChatGPT",
+    "url": "ai.html",
+    "category": "AI 导航 · 前沿大模型与对话平台",
+    "date": "2026-08-22",
+    "tags": [
+      "ChatGPT",
+      "OpenAI",
+      "GPT-4o",
+      "深度思考",
+      "AI助手"
+    ],
+    "summary": "OpenAI 全球领先的 AI 智能助手，搭载 GPT-4o 与深度推理模型 — 引领生成式 AI 浪潮的代表作。集成 GPT-4o 实时多模态交互、o1/o3 复杂数学代码深度思考能力、网络搜索与全能高级数据分析。",
+    "content": "ChatGPT https://chatgpt.com/ OpenAI 全球领先的 AI 智能助手，搭载 GPT-4o 与深度推理模型 引领生成式 AI 浪潮的代表作。集成 GPT-4o 实时多模态交互、o1/o3 复杂数学代码深度思考能力、网络搜索与全能高级数据分析。 ChatGPT OpenAI GPT-4o 深度思考 AI助手",
+    "sections": []
+  },
+  {
+    "id": "ai-claude",
+    "type": "ai",
+    "title": "Claude",
+    "url": "ai.html",
+    "category": "AI 导航 · 前沿大模型与对话平台",
+    "date": "2026-08-22",
+    "tags": [
+      "Claude",
+      "Anthropic",
+      "编程神器",
+      "长文本",
+      "Sonnet"
+    ],
+    "summary": "Anthropic 出品的高智能、强逻辑与卓越编程能力的旗舰 AI — 以超强代码编写、自然文字表达与严谨逻辑推理闻名的顶尖模型（Claude 3.5 Sonnet / Opus），支持 Projects 项目上下文管理与 Artifacts 即时交互。",
+    "content": "Claude https://claude.ai/ Anthropic 出品的高智能、强逻辑与卓越编程能力的旗舰 AI 以超强代码编写、自然文字表达与严谨逻辑推理闻名的顶尖模型（Claude 3.5 Sonnet / Opus），支持 Projects 项目上下文管理与 Artifacts 即时交互。 Claude Anthropic 编程神器 长文本 Sonnet",
+    "sections": []
+  },
+  {
+    "id": "ai-deepseek-深度求索",
+    "type": "ai",
+    "title": "DeepSeek (深度求索)",
+    "url": "ai.html",
+    "category": "AI 导航 · 前沿大模型与对话平台",
+    "date": "2026-08-22",
+    "tags": [
+      "DeepSeek",
+      "R1推理",
+      "开源模型",
+      "代码生成",
+      "深度求索"
+    ],
+    "summary": "国产顶尖开源推理与通用大模型，以惊艳性能与高性价比享誉全球 — 深度求索推出的新一代国产顶尖开源模型，DeepSeek-R1 具备极强思维链深度推理能力，DeepSeek-V3 在多语言、代码与数学上达到世界一流水平。",
+    "content": "DeepSeek (深度求索) https://chat.deepseek.com/ 国产顶尖开源推理与通用大模型，以惊艳性能与高性价比享誉全球 深度求索推出的新一代国产顶尖开源模型，DeepSeek-R1 具备极强思维链深度推理能力，DeepSeek-V3 在多语言、代码与数学上达到世界一流水平。 DeepSeek R1推理 开源模型 代码生成 深度求索",
+    "sections": []
+  },
+  {
+    "id": "ai-kimi-月之暗面",
+    "type": "ai",
+    "title": "Kimi (月之暗面)",
+    "url": "ai.html",
+    "category": "AI 导航 · 前沿大模型与对话平台",
+    "date": "2026-08-22",
+    "tags": [
+      "Kimi",
+      "月之暗面",
+      "联网搜索",
+      "长文本",
+      "研报分析"
+    ],
+    "summary": "国内领先的超长文本 AI 搜索与知识助手，支持长文档深度精读 — 月之暗面推出的高智能知识助手，支持百万字长文档、多篇研报与网页即时深度检索，具备强大的联网搜索与精准信息提炼能力。",
+    "content": "Kimi (月之暗面) https://kimi.moonshot.cn/ 国内领先的超长文本 AI 搜索与知识助手，支持长文档深度精读 月之暗面推出的高智能知识助手，支持百万字长文档、多篇研报与网页即时深度检索，具备强大的联网搜索与精准信息提炼能力。 Kimi 月之暗面 联网搜索 长文本 研报分析",
+    "sections": []
+  },
+  {
+    "id": "ai-grok",
+    "type": "ai",
+    "title": "Grok",
+    "url": "ai.html",
+    "category": "AI 导航 · 前沿大模型与对话平台",
+    "date": "2026-08-22",
+    "tags": [
+      "Grok",
+      "xAI",
+      "ElonMusk",
+      "实时资讯",
+      "多模态"
+    ],
+    "summary": "xAI 出品的幽默智能大模型，深度整合全球实时资讯脉搏 — Elon Musk 创立的 xAI 推出的全新一代智能大模型，具备敏锐的实时事件感知、卓越的视觉图像理解与自然直接的对话风格。",
+    "content": "Grok https://grok.com/ xAI 出品的幽默智能大模型，深度整合全球实时资讯脉搏 Elon Musk 创立的 xAI 推出的全新一代智能大模型，具备敏锐的实时事件感知、卓越的视觉图像理解与自然直接的对话风格。 Grok xAI ElonMusk 实时资讯 多模态",
+    "sections": []
+  },
+  {
+    "id": "ai-claude-code",
+    "type": "ai",
+    "title": "Claude Code",
+    "url": "ai.html",
+    "category": "AI 导航 · AI 智能体与自主编程",
+    "date": "2026-08-22",
+    "tags": [
+      "ClaudeCode",
+      "AI编程",
+      "Agent",
+      "智能体",
+      "CLI工具"
+    ],
+    "summary": "Anthropic 官方终端自主 AI 智能体，直接读写并排查工程代码 — 运行在终端里的新一代智能编程 Agent，能够自主理解大型复杂代码库、执行文件编辑、运行测试用例、排查 Git 差异并一键提交。",
+    "content": "Claude Code https://github.com/anthropics/claude-code Anthropic 官方终端自主 AI 智能体，直接读写并排查工程代码 运行在终端里的新一代智能编程 Agent，能够自主理解大型复杂代码库、执行文件编辑、运行测试用例、排查 Git 差异并一键提交。 ClaudeCode AI编程 Agent 智能体 CLI工具",
+    "sections": []
+  },
+  {
+    "id": "ai-cursor",
+    "type": "ai",
+    "title": "Cursor",
+    "url": "ai.html",
+    "category": "AI 导航 · AI 智能体与自主编程",
+    "date": "2026-08-22",
+    "tags": [
+      "Cursor",
+      "VSCode",
+      "AI编程",
+      "Composer",
+      "生产力"
+    ],
+    "summary": "重新定义生产力的新一代 AI 驱动代码编辑器，全球开发者狂赞 — 基于 VS Code 深度定制的顶尖 AI IDE。内置全局代码库语义索引、多文件智能协同编辑 Composer、行间智能预测 Tab 与一键 Bug 修复。",
+    "content": "Cursor https://www.cursor.com/ 重新定义生产力的新一代 AI 驱动代码编辑器，全球开发者狂赞 基于 VS Code 深度定制的顶尖 AI IDE。内置全局代码库语义索引、多文件智能协同编辑 Composer、行间智能预测 Tab 与一键 Bug 修复。 Cursor VSCode AI编程 Composer 生产力",
+    "sections": []
+  },
+  {
+    "id": "ai-v0-by-vercel",
+    "type": "ai",
+    "title": "v0 by Vercel",
+    "url": "ai.html",
+    "category": "AI 导航 · AI 智能体与自主编程",
+    "date": "2026-08-22",
+    "tags": [
+      "v0",
+      "Vercel",
+      "React",
+      "TailwindCSS",
+      "前端生成"
+    ],
+    "summary": "基于自然语言提示词秒级生成高质量现代化 React / Tailwind UI — Vercel 出品的 UI 生成神器，通过简单对话即刻产出符合现代设计美学的 React 组件代码，支持一键复制代码或无缝部署到 Next.js 项目。",
+    "content": "v0 by Vercel https://v0.dev/ 基于自然语言提示词秒级生成高质量现代化 React / Tailwind UI Vercel 出品的 UI 生成神器，通过简单对话即刻产出符合现代设计美学的 React 组件代码，支持一键复制代码或无缝部署到 Next.js 项目。 v0 Vercel React TailwindCSS 前端生成",
+    "sections": []
+  },
+  {
+    "id": "ai-bolt-new",
+    "type": "ai",
+    "title": "Bolt.new",
+    "url": "ai.html",
+    "category": "AI 导航 · AI 智能体与自主编程",
+    "date": "2026-08-22",
+    "tags": [
+      "Bolt.new",
+      "全栈开发",
+      "WebContainers",
+      "即时部署",
+      "Agent"
+    ],
+    "summary": "在浏览器端全自动生成、安装依赖与即时部署全栈应用的 AI Agent — 基于 WebContainers 技术的端到端全栈开发智能体，用户只需描述需求即可在浏览器内自动搭建框架、编写后端 API、安装 npm 包并实时运行。",
+    "content": "Bolt.new https://bolt.new/ 在浏览器端全自动生成、安装依赖与即时部署全栈应用的 AI Agent 基于 WebContainers 技术的端到端全栈开发智能体，用户只需描述需求即可在浏览器内自动搭建框架、编写后端 API、安装 npm 包并实时运行。 Bolt.new 全栈开发 WebContainers 即时部署 Agent",
+    "sections": []
+  },
+  {
+    "id": "ai-agnes-ai",
+    "type": "ai",
+    "title": "Agnes AI",
+    "url": "ai.html",
+    "category": "AI 导航 · AI 智能体与自主编程",
+    "date": "2026-08-22",
+    "tags": [
+      "AgnesAI",
+      "AI智能体",
+      "Agent",
+      "工作流",
+      "自动化",
+      "AI平台"
+    ],
+    "summary": "新一代自进化智能体与企业级自主工作流编排执行平台 — 专注于复杂任务自动化与端到端工作流编排的高性能 AI Agent 平台，支持多模型智能调度、多智能体协同协作与深度业务场景落地。",
+    "content": "Agnes AI https://platform.agnes-ai.com/ 新一代自进化智能体与企业级自主工作流编排执行平台 专注于复杂任务自动化与端到端工作流编排的高性能 AI Agent 平台，支持多模型智能调度、多智能体协同协作与深度业务场景落地。 AgnesAI AI智能体 Agent 工作流 自动化 AI平台",
+    "sections": []
+  },
+  {
+    "id": "ai-midjourney",
+    "type": "ai",
+    "title": "Midjourney",
+    "url": "ai.html",
+    "category": "AI 导航 · AI 图像与多模态创作",
+    "date": "2026-08-22",
+    "tags": [
+      "Midjourney",
+      "AI绘画",
+      "艺术创作",
+      "图像生成",
+      "设计"
+    ],
+    "summary": "全球公认顶尖的 AI 艺术图像生成工具，电影级光影与质感 — 行业首屈一指的文本生成图像平台，以无与伦比的艺术美感、逼真的写实光影、细腻的材质纹理与丰富的风格掌控力闻名于世。",
+    "content": "Midjourney https://www.midjourney.com/ 全球公认顶尖的 AI 艺术图像生成工具，电影级光影与质感 行业首屈一指的文本生成图像平台，以无与伦比的艺术美感、逼真的写实光影、细腻的材质纹理与丰富的风格掌控力闻名于世。 Midjourney AI绘画 艺术创作 图像生成 设计",
+    "sections": []
+  },
+  {
+    "id": "ai-flux-1-black-forest-labs",
+    "type": "ai",
+    "title": "FLUX.1 (Black Forest Labs)",
+    "url": "ai.html",
+    "category": "AI 导航 · AI 图像与多模态创作",
+    "date": "2026-08-22",
+    "tags": [
+      "FLUX.1",
+      "开源模型",
+      "文字排版",
+      "生图利器",
+      "BFL"
+    ],
+    "summary": "原 SD 核心团队创立的顶尖开源生图模型，文字渲染与画质绝佳 — 新一代革命性开源图像生成模型，具备卓越的自然语言提示词遵循度、高精细度复杂人体手部还原以及精准清晰的英文字母直接排版渲染能力。",
+    "content": "FLUX.1 (Black Forest Labs) https://blackforestlabs.ai/ 原 SD 核心团队创立的顶尖开源生图模型，文字渲染与画质绝佳 新一代革命性开源图像生成模型，具备卓越的自然语言提示词遵循度、高精细度复杂人体手部还原以及精准清晰的英文字母直接排版渲染能力。 FLUX.1 开源模型 文字排版 生图利器 BFL",
+    "sections": []
+  },
+  {
+    "id": "ai-runway-gen-3",
+    "type": "ai",
+    "title": "Runway Gen-3",
+    "url": "ai.html",
+    "category": "AI 导航 · AI 图像与多模态创作",
+    "date": "2026-08-22",
+    "tags": [
+      "Runway",
+      "Gen-3",
+      "AI视频",
+      "动态渲染",
+      "创意设计"
+    ],
+    "summary": "电影工业级高保真 AI 视频生成与多模态创意渲染套件 — 领先的视频生成与视觉特效平台，支持文本生视频、图片生视频、精准运镜控制与动态画笔，广泛应用于影视创意、广告与短视频制作。",
+    "content": "Runway Gen-3 https://runwayml.com/ 电影工业级高保真 AI 视频生成与多模态创意渲染套件 领先的视频生成与视觉特效平台，支持文本生视频、图片生视频、精准运镜控制与动态画笔，广泛应用于影视创意、广告与短视频制作。 Runway Gen-3 AI视频 动态渲染 创意设计",
+    "sections": []
+  },
+  {
+    "id": "ai-openrouter",
+    "type": "ai",
+    "title": "OpenRouter",
+    "url": "ai.html",
+    "category": "AI 导航 · AI 聚合平台与 API 服务",
+    "date": "2026-08-22",
+    "tags": [
+      "OpenRouter",
+      "模型网关",
+      "API聚合",
+      "低成本",
+      "开发者"
+    ],
+    "summary": "全球统一的大模型 API 路由聚合网关，低门槛调用上百款大模型 — 极具性价比的统一大模型接入平台。仅需一个 API Key 即可低延迟调用包括 Claude 3.5、GPT-4o、DeepSeek、Llama 3 等全球所有主流模型。",
+    "content": "OpenRouter https://openrouter.ai/ 全球统一的大模型 API 路由聚合网关，低门槛调用上百款大模型 极具性价比的统一大模型接入平台。仅需一个 API Key 即可低延迟调用包括 Claude 3.5、GPT-4o、DeepSeek、Llama 3 等全球所有主流模型。 OpenRouter 模型网关 API聚合 低成本 开发者",
+    "sections": []
+  },
+  {
+    "id": "ai-hugging-face",
+    "type": "ai",
+    "title": "Hugging Face",
+    "url": "ai.html",
+    "category": "AI 导航 · AI 聚合平台与 API 服务",
+    "date": "2026-08-22",
+    "tags": [
+      "HuggingFace",
+      "开源社区",
+      "Transformers",
+      "模型下载",
+      "Spaces"
+    ],
+    "summary": "全球最大的开源 AI 模型、数据集与 Web 演示应用社区中心 — AI 领域的 GitHub。聚集了全球最新开源权重（Transformers/Diffusers）、开源数据集与 Spaces 云端演示，是探索与部署开源 AI 的首选地。",
+    "content": "Hugging Face https://huggingface.co/ 全球最大的开源 AI 模型、数据集与 Web 演示应用社区中心 AI 领域的 GitHub。聚集了全球最新开源权重（Transformers/Diffusers）、开源数据集与 Spaces 云端演示，是探索与部署开源 AI 的首选地。 HuggingFace 开源社区 Transformers 模型下载 Spaces",
+    "sections": []
+  },
+  {
+    "id": "ai-siliconflow-硅基流动",
+    "type": "ai",
+    "title": "SiliconFlow (硅基流动)",
+    "url": "ai.html",
+    "category": "AI 导航 · AI 聚合平台与 API 服务",
+    "date": "2026-08-22",
+    "tags": [
+      "SiliconFlow",
+      "硅基流动",
+      "DeepSeek",
+      "极速API",
+      "国产云"
+    ],
+    "summary": "极致性能的国产大模型云服务与推理加速平台，提供稳定 API — 专注大模型高效推理的云服务平台，深度优化开源模型推理并发与吞吐，提供 DeepSeek-R1/V3、FLUX 等顶级模型的低延迟、高可用 API 接入。",
+    "content": "SiliconFlow (硅基流动) https://siliconflow.cn/ 极致性能的国产大模型云服务与推理加速平台，提供稳定 API 专注大模型高效推理的云服务平台，深度优化开源模型推理并发与吞吐，提供 DeepSeek-R1/V3、FLUX 等顶级模型的低延迟、高可用 API 接入。 SiliconFlow 硅基流动 DeepSeek 极速API 国产云",
+    "sections": []
+  },
+  {
+    "id": "tool-草料二维码",
+    "type": "tool",
+    "title": "草料二维码",
+    "url": "tools.html",
+    "category": "工具导航 · 实用生成与办公工具",
+    "date": "2026-08-22",
+    "tags": [
+      "二维码",
+      "QR Code",
+      "生成器",
+      "常用工具",
+      "图片"
+    ],
+    "summary": "国内领先的专业二维码在线生成、解析与美化设计平台 — 支持文本、网址链接、图片、文件、名片等多种内容一键生成二维码，提供丰富高颜值样式定制、参数微调与高清矢量/位图导出。",
+    "content": "草料二维码 https://cli.im/ 国内领先的专业二维码在线生成、解析与美化设计平台 支持文本、网址链接、图片、文件、名片等多种内容一键生成二维码，提供丰富高颜值样式定制、参数微调与高清矢量/位图导出。 二维码 QR Code 生成器 常用工具 图片",
+    "sections": []
+  },
+  {
+    "id": "tool-1password-强密码生成器",
+    "type": "tool",
+    "title": "1Password 强密码生成器",
+    "url": "tools.html",
+    "category": "工具导航 · 实用生成与办公工具",
+    "date": "2026-08-22",
+    "tags": [
+      "1Password",
+      "密码生成器",
+      "安全工具",
+      "随机密码",
+      "信息安全"
+    ],
+    "summary": "1Password 官方出品的免费高安全度随机强密码与密码短语生成器 — 基于客户端加密安全随机数发生器，支持自定义密码长度、字符集组合（大小写/数字/符号）与易记密码短语生成，远离账号撞库与弱密码风险。",
+    "content": "1Password 强密码生成器 https://1password.com/zh-cn/password-generator 1Password 官方出品的免费高安全度随机强密码与密码短语生成器 基于客户端加密安全随机数发生器，支持自定义密码长度、字符集组合（大小写/数字/符号）与易记密码短语生成，远离账号撞库与弱密码风险。 1Password 密码生成器 安全工具 随机密码 信息安全",
+    "sections": []
+  },
+  {
+    "id": "tool-轻松传-easychuan",
+    "type": "tool",
+    "title": "轻松传 (EasyChuan)",
+    "url": "tools.html",
+    "category": "工具导航 · 实用生成与办公工具",
+    "date": "2026-08-22",
+    "tags": [
+      "轻松传",
+      "文件传输",
+      "快传",
+      "剪贴板同步",
+      "免安装",
+      "局域网"
+    ],
+    "summary": "极简纯净的免安装跨设备局域网与公网文件快传及文本同步工具 — 无需登录、即开即用的多端文件传输神器。通过浏览器生成提取码或扫码即可实现手机与电脑间极速传输大文件、图片与剪贴板文本，安全不限速。",
+    "content": "轻松传 (EasyChuan) https://easychuan.cn/ 极简纯净的免安装跨设备局域网与公网文件快传及文本同步工具 无需登录、即开即用的多端文件传输神器。通过浏览器生成提取码或扫码即可实现手机与电脑间极速传输大文件、图片与剪贴板文本，安全不限速。 轻松传 文件传输 快传 剪贴板同步 免安装 局域网",
+    "sections": []
+  },
+  {
+    "id": "tool-smallpdf-pdf-转-word",
+    "type": "tool",
+    "title": "Smallpdf (PDF 转 Word)",
+    "url": "tools.html",
+    "category": "工具导航 · 实用生成与办公工具",
+    "date": "2026-08-22",
+    "tags": [
+      "Smallpdf",
+      "PDF转Word",
+      "格式转换",
+      "文档处理",
+      "办公工具",
+      "在线转换"
+    ],
+    "summary": "专业高保真在线 PDF 转 Word (DOCX) 文档与格式转换平台 — 全球知名的免安装在线 PDF 处理套件，支持将 PDF 文件极速无损转换为可自由编辑的 Word (DOCX) 文档，高精度保留原始排版与版面元素。",
+    "content": "Smallpdf (PDF 转 Word) https://smallpdf.com/cn/pdf-to-word 专业高保真在线 PDF 转 Word (DOCX) 文档与格式转换平台 全球知名的免安装在线 PDF 处理套件，支持将 PDF 文件极速无损转换为可自由编辑的 Word (DOCX) 文档，高精度保留原始排版与版面元素。 Smallpdf PDF转Word 格式转换 文档处理 办公工具 在线转换",
+    "sections": []
+  },
+  {
+    "id": "tool-mobaxterm",
+    "type": "tool",
+    "title": "MobaXterm",
+    "url": "tools.html",
+    "category": "工具导航 · 终端与远程运维工具",
+    "date": "2026-08-22",
+    "tags": [
+      "MobaXterm",
+      "SSH",
+      "X11",
+      "RDP",
+      "VNC",
+      "终端箱",
+      "远程连接"
+    ],
+    "summary": "Windows 平台最全能的远程计算工具箱与一体化终端管理器 — 集成 SSH、X11、RDP、VNC、FTP/SFTP 等全协议支持，内建丰富的 Unix 工具集与图形化多标签终端界面，远程运维终极解决方案。",
+    "content": "MobaXterm https://mobaxterm.mobatek.net/ Windows 平台最全能的远程计算工具箱与一体化终端管理器 集成 SSH、X11、RDP、VNC、FTP/SFTP 等全协议支持，内建丰富的 Unix 工具集与图形化多标签终端界面，远程运维终极解决方案。 MobaXterm SSH X11 RDP VNC 终端箱 远程连接",
+    "sections": []
+  },
+  {
+    "id": "tool-finalshell",
+    "type": "tool",
+    "title": "FinalShell",
+    "url": "tools.html",
+    "category": "工具导航 · 终端与远程运维工具",
+    "date": "2026-08-22",
+    "tags": [
+      "FinalShell",
+      "SSH",
+      "终端工具",
+      "SFTP",
+      "Linux运维",
+      "服务器管理"
+    ],
+    "summary": "一体化多平台国产良心 SSH 终端与服务器实时监控管理软件 — 深度整合 SSH 客户端与服务器硬件状态实时监测（CPU/内存/网络/进程），支持可视化 SFTP 文件管理与命令智能自动补全。",
+    "content": "FinalShell http://www.hostbuf.com/ 一体化多平台国产良心 SSH 终端与服务器实时监控管理软件 深度整合 SSH 客户端与服务器硬件状态实时监测（CPU/内存/网络/进程），支持可视化 SFTP 文件管理与命令智能自动补全。 FinalShell SSH 终端工具 SFTP Linux运维 服务器管理",
+    "sections": []
+  },
+  {
+    "id": "tool-aapanel-宝塔国际版",
+    "type": "tool",
+    "title": "aaPanel (宝塔国际版)",
+    "url": "tools.html",
+    "category": "工具导航 · 终端与远程运维工具",
+    "date": "2026-08-22",
+    "tags": [
+      "aaPanel",
+      "宝塔面板",
+      "服务器运维",
+      "Linux面板",
+      "LAMP",
+      "LNMP",
+      "建站工具"
+    ],
+    "summary": "简单强大且纯净免绑定的 Linux / Windows 服务器可视化运维管理面板 — 宝塔面板官方面向全球开发者的国际版本，提供 LNMP / LAMP 运行环境一键部署、网站管理、数据库、FTP、文件管理器与 SSL 证书自动续期。",
+    "content": "aaPanel (宝塔国际版) https://www.aapanel.com/new/download.html 简单强大且纯净免绑定的 Linux / Windows 服务器可视化运维管理面板 宝塔面板官方面向全球开发者的国际版本，提供 LNMP / LAMP 运行环境一键部署、网站管理、数据库、FTP、文件管理器与 SSL 证书自动续期。 aaPanel 宝塔面板 服务器运维 Linux面板 LAMP LNMP 建站工具",
+    "sections": []
+  },
+  {
+    "id": "tool-draw-io",
+    "type": "tool",
+    "title": "draw.io",
+    "url": "tools.html",
+    "category": "工具导航 · 架构设计与思维导图",
+    "date": "2026-08-22",
+    "tags": [
+      "架构图",
+      "流程图",
+      "UML",
+      "拓扑图",
+      "免费开源"
+    ],
+    "summary": "完全免费开源的专业在线流程图、架构图与 UML 绘制利器 — 极其强大的在线绘图工具，支持绘制系统架构图、流程图、时序图、网络拓扑图与思维导图，支持导出矢量 SVG、PNG、PDF 及直接存储至 GitHub / 本地。",
+    "content": "draw.io https://app.diagrams.net/ 完全免费开源的专业在线流程图、架构图与 UML 绘制利器 极其强大的在线绘图工具，支持绘制系统架构图、流程图、时序图、网络拓扑图与思维导图，支持导出矢量 SVG、PNG、PDF 及直接存储至 GitHub / 本地。 架构图 流程图 UML 拓扑图 免费开源",
+    "sections": []
+  },
+  {
+    "id": "tool-pdmaner-元数建模",
+    "type": "tool",
+    "title": "PDManer (元数建模)",
+    "url": "tools.html",
+    "category": "工具导航 · 架构设计与思维导图",
+    "date": "2026-08-22",
+    "tags": [
+      "PDManer",
+      "数据库建模",
+      "ER图",
+      "DDL生成",
+      "架构设计",
+      "MySQL"
+    ],
+    "summary": "跨平台专业国产开源数据库 ER 建模与数据资产设计开发平台 — 支持 MySQL、PostgreSQL、Oracle、达梦等多数据库方言，提供概念模型到物理模型全流程可视化设计、DDL 脚本一键生成与版本逆向工程。",
+    "content": "PDManer (元数建模) https://www.pdmaas.cn/Download 跨平台专业国产开源数据库 ER 建模与数据资产设计开发平台 支持 MySQL、PostgreSQL、Oracle、达梦等多数据库方言，提供概念模型到物理模型全流程可视化设计、DDL 脚本一键生成与版本逆向工程。 PDManer 数据库建模 ER图 DDL生成 架构设计 MySQL",
+    "sections": []
+  },
+  {
+    "id": "tool-dbeaver",
+    "type": "tool",
+    "title": "DBeaver",
+    "url": "tools.html",
+    "category": "工具导航 · 架构设计与思维导图",
+    "date": "2026-08-22",
+    "tags": [
+      "DBeaver",
+      "数据库管理",
+      "SQL编辑器",
+      "MySQL",
+      "PostgreSQL",
+      "开源客户端"
+    ],
+    "summary": "全球领先的免费开源通用全平台多数据库连接管理客户端 — 功能极其强悍的通用数据库工具与 SQL 编辑器，支持 MySQL、PostgreSQL、SQLite、Oracle、Redis 等上百种数据库连接与数据可视化操作。",
+    "content": "DBeaver https://dbeaver.io/download/ 全球领先的免费开源通用全平台多数据库连接管理客户端 功能极其强悍的通用数据库工具与 SQL 编辑器，支持 MySQL、PostgreSQL、SQLite、Oracle、Redis 等上百种数据库连接与数据可视化操作。 DBeaver 数据库管理 SQL编辑器 MySQL PostgreSQL 开源客户端",
+    "sections": []
+  },
+  {
+    "id": "tool-geek-uninstaller",
+    "type": "tool",
+    "title": "Geek Uninstaller",
+    "url": "tools.html",
+    "category": "工具导航 · 系统优化与效率工具",
+    "date": "2026-08-22",
+    "tags": [
+      "Geek",
+      "软件卸载",
+      "Windows",
+      "注册表清理",
+      "系统工具"
+    ],
+    "summary": "Windows 平台极简高效的绿色单文件软件卸载与深度清理工具 — 单文件免安装的 Windows 卸载神器，支持强力删除流氓与顽固残留软件、深度扫描清理注册表键值与关联垃圾文件。",
+    "content": "Geek Uninstaller https://geekuninstaller.com/ Windows 平台极简高效的绿色单文件软件卸载与深度清理工具 单文件免安装的 Windows 卸载神器，支持强力删除流氓与顽固残留软件、深度扫描清理注册表键值与关联垃圾文件。 Geek 软件卸载 Windows 注册表清理 系统工具",
+    "sections": []
+  },
+  {
+    "id": "tool-kms-在线激活服务-kms-cx",
+    "type": "tool",
+    "title": "KMS 在线激活服务 (KMS.cx)",
+    "url": "tools.html",
+    "category": "工具导航 · 系统优化与效率工具",
+    "date": "2026-08-22",
+    "tags": [
+      "KMS",
+      "Windows激活",
+      "Office激活",
+      "GVLK",
+      "系统工具",
+      "命令行"
+    ],
+    "summary": "极简高速的公共 KMS 在线激活服务与 Windows / Office 一键脚本指南 — 提供全天候高可用的正规企业 KMS 批量授权在线激活服务器地址、GVLK 密钥速查表以及纯原生无后门的命令行一键激活配置教程。",
+    "content": "KMS 在线激活服务 (KMS.cx) https://kms.cx/ 极简高速的公共 KMS 在线激活服务与 Windows / Office 一键脚本指南 提供全天候高可用的正规企业 KMS 批量授权在线激活服务器地址、GVLK 密钥速查表以及纯原生无后门的命令行一键激活配置教程。 KMS Windows激活 Office激活 GVLK 系统工具 命令行",
+    "sections": []
+  },
+  {
+    "id": "tool-flyenv",
+    "type": "tool",
+    "title": "FlyEnv",
+    "url": "tools.html",
+    "category": "工具导航 · 系统优化与效率工具",
+    "date": "2026-08-22",
+    "tags": [
+      "FlyEnv",
+      "开发环境",
+      "PHP",
+      "NodeJS",
+      "MySQL",
+      "Redis",
+      "本地调试"
+    ],
+    "summary": "全能现代化本地多语言开发环境与服务集成管理工具 — 支持 PHP、Node.js、Python、Go、Java、MySQL、Redis、Nginx 等环境的一键安装与多版本极速切换，跨平台本地开发必备神器。",
+    "content": "FlyEnv https://flyenv.com/download.html 全能现代化本地多语言开发环境与服务集成管理工具 支持 PHP、Node.js、Python、Go、Java、MySQL、Redis、Nginx 等环境的一键安装与多版本极速切换，跨平台本地开发必备神器。 FlyEnv 开发环境 PHP NodeJS MySQL Redis 本地调试",
+    "sections": []
+  },
+  {
+    "id": "tool-cloudconvert-svg-to-ico",
+    "type": "tool",
+    "title": "CloudConvert (SVG to ICO)",
+    "url": "tools.html",
+    "category": "工具导航 · 图像与多媒体处理",
+    "date": "2026-08-22",
+    "tags": [
+      "SVG",
+      "ICO",
+      "Favicon",
+      "格式转换",
+      "网站图标"
+    ],
+    "summary": "专业高保真在线 SVG 矢量图转 ICO 网站图标 Favicon 转换器 — 支持将 SVG 矢量文件快速批量转换为多尺寸高清 ICO 网站图标，支持自定义图标分辨率（16x16、32x32、48x48 等），免安装即用。",
+    "content": "CloudConvert (SVG to ICO) https://cloudconvert.com/svg-to-ico 专业高保真在线 SVG 矢量图转 ICO 网站图标 Favicon 转换器 支持将 SVG 矢量文件快速批量转换为多尺寸高清 ICO 网站图标，支持自定义图标分辨率（16x16、32x32、48x48 等），免安装即用。 SVG ICO Favicon 格式转换 网站图标",
+    "sections": []
+  },
+  {
+    "id": "tool-tinify-tinypng-中文网",
+    "type": "tool",
+    "title": "Tinify (TinyPNG 中文网)",
+    "url": "tools.html",
+    "category": "工具导航 · 图像与多媒体处理",
+    "date": "2026-08-22",
+    "tags": [
+      "Tinify",
+      "TinyPNG",
+      "图片压缩",
+      "WebP",
+      "PNG",
+      "性能优化"
+    ],
+    "summary": "智能 WebP、PNG 与 JPEG 图像高保真无损压缩与批量处理平台 — 业内最负盛名的智能图像压缩服务，采用先进的量化算法精准减少颜色位数，大幅精简图片体积并保留完美视觉画质，网站提速必备利器。",
+    "content": "Tinify (TinyPNG 中文网) https://tinify.cn/ 智能 WebP、PNG 与 JPEG 图像高保真无损压缩与批量处理平台 业内最负盛名的智能图像压缩服务，采用先进的量化算法精准减少颜色位数，大幅精简图片体积并保留完美视觉画质，网站提速必备利器。 Tinify TinyPNG 图片压缩 WebP PNG 性能优化",
+    "sections": []
+  },
+  {
+    "id": "tool-hills-lite-emby-jellyfin-客户端",
+    "type": "tool",
+    "title": "Hills Lite (Emby / Jellyfin 客户端)",
+    "url": "tools.html",
+    "category": "工具导航 · 图像与多媒体处理",
+    "date": "2026-08-22",
+    "tags": [
+      "HillsLite",
+      "Emby",
+      "Jellyfin",
+      "媒体播放器",
+      "Windows",
+      "流媒体"
+    ],
+    "summary": "Windows 平台极简高颜值的 Emby 与 Jellyfin 媒体库第三方播放器 — 微软商店极受好评的轻量级流媒体客户端，原生 Fluent 设计美学，完美连接个人 Emby / Jellyfin 影音服务器，支持高清硬件解码与杜比视界播放。",
+    "content": "Hills Lite (Emby / Jellyfin 客户端) https://apps.microsoft.com/detail/9nxnzfrllwzx?hl=zh-CN&gl=CN Windows 平台极简高颜值的 Emby 与 Jellyfin 媒体库第三方播放器 微软商店极受好评的轻量级流媒体客户端，原生 Fluent 设计美学，完美连接个人 Emby / Jellyfin 影音服务器，支持高清硬件解码与杜比视界播放。 HillsLite Emby Jellyfin 媒体播放器 Windows 流媒体",
+    "sections": []
+  },
+  {
+    "id": "tool-ffmpeg",
+    "type": "tool",
+    "title": "FFmpeg",
+    "url": "tools.html",
+    "category": "工具导航 · 图像与多媒体处理",
+    "date": "2026-08-22",
+    "tags": [
+      "FFmpeg",
+      "音视频处理",
+      "视频转码",
+      "流媒体",
+      "编解码",
+      "多媒体工具"
+    ],
+    "summary": "全球领先的跨平台音视频录制、格式转换与多媒体流处理终极解决方案 — 业界最负盛名的开源跨平台音视频处理框架与多媒体工具箱，集成极其强悍的编解码库（libavcodec）、转码引擎、流媒体处理与硬件加速能力。",
+    "content": "FFmpeg https://www.ffmpeg.org/ 全球领先的跨平台音视频录制、格式转换与多媒体流处理终极解决方案 业界最负盛名的开源跨平台音视频处理框架与多媒体工具箱，集成极其强悍的编解码库（libavcodec）、转码引擎、流媒体处理与硬件加速能力。 FFmpeg 音视频处理 视频转码 流媒体 编解码 多媒体工具",
+    "sections": []
+  },
+  {
+    "id": "tool-ippure-ip-纯净度检测",
+    "type": "tool",
+    "title": "IPPure (IP 纯净度检测)",
+    "url": "tools.html",
+    "category": "工具导航 · 网络诊断与安全检测",
+    "date": "2026-08-22",
+    "tags": [
+      "IPPure",
+      "IP查询",
+      "纯净度",
+      "代理检测",
+      "网络诊断",
+      "安全风控"
+    ],
+    "summary": "专业 IP 纯净度、代理类型识别与网络欺诈风险评分检测工具 — 提供精准的 IP 归属地查询、原生/广播 IP 属性判定、数据中心/家庭宽带类型识别与网络欺诈风险分数评估，出海与网络诊断利器。",
+    "content": "IPPure (IP 纯净度检测) https://ippure.com/ 专业 IP 纯净度、代理类型识别与网络欺诈风险评分检测工具 提供精准的 IP 归属地查询、原生/广播 IP 属性判定、数据中心/家庭宽带类型识别与网络欺诈风险分数评估，出海与网络诊断利器。 IPPure IP查询 纯净度 代理检测 网络诊断 安全风控",
+    "sections": []
+  },
+  {
+    "id": "tool-cloudflare-优选-ip-节点库-090227-xyz",
+    "type": "tool",
+    "title": "Cloudflare 优选 IP 节点库 (090227.xyz)",
+    "url": "tools.html",
+    "category": "工具导航 · 网络诊断与安全检测",
+    "date": "2026-08-22",
+    "tags": [
+      "Cloudflare",
+      "CF优选",
+      "IP优选",
+      "CDN加速",
+      "节点测速",
+      "网络工具"
+    ],
+    "summary": "实时自动化测速更新的 Cloudflare 与 CDN 优选 IP 节点在线平台 — 提供全天候自动化实时测速与多线路优选筛选的 Cloudflare IP、反向代理节点及测速订阅源，助力网络加速与高可用稳定连接。",
+    "content": "Cloudflare 优选 IP 节点库 (090227.xyz) https://cf.090227.xyz/ 实时自动化测速更新的 Cloudflare 与 CDN 优选 IP 节点在线平台 提供全天候自动化实时测速与多线路优选筛选的 Cloudflare IP、反向代理节点及测速订阅源，助力网络加速与高可用稳定连接。 Cloudflare CF优选 IP优选 CDN加速 节点测速 网络工具",
+    "sections": []
+  },
+  {
+    "id": "github-fnm",
+    "type": "github",
+    "title": "fnm (Schniz/fnm)",
+    "url": "nav.html",
+    "category": "GitHub 导航 · Node.js 版本管理",
+    "date": "2026-08-22",
+    "tags": [
+      "Rust",
+      "Node.js",
+      "CLI",
+      "版本管理",
+      "跨平台"
+    ],
+    "summary": "🚀 基于 Rust 编写的高性能、轻量级跨平台 Node.js 版本管理器 — 极速且原生的 Node.js 版本管理器。原生支持 .node-version 和 .nvmrc 自动环境感知切换，支持 Bash、Zsh、Fish、PowerShell，启动与切换性能极其优异。",
+    "content": "fnm Schniz/fnm https://github.com/Schniz/fnm 🚀 基于 Rust 编写的高性能、轻量级跨平台 Node.js 版本管理器 极速且原生的 Node.js 版本管理器。原生支持 .node-version 和 .nvmrc 自动环境感知切换，支持 Bash、Zsh、Fish、PowerShell，启动与切换性能极其优异。 Rust Node.js CLI 版本管理 跨平台",
+    "sections": []
+  },
+  {
+    "id": "github-nvm",
+    "type": "github",
+    "title": "nvm (nvm-sh/nvm)",
+    "url": "nav.html",
+    "category": "GitHub 导航 · Node.js 版本管理",
+    "date": "2026-08-22",
+    "tags": [
+      "Shell",
+      "Bash",
+      "Node.js",
+      "环境配置",
+      "经典工具"
+    ],
+    "summary": "POSIX 兼容的标准 Node.js 多版本环境管理脚本 — 业界最流行、应用最广泛的 Node.js 版本管理解决方案。通过 Bash 脚本为每个版本独立隔离 node/npm 环境，完美解决多项目 Node 版本依赖冲突。",
+    "content": "nvm nvm-sh/nvm https://github.com/nvm-sh/nvm POSIX 兼容的标准 Node.js 多版本环境管理脚本 业界最流行、应用最广泛的 Node.js 版本管理解决方案。通过 Bash 脚本为每个版本独立隔离 node/npm 环境，完美解决多项目 Node 版本依赖冲突。 Shell Bash Node.js 环境配置 经典工具",
+    "sections": []
+  },
+  {
+    "id": "github-ventoy",
+    "type": "github",
+    "title": "Ventoy (ventoy/Ventoy)",
+    "url": "nav.html",
+    "category": "GitHub 导航 · 系统与装机利器",
+    "date": "2026-08-22",
+    "tags": [
+      "Ventoy",
+      "启动盘",
+      "ISO启动",
+      "C",
+      "系统安装",
+      "U盘"
+    ],
+    "summary": "新一代多系统多合一启动 U 盘制作神器，无需格式化直接启动 ISO — 革命性的多合一启动盘制作工具。安装一次 Ventoy 后，只需将 Windows/Linux 的 ISO/WIM/IMG 镜像文件直接拷贝进 U 盘即可在开机菜单直接引导启动。",
+    "content": "Ventoy ventoy/Ventoy https://github.com/ventoy/Ventoy 新一代多系统多合一启动 U 盘制作神器，无需格式化直接启动 ISO 革命性的多合一启动盘制作工具。安装一次 Ventoy 后，只需将 Windows/Linux 的 ISO/WIM/IMG 镜像文件直接拷贝进 U 盘即可在开机菜单直接引导启动。 Ventoy 启动盘 ISO启动 C 系统安装 U盘",
+    "sections": []
+  },
+  {
+    "id": "github-lky-officetools",
+    "type": "github",
+    "title": "LKY_OfficeTools (OdysseusYuan/LKY_OfficeTools)",
+    "url": "nav.html",
+    "category": "GitHub 导航 · 系统与装机利器",
+    "date": "2026-08-22",
+    "tags": [
+      "Office",
+      "LKY",
+      "办公工具",
+      "装机必备",
+      "一键安装",
+      "Windows"
+    ],
+    "summary": "一键全自动快速下载、安装与配置正版 Office 部署神器 — 极简实用的 Microsoft Office 一键快速下载安装与配置工具，支持自由选择组件版本、自定义安装路径、自动部署多语言包与系统环境初始化。",
+    "content": "LKY_OfficeTools OdysseusYuan/LKY_OfficeTools https://github.com/OdysseusYuan/LKY_OfficeTools 一键全自动快速下载、安装与配置正版 Office 部署神器 极简实用的 Microsoft Office 一键快速下载安装与配置工具，支持自由选择组件版本、自定义安装路径、自动部署多语言包与系统环境初始化。 Office LKY 办公工具 装机必备 一键安装 Windows",
+    "sections": []
+  },
+  {
+    "id": "github-fail2ban",
+    "type": "github",
+    "title": "Fail2Ban (fail2ban/fail2ban)",
+    "url": "nav.html",
+    "category": "GitHub 导航 · 服务器安全与防护",
+    "date": "2026-08-22",
+    "tags": [
+      "Fail2Ban",
+      "Linux安全",
+      "防爆破",
+      "Python",
+      "SSH防护",
+      "防火墙"
+    ],
+    "summary": "Linux 服务器日志驱动的自动化恶意 IP 封禁与防暴力破解系统 — 通过持续分析 SSH、Nginx、Postfix 等系统服务日志，精准识别非法尝试与暴力破解攻击，并自动调用 iptables / firewalld 实时封禁攻击者 IP。",
+    "content": "Fail2Ban fail2ban/fail2ban https://github.com/fail2ban/fail2ban Linux 服务器日志驱动的自动化恶意 IP 封禁与防暴力破解系统 通过持续分析 SSH、Nginx、Postfix 等系统服务日志，精准识别非法尝试与暴力破解攻击，并自动调用 iptables / firewalld 实时封禁攻击者 IP。 Fail2Ban Linux安全 防爆破 Python SSH防护 防火墙",
+    "sections": []
+  },
+  {
+    "id": "github-acme-sh",
+    "type": "github",
+    "title": "acme.sh (acmesh-official/acme.sh)",
+    "url": "nav.html",
+    "category": "GitHub 导航 · 服务器安全与防护",
+    "date": "2026-08-22",
+    "tags": [
+      "acme.sh",
+      "SSL证书",
+      "HTTPS",
+      "Let's Encrypt",
+      "Shell",
+      "自动化运维"
+    ],
+    "summary": "纯 Shell 编写的自动化免费 SSL/TLS 证书申请与一键续期脚本 — 最流行、最轻量的 ACME 协议客户端。纯 Shell 编写且零第三方依赖，支持 Let's Encrypt / ZeroSSL 免费证书自动申请、DNS 自动化鉴权验证与 Web 服务器静默热重载。",
+    "content": "acme.sh acmesh-official/acme.sh https://github.com/acmesh-official/acme.sh 纯 Shell 编写的自动化免费 SSL/TLS 证书申请与一键续期脚本 最流行、最轻量的 ACME 协议客户端。纯 Shell 编写且零第三方依赖，支持 Let's Encrypt / ZeroSSL 免费证书自动申请、DNS 自动化鉴权验证与 Web 服务器静默热重载。 acme.sh SSL证书 HTTPS Let's Encrypt Shell 自动化运维",
+    "sections": []
+  },
+  {
+    "id": "github-fingerprintjs",
+    "type": "github",
+    "title": "FingerprintJS (fingerprintjs/fingerprintjs)",
+    "url": "nav.html",
+    "category": "GitHub 导航 · 前端安全与设备识别",
+    "date": "2026-08-22",
+    "tags": [
+      "Fingerprint",
+      "设备指纹",
+      "TypeScript",
+      "安全风控",
+      "浏览器特征",
+      "前端库"
+    ],
+    "summary": "最流行的浏览器端高精度设备指纹识别与无 Cookie 访客识别库 — 无需 Cookie 或本地存储，通过分析 Canvas、WebGL、音频上下文、系统字体与硬件特征生成高稳定性设备指纹，广泛用于业务反欺诈与安全风控。",
+    "content": "FingerprintJS fingerprintjs/fingerprintjs https://github.com/fingerprintjs/fingerprintjs 最流行的浏览器端高精度设备指纹识别与无 Cookie 访客识别库 无需 Cookie 或本地存储，通过分析 Canvas、WebGL、音频上下文、系统字体与硬件特征生成高稳定性设备指纹，广泛用于业务反欺诈与安全风控。 Fingerprint 设备指纹 TypeScript 安全风控 浏览器特征 前端库",
+    "sections": []
+  },
+  {
+    "id": "github-cloudflarespeedtest",
+    "type": "github",
+    "title": "CloudflareSpeedTest (XIU2/CloudflareSpeedTest)",
+    "url": "nav.html",
+    "category": "GitHub 导航 · 网络加速与穿透工具",
+    "date": "2026-08-22",
+    "tags": [
+      "CloudflareSpeedTest",
+      "Cloudflare",
+      "CDN",
+      "测速",
+      "IP优选",
+      "Go",
+      "网络优化"
+    ],
+    "summary": "🌩 针对 Cloudflare CDN 的多线程高速测速与优选 IP 筛选工具 — 国内最火爆的 Cloudflare CDN 优选测速利器。支持并发测试 Cloudflare 所有公开/自定义 IP 的延迟和下载速度，自动筛选出延迟最低、速度最快的最优 IP。",
+    "content": "CloudflareSpeedTest XIU2/CloudflareSpeedTest https://github.com/XIU2/CloudflareSpeedTest 🌩 针对 Cloudflare CDN 的多线程高速测速与优选 IP 筛选工具 国内最火爆的 Cloudflare CDN 优选测速利器。支持并发测试 Cloudflare 所有公开/自定义 IP 的延迟和下载速度，自动筛选出延迟最低、速度最快的最优 IP。 CloudflareSpeedTest Cloudflare CDN 测速 IP优选 Go 网络优化",
+    "sections": []
+  },
+  {
+    "id": "github-frp",
+    "type": "github",
+    "title": "frp (fatedier/frp)",
+    "url": "nav.html",
+    "category": "GitHub 导航 · 网络加速与穿透工具",
+    "date": "2026-08-22",
+    "tags": [
+      "frp",
+      "内网穿透",
+      "反向代理",
+      "Go",
+      "远程访问",
+      "NAT穿透"
+    ],
+    "summary": "⚡ 高性能反向代理与内网穿透利器，轻松将内网服务暴露至公网 — 业界应用最广泛的开源高性能反向代理与内网穿透应用。支持 TCP、UDP、HTTP、HTTPS、STCP 等多种协议，支持链路加密与多路复用，远程运维与私有云部署必备。",
+    "content": "frp fatedier/frp https://github.com/fatedier/frp ⚡ 高性能反向代理与内网穿透利器，轻松将内网服务暴露至公网 业界应用最广泛的开源高性能反向代理与内网穿透应用。支持 TCP、UDP、HTTP、HTTPS、STCP 等多种协议，支持链路加密与多路复用，远程运维与私有云部署必备。 frp 内网穿透 反向代理 Go 远程访问 NAT穿透",
+    "sections": []
+  },
+  {
+    "id": "github-v2rayng",
+    "type": "github",
+    "title": "v2rayNG (2dust/v2rayNG)",
+    "url": "nav.html",
+    "category": "GitHub 导航 · 网络加速与穿透工具",
+    "date": "2026-08-22",
+    "tags": [
+      "v2rayNG",
+      "Android",
+      "代理工具",
+      "V2Ray",
+      "Xray",
+      "Shadowsocks",
+      "Kotlin"
+    ],
+    "summary": "Android 平台主流且强大的多协议通用网络代理客户端 — 基于 V2Ray / Xray 核心开发的 Android 客户端，全面支持 VMess、VLESS、Shadowsocks、Trojan、Socks5 等主流网络协议与分流规则配置。",
+    "content": "v2rayNG 2dust/v2rayNG https://github.com/2dust/v2rayNG Android 平台主流且强大的多协议通用网络代理客户端 基于 V2Ray / Xray 核心开发的 Android 客户端，全面支持 VMess、VLESS、Shadowsocks、Trojan、Socks5 等主流网络协议与分流规则配置。 v2rayNG Android 代理工具 V2Ray Xray Shadowsocks Kotlin",
+    "sections": []
+  },
+  {
+    "id": "github-v2rayn",
+    "type": "github",
+    "title": "v2rayN (2dust/v2rayN)",
+    "url": "nav.html",
+    "category": "GitHub 导航 · 网络加速与穿透工具",
+    "date": "2026-08-22",
+    "tags": [
+      "v2rayN",
+      "Windows",
+      "代理工具",
+      "V2Ray",
+      "Xray",
+      "sing-box",
+      "C#"
+    ],
+    "summary": "Windows 平台主流且强大的多协议通用网络代理 GUI 客户端 — 基于 V2Ray / Xray / sing-box 核心开发的 Windows 桌面图形客户端，全面支持 VMess、VLESS、Shadowsocks、Trojan、Hysteria2 等主流协议与路由分流规则配置。",
+    "content": "v2rayN 2dust/v2rayN https://github.com/2dust/v2rayN Windows 平台主流且强大的多协议通用网络代理 GUI 客户端 基于 V2Ray / Xray / sing-box 核心开发的 Windows 桌面图形客户端，全面支持 VMess、VLESS、Shadowsocks、Trojan、Hysteria2 等主流协议与路由分流规则配置。 v2rayN Windows 代理工具 V2Ray Xray sing-box C#",
+    "sections": []
+  },
+  {
+    "id": "file-fileupload-vue",
+    "type": "file",
+    "title": "FileUpload.vue",
+    "url": "files.html",
+    "category": "资源文件 · 前端组件",
+    "date": "2026-08-22",
+    "tags": [
+      "vue",
+      "前端组件"
+    ],
+    "summary": "Vue3 + Element Plus 文件上传组件源码（支持回显、批量与手动控制提交） (12.7 KB, undefined 行)",
+    "content": "FileUpload.vue Vue3 + Element Plus 文件上传组件源码（支持回显、批量与手动控制提交） 前端组件 vue",
+    "sections": []
+  },
+  {
+    "id": "file-queryform-vue",
+    "type": "file",
+    "title": "QueryForm.vue",
+    "url": "files.html",
+    "category": "资源文件 · 前端组件",
+    "date": "2026-08-22",
+    "tags": [
+      "vue",
+      "前端组件"
+    ],
+    "summary": "Vue3 + Element Plus 查询表单通用封装组件源码（响应式布局与重置联动） (10.3 KB, undefined 行)",
+    "content": "QueryForm.vue Vue3 + Element Plus 查询表单通用封装组件源码（响应式布局与重置联动） 前端组件 vue",
+    "sections": []
+  },
+  {
+    "id": "file-tools-js",
+    "type": "file",
+    "title": "tools.js",
+    "url": "files.html",
+    "category": "资源文件 · 代码库",
+    "date": "2026-08-22",
+    "tags": [
+      "js",
+      "代码库"
+    ],
+    "summary": "JavaScript 常用实用函数库合集（防抖节流、树递归、深拷贝、数据类型判断） (24.7 KB, undefined 行)",
+    "content": "tools.js JavaScript 常用实用函数库合集（防抖节流、树递归、深拷贝、数据类型判断） 代码库 js",
+    "sections": []
+  },
+  {
+    "id": "file-frps-sh",
+    "type": "file",
+    "title": "frps.sh",
+    "url": "files.html",
+    "category": "资源文件 · Shell 脚本",
+    "date": "2026-08-22",
+    "tags": [
+      "sh",
+      "Shell 脚本"
+    ],
+    "summary": "FRP 内网穿透服务端 Linux 一键自动化安装、配置与 Systemd 管理脚本 (29.1 KB, undefined 行)",
+    "content": "frps.sh FRP 内网穿透服务端 Linux 一键自动化安装、配置与 Systemd 管理脚本 Shell 脚本 sh",
+    "sections": []
+  },
+  {
+    "id": "file-xray-sh",
+    "type": "file",
+    "title": "xray.sh",
+    "url": "files.html",
+    "category": "资源文件 · Shell 脚本",
+    "date": "2026-08-22",
+    "tags": [
+      "sh",
+      "Shell 脚本"
+    ],
+    "summary": "Xray Core 核心网络代理服务一键安装与证书部署脚本 (23.1 KB, undefined 行)",
+    "content": "xray.sh Xray Core 核心网络代理服务一键安装与证书部署脚本 Shell 脚本 sh",
+    "sections": []
+  },
+  {
+    "id": "file-cmd-proxy-bat",
+    "type": "file",
+    "title": "cmd_proxy.bat",
+    "url": "files.html",
+    "category": "资源文件 · Windows 批处理",
+    "date": "2026-08-22",
+    "tags": [
+      "bat",
+      "Windows 批处理"
+    ],
+    "summary": "Windows CMD 终端一键设置与清除 HTTP/SOCKS5 代理环境变量脚本 (823 B, undefined 行)",
+    "content": "cmd_proxy.bat Windows CMD 终端一键设置与清除 HTTP/SOCKS5 代理环境变量脚本 Windows 批处理 bat",
+    "sections": []
+  },
+  {
+    "id": "file-cmd-proxy-agy-bat",
+    "type": "file",
+    "title": "cmd_proxy_agy.bat",
+    "url": "files.html",
+    "category": "资源文件 · Windows 批处理",
+    "date": "2026-08-22",
+    "tags": [
+      "bat",
+      "Windows 批处理"
+    ],
+    "summary": "Windows CMD 终端一键配置代理并自动开启 Antigravity (AGY) 免权限全自动运行脚本 (858 B, undefined 行)",
+    "content": "cmd_proxy_agy.bat Windows CMD 终端一键配置代理并自动开启 Antigravity (AGY) 免权限全自动运行脚本 Windows 批处理 bat",
+    "sections": []
+  },
+  {
+    "id": "file-filenamereplascrip-bat",
+    "type": "file",
+    "title": "fileNameReplaScrip.bat",
+    "url": "files.html",
+    "category": "资源文件 · Windows 批处理",
+    "date": "2026-08-22",
+    "tags": [
+      "bat",
+      "Windows 批处理"
+    ],
+    "summary": "Windows 批量替换与修改文件名自动化 BAT 批处理脚本 (879 B, undefined 行)",
+    "content": "fileNameReplaScrip.bat Windows 批量替换与修改文件名自动化 BAT 批处理脚本 Windows 批处理 bat",
+    "sections": []
+  },
+  {
+    "id": "file-imghandle-jpg-zip",
+    "type": "file",
+    "title": "ImgHandle_jpg.zip",
+    "url": "files.html",
+    "category": "资源文件 · 压缩资源包",
+    "date": "2026-08-22",
+    "tags": [
+      "zip",
+      "压缩资源包"
+    ],
+    "summary": "Photoshop 批量压缩 JPG 图片 ExtendScript 脚本与动作资源包 (1.7 KB, undefined 行)",
+    "content": "ImgHandle_jpg.zip Photoshop 批量压缩 JPG 图片 ExtendScript 脚本与动作资源包 压缩资源包 zip",
+    "sections": []
+  },
+  {
+    "id": "file-curvecharts-rar",
+    "type": "file",
+    "title": "curveCharts.rar",
+    "url": "files.html",
+    "category": "资源文件 · 压缩资源包",
+    "date": "2026-08-22",
+    "tags": [
+      "rar",
+      "压缩资源包"
+    ],
+    "summary": "平滑贝塞尔曲线与数据可视化图表组件资源包 (6.9 KB, undefined 行)",
+    "content": "curveCharts.rar 平滑贝塞尔曲线与数据可视化图表组件资源包 压缩资源包 rar",
+    "sections": []
+  },
+  {
+    "id": "file-优惠券弹框组件-zip",
+    "type": "file",
+    "title": "优惠券弹框组件.zip",
+    "url": "files.html",
+    "category": "资源文件 · 压缩资源包",
+    "date": "2026-08-22",
+    "tags": [
+      "zip",
+      "压缩资源包"
+    ],
+    "summary": "Vue 前端业务优惠券领取与展示弹框交互组件完整工程包 (30.4 KB, undefined 行)",
+    "content": "优惠券弹框组件.zip Vue 前端业务优惠券领取与展示弹框交互组件完整工程包 压缩资源包 zip",
+    "sections": []
   }
 ];
