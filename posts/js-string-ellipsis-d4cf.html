@@ -26,6 +26,20 @@
   <meta name="twitter:title" content="JavaScript 字符串指定长度截断并自动追加省略号 - vmrey.github.io">
   <meta name="twitter:description" content="纯 JavaScript 实现可自定义最大字符长度的文本截断函数，超出部分智能替换为 ... 省略号，支持严格边界保护。">
   <meta name="twitter:image" content="https://vmrey.github.io/favicon.svg">
+
+  <!-- 页面绘制前同步初始化深浅色主题，彻底杜绝首屏白屏闪烁 (Anti-FOUC) -->
+  <script>
+    (function() {
+      try {
+        var t = localStorage.getItem('theme');
+        if (!t) {
+          var isDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+          t = isDark ? 'dark' : 'light';
+        }
+        document.documentElement.setAttribute('data-theme', t);
+      } catch(e) {}
+    })();
+  </script>
   
   <script type="application/ld+json">
   {
@@ -372,12 +386,12 @@ console.log(truncateWithEllipsis('短文本', 10));
     </svg>
   </button>
 
-  <script src="../js/config.js"></script>
-  <script src="../data/search-index.js"></script>
-  <script src="../js/main.js"></script>
-  <script src="../js/prism.js"></script>
-  <script src="../js/search.js"></script>
-  <script src="../js/file-preview.js"></script>
+  <script defer src="../js/config.js"></script>
+  <script defer src="../data/search-index.js"></script>
+  <script defer src="../js/main.js"></script>
+  <script defer src="../js/prism.js"></script>
+  <script defer src="../js/search.js"></script>
+  <script defer src="../js/file-preview.js"></script>
 
 </body>
 </html>

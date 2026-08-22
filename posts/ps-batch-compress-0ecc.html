@@ -26,6 +26,20 @@
   <meta name="twitter:title" content="Photoshop 批量压缩与图片重命名 ExtendScript (JSX) 脚本源码 - vmrey.github.io">
   <meta name="twitter:description" content="使用 Adobe ExtendScript 编写 PS 自动化脚本，一键递归处理整个文件夹中的图片并按质量比导出。">
   <meta name="twitter:image" content="https://vmrey.github.io/favicon.svg">
+
+  <!-- 页面绘制前同步初始化深浅色主题，彻底杜绝首屏白屏闪烁 (Anti-FOUC) -->
+  <script>
+    (function() {
+      try {
+        var t = localStorage.getItem('theme');
+        if (!t) {
+          var isDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+          t = isDark ? 'dark' : 'light';
+        }
+        document.documentElement.setAttribute('data-theme', t);
+      } catch(e) {}
+    })();
+  </script>
   
   <script type="application/ld+json">
   {
@@ -754,12 +768,12 @@ main();</code></pre>
     </svg>
   </button>
 
-  <script src="../js/config.js"></script>
-  <script src="../data/search-index.js"></script>
-  <script src="../js/main.js"></script>
-  <script src="../js/prism.js"></script>
-  <script src="../js/search.js"></script>
-  <script src="../js/file-preview.js"></script>
+  <script defer src="../js/config.js"></script>
+  <script defer src="../data/search-index.js"></script>
+  <script defer src="../js/main.js"></script>
+  <script defer src="../js/prism.js"></script>
+  <script defer src="../js/search.js"></script>
+  <script defer src="../js/file-preview.js"></script>
 
 </body>
 </html>

@@ -322,7 +322,7 @@ async function main() {
         console.error(`  - 已存在于: [${c.match.navName}] [${c.match.category}] ${c.match.name} (${c.match.url})`);
       });
       console.error(`\n🚫 为保障数据严谨性，已取消添加。若确需更新，请使用 modify 命令。\n`);
-      process.exit(1)
+      process.exit(1);
     }
 
     // 2. 实时可访问性检测 (确保链接有效)

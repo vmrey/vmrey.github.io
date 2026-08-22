@@ -485,33 +485,59 @@ function parseFrontMatterAndMarkdown(raw) {
 // 增强型行内 Markdown 解析器 (支持加粗、斜体、删除线、代码、图片、链接、脚注引用、徽章等)
 function formatInlineMarkdown(text) {
   if (!text) return '';
-  let res = escapeHtml(text);
 
-  // 1. 删除线 (~~内容~~)
+  const placeholders = [];
+  let tokenIdx = 0;
+
+  function storeToken(html) {
+    const key = `%%MD_TOKEN_${tokenIdx++}%%`;
+    placeholders.push({ key, html });
+    return key;
+  }
+
+  let str = text;
+
+  // 1. 优先提取并保护行内代码 (`code`)，内部进行 HTML 转义
+  str = str.replace(/`([^`]+)`/g, (match, code) => {
+    return storeToken(`<code>${escapeHtml(code)}</code>`);
+  });
+
+  // 2. 提取并保护图片 (![alt](url))，注入 loading="lazy" decoding="async"
+  str = str.replace(/!\[(.*?)\]\((.*?)\)/g, (match, alt, url) => {
+    return storeToken(`<img src="${escapeHtml(url)}" alt="${escapeHtml(alt)}" class="article-image" loading="lazy" decoding="async">`);
+  });
+
+  // 3. 提取并保护超链接 ([text](url))
+  str = str.replace(/\[(.*?)\]\((.*?)\)/g, (match, linkText, url) => {
+    const isExternal = url.startsWith('http://') || url.startsWith('https://');
+    const targetAttr = isExternal ? ' target="_blank" rel="noopener noreferrer"' : '';
+    // 递归格式化链接内的文字（如链接内加粗）
+    const formattedLinkText = formatInlineMarkdown(linkText);
+    return storeToken(`<a href="${escapeHtml(url)}"${targetAttr}>${formattedLinkText}</a>`);
+  });
+
+  // 4. 提取并保护脚注引用 ([^1])
+  str = str.replace(/\[\^([a-zA-Z0-9_-]+)\]/g, (match, fnId) => {
+    return storeToken(`<sup class="footnote-ref"><a href="#fn-${fnId}" id="fnref-${fnId}">[${fnId}]</a></sup>`);
+  });
+
+  // 5. 对剩余的纯文本部分进行安全 HTML 转义
+  let res = escapeHtml(str);
+
+  // 6. 删除线 (~~内容~~)
   res = res.replace(/~~(.*?)~~/g, '<del>$1</del>');
 
-  // 2. 加粗 (**内容** 或 __内容__)
+  // 7. 加粗 (**内容** 或 __内容__)
   res = res.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
   res = res.replace(/__(.*?)__/g, '<strong>$1</strong>');
 
-  // 3. 斜体 (*内容* 或 _内容_)
+  // 8. 斜体 (*内容* 或 _内容_)
   res = res.replace(/\*(.*?)\*/g, '<em>$1</em>');
-  res = res.replace(/_([^_]+)_/g, '<em>$1</em>');
+  res = res.replace(/(^|[^\w])_([^_]+)_(?=[^\w]|$)/g, '$1<em>$2</em>');
 
-  // 4. 行内代码 (`code`)
-  res = res.replace(/`([^`]+)`/g, '<code>$1</code>');
-
-  // 5. 脚注引用 ([^1])
-  res = res.replace(/\[\^([a-zA-Z0-9_-]+)\]/g, '<sup class="footnote-ref"><a href="#fn-$1" id="fnref-$1">[$1]</a></sup>');
-
-  // 6. 图片 (![alt](url))
-  res = res.replace(/!\[(.*?)\]\((.*?)\)/g, '<img src="$2" alt="$1" class="article-image">');
-
-  // 7. 链接 ([text](url))
-  res = res.replace(/\[(.*?)\]\((.*?)\)/g, (match, text, url) => {
-    const isExternal = url.startsWith('http://') || url.startsWith('https://');
-    const targetAttr = isExternal ? ' target="_blank" rel="noopener noreferrer"' : '';
-    return `<a href="${url}"${targetAttr}>${text}</a>`;
+  // 9. 还原所有被保护的占位符
+  placeholders.forEach(({ key, html }) => {
+    res = res.replace(key, html);
   });
 
   return res;
@@ -1029,7 +1055,7 @@ postsList.forEach((p, idx) => {
 - **核心摘要**: ${p.summary || p.title}
 
 ### 核心内容要点与大纲:
-${(p.sections || []).map(s => `- ${s.title}`).join('\n') || '- 详见正文实战代码与解析'}
+${(p.headings || []).map(s => `- ${s.title}`).join('\n') || '- 详见正文实战代码与解析'}
 
 `;
 });

@@ -26,6 +26,20 @@
   <meta name="twitter:title" content="Git 常用高频命令与分支协同工作流速查清单 - vmrey.github.io">
   <meta name="twitter:description" content="系统整理日常开发中最常用的 Git 核心操作：SSH 密钥生成、全局身份配置、分支管理、暂存区操作、回退撤销与冲突解决速查。">
   <meta name="twitter:image" content="https://vmrey.github.io/favicon.svg">
+
+  <!-- 页面绘制前同步初始化深浅色主题，彻底杜绝首屏白屏闪烁 (Anti-FOUC) -->
+  <script>
+    (function() {
+      try {
+        var t = localStorage.getItem('theme');
+        if (!t) {
+          var isDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+          t = isDark ? 'dark' : 'light';
+        }
+        document.documentElement.setAttribute('data-theme', t);
+      } catch(e) {}
+    })();
+  </script>
   
   <script type="application/ld+json">
   {
@@ -326,7 +340,7 @@ git config --global user.email &quot;your_email@example.com&quot;</code></pre>
 ssh-keygen -t rsa -b 4096 -C &quot;your_email@example.com&quot;</code></pre>
 <p>查看并复制生成的公钥内容（粘贴至 GitHub <code>Settings -&gt; SSH Keys</code>）：</p>
 <ul>
-<li><strong>Linux / macOS</strong>：<code>cat ~/.ssh/id<em>ed25519.pub</code> 或 <code>cat ~/.ssh/id</em>rsa.pub</code>
+<li><strong>Linux / macOS</strong>：<code>cat ~/.ssh/id_ed25519.pub</code> 或 <code>cat ~/.ssh/id_rsa.pub</code>
 </li>
 <li><strong>Windows</strong>：<code>type %USERPROFILE%\.ssh\id_rsa.pub</code>
 </li>
@@ -477,12 +491,12 @@ git reset --hard &lt;commit-id&gt;</code></pre>
     </svg>
   </button>
 
-  <script src="../js/config.js"></script>
-  <script src="../data/search-index.js"></script>
-  <script src="../js/main.js"></script>
-  <script src="../js/prism.js"></script>
-  <script src="../js/search.js"></script>
-  <script src="../js/file-preview.js"></script>
+  <script defer src="../js/config.js"></script>
+  <script defer src="../data/search-index.js"></script>
+  <script defer src="../js/main.js"></script>
+  <script defer src="../js/prism.js"></script>
+  <script defer src="../js/search.js"></script>
+  <script defer src="../js/file-preview.js"></script>
 
 </body>
 </html>

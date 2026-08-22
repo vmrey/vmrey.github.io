@@ -26,6 +26,20 @@
   <meta name="twitter:title" content="Element UI 中 el-calendar 日历组件禁用与灰色置灰点击处理 - vmrey.github.io">
   <meta name="twitter:description" content="针对 Element UI 的 el-calendar 日历组件，利用 slot 插槽与 CSS 禁用非本月或过期日期的点击操作并展示灰色状态。">
   <meta name="twitter:image" content="https://vmrey.github.io/favicon.svg">
+
+  <!-- 页面绘制前同步初始化深浅色主题，彻底杜绝首屏白屏闪烁 (Anti-FOUC) -->
+  <script>
+    (function() {
+      try {
+        var t = localStorage.getItem('theme');
+        if (!t) {
+          var isDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+          t = isDark ? 'dark' : 'light';
+        }
+        document.documentElement.setAttribute('data-theme', t);
+      } catch(e) {}
+    })();
+  </script>
   
   <script type="application/ld+json">
   {
@@ -391,12 +405,12 @@ export default {
     </svg>
   </button>
 
-  <script src="../js/config.js"></script>
-  <script src="../data/search-index.js"></script>
-  <script src="../js/main.js"></script>
-  <script src="../js/prism.js"></script>
-  <script src="../js/search.js"></script>
-  <script src="../js/file-preview.js"></script>
+  <script defer src="../js/config.js"></script>
+  <script defer src="../data/search-index.js"></script>
+  <script defer src="../js/main.js"></script>
+  <script defer src="../js/prism.js"></script>
+  <script defer src="../js/search.js"></script>
+  <script defer src="../js/file-preview.js"></script>
 
 </body>
 </html>

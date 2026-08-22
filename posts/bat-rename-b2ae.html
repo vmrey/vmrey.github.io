@@ -26,6 +26,20 @@
   <meta name="twitter:title" content="Windows 批量修改文件名与字符替换批处理 (.bat) 脚本 - vmrey.github.io">
   <meta name="twitter:description" content="无需安装第三方软件，利用原生 Bat 批处理脚本一键完成指定文件夹下海量文件的前缀添加与文本替换。">
   <meta name="twitter:image" content="https://vmrey.github.io/favicon.svg">
+
+  <!-- 页面绘制前同步初始化深浅色主题，彻底杜绝首屏白屏闪烁 (Anti-FOUC) -->
+  <script>
+    (function() {
+      try {
+        var t = localStorage.getItem('theme');
+        if (!t) {
+          var isDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+          t = isDark ? 'dark' : 'light';
+        }
+        document.documentElement.setAttribute('data-theme', t);
+      } catch(e) {}
+    })();
+  </script>
   
   <script type="application/ld+json">
   {
@@ -468,9 +482,9 @@ pause</code></pre>
 替换后的字符串: picture</code></pre>
 <p><strong>效果：</strong></p>
 <ul>
-<li><code>photo<em>001.jpg</code> → <code>picture</em>001.jpg</code>
+<li><code>photo_001.jpg</code> → <code>picture_001.jpg</code>
 </li>
-<li><code>my<em>photo.png</code> → <code>my</em>picture.png</code>
+<li><code>my_photo.png</code> → <code>my_picture.png</code>
 </li>
 </ul>
 <h3 id="示例2-批量删除文件名中的字符">示例2：批量删除文件名中的字符</h3>
@@ -478,9 +492,9 @@ pause</code></pre>
 替换后的字符串: (直接回车)</code></pre>
 <p><strong>效果：</strong></p>
 <ul>
-<li><code>copy<em>document.txt</code> → <code></em>document.txt</code>
+<li><code>copy_document.txt</code> → <code>_document.txt</code>
 </li>
-<li><code>file<em>copy</em>2.doc</code> → <code>file__2.doc</code>
+<li><code>file_copy_2.doc</code> → <code>file__2.doc</code>
 </li>
 </ul>
 <h3 id="示例3-批量添加前缀">示例3：批量添加前缀</h3>
@@ -711,12 +725,12 @@ if __name__ == &quot;__main__&quot;:
     </svg>
   </button>
 
-  <script src="../js/config.js"></script>
-  <script src="../data/search-index.js"></script>
-  <script src="../js/main.js"></script>
-  <script src="../js/prism.js"></script>
-  <script src="../js/search.js"></script>
-  <script src="../js/file-preview.js"></script>
+  <script defer src="../js/config.js"></script>
+  <script defer src="../data/search-index.js"></script>
+  <script defer src="../js/main.js"></script>
+  <script defer src="../js/prism.js"></script>
+  <script defer src="../js/search.js"></script>
+  <script defer src="../js/file-preview.js"></script>
 
 </body>
 </html>

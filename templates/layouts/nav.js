@@ -138,108 +138,35 @@ ${categoriesHtml}
       </div>
 
       <!-- 搜索空状态 -->
-      <div class="empty-state" id="nav-empty-state" style="display: none;">
-        <div class="empty-icon-wrap">
-          <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-            <circle cx="11" cy="11" r="8"></circle>
-            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+      <div class="empty-state-card" id="nav-empty-state" style="display: none;">
+        <div class="empty-state-illustration">
+          <div class="empty-state-glow"></div>
+          <svg class="empty-state-svg" viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="28" cy="28" r="16" stroke-dasharray="4 4" opacity="0.6"/>
+            <circle cx="44" cy="44" r="12" fill="var(--surface)" stroke="var(--primary)" stroke-width="2"/>
+            <line x1="52.5" y1="52.5" x2="60" y2="60" stroke="var(--primary)" stroke-width="2.5"/>
           </svg>
         </div>
-        <div class="empty-title">未匹配到相关开源项目</div>
-        <p class="empty-desc">未能找到包含关键词的 GitHub 项目，请尝试更换关键词或切换分类筛选。</p>
-        <button type="button" class="empty-action-btn primary" id="nav-empty-reset-btn">清空搜索条件</button>
-      </div>
+        <h3 class="empty-state-title">未匹配到相关开源项目</h3>
+        <p class="empty-state-desc">未能找到包含关键词的 GitHub 项目，请尝试更换关键词或切换分类筛选。</p>
+        <button type="button" class="empty-state-reset-btn" id="nav-empty-reset-btn">
+          <span>清空搜索条件</span>
+        </button>
+      </div>`;
 
-      <!-- GitHub 导航页面交互脚本 -->
-      <script>
-      (function() {
-        const filterInput = document.getElementById('nav-filter-input');
-        const pillBtns = document.querySelectorAll('.nav-pill-btn');
-        const repoCards = Array.from(document.querySelectorAll('.nav-repo-card'));
-        const categorySections = Array.from(document.querySelectorAll('.nav-category-section'));
-        const emptyState = document.getElementById('nav-empty-state');
-        const emptyResetBtn = document.getElementById('nav-empty-reset-btn');
-        const countBadge = document.getElementById('nav-count-badge');
-
-        let activeCat = 'all';
-        let searchQuery = '';
-
-        function filterRepos() {
-          let visibleCount = 0;
-          let visibleCats = 0;
-
-          categorySections.forEach(section => {
-            const sectionCat = section.getAttribute('data-cat-name');
-            const catMatches = activeCat === 'all' || activeCat === sectionCat;
-            const sectionCards = section.querySelectorAll('.nav-repo-card');
-            let sectionVisibleCount = 0;
-
-            sectionCards.forEach(card => {
-              const name = card.getAttribute('data-name') || '';
-              const repo = card.getAttribute('data-repo') || '';
-              const desc = card.getAttribute('data-desc') || '';
-              const tags = card.getAttribute('data-tags') || '';
-              
-              const matchesSearch = !searchQuery || 
-                name.includes(searchQuery) || 
-                repo.includes(searchQuery) || 
-                desc.includes(searchQuery) || 
-                tags.includes(searchQuery);
-
-              if (catMatches && matchesSearch) {
-                card.style.display = 'flex';
-                sectionVisibleCount++;
-                visibleCount++;
-              } else {
-                card.style.display = 'none';
-              }
-            });
-
-            if (sectionVisibleCount > 0) {
-              section.style.display = 'flex';
-              visibleCats++;
-            } else {
-              section.style.display = 'none';
-            }
-          });
-
-          if (emptyState) {
-            emptyState.style.display = visibleCount === 0 ? 'flex' : 'none';
-          }
-
-          if (countBadge) {
-            countBadge.textContent = '共 ' + visibleCats + ' 个分类 · ' + visibleCount + ' 个精选项目';
-          }
-        }
-
-        if (filterInput) {
-          filterInput.addEventListener('input', (e) => {
-            searchQuery = e.target.value.trim().toLowerCase();
-            filterRepos();
-          });
-        }
-
-        pillBtns.forEach(btn => {
-          btn.addEventListener('click', () => {
-            pillBtns.forEach(b => b.classList.remove('active'));
-            btn.classList.add('active');
-            activeCat = btn.getAttribute('data-filter-cat') || 'all';
-            filterRepos();
-          });
+  const inlineScripts = `    document.addEventListener('DOMContentLoaded', () => {
+      if (typeof window.initNavFilter === 'function') {
+        window.initNavFilter({
+          inputId: 'nav-filter-input',
+          pillSelector: '.nav-pill-btn',
+          cardSelector: '.nav-repo-card',
+          sectionSelector: '.nav-category-section',
+          emptyId: 'nav-empty-state',
+          countId: 'nav-count-badge',
+          typeName: '精选项目'
         });
-
-        if (emptyResetBtn) {
-          emptyResetBtn.addEventListener('click', () => {
-            if (filterInput) filterInput.value = '';
-            searchQuery = '';
-            activeCat = 'all';
-            pillBtns.forEach(b => b.classList.toggle('active', b.getAttribute('data-filter-cat') === 'all'));
-            filterRepos();
-          });
-        }
-      })();
-      </script>
-  `;
+      }
+    });`;
 
   return renderBaseLayout({
     title: `GitHub 导航 · ${blogConfig.siteName}`,
@@ -247,9 +174,8 @@ ${categoriesHtml}
     keywords: `GitHub, 开源导航, fnm, nvm, Ventoy, Fail2Ban, Node.js, 开发者工具, ${blogConfig.siteName}`,
     canonicalPath: 'nav.html',
     sidebarHtml,
-    activePage: 'nav',
     mainContentHtml,
-    blogConfig,
+    inlineScripts,
     isSubfolder: false
   });
 }

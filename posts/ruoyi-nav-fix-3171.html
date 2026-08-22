@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>若依管理系统导航报错 reading 'nextSibling' 根因分析与解决方案 - vmrey.github.io</title>
+  <title>若依管理系统导航报错 reading &#39;nextSibling&#39; 根因分析与解决方案 - vmrey.github.io</title>
   <meta name="description" content="剖析 Vue-Router 与 Element-UI 侧边栏菜单在动态路由加载时 nextSibling 为空的偶发报错原因与补丁方案。">
   <meta name="keywords" content="前端开发, Vue, Bug排查, 若依">
   <meta name="author" content="vmrey">
@@ -16,16 +16,30 @@
   <!-- Open Graph 社交卡片 (微信/QQ/Telegram/GitHub) -->
   <meta property="og:site_name" content="vmrey's Blog">
   <meta property="og:type" content="article">
-  <meta property="og:title" content="若依管理系统导航报错 reading 'nextSibling' 根因分析与解决方案 - vmrey.github.io">
+  <meta property="og:title" content="若依管理系统导航报错 reading &#39;nextSibling&#39; 根因分析与解决方案 - vmrey.github.io">
   <meta property="og:description" content="剖析 Vue-Router 与 Element-UI 侧边栏菜单在动态路由加载时 nextSibling 为空的偶发报错原因与补丁方案。">
   <meta property="og:url" content="https://vmrey.github.io/posts/ruoyi-nav-fix-3171.html">
   <meta property="og:image" content="https://vmrey.github.io/favicon.svg">
 
   <!-- Twitter / X 社交卡片 -->
   <meta name="twitter:card" content="summary">
-  <meta name="twitter:title" content="若依管理系统导航报错 reading 'nextSibling' 根因分析与解决方案 - vmrey.github.io">
+  <meta name="twitter:title" content="若依管理系统导航报错 reading &#39;nextSibling&#39; 根因分析与解决方案 - vmrey.github.io">
   <meta name="twitter:description" content="剖析 Vue-Router 与 Element-UI 侧边栏菜单在动态路由加载时 nextSibling 为空的偶发报错原因与补丁方案。">
   <meta name="twitter:image" content="https://vmrey.github.io/favicon.svg">
+
+  <!-- 页面绘制前同步初始化深浅色主题，彻底杜绝首屏白屏闪烁 (Anti-FOUC) -->
+  <script>
+    (function() {
+      try {
+        var t = localStorage.getItem('theme');
+        if (!t) {
+          var isDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+          t = isDark ? 'dark' : 'light';
+        }
+        document.documentElement.setAttribute('data-theme', t);
+      } catch(e) {}
+    })();
+  </script>
   
   <script type="application/ld+json">
   {
@@ -376,12 +390,12 @@
     </svg>
   </button>
 
-  <script src="../js/config.js"></script>
-  <script src="../data/search-index.js"></script>
-  <script src="../js/main.js"></script>
-  <script src="../js/prism.js"></script>
-  <script src="../js/search.js"></script>
-  <script src="../js/file-preview.js"></script>
+  <script defer src="../js/config.js"></script>
+  <script defer src="../data/search-index.js"></script>
+  <script defer src="../js/main.js"></script>
+  <script defer src="../js/prism.js"></script>
+  <script defer src="../js/search.js"></script>
+  <script defer src="../js/file-preview.js"></script>
 
 </body>
 </html>

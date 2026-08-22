@@ -304,20 +304,33 @@
       return snippet;
     }
 
-    // 高亮文本中的关键词
+    // 高亮文本中的关键词 (单次联合正则匹配与安全转义，杜绝 DOM 标签破坏与 XSS)
     function highlightKeywords(text, keywords) {
       if (!text) return '';
-      let safeText = escapeHTML(text);
-      keywords.forEach(kw => {
-        if (!kw) return;
-        const regex = new RegExp(`(${escapeRegExp(kw)})`, 'gi');
-        safeText = safeText.replace(regex, '<mark class="search-highlight">$1</mark>');
-      });
-      return safeText;
+      const validKw = (keywords || []).map(k => (k || '').trim()).filter(Boolean);
+      if (validKw.length === 0) return escapeHTML(text);
+
+      // 按长度倒序排序，确保长词优先匹配
+      const sortedKw = [...new Set(validKw)].sort((a, b) => b.length - a.length);
+      const pattern = new RegExp(`(${sortedKw.map(escapeRegExp).join('|')})`, 'gi');
+
+      const parts = text.split(pattern);
+      return parts.map(part => {
+        if (!part) return '';
+        const isMatch = sortedKw.some(kw => kw.toLowerCase() === part.toLowerCase());
+        if (isMatch) {
+          return `<mark class="search-highlight">${escapeHTML(part)}</mark>`;
+        }
+        return escapeHTML(part);
+      }).join('');
     }
 
     function escapeHTML(str) {
-      return str.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+      return (str || '')
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;');
     }
 
     function escapeRegExp(str) {

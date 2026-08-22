@@ -137,106 +137,36 @@ ${categoriesHtml}
       </div>
 
       <!-- 搜索空状态 -->
-      <div class="empty-state" id="ai-empty-state" style="display: none;">
-        <div class="empty-icon-wrap">
-          <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-            <circle cx="11" cy="11" r="8"></circle>
-            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+      <!-- 搜索空状态 -->
+      <div class="empty-state-card" id="ai-empty-state" style="display: none;">
+        <div class="empty-state-illustration">
+          <div class="empty-state-glow"></div>
+          <svg class="empty-state-svg" viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="28" cy="28" r="16" stroke-dasharray="4 4" opacity="0.6"/>
+            <circle cx="44" cy="44" r="12" fill="var(--surface)" stroke="var(--primary)" stroke-width="2"/>
+            <line x1="52.5" y1="52.5" x2="60" y2="60" stroke="var(--primary)" stroke-width="2.5"/>
           </svg>
         </div>
-        <div class="empty-title">未匹配到相关 AI 工具</div>
-        <p class="empty-desc">未能找到包含关键词的 AI 产品，请尝试更换关键词或切换分类筛选。</p>
-        <button type="button" class="empty-action-btn primary" id="ai-empty-reset-btn">清空搜索条件</button>
-      </div>
+        <h3 class="empty-state-title">未匹配到相关 AI 工具</h3>
+        <p class="empty-state-desc">未能找到包含关键词的 AI 产品，请尝试更换关键词或切换分类筛选。</p>
+        <button type="button" class="empty-state-reset-btn" id="ai-empty-reset-btn">
+          <span>清空搜索条件</span>
+        </button>
+      </div>`;
 
-      <!-- AI 导航页面交互脚本 -->
-      <script>
-      (function() {
-        const filterInput = document.getElementById('ai-filter-input');
-        const pillBtns = document.querySelectorAll('.nav-pill-btn');
-        const aiCards = Array.from(document.querySelectorAll('.nav-repo-card'));
-        const categorySections = Array.from(document.querySelectorAll('.nav-category-section'));
-        const emptyState = document.getElementById('ai-empty-state');
-        const emptyResetBtn = document.getElementById('ai-empty-reset-btn');
-        const countBadge = document.getElementById('ai-count-badge');
-
-        let activeCat = 'all';
-        let searchQuery = '';
-
-        function filterAi() {
-          let visibleCount = 0;
-          let visibleCats = 0;
-
-          categorySections.forEach(section => {
-            const sectionCat = section.getAttribute('data-cat-name');
-            const catMatches = activeCat === 'all' || activeCat === sectionCat;
-            const sectionCards = section.querySelectorAll('.nav-repo-card');
-            let sectionVisibleCount = 0;
-
-            sectionCards.forEach(card => {
-              const name = card.getAttribute('data-name') || '';
-              const desc = card.getAttribute('data-desc') || '';
-              const tags = card.getAttribute('data-tags') || '';
-              
-              const matchesSearch = !searchQuery || 
-                name.includes(searchQuery) || 
-                desc.includes(searchQuery) || 
-                tags.includes(searchQuery);
-
-              if (catMatches && matchesSearch) {
-                card.style.display = 'flex';
-                sectionVisibleCount++;
-                visibleCount++;
-              } else {
-                card.style.display = 'none';
-              }
-            });
-
-            if (sectionVisibleCount > 0) {
-              section.style.display = 'flex';
-              visibleCats++;
-            } else {
-              section.style.display = 'none';
-            }
-          });
-
-          if (emptyState) {
-            emptyState.style.display = visibleCount === 0 ? 'flex' : 'none';
-          }
-
-          if (countBadge) {
-            countBadge.textContent = '共 ' + visibleCats + ' 个分类 · ' + visibleCount + ' 个顶尖 AI 工具';
-          }
-        }
-
-        if (filterInput) {
-          filterInput.addEventListener('input', (e) => {
-            searchQuery = e.target.value.trim().toLowerCase();
-            filterAi();
-          });
-        }
-
-        pillBtns.forEach(btn => {
-          btn.addEventListener('click', () => {
-            pillBtns.forEach(b => b.classList.remove('active'));
-            btn.classList.add('active');
-            activeCat = btn.getAttribute('data-filter-cat') || 'all';
-            filterAi();
-          });
+  const inlineScripts = `    document.addEventListener('DOMContentLoaded', () => {
+      if (typeof window.initNavFilter === 'function') {
+        window.initNavFilter({
+          inputId: 'ai-filter-input',
+          pillSelector: '.nav-pill-btn',
+          cardSelector: '.nav-repo-card',
+          sectionSelector: '.nav-category-section',
+          emptyId: 'ai-empty-state',
+          countId: 'ai-count-badge',
+          typeName: '顶尖 AI 工具'
         });
-
-        if (emptyResetBtn) {
-          emptyResetBtn.addEventListener('click', () => {
-            if (filterInput) filterInput.value = '';
-            searchQuery = '';
-            activeCat = 'all';
-            pillBtns.forEach(b => b.classList.toggle('active', b.getAttribute('data-filter-cat') === 'all'));
-            filterAi();
-          });
-        }
-      })();
-      </script>
-  `;
+      }
+    });`;
 
   return renderBaseLayout({
     title: `AI 导航 · ${blogConfig.siteName}`,
@@ -244,9 +174,8 @@ ${categoriesHtml}
     keywords: `AI导航, Gemini, ChatGPT, DeepSeek, Claude, Cursor, AI智能体, 大模型, ${blogConfig.siteName}`,
     canonicalPath: 'ai.html',
     sidebarHtml,
-    activePage: 'ai',
     mainContentHtml,
-    blogConfig,
+    inlineScripts,
     isSubfolder: false
   });
 }

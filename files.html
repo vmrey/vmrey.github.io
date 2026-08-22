@@ -26,6 +26,20 @@
   <meta name="twitter:title" content="资源文件库 - vmrey.github.io">
   <meta name="twitter:description" content="包含 Vue 组件源码、Shell 部署脚本、Windows 批处理以及项目压缩包附件，以文件夹嵌套树状结构呈现，支持全站免跳转在线代码高亮预览与高速直接下载。">
   <meta name="twitter:image" content="https://vmrey.github.io/favicon.svg">
+
+  <!-- 页面绘制前同步初始化深浅色主题，彻底杜绝首屏白屏闪烁 (Anti-FOUC) -->
+  <script>
+    (function() {
+      try {
+        var t = localStorage.getItem('theme');
+        if (!t) {
+          var isDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+          t = isDark ? 'dark' : 'light';
+        }
+        document.documentElement.setAttribute('data-theme', t);
+      } catch(e) {}
+    })();
+  </script>
   
   <link rel="stylesheet" href="css/style.css">
   <link rel="stylesheet" href="css/prism.css">
@@ -690,12 +704,12 @@
     </svg>
   </button>
 
-  <script src="js/config.js"></script>
-  <script src="data/search-index.js"></script>
-  <script src="js/main.js"></script>
-  <script src="js/prism.js"></script>
-  <script src="js/search.js"></script>
-  <script src="js/file-preview.js"></script>
+  <script defer src="js/config.js"></script>
+  <script defer src="data/search-index.js"></script>
+  <script defer src="js/main.js"></script>
+  <script defer src="js/prism.js"></script>
+  <script defer src="js/search.js"></script>
+  <script defer src="js/file-preview.js"></script>
   <script>
     // 文件夹嵌套树状交互逻辑 (展开/折叠/实时过滤)
     document.addEventListener('DOMContentLoaded', () => {

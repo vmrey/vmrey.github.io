@@ -221,10 +221,14 @@
     if (['vue', 'html', 'xml'].includes(ext)) prismLang = 'markup';
     else if (['sh', 'bash', 'zsh'].includes(ext)) prismLang = 'bash';
     else if (['bat', 'cmd'].includes(ext)) prismLang = 'batch';
+    else if (['ps1'].includes(ext)) prismLang = 'powershell';
+    else if (['py'].includes(ext)) prismLang = 'python';
+    else if (['ts', 'tsx'].includes(ext)) prismLang = 'typescript';
+    else if (['jsx'].includes(ext)) prismLang = 'javascript';
     else if (['json'].includes(ext)) prismLang = 'json';
     else if (['css', 'scss', 'less'].includes(ext)) prismLang = 'css';
     else if (['md', 'markdown'].includes(ext)) prismLang = 'markdown';
-    else if (['txt', 'log'].includes(ext)) prismLang = 'text';
+    else if (['txt', 'log', 'vbs'].includes(ext)) prismLang = 'text';
 
     fetch(fileUrl)
       .then(res => {
@@ -274,7 +278,7 @@
         const ext = fileName.split('.').pop().toLowerCase();
         
         // 如果文件属于受支持的预览/资源类型，开启预览弹窗
-        const fileExts = ['vue', 'js', 'sh', 'bat', 'txt', 'json', 'md', 'css', 'zip', 'rar', '7z'];
+        const fileExts = ['vue', 'js', 'ts', 'jsx', 'tsx', 'sh', 'bash', 'zsh', 'py', 'bat', 'cmd', 'ps1', 'vbs', 'txt', 'json', 'md', 'css', 'html', 'zip', 'rar', '7z', 'tar', 'gz'];
         if (fileExts.includes(ext)) {
           e.preventDefault();
           window.openFilePreview(href, fileName);

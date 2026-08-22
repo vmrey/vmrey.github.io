@@ -424,16 +424,20 @@ document.addEventListener('DOMContentLoaded', () => {
       const urlParams = new URLSearchParams(window.location.search);
       const queryTag = urlParams.get('tag') || urlParams.get('cat');
       if (queryTag) {
+        let matchedBtn = null;
         allFilterBtns.forEach(btn => {
           const btnTag = btn.getAttribute('data-tag');
           if (btnTag && btnTag.toLowerCase() === queryTag.toLowerCase()) {
-            allFilterBtns.forEach(b => b.classList.remove('active'));
-            btn.classList.add('active');
-            activeTag = btnTag;
-            const tree = btn.closest('.nav-item-tree');
-            if (tree) tree.classList.add('open');
+            matchedBtn = btn;
           }
         });
+        if (matchedBtn) {
+          allFilterBtns.forEach(b => b.classList.remove('active'));
+          matchedBtn.classList.add('active');
+          activeTag = matchedBtn.getAttribute('data-tag') || 'all';
+          const tree = matchedBtn.closest('.nav-item-tree');
+          if (tree) tree.classList.add('open');
+        }
       }
     } catch (e) {
       console.warn('URLSearchParams parse error:', e);
@@ -477,6 +481,14 @@ document.addEventListener('DOMContentLoaded', () => {
         currentPage = 1;
         renderPage();
         toggleSidebar(false);
+
+        // 同步 URL Query 参数，便于用户复制链接或刷新保持筛选状态
+        try {
+          const newUrl = targetTag === 'all'
+            ? window.location.pathname
+            : `${window.location.pathname}?tag=${encodeURIComponent(targetTag)}`;
+          window.history.replaceState(null, '', newUrl);
+        } catch (err) {}
       });
     });
   }
@@ -486,8 +498,10 @@ document.addEventListener('DOMContentLoaded', () => {
     renderPage();
   }
 
-  // TOC Scroll Spy for Article Detail Pages
+  // TOC Scroll Spy for Article Detail Pages (绝对定位高亮与触底智能激活)
   const tocLinks = document.querySelectorAll('.toc-link');
+  let highlightCurrentTOC = null;
+
   if (tocLinks.length > 0) {
     const headings = [];
     tocLinks.forEach(link => {
@@ -502,13 +516,19 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     if (headings.length > 0) {
-      function highlightCurrentTOC() {
-        const scrollPos = window.scrollY + 100;
-        let currentActive = headings[0].link;
+      highlightCurrentTOC = function() {
+        const scrollPos = window.scrollY + 120;
+        const isBottom = (window.innerHeight + window.scrollY) >= (document.documentElement.scrollHeight - 60);
 
-        for (let i = 0; i < headings.length; i++) {
-          if (headings[i].el.offsetTop <= scrollPos) {
-            currentActive = headings[i].link;
+        let currentActive = headings[0].link;
+        if (isBottom && headings.length > 0) {
+          currentActive = headings[headings.length - 1].link;
+        } else {
+          for (let i = 0; i < headings.length; i++) {
+            const top = headings[i].el.getBoundingClientRect().top + window.scrollY;
+            if (top <= scrollPos) {
+              currentActive = headings[i].link;
+            }
           }
         }
 
@@ -516,25 +536,25 @@ document.addEventListener('DOMContentLoaded', () => {
         if (currentActive) {
           currentActive.classList.add('active');
         }
-      }
+      };
 
-      window.addEventListener('scroll', highlightCurrentTOC, { passive: true });
       highlightCurrentTOC();
     }
   }
 
   // 5. Back To Top Floating Button Controller
   const backToTopBtn = document.getElementById('back-to-top-btn');
+  let toggleBackToTop = null;
+
   if (backToTopBtn) {
-    function toggleBackToTop() {
+    toggleBackToTop = function() {
       if (window.scrollY > 300) {
         backToTopBtn.classList.add('visible');
       } else {
         backToTopBtn.classList.remove('visible');
       }
-    }
+    };
 
-    window.addEventListener('scroll', toggleBackToTop, { passive: true });
     toggleBackToTop();
 
     backToTopBtn.addEventListener('click', () => {
@@ -544,4 +564,106 @@ document.addEventListener('DOMContentLoaded', () => {
       });
     });
   }
+
+  // 统一高性能 requestAnimationFrame 滚动节流监听
+  if (highlightCurrentTOC || toggleBackToTop) {
+    let scrollTicking = false;
+    window.addEventListener('scroll', () => {
+      if (!scrollTicking) {
+        window.requestAnimationFrame(() => {
+          if (highlightCurrentTOC) highlightCurrentTOC();
+          if (toggleBackToTop) toggleBackToTop();
+          scrollTicking = false;
+        });
+        scrollTicking = true;
+      }
+    }, { passive: true });
+  }
+
+  // 全局三大导航中心（AI/工具/GitHub）通用高效过滤控制器
+  window.initNavFilter = function({ inputId, pillSelector, cardSelector, sectionSelector, emptyId, countId, typeName = '精选项目' }) {
+    const filterInput = document.getElementById(inputId);
+    const pillBtns = document.querySelectorAll(pillSelector);
+    const categorySections = Array.from(document.querySelectorAll(sectionSelector));
+    const emptyState = document.getElementById(emptyId);
+    const emptyResetBtn = emptyState ? (emptyState.querySelector('.empty-action-btn') || emptyState.querySelector('button')) : null;
+    const countBadge = document.getElementById(countId);
+
+    let activeCat = 'all';
+    let searchQuery = '';
+
+    function filterItems() {
+      let visibleCount = 0;
+      let visibleCats = 0;
+
+      categorySections.forEach(section => {
+        const sectionCat = section.getAttribute('data-cat-name');
+        const catMatches = activeCat === 'all' || activeCat === sectionCat;
+        const sectionCards = section.querySelectorAll(cardSelector);
+        let sectionVisibleCount = 0;
+
+        sectionCards.forEach(card => {
+          const name = card.getAttribute('data-name') || '';
+          const repo = card.getAttribute('data-repo') || '';
+          const desc = card.getAttribute('data-desc') || '';
+          const tags = card.getAttribute('data-tags') || '';
+
+          const matchesSearch = !searchQuery ||
+            name.includes(searchQuery) ||
+            repo.includes(searchQuery) ||
+            desc.includes(searchQuery) ||
+            tags.includes(searchQuery);
+
+          if (catMatches && matchesSearch) {
+            card.style.display = 'flex';
+            sectionVisibleCount++;
+            visibleCount++;
+          } else {
+            card.style.display = 'none';
+          }
+        });
+
+        if (sectionVisibleCount > 0) {
+          section.style.display = 'flex';
+          visibleCats++;
+        } else {
+          section.style.display = 'none';
+        }
+      });
+
+      if (emptyState) {
+        emptyState.style.display = visibleCount === 0 ? 'flex' : 'none';
+      }
+
+      if (countBadge) {
+        countBadge.textContent = '共 ' + visibleCats + ' 个分类 · ' + visibleCount + ' 个' + typeName;
+      }
+    }
+
+    if (filterInput) {
+      filterInput.addEventListener('input', (e) => {
+        searchQuery = e.target.value.trim().toLowerCase();
+        filterItems();
+      });
+    }
+
+    pillBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        pillBtns.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        activeCat = btn.getAttribute('data-filter-cat') || 'all';
+        filterItems();
+      });
+    });
+
+    if (emptyResetBtn) {
+      emptyResetBtn.addEventListener('click', () => {
+        if (filterInput) filterInput.value = '';
+        searchQuery = '';
+        activeCat = 'all';
+        pillBtns.forEach(b => b.classList.toggle('active', b.getAttribute('data-filter-cat') === 'all'));
+        filterItems();
+      });
+    }
+  };
 });

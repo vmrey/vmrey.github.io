@@ -26,6 +26,20 @@
   <meta name="twitter:title" content="微信小程序自定义高颜值 Loading 加载动画组件 - vmrey.github.io">
   <meta name="twitter:description" content="告别默认 wx.showLoading 灰暗样式，使用纯 CSS3 关键帧动画打造现代多点旋转数据加载组件。">
   <meta name="twitter:image" content="https://vmrey.github.io/favicon.svg">
+
+  <!-- 页面绘制前同步初始化深浅色主题，彻底杜绝首屏白屏闪烁 (Anti-FOUC) -->
+  <script>
+    (function() {
+      try {
+        var t = localStorage.getItem('theme');
+        if (!t) {
+          var isDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+          t = isDark ? 'dark' : 'light';
+        }
+        document.documentElement.setAttribute('data-theme', t);
+      } catch(e) {}
+    })();
+  </script>
   
   <script type="application/ld+json">
   {
@@ -315,7 +329,7 @@
           <article class="article-content" id="main-content">
             <div class="prose">
 <h2 id="一-效果预览">一、效果预览</h2>
-<p><img src="../assets/images/loading.png" alt="Loading 效果图" class="article-image"></p>
+<p><img src="../assets/images/loading.png" alt="Loading 效果图" class="article-image" loading="lazy" decoding="async"></p>
 <hr>
 <h2 id="二-wxml-骨架">二、WXML 骨架</h2>
 <pre><code class="language-html">&lt;view class=&quot;loading-mask&quot; wx:if=&quot;{{loading}}&quot;&gt;
@@ -401,12 +415,12 @@
     </svg>
   </button>
 
-  <script src="../js/config.js"></script>
-  <script src="../data/search-index.js"></script>
-  <script src="../js/main.js"></script>
-  <script src="../js/prism.js"></script>
-  <script src="../js/search.js"></script>
-  <script src="../js/file-preview.js"></script>
+  <script defer src="../js/config.js"></script>
+  <script defer src="../data/search-index.js"></script>
+  <script defer src="../js/main.js"></script>
+  <script defer src="../js/prism.js"></script>
+  <script defer src="../js/search.js"></script>
+  <script defer src="../js/file-preview.js"></script>
 
 </body>
 </html>

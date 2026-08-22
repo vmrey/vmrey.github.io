@@ -26,6 +26,20 @@
   <meta name="twitter:title" content="Nginx 全站反向代理配置说明文档（Cloudflare CDN + 流媒体优化版） - vmrey.github.io">
   <meta name="twitter:description" content="专为 Cloudflare CDN + 全站反向代理架构设计，支持 Emby 流媒体大文件分片、WebSocket 实时长连接与 SNI 强校验。">
   <meta name="twitter:image" content="https://vmrey.github.io/favicon.svg">
+
+  <!-- 页面绘制前同步初始化深浅色主题，彻底杜绝首屏白屏闪烁 (Anti-FOUC) -->
+  <script>
+    (function() {
+      try {
+        var t = localStorage.getItem('theme');
+        if (!t) {
+          var isDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+          t = isDark ? 'dark' : 'light';
+        }
+        document.documentElement.setAttribute('data-theme', t);
+      } catch(e) {}
+    })();
+  </script>
   
   <script type="application/ld+json">
   {
@@ -372,17 +386,17 @@ location / {
       <td style="text-align: left">解决动态源站 IP 变动后 Nginx 无法解析导致 502 的问题</td>
     </tr>
     <tr>
-      <td style="text-align: left"><code>proxy<em>ssl</em>server_name on;</code></td>
+      <td style="text-align: left"><code>proxy_ssl_server_name on;</code></td>
       <td style="text-align: left">开启上游 HTTPS SNI 扩展支持</td>
       <td style="text-align: left">解决反代 Cloudflare 等 CDN 源站时由于缺少 SNI 握手失败报错</td>
     </tr>
     <tr>
-      <td style="text-align: left"><code>proxy<em>redirect https://$target</em>domain/ /;</code></td>
+      <td style="text-align: left"><code>proxy_redirect https://$target_domain/ /;</code></td>
       <td style="text-align: left">自动改写源站 301/302 重定向头部</td>
       <td style="text-align: left">防止客户端登录或跳转时被重定向暴露原源站域名</td>
     </tr>
     <tr>
-      <td style="text-align: left"><code>proxy<em>set</em>header Upgrade ...</code></td>
+      <td style="text-align: left"><code>proxy_set_header Upgrade ...</code></td>
       <td style="text-align: left">开启 HTTP/1.1 WebSocket 双向升级</td>
       <td style="text-align: left">确保 Emby 播放进度同步、即时控制与长轮询不掉线</td>
     </tr>
@@ -392,7 +406,7 @@ location / {
       <td style="text-align: left">解决视频拖动进度条卡顿、初始加载缓冲时间过长问题</td>
     </tr>
     <tr>
-      <td style="text-align: left"><code>proxy<em>read</em>timeout 86400;</code></td>
+      <td style="text-align: left"><code>proxy_read_timeout 86400;</code></td>
       <td style="text-align: left">延长上游连接读取超时至 24 小时</td>
       <td style="text-align: left">防止播放超长 4K 电影或挂起播放器时被 Nginx 提前切断连接</td>
     </tr>
@@ -449,12 +463,12 @@ nginx -s reload</code></pre>
     </svg>
   </button>
 
-  <script src="../js/config.js"></script>
-  <script src="../data/search-index.js"></script>
-  <script src="../js/main.js"></script>
-  <script src="../js/prism.js"></script>
-  <script src="../js/search.js"></script>
-  <script src="../js/file-preview.js"></script>
+  <script defer src="../js/config.js"></script>
+  <script defer src="../data/search-index.js"></script>
+  <script defer src="../js/main.js"></script>
+  <script defer src="../js/prism.js"></script>
+  <script defer src="../js/search.js"></script>
+  <script defer src="../js/file-preview.js"></script>
 
 </body>
 </html>
