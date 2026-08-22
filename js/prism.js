@@ -57,29 +57,32 @@
       let content = Prism.stringify(o.content);
       return `<span class="token ${o.type}">${content}</span>`;
     },
-    highlightElement: function(codeBlock) {
-      if (!codeBlock) return;
-      let lang = 'javascript';
+    getLanguage: function(codeBlock) {
+      if (!codeBlock) return 'javascript';
       const classes = (codeBlock.className || '').split(' ');
       for (let cls of classes) {
         if (cls.startsWith('language-') || cls.startsWith('lang-')) {
-          lang = cls.replace(/^(language-|lang-)/, '').toLowerCase();
-          break;
+          return cls.replace(/^(language-|lang-)/, '').toLowerCase();
         }
       }
-
+      return 'javascript';
+    },
+    highlightElement: function(codeBlock) {
+      if (!codeBlock) return 'javascript';
+      const lang = Prism.getLanguage(codeBlock);
       const grammar = Prism.languages[lang] || Prism.languages.javascript;
       const rawCode = codeBlock.textContent;
       codeBlock.innerHTML = Prism.highlight(rawCode, grammar);
+      return lang;
     },
     highlightAll: function() {
       document.querySelectorAll('pre code').forEach(codeBlock => {
-        Prism.highlightElement(codeBlock);
+        const lang = Prism.highlightElement(codeBlock) || Prism.getLanguage(codeBlock);
         const rawCode = codeBlock.textContent;
 
         // 如果父级 pre 尚未包装 code-block-wrapper，自动包装并添加语言标签与复制按钮
         const pre = codeBlock.parentElement;
-        if (pre && pre.tagName === 'PRE' && !pre.parentElement.classList.contains('code-block-wrapper')) {
+        if (pre && pre.tagName === 'PRE' && pre.parentElement && !pre.parentElement.classList.contains('code-block-wrapper')) {
           const wrapper = document.createElement('div');
           wrapper.className = 'code-block-wrapper';
           
