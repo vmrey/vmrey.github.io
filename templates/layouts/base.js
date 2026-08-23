@@ -61,6 +61,7 @@ function renderBaseLayout({
   <meta name="keywords" content="${safeKeywords}">
   <meta name="author" content="vmrey">
   <meta name="robots" content="index, follow">
+  <meta name="google-site-verification" content="Vi8ircfK8SuZNzZBrtU7av_aXeiUKrLDKgef-84unTM">
   <link rel="canonical" href="${fullCanonicalUrl}">
   <link rel="alternate" type="application/rss+xml" title="vmrey.github.io RSS 订阅源" href="${siteUrl}/feed.xml">
   <link rel="alternate" type="text/plain" title="LLMs.txt AI 知识索引" href="${siteUrl}/llms.txt">
