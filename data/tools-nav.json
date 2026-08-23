@@ -122,6 +122,23 @@
           "LNMP",
           "建站工具"
         ]
+      },
+      {
+        "name": "MQTTX",
+        "url": "https://mqttx.app/zh/downloads",
+        "tagline": "全功能跨平台开源 MQTT 5.0 桌面客户端与物联网通信调试利器",
+        "description": "由 EMQ 官方出品的现代化开源 MQTT 客户端与测试工具箱，提供桌面 GUI、CLI 命令行与 Web 网页版，原生支持 MQTT 5.0、Payload 格式化、脚本模拟与连接压力测试。",
+        "category": "终端与远程运维工具",
+        "badge": "跨平台MQTT客户端",
+        "tags": [
+          "MQTTX",
+          "MQTT",
+          "客户端",
+          "物联网",
+          "IoT调试",
+          "跨平台",
+          "EMQ"
+        ]
       }
     ]
   },

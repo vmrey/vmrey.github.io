@@ -3417,6 +3417,26 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
     "sections": []
   },
   {
+    "id": "tool-mqttx",
+    "type": "tool",
+    "title": "MQTTX",
+    "url": "tools.html",
+    "category": "工具导航 · 终端与远程运维工具",
+    "date": "2026-08-23",
+    "tags": [
+      "MQTTX",
+      "MQTT",
+      "客户端",
+      "物联网",
+      "IoT调试",
+      "跨平台",
+      "EMQ"
+    ],
+    "summary": "全功能跨平台开源 MQTT 5.0 桌面客户端与物联网通信调试利器 — 由 EMQ 官方出品的现代化开源 MQTT 客户端与测试工具箱，提供桌面 GUI、CLI 命令行与 Web 网页版，原生支持 MQTT 5.0、Payload 格式化、脚本模拟与连接压力测试。",
+    "content": "MQTTX https://mqttx.app/zh/downloads 全功能跨平台开源 MQTT 5.0 桌面客户端与物联网通信调试利器 由 EMQ 官方出品的现代化开源 MQTT 客户端与测试工具箱，提供桌面 GUI、CLI 命令行与 Web 网页版，原生支持 MQTT 5.0、Payload 格式化、脚本模拟与连接压力测试。 MQTTX MQTT 客户端 物联网 IoT调试 跨平台 EMQ",
+    "sections": []
+  },
+  {
     "id": "tool-draw-io",
     "type": "tool",
     "title": "draw.io",
@@ -3890,6 +3910,27 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
     ],
     "summary": "基于 Cloudflare Pages 与 Workers 的轻量级边缘网络隧道工具 — 基于 Cloudflare 边缘计算无服务器架构的轻量级网络代理与边缘隧道项目，支持一键部署 VLESS 协议节点及自定义优选域名订阅。",
     "content": "edgetunnel cmliu/edgetunnel https://github.com/cmliu/edgetunnel 基于 Cloudflare Pages 与 Workers 的轻量级边缘网络隧道工具 基于 Cloudflare 边缘计算无服务器架构的轻量级网络代理与边缘隧道项目，支持一键部署 VLESS 协议节点及自定义优选域名订阅。 edgetunnel Cloudflare Workers Pages VLESS 代理工具 JavaScript",
+    "sections": []
+  },
+  {
+    "id": "github-emqx",
+    "type": "github",
+    "title": "EMQX (emqx/emqx)",
+    "url": "nav.html",
+    "category": "GitHub 导航 · 物联网与消息中间件",
+    "date": "2026-08-23",
+    "tags": [
+      "EMQX",
+      "MQTT",
+      "物联网",
+      "IoT",
+      "Erlang",
+      "消息中间件",
+      "车联网",
+      "高并发"
+    ],
+    "summary": "全球最具扩展性的开源分布式 MQTT 消息服务器与物联网消息中间件 — 基于 Erlang/OTP 构建的高性能分布式 MQTT Broker，单集群支持 1 亿并发 MQTT 连接与毫秒级低延迟吞吐，广泛应用于物联网、车联网与工业互联网。",
+    "content": "EMQX emqx/emqx https://github.com/emqx/emqx 全球最具扩展性的开源分布式 MQTT 消息服务器与物联网消息中间件 基于 Erlang/OTP 构建的高性能分布式 MQTT Broker，单集群支持 1 亿并发 MQTT 连接与毫秒级低延迟吞吐，广泛应用于物联网、车联网与工业互联网。 EMQX MQTT 物联网 IoT Erlang 消息中间件 车联网 高并发",
     "sections": []
   },
   {

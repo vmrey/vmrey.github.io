@@ -31,7 +31,8 @@ function renderNavLayout({
     '系统与装机利器': `<circle cx="12" cy="12" r="10"></circle><circle cx="12" cy="12" r="3"></circle>`,
     '服务器安全与防护': `<path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>`,
     '前端安全与设备识别': `<path d="M2 12C2 6.5 6.5 2 12 2a10 10 0 0 1 8 4"></path><path d="M5 19.5C5.5 18 6 15 6 12a6 6 0 0 1 11.5-2.5"></path><path d="M12 12a2 2 0 0 1 2 2c0 3-1 6-2 8"></path><path d="M8 22c1-2 1.5-4 1.5-6a2.5 2.5 0 0 1 5 0c0 2.5-.5 4.5-1.5 6"></path><path d="M17 18c1-1.5 2-3.5 2-6a8 8 0 0 0-16 0c0 1.5.3 3 .8 4.5"></path>`,
-    '网络加速与穿透工具': `<circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path>`
+    '网络加速与穿透工具': `<circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path>`,
+    '物联网与消息中间件': `<rect x="2" y="2" width="20" height="8" rx="2" ry="2"></rect><rect x="2" y="14" width="20" height="8" rx="2" ry="2"></rect><line x1="6" y1="6" x2="6.01" y2="6"></line><line x1="6" y1="18" x2="6.01" y2="18"></line>`
   };
 
   // 2. 渲染各分类项目卡片矩阵
@@ -178,7 +179,7 @@ ${categoriesHtml}
   return renderBaseLayout({
     title: `GitHub 导航 · ${blogConfig.siteName}`,
     description: `精选收录高价值 GitHub 开源项目、Node.js 版本管理器与优质工程工具链`,
-    keywords: `GitHub, 开源导航, fnm, nvm, Ventoy, Fail2Ban, Node.js, 开发者工具, ${blogConfig.siteName}`,
+    keywords: `GitHub, 开源导航, fnm, nvm, Ventoy, Fail2Ban, EMQX, Node.js, 物联网, 开发者工具, ${blogConfig.siteName}`,
     canonicalPath: 'nav.html',
     sidebarHtml,
     mainContentHtml,

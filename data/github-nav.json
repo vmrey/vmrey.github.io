@@ -240,5 +240,31 @@
         "language": "JavaScript"
       }
     ]
+  },
+  {
+    "category": "物联网与消息中间件",
+    "description": "超大规模分布式物联网 MQTT 消息服务器与云原生消息中间件",
+    "icon": "server",
+    "items": [
+      {
+        "name": "EMQX",
+        "repo": "emqx/emqx",
+        "url": "https://github.com/emqx/emqx",
+        "tagline": "全球最具扩展性的开源分布式 MQTT 消息服务器与物联网消息中间件",
+        "description": "基于 Erlang/OTP 构建的高性能分布式 MQTT Broker，单集群支持 1 亿并发 MQTT 连接与毫秒级低延迟吞吐，广泛应用于物联网、车联网与工业互联网。",
+        "language": "Erlang",
+        "badge": "Erlang / 物联网标杆",
+        "tags": [
+          "EMQX",
+          "MQTT",
+          "物联网",
+          "IoT",
+          "Erlang",
+          "消息中间件",
+          "车联网",
+          "高并发"
+        ]
+      }
+    ]
   }
 ]
