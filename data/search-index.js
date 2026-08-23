@@ -2982,7 +2982,7 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
     "title": "Google Gemini",
     "url": "ai.html",
     "category": "AI 导航 · 前沿大模型与对话平台",
-    "date": "2026-08-22",
+    "date": "2026-08-23",
     "tags": [
       "Gemini",
       "Google",
@@ -3000,7 +3000,7 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
     "title": "ChatGPT",
     "url": "ai.html",
     "category": "AI 导航 · 前沿大模型与对话平台",
-    "date": "2026-08-22",
+    "date": "2026-08-23",
     "tags": [
       "ChatGPT",
       "OpenAI",
@@ -3018,7 +3018,7 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
     "title": "Claude",
     "url": "ai.html",
     "category": "AI 导航 · 前沿大模型与对话平台",
-    "date": "2026-08-22",
+    "date": "2026-08-23",
     "tags": [
       "Claude",
       "Anthropic",
@@ -3036,7 +3036,7 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
     "title": "DeepSeek (深度求索)",
     "url": "ai.html",
     "category": "AI 导航 · 前沿大模型与对话平台",
-    "date": "2026-08-22",
+    "date": "2026-08-23",
     "tags": [
       "DeepSeek",
       "R1推理",
@@ -3054,7 +3054,7 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
     "title": "Kimi (月之暗面)",
     "url": "ai.html",
     "category": "AI 导航 · 前沿大模型与对话平台",
-    "date": "2026-08-22",
+    "date": "2026-08-23",
     "tags": [
       "Kimi",
       "月之暗面",
@@ -3072,7 +3072,7 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
     "title": "Grok",
     "url": "ai.html",
     "category": "AI 导航 · 前沿大模型与对话平台",
-    "date": "2026-08-22",
+    "date": "2026-08-23",
     "tags": [
       "Grok",
       "xAI",
@@ -3090,7 +3090,7 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
     "title": "Claude Code",
     "url": "ai.html",
     "category": "AI 导航 · AI 智能体与自主编程",
-    "date": "2026-08-22",
+    "date": "2026-08-23",
     "tags": [
       "ClaudeCode",
       "AI编程",
@@ -3108,7 +3108,7 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
     "title": "Cursor",
     "url": "ai.html",
     "category": "AI 导航 · AI 智能体与自主编程",
-    "date": "2026-08-22",
+    "date": "2026-08-23",
     "tags": [
       "Cursor",
       "VSCode",
@@ -3126,7 +3126,7 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
     "title": "v0 by Vercel",
     "url": "ai.html",
     "category": "AI 导航 · AI 智能体与自主编程",
-    "date": "2026-08-22",
+    "date": "2026-08-23",
     "tags": [
       "v0",
       "Vercel",
@@ -3144,7 +3144,7 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
     "title": "Bolt.new",
     "url": "ai.html",
     "category": "AI 导航 · AI 智能体与自主编程",
-    "date": "2026-08-22",
+    "date": "2026-08-23",
     "tags": [
       "Bolt.new",
       "全栈开发",
@@ -3162,7 +3162,7 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
     "title": "Agnes AI",
     "url": "ai.html",
     "category": "AI 导航 · AI 智能体与自主编程",
-    "date": "2026-08-22",
+    "date": "2026-08-23",
     "tags": [
       "AgnesAI",
       "AI智能体",
@@ -3181,7 +3181,7 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
     "title": "Midjourney",
     "url": "ai.html",
     "category": "AI 导航 · AI 图像与多模态创作",
-    "date": "2026-08-22",
+    "date": "2026-08-23",
     "tags": [
       "Midjourney",
       "AI绘画",
@@ -3199,7 +3199,7 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
     "title": "FLUX.1 (Black Forest Labs)",
     "url": "ai.html",
     "category": "AI 导航 · AI 图像与多模态创作",
-    "date": "2026-08-22",
+    "date": "2026-08-23",
     "tags": [
       "FLUX.1",
       "开源模型",
@@ -3217,7 +3217,7 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
     "title": "Runway Gen-3",
     "url": "ai.html",
     "category": "AI 导航 · AI 图像与多模态创作",
-    "date": "2026-08-22",
+    "date": "2026-08-23",
     "tags": [
       "Runway",
       "Gen-3",
@@ -3235,7 +3235,7 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
     "title": "OpenRouter",
     "url": "ai.html",
     "category": "AI 导航 · AI 聚合平台与 API 服务",
-    "date": "2026-08-22",
+    "date": "2026-08-23",
     "tags": [
       "OpenRouter",
       "模型网关",
@@ -3253,7 +3253,7 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
     "title": "Hugging Face",
     "url": "ai.html",
     "category": "AI 导航 · AI 聚合平台与 API 服务",
-    "date": "2026-08-22",
+    "date": "2026-08-23",
     "tags": [
       "HuggingFace",
       "开源社区",
@@ -3271,7 +3271,7 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
     "title": "SiliconFlow (硅基流动)",
     "url": "ai.html",
     "category": "AI 导航 · AI 聚合平台与 API 服务",
-    "date": "2026-08-22",
+    "date": "2026-08-23",
     "tags": [
       "SiliconFlow",
       "硅基流动",
@@ -3289,7 +3289,7 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
     "title": "草料二维码",
     "url": "tools.html",
     "category": "工具导航 · 实用生成与办公工具",
-    "date": "2026-08-22",
+    "date": "2026-08-23",
     "tags": [
       "二维码",
       "QR Code",
@@ -3307,7 +3307,7 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
     "title": "1Password 强密码生成器",
     "url": "tools.html",
     "category": "工具导航 · 实用生成与办公工具",
-    "date": "2026-08-22",
+    "date": "2026-08-23",
     "tags": [
       "1Password",
       "密码生成器",
@@ -3325,7 +3325,7 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
     "title": "轻松传 (EasyChuan)",
     "url": "tools.html",
     "category": "工具导航 · 实用生成与办公工具",
-    "date": "2026-08-22",
+    "date": "2026-08-23",
     "tags": [
       "轻松传",
       "文件传输",
@@ -3344,7 +3344,7 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
     "title": "Smallpdf (PDF 转 Word)",
     "url": "tools.html",
     "category": "工具导航 · 实用生成与办公工具",
-    "date": "2026-08-22",
+    "date": "2026-08-23",
     "tags": [
       "Smallpdf",
       "PDF转Word",
@@ -3363,7 +3363,7 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
     "title": "MobaXterm",
     "url": "tools.html",
     "category": "工具导航 · 终端与远程运维工具",
-    "date": "2026-08-22",
+    "date": "2026-08-23",
     "tags": [
       "MobaXterm",
       "SSH",
@@ -3383,7 +3383,7 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
     "title": "FinalShell",
     "url": "tools.html",
     "category": "工具导航 · 终端与远程运维工具",
-    "date": "2026-08-22",
+    "date": "2026-08-23",
     "tags": [
       "FinalShell",
       "SSH",
@@ -3402,7 +3402,7 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
     "title": "aaPanel (宝塔国际版)",
     "url": "tools.html",
     "category": "工具导航 · 终端与远程运维工具",
-    "date": "2026-08-22",
+    "date": "2026-08-23",
     "tags": [
       "aaPanel",
       "宝塔面板",
@@ -3422,7 +3422,7 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
     "title": "draw.io",
     "url": "tools.html",
     "category": "工具导航 · 架构设计与思维导图",
-    "date": "2026-08-22",
+    "date": "2026-08-23",
     "tags": [
       "架构图",
       "流程图",
@@ -3440,7 +3440,7 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
     "title": "PDManer (元数建模)",
     "url": "tools.html",
     "category": "工具导航 · 架构设计与思维导图",
-    "date": "2026-08-22",
+    "date": "2026-08-23",
     "tags": [
       "PDManer",
       "数据库建模",
@@ -3459,7 +3459,7 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
     "title": "DBeaver",
     "url": "tools.html",
     "category": "工具导航 · 架构设计与思维导图",
-    "date": "2026-08-22",
+    "date": "2026-08-23",
     "tags": [
       "DBeaver",
       "数据库管理",
@@ -3478,7 +3478,7 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
     "title": "Geek Uninstaller",
     "url": "tools.html",
     "category": "工具导航 · 系统优化与效率工具",
-    "date": "2026-08-22",
+    "date": "2026-08-23",
     "tags": [
       "Geek",
       "软件卸载",
@@ -3496,7 +3496,7 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
     "title": "KMS 在线激活服务 (KMS.cx)",
     "url": "tools.html",
     "category": "工具导航 · 系统优化与效率工具",
-    "date": "2026-08-22",
+    "date": "2026-08-23",
     "tags": [
       "KMS",
       "Windows激活",
@@ -3515,7 +3515,7 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
     "title": "FlyEnv",
     "url": "tools.html",
     "category": "工具导航 · 系统优化与效率工具",
-    "date": "2026-08-22",
+    "date": "2026-08-23",
     "tags": [
       "FlyEnv",
       "开发环境",
@@ -3530,12 +3530,32 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
     "sections": []
   },
   {
+    "id": "tool-winrar-官方中文网",
+    "type": "tool",
+    "title": "WinRAR (官方中文网)",
+    "url": "tools.html",
+    "category": "工具导航 · 系统优化与效率工具",
+    "date": "2026-08-23",
+    "tags": [
+      "WinRAR",
+      "压缩工具",
+      "解压软件",
+      "RAR",
+      "ZIP",
+      "系统工具",
+      "装机必备"
+    ],
+    "summary": "全球流行经典的专业文件压缩与解压缩利器官方中文门户 — Windows 平台家喻户晓的经典文件压缩与解压管理工具，支持 RAR、ZIP、7Z、ISO、TAR 等主流格式，具备高压缩率与加密固实压缩功能。",
+    "content": "WinRAR (官方中文网) https://www.winrar.com.cn/ 全球流行经典的专业文件压缩与解压缩利器官方中文门户 Windows 平台家喻户晓的经典文件压缩与解压管理工具，支持 RAR、ZIP、7Z、ISO、TAR 等主流格式，具备高压缩率与加密固实压缩功能。 WinRAR 压缩工具 解压软件 RAR ZIP 系统工具 装机必备",
+    "sections": []
+  },
+  {
     "id": "tool-cloudconvert-svg-to-ico",
     "type": "tool",
     "title": "CloudConvert (SVG to ICO)",
     "url": "tools.html",
     "category": "工具导航 · 图像与多媒体处理",
-    "date": "2026-08-22",
+    "date": "2026-08-23",
     "tags": [
       "SVG",
       "ICO",
@@ -3553,7 +3573,7 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
     "title": "Tinify (TinyPNG 中文网)",
     "url": "tools.html",
     "category": "工具导航 · 图像与多媒体处理",
-    "date": "2026-08-22",
+    "date": "2026-08-23",
     "tags": [
       "Tinify",
       "TinyPNG",
@@ -3572,7 +3592,7 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
     "title": "Hills Lite (Emby / Jellyfin 客户端)",
     "url": "tools.html",
     "category": "工具导航 · 图像与多媒体处理",
-    "date": "2026-08-22",
+    "date": "2026-08-23",
     "tags": [
       "HillsLite",
       "Emby",
@@ -3591,7 +3611,7 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
     "title": "FFmpeg",
     "url": "tools.html",
     "category": "工具导航 · 图像与多媒体处理",
-    "date": "2026-08-22",
+    "date": "2026-08-23",
     "tags": [
       "FFmpeg",
       "音视频处理",
@@ -3610,7 +3630,7 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
     "title": "IPPure (IP 纯净度检测)",
     "url": "tools.html",
     "category": "工具导航 · 网络诊断与安全检测",
-    "date": "2026-08-22",
+    "date": "2026-08-23",
     "tags": [
       "IPPure",
       "IP查询",
@@ -3629,7 +3649,7 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
     "title": "Cloudflare 优选 IP 节点库 (090227.xyz)",
     "url": "tools.html",
     "category": "工具导航 · 网络诊断与安全检测",
-    "date": "2026-08-22",
+    "date": "2026-08-23",
     "tags": [
       "Cloudflare",
       "CF优选",
@@ -3648,7 +3668,7 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
     "title": "fnm (Schniz/fnm)",
     "url": "nav.html",
     "category": "GitHub 导航 · Node.js 版本管理",
-    "date": "2026-08-22",
+    "date": "2026-08-23",
     "tags": [
       "Rust",
       "Node.js",
@@ -3666,7 +3686,7 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
     "title": "nvm (nvm-sh/nvm)",
     "url": "nav.html",
     "category": "GitHub 导航 · Node.js 版本管理",
-    "date": "2026-08-22",
+    "date": "2026-08-23",
     "tags": [
       "Shell",
       "Bash",
@@ -3684,7 +3704,7 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
     "title": "Ventoy (ventoy/Ventoy)",
     "url": "nav.html",
     "category": "GitHub 导航 · 系统与装机利器",
-    "date": "2026-08-22",
+    "date": "2026-08-23",
     "tags": [
       "Ventoy",
       "启动盘",
@@ -3703,7 +3723,7 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
     "title": "LKY_OfficeTools (OdysseusYuan/LKY_OfficeTools)",
     "url": "nav.html",
     "category": "GitHub 导航 · 系统与装机利器",
-    "date": "2026-08-22",
+    "date": "2026-08-23",
     "tags": [
       "Office",
       "LKY",
@@ -3722,7 +3742,7 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
     "title": "Fail2Ban (fail2ban/fail2ban)",
     "url": "nav.html",
     "category": "GitHub 导航 · 服务器安全与防护",
-    "date": "2026-08-22",
+    "date": "2026-08-23",
     "tags": [
       "Fail2Ban",
       "Linux安全",
@@ -3741,7 +3761,7 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
     "title": "acme.sh (acmesh-official/acme.sh)",
     "url": "nav.html",
     "category": "GitHub 导航 · 服务器安全与防护",
-    "date": "2026-08-22",
+    "date": "2026-08-23",
     "tags": [
       "acme.sh",
       "SSL证书",
@@ -3760,7 +3780,7 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
     "title": "FingerprintJS (fingerprintjs/fingerprintjs)",
     "url": "nav.html",
     "category": "GitHub 导航 · 前端安全与设备识别",
-    "date": "2026-08-22",
+    "date": "2026-08-23",
     "tags": [
       "Fingerprint",
       "设备指纹",
@@ -3779,7 +3799,7 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
     "title": "CloudflareSpeedTest (XIU2/CloudflareSpeedTest)",
     "url": "nav.html",
     "category": "GitHub 导航 · 网络加速与穿透工具",
-    "date": "2026-08-22",
+    "date": "2026-08-23",
     "tags": [
       "CloudflareSpeedTest",
       "Cloudflare",
@@ -3799,7 +3819,7 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
     "title": "frp (fatedier/frp)",
     "url": "nav.html",
     "category": "GitHub 导航 · 网络加速与穿透工具",
-    "date": "2026-08-22",
+    "date": "2026-08-23",
     "tags": [
       "frp",
       "内网穿透",
@@ -3818,7 +3838,7 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
     "title": "v2rayNG (2dust/v2rayNG)",
     "url": "nav.html",
     "category": "GitHub 导航 · 网络加速与穿透工具",
-    "date": "2026-08-22",
+    "date": "2026-08-23",
     "tags": [
       "v2rayNG",
       "Android",
@@ -3838,7 +3858,7 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
     "title": "v2rayN (2dust/v2rayN)",
     "url": "nav.html",
     "category": "GitHub 导航 · 网络加速与穿透工具",
-    "date": "2026-08-22",
+    "date": "2026-08-23",
     "tags": [
       "v2rayN",
       "Windows",
@@ -3853,12 +3873,32 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
     "sections": []
   },
   {
+    "id": "github-edgetunnel",
+    "type": "github",
+    "title": "edgetunnel (cmliu/edgetunnel)",
+    "url": "nav.html",
+    "category": "GitHub 导航 · 网络加速与穿透工具",
+    "date": "2026-08-23",
+    "tags": [
+      "edgetunnel",
+      "Cloudflare",
+      "Workers",
+      "Pages",
+      "VLESS",
+      "代理工具",
+      "JavaScript"
+    ],
+    "summary": "基于 Cloudflare Pages 与 Workers 的轻量级边缘网络隧道工具 — 基于 Cloudflare 边缘计算无服务器架构的轻量级网络代理与边缘隧道项目，支持一键部署 VLESS 协议节点及自定义优选域名订阅。",
+    "content": "edgetunnel cmliu/edgetunnel https://github.com/cmliu/edgetunnel 基于 Cloudflare Pages 与 Workers 的轻量级边缘网络隧道工具 基于 Cloudflare 边缘计算无服务器架构的轻量级网络代理与边缘隧道项目，支持一键部署 VLESS 协议节点及自定义优选域名订阅。 edgetunnel Cloudflare Workers Pages VLESS 代理工具 JavaScript",
+    "sections": []
+  },
+  {
     "id": "file-fileupload-vue",
     "type": "file",
     "title": "FileUpload.vue",
     "url": "files.html",
     "category": "资源文件 · 前端组件",
-    "date": "2026-08-22",
+    "date": "2026-08-23",
     "tags": [
       "vue",
       "前端组件"
@@ -3873,7 +3913,7 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
     "title": "QueryForm.vue",
     "url": "files.html",
     "category": "资源文件 · 前端组件",
-    "date": "2026-08-22",
+    "date": "2026-08-23",
     "tags": [
       "vue",
       "前端组件"
@@ -3888,7 +3928,7 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
     "title": "tools.js",
     "url": "files.html",
     "category": "资源文件 · 代码库",
-    "date": "2026-08-22",
+    "date": "2026-08-23",
     "tags": [
       "js",
       "代码库"
@@ -3903,7 +3943,7 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
     "title": "frps.sh",
     "url": "files.html",
     "category": "资源文件 · Shell 脚本",
-    "date": "2026-08-22",
+    "date": "2026-08-23",
     "tags": [
       "sh",
       "Shell 脚本"
@@ -3918,7 +3958,7 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
     "title": "xray.sh",
     "url": "files.html",
     "category": "资源文件 · Shell 脚本",
-    "date": "2026-08-22",
+    "date": "2026-08-23",
     "tags": [
       "sh",
       "Shell 脚本"
@@ -3933,7 +3973,7 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
     "title": "cmd_proxy.bat",
     "url": "files.html",
     "category": "资源文件 · Windows 批处理",
-    "date": "2026-08-22",
+    "date": "2026-08-23",
     "tags": [
       "bat",
       "Windows 批处理"
@@ -3948,7 +3988,7 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
     "title": "cmd_proxy_agy.bat",
     "url": "files.html",
     "category": "资源文件 · Windows 批处理",
-    "date": "2026-08-22",
+    "date": "2026-08-23",
     "tags": [
       "bat",
       "Windows 批处理"
@@ -3963,7 +4003,7 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
     "title": "fileNameReplaScrip.bat",
     "url": "files.html",
     "category": "资源文件 · Windows 批处理",
-    "date": "2026-08-22",
+    "date": "2026-08-23",
     "tags": [
       "bat",
       "Windows 批处理"
@@ -3978,7 +4018,7 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
     "title": "ImgHandle_jpg.zip",
     "url": "files.html",
     "category": "资源文件 · 压缩资源包",
-    "date": "2026-08-22",
+    "date": "2026-08-23",
     "tags": [
       "zip",
       "压缩资源包"
@@ -3993,7 +4033,7 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
     "title": "curveCharts.rar",
     "url": "files.html",
     "category": "资源文件 · 压缩资源包",
-    "date": "2026-08-22",
+    "date": "2026-08-23",
     "tags": [
       "rar",
       "压缩资源包"
@@ -4008,7 +4048,7 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
     "title": "优惠券弹框组件.zip",
     "url": "files.html",
     "category": "资源文件 · 压缩资源包",
-    "date": "2026-08-22",
+    "date": "2026-08-23",
     "tags": [
       "zip",
       "压缩资源包"

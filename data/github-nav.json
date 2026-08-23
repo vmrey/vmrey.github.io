@@ -219,6 +219,25 @@
           "sing-box",
           "C#"
         ]
+      },
+      {
+        "name": "edgetunnel",
+        "url": "https://github.com/cmliu/edgetunnel",
+        "tagline": "基于 Cloudflare Pages 与 Workers 的轻量级边缘网络隧道工具",
+        "description": "基于 Cloudflare 边缘计算无服务器架构的轻量级网络代理与边缘隧道项目，支持一键部署 VLESS 协议节点及自定义优选域名订阅。",
+        "category": "网络加速与穿透工具",
+        "badge": "JavaScript / 边缘网络隧道",
+        "tags": [
+          "edgetunnel",
+          "Cloudflare",
+          "Workers",
+          "Pages",
+          "VLESS",
+          "代理工具",
+          "JavaScript"
+        ],
+        "repo": "cmliu/edgetunnel",
+        "language": "JavaScript"
       }
     ]
   }
