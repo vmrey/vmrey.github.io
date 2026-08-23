@@ -19,8 +19,8 @@
     "desc": "Xray Core 核心网络代理服务一键安装与证书部署脚本",
     "category": "Shell 脚本"
   },
-  "fileNameReplaScrip.bat": {
-    "desc": "Windows 批量替换与修改文件名自动化 BAT 批处理脚本",
+  "RenameTool.bat": {
+    "desc": "Windows 批量修改文件名与文件夹名自动化批处理工具（支持递归与特殊字符防破坏）",
     "category": "Windows 批处理"
   },
   "cmd_proxy.bat": {

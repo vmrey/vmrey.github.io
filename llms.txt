@@ -60,7 +60,7 @@
 - [SVN (Subversion) 常用版本控制命令速查与批量清理指南](https://vmrey.github.io/posts/svn-cheatsheet-1d69.html): 整理 SVN 核心操作命令速查表，重点讲解在 macOS/Linux 终端下一键批量添加未跟踪文件 (?) 与批量删除丢失文件 (!) 的 Shell 管道组合技巧。
 - [高质量无损图片压缩工具与批量处理方案横向评测](https://vmrey.github.io/posts/img-compress-tools-4c4a.html): 横向对比 TinyPNG、Caesium、Squoosh 等多款主流压缩工具，如何在保持视觉高保真的同时将体积缩减 70%。
 - [Photoshop 批量图片压缩 ExtendScript (JSX) 自动化脚本（支持保留子目录结构）](https://vmrey.github.io/posts/ps-batch-compress-0ecc.html): Photoshop ExtendScript (JSX) 批量图片压缩脚本最新优化版。支持 JPG/PNG/GIF/JFIF 递归批量处理与自动保留多层子目录结构，内置防覆盖机制与稳健异常处理。
-- [Windows 批量修改文件名与字符替换批处理 (.bat) 脚本](https://vmrey.github.io/posts/bat-rename-b2ae.html): 无需安装第三方软件，利用原生 Bat 批处理脚本一键完成指定文件夹下海量文件的前缀添加与文本替换。
+- [Windows 批量修改文件名与文件夹名自动化批处理 (BAT) 脚本实战（优化版）](https://vmrey.github.io/posts/bat-rename-b2ae.html): 深度优化版 Windows BAT 批处理脚本，支持递归批量替换文件与文件夹名（含空格）。内置重名跳过保护、动态延迟扩展防破坏特殊字符，利用 sort /r 倒序遍历彻底解决子目录重命名死循环。
 - [VSCode 前端开发高频实用正则表达式查找与批量替换清单](https://vmrey.github.io/posts/vscode-regex-replace-df0f.html): 精选 VSCode 全局重构高频正则：快速批量将 v-model 改为 v-model.trim、清理行尾空格及修正多余空行。
 - [VSCode 中使用正则表达式批量清理 console.log 打印语句](https://vmrey.github.io/posts/vscode-clean-log-8fb9.html): 项目打包上线前，利用 VSCode 强大的正则查找与替换功能，一键安全快速清除所有调试用 console.log 语句。
 

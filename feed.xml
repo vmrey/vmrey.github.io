@@ -5,7 +5,7 @@
     <link>https://vmrey.github.io/</link>
     <description>构建工具，写干净的代码</description>
     <language>zh-CN</language>
-    <lastBuildDate>Sun, 23 Aug 2026 10:12:49 GMT</lastBuildDate>
+    <lastBuildDate>Sun, 23 Aug 2026 10:25:44 GMT</lastBuildDate>
     <atom:link href="https://vmrey.github.io/feed.xml" rel="self" type="application/rss+xml"/>
     <item>
       <title>微信小程序踩坑记录：如何完美解决图片强制刷新（彻底告别本地缓存）</title>
@@ -80,12 +80,12 @@
       <description>全面整理 Kodbox 可道云私有云存储部署方案：包含 Docker Compose 极简持久化搭建与常规 LNMP 裸机源码快速安装。</description>
     </item>
     <item>
-      <title>Windows 批量修改文件名与字符替换批处理 (.bat) 脚本</title>
+      <title>Windows 批量修改文件名与文件夹名自动化批处理 (BAT) 脚本实战（优化版）</title>
       <link>https://vmrey.github.io/posts/bat-rename-b2ae.html</link>
       <guid isPermaLink="true">https://vmrey.github.io/posts/bat-rename-b2ae.html</guid>
       <pubDate>Sun, 28 Jun 2026 00:00:00 GMT</pubDate>
       <category>效率工具与软件</category>
-      <description>无需安装第三方软件，利用原生 Bat 批处理脚本一键完成指定文件夹下海量文件的前缀添加与文本替换。</description>
+      <description>深度优化版 Windows BAT 批处理脚本，支持递归批量替换文件与文件夹名（含空格）。内置重名跳过保护、动态延迟扩展防破坏特殊字符，利用 sort /r 倒序遍历彻底解决子目录重命名死循环。</description>
     </item>
     <item>
       <title>Nginx 全站反向代理配置说明文档（Cloudflare CDN + 流媒体优化版）</title>

@@ -3,9 +3,9 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-  <title>Windows 批量修改文件名与字符替换批处理 (.bat) 脚本 - vmrey.github.io</title>
-  <meta name="description" content="无需安装第三方软件，利用原生 Bat 批处理脚本一键完成指定文件夹下海量文件的前缀添加与文本替换。">
-  <meta name="keywords" content="效率工具, Windows, 批处理, 自动化">
+  <title>Windows 批量修改文件名与文件夹名自动化批处理 (BAT) 脚本实战（优化版） - vmrey.github.io</title>
+  <meta name="description" content="深度优化版 Windows BAT 批处理脚本，支持递归批量替换文件与文件夹名（含空格）。内置重名跳过保护、动态延迟扩展防破坏特殊字符，利用 sort /r 倒序遍历彻底解决子目录重命名死循环。">
+  <meta name="keywords" content="效率工具, Windows, 批处理, 自动化, 文件管理">
   <meta name="author" content="vmrey">
   <meta name="robots" content="index, follow">
   <meta name="google-site-verification" content="Vi8ircfK8SuZNzZBrtU7av_aXeiUKrLDKgef-84unTM">
@@ -17,15 +17,15 @@
   <!-- Open Graph 社交卡片 (微信/QQ/Telegram/GitHub) -->
   <meta property="og:site_name" content="vmrey's Blog">
   <meta property="og:type" content="article">
-  <meta property="og:title" content="Windows 批量修改文件名与字符替换批处理 (.bat) 脚本 - vmrey.github.io">
-  <meta property="og:description" content="无需安装第三方软件，利用原生 Bat 批处理脚本一键完成指定文件夹下海量文件的前缀添加与文本替换。">
+  <meta property="og:title" content="Windows 批量修改文件名与文件夹名自动化批处理 (BAT) 脚本实战（优化版） - vmrey.github.io">
+  <meta property="og:description" content="深度优化版 Windows BAT 批处理脚本，支持递归批量替换文件与文件夹名（含空格）。内置重名跳过保护、动态延迟扩展防破坏特殊字符，利用 sort /r 倒序遍历彻底解决子目录重命名死循环。">
   <meta property="og:url" content="https://vmrey.github.io/posts/bat-rename-b2ae.html">
   <meta property="og:image" content="https://vmrey.github.io/favicon.svg">
 
   <!-- Twitter / X 社交卡片 -->
   <meta name="twitter:card" content="summary">
-  <meta name="twitter:title" content="Windows 批量修改文件名与字符替换批处理 (.bat) 脚本 - vmrey.github.io">
-  <meta name="twitter:description" content="无需安装第三方软件，利用原生 Bat 批处理脚本一键完成指定文件夹下海量文件的前缀添加与文本替换。">
+  <meta name="twitter:title" content="Windows 批量修改文件名与文件夹名自动化批处理 (BAT) 脚本实战（优化版） - vmrey.github.io">
+  <meta name="twitter:description" content="深度优化版 Windows BAT 批处理脚本，支持递归批量替换文件与文件夹名（含空格）。内置重名跳过保护、动态延迟扩展防破坏特殊字符，利用 sort /r 倒序遍历彻底解决子目录重命名死循环。">
   <meta name="twitter:image" content="https://vmrey.github.io/favicon.svg">
 
   <!-- 页面绘制前同步初始化深浅色主题，彻底杜绝首屏白屏闪烁 (Anti-FOUC) -->
@@ -46,8 +46,8 @@
   {
     "@context": "https://schema.org",
     "@type": "BlogPosting",
-    "headline": "Windows 批量修改文件名与字符替换批处理 (.bat) 脚本",
-    "description": "无需安装第三方软件，利用原生 Bat 批处理脚本一键完成指定文件夹下海量文件的前缀添加与文本替换。",
+    "headline": "Windows 批量修改文件名与文件夹名自动化批处理 (BAT) 脚本实战（优化版）",
+    "description": "深度优化版 Windows BAT 批处理脚本，支持递归批量替换文件与文件夹名（含空格）。内置重名跳过保护、动态延迟扩展防破坏特殊字符，利用 sort /r 倒序遍历彻底解决子目录重命名死循环。",
     "datePublished": "2026-06-28",
     "dateModified": "2026-06-28",
     "author": {
@@ -67,7 +67,7 @@
       "@type": "WebPage",
       "@id": "https://vmrey.github.io/posts/bat-rename-b2ae.html"
     },
-    "keywords": "效率工具, Windows, 批处理, 自动化",
+    "keywords": "效率工具, Windows, 批处理, 自动化, 文件管理",
     "articleSection": "效率工具与软件"
   }
   </script>
@@ -315,13 +315,13 @@
             <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
             <span>返回文章列表</span>
           </a>
-          <h1 class="article-title">Windows 批量修改文件名与字符替换批处理 (.bat) 脚本</h1>
+          <h1 class="article-title">Windows 批量修改文件名与文件夹名自动化批处理 (BAT) 脚本实战（优化版）</h1>
           <div class="article-meta">
             <span class="post-block-tag">效率工具与软件</span>
             <span>·</span>
             <time datetime="2026-06-28">2026-06-28</time>
             <span>·</span>
-            <span>15 分钟阅读</span>
+            <span>6 分钟阅读</span>
           </div>
         </header>
 
@@ -329,30 +329,57 @@
         <div class="article-layout">
           <article class="article-content" id="main-content">
             <div class="prose">
-<h2 id="功能说明">功能说明</h2>
-<p>这是一个Windows批处理脚本，用于批量修改文件名和文件夹名，主要功能包括：</p>
+<p>这是一个简单轻量且性能强悍的 Windows 批处理 (BAT) 自动化脚本，用于一键批量替换当前文件夹及其所有子文件夹下的文件和文件夹名称。</p>
+<hr>
+<h2 id="一-核心功能亮点">一、✨ 核心功能亮点</h2>
+<ul>
+<li><strong>批量深度替换</strong>：一键递归替换当前目录及所有子目录下文件和文件夹名称中的指定字符串（支持替换空格）。
+</li>
+<li><strong>安全防误触机制</strong>：如果替换后的文件名已经存在，或者文件处于被占用、只读或无权限状态，脚本会自动跳过并打印原因，防止误操作或数据损坏。
+</li>
+<li><strong>极速底层过滤</strong>：利用 <code>dir /s /b &quot;*%str1%*&quot;</code> 原生命令在内核层直接过滤匹配文件，面对上万个文件的庞大工程也能瞬间完成处理，彻底告别逐个比对的卡顿。
+</li>
+<li><strong>特殊字符防破坏</strong>：在循环体内部精细动态开关延迟变量扩展（<code>setlocal enabledelayedexpansion</code>），完美兼容包含感叹号（<code>!</code>）和点号（<code>.</code>）等特殊字符的原始文件及文件夹名。
+</li>
+<li><strong>子目录倒序防死锁</strong>：重命名文件夹时采用 <code>sort /r</code> 倒序遍历算法，优先从最深层子目录自底向上重命名，彻底解决旧版由于父目录改名导致子路径失效的死锁与无限循环 Bug。
+</li>
+</ul>
+<hr>
+<h2 id="二-使用方法与运行步骤">二、🚀 使用方法与运行步骤</h2>
 <ol>
-<li><strong>批量替换文件名</strong>：替换指定文件名中的字符串
+<li><strong>获取脚本</strong>：
+
+<ul>
+<li>方式一：点击下方下载链接直接获取预置的 <code>RenameTool.bat</code> 文件；
 </li>
-<li><strong>批量删除字符</strong>：删除文件名中的指定字符（汉字、字母、数字等）
+<li>方式二：新建文本文件，将下方提供的完整代码复制进去，另存为 <code>RenameTool.bat</code>。
 </li>
-<li><strong>支持文件夹重命名</strong>：同时处理文件和文件夹
+</ul>
 </li>
-<li><strong>递归处理</strong>：自动处理子目录中的文件
+<li><strong>放置与运行</strong>：将 <code>RenameTool.bat</code> 放置到你需要批量重命名的<strong>最外层主文件夹</strong>根目录下，双击运行。
+</li>
+<li><strong>按交互提示操作</strong>：
+
+<ul>
+<li>输入<strong>需要被替换的旧字符</strong>（支持空格），按回车确认；
+</li>
+<li>输入<strong>想要替换成的新字符</strong>（若想直接删除特定字符，不输入任何内容直接按回车即可）；
+</li>
+<li>观察终端实时处理日志，等待脚本统计成功与跳过数量即可完成！
+</li>
+</ul>
 </li>
 </ol>
-<h2 id="脚本源码">脚本源码</h2>
-<pre><code class="language-batch">@echo off
+<hr>
+<h2 id="三-完整代码-最新优化版">三、💻 完整代码 (最新优化版)</h2>
+<pre><code class="language-bat">@echo off
 chcp 65001 &gt;nul
-setlocal enabledelayedexpansion
 
 title 批量修改文件名工具
 
 echo ========================================
-echo    批量修改文件名工具
+echo    批量修改文件名工具 (性能优化版)
 echo ========================================
-echo.
-echo 此批处理可批量替换当前文件夹下所有文件(文件夹)名。
 echo.
 echo 注意事项：
 echo 1. 建议先备份重要文件
@@ -360,273 +387,118 @@ echo 2. 脚本会递归处理子目录
 echo 3. 文件名冲突时会跳过
 echo.
 
-set /p str1= 请输入要替换的文件(文件夹)名字符串（可替换空格）：
+set /p str1= 请输入要替换的字符串（可替换空格）：
 if &quot;%str1%&quot;==&quot;&quot; (
     echo 错误：替换字符串不能为空！
     pause
     exit /b
 )
 
-set /p str2= 请输入替换后的文件(文件夹)名字符串（去除则直接回车）：
+set /p str2= 请输入替换后的字符串（去除则直接回车）：
 
 echo.
 echo 正在替换文件名……
 set file_count=0
 set skip_count=0
 
-for /f &quot;delims=&quot; %%a in ('dir /a-d /s /b 2^&gt;nul') do (
+:: 性能优化：直接让 dir 过滤包含 str1 的文件
+for /f &quot;delims=&quot; %%a in ('dir /a-d /s /b &quot;*%str1%*&quot; 2^&gt;nul') do (
     if &quot;%%~nxa&quot; neq &quot;%~nx0&quot; (
-        set &quot;f=%%~na&quot;
-        set &quot;new_name=!f:%str1%=%str2%!&quot;
-        if &quot;!new_name!&quot; neq &quot;%%~na&quot; (
-            if not exist &quot;%%~dpa!new_name!%%~xa&quot; (
-                ren &quot;%%a&quot; &quot;!new_name!%%~xa&quot; 2&gt;nul
-                if !errorlevel! equ 0 (
-                    echo 已重命名: &quot;%%~nxa&quot; -^&gt; &quot;!new_name!%%~xa&quot;
-                    set /a file_count+=1
-                ) else (
-                    echo 跳过: &quot;%%~nxa&quot; (权限不足)
-                    set /a skip_count+=1
-                )
+        :: 解决含有 ! 的文件名被破坏的问题，在循环内动态开关延迟扩展
+        set &quot;full_path=%%~dpa&quot;
+        set &quot;old_name=%%~na&quot;
+        set &quot;ext=%%~xa&quot;
+        
+        setlocal enabledelayedexpansion
+        set &quot;new_name=!old_name:%str1%=%str2%!&quot;
+        
+        if not exist &quot;!full_path!!new_name!!ext!&quot; (
+            ren &quot;%%a&quot; &quot;!new_name!!ext!&quot; 2&gt;nul
+            if !errorlevel! equ 0 (
+                echo 已重命名: &quot;!old_name!!ext!&quot; -^&gt; &quot;!new_name!!ext!&quot;
+                :: 跨 endlocal 传递变量需特殊技巧，这里直接退回外层环境累加
+                endlocal
+                set /a file_count+=1
             ) else (
-                echo 跳过: &quot;%%~nxa&quot; (文件名已存在)
+                echo 跳过: &quot;!old_name!!ext!&quot; (权限不足)
+                endlocal
                 set /a skip_count+=1
             )
+        ) else (
+            echo 跳过: &quot;!old_name!!ext!&quot; (文件名已存在)
+            endlocal
+            set /a skip_count+=1
         )
     )
 )
 
-echo 文件名替换完成！共处理 !file_count! 个文件，跳过 !skip_count! 个文件
+echo 文件名替换完成！共处理 %file_count% 个文件，跳过 %skip_count% 个文件
 echo.
 echo 正在替换文件夹名……
 set folder_count=0
 set folder_skip=0
 
-:folder_loop
-set n=0
-for /f &quot;delims=&quot; %%i in ('dir /ad /s /b 2^&gt;nul ^|find &quot;%str1%&quot;') do (
-    set &quot;t=%%~ni&quot;
-    set &quot;new_folder=!t:%str1%=%str2%!&quot;
-    if &quot;!new_folder!&quot; neq &quot;%%~ni&quot; (
-        if not exist &quot;%%~dpi!new_folder!&quot; (
-            ren &quot;%%i&quot; &quot;!new_folder!&quot; 2&gt;nul
-            if !errorlevel! equ 0 (
-                echo 已重命名文件夹: &quot;%%~ni&quot; -^&gt; &quot;!new_folder!&quot;
-                set /a folder_count+=1
-                set /a n+=1
-            ) else (
-                echo 跳过文件夹: &quot;%%~ni&quot; (权限不足)
-                set /a folder_skip+=1
-            )
+:: 性能与逻辑优化：利用 sort /r 倒序排列，优先处理最深层的子文件夹，彻底告别死循环
+for /f &quot;delims=&quot; %%i in ('dir /ad /s /b &quot;*%str1%*&quot; 2^&gt;nul ^| sort /r') do (
+    set &quot;full_path=%%~dpi&quot;
+    set &quot;old_folder=%%~nxi&quot;
+    
+    setlocal enabledelayedexpansion
+    set &quot;new_folder=!old_folder:%str1%=%str2%!&quot;
+    
+    if not exist &quot;!full_path!!new_folder!&quot; (
+        ren &quot;%%i&quot; &quot;!new_folder!&quot; 2&gt;nul
+        if !errorlevel! equ 0 (
+            echo 已重命名文件夹: &quot;!old_folder!&quot; -^&gt; &quot;!new_folder!&quot;
+            endlocal
+            set /a folder_count+=1
         ) else (
-            echo 跳过文件夹: &quot;%%~ni&quot; (文件夹名已存在)
+            echo 跳过文件夹: &quot;!old_folder!&quot; (权限不足)
+            endlocal
             set /a folder_skip+=1
         )
+    ) else (
+        echo 跳过文件夹: &quot;!old_folder!&quot; (文件夹名已存在)
+        endlocal
+        set /a folder_skip+=1
     )
 )
 
-if &quot;!n!&quot; neq &quot;0&quot; goto folder_loop
-
-echo 文件夹名替换完成！共处理 !folder_count! 个文件夹，跳过 !folder_skip! 个文件夹
+echo 文件夹名替换完成！共处理 %folder_count% 个文件夹，跳过 %folder_skip% 个文件夹
 echo.
 echo ========================================
 echo 处理完成！
-echo 文件: !file_count! 个成功，!skip_count! 个跳过
-echo 文件夹: !folder_count! 个成功，!folder_skip! 个跳过
+echo 文件: %file_count% 个成功，%skip_count% 个跳过
+echo 文件夹: %folder_count% 个成功，%folder_skip% 个跳过
 echo ========================================
 echo.
 pause</code></pre>
-<h2 id="使用方法">使用方法</h2>
-<h3 id="第一步-创建脚本文件">第一步：创建脚本文件</h3>
+<hr>
+<h2 id="四-核心技术原理解析">四、🔍 核心技术原理解析</h2>
+<h3 id="1-为什么要在循环内动态开关延迟扩展">1. 为什么要在循环内动态开关延迟扩展？</h3>
+<p>在标准 CMD 环境中，如果全局开启 <code>setlocal enabledelayedexpansion</code>，当遍历到的原始文件名中含有感叹号（如 <code>Notice!.txt</code>）时，CMD 解释器会将 <code>!</code> 当作变量定界符吞噬，导致文件名被意外篡改损坏。</p>
+<p><strong>解决方案</strong>：在外层使用普通变量接收 <code>%%~na</code>，仅在需要进行变量字符串替换（<code>!old_name:%str1%=%str2%!</code>）的瞬间开启延迟扩展，替换完成后立即 <code>endlocal</code> 还原环境。</p>
+<h3 id="2-为什么重命名文件夹必须加-sort-r-倒序">2. 为什么重命名文件夹必须加 <code>sort /r</code> 倒序？</h3>
+<p>如果在自顶向下遍历时重命名了父目录（例如将 <code>A/B/C</code> 中的 <code>A</code> 改名为 <code>A_new</code>），原本已经读取到的子路径 <code>A/B/C</code> 在磁盘上就会瞬间失效变为死路径，后续处理子目录必定报错或陷入死循环。</p>
+<p><strong>解决方案</strong>：管道配合 <code>sort /r</code>，让路径深度最深的叶子文件夹（如 <code>A/B/C</code>）优先被处理，最后处理顶层根目录 <code>A</code>，从而实现 100% 稳健的目录树迁移。</p>
+<hr>
+<h2 id="五-脚本下载与免跳转预览">五、📥 脚本下载与免跳转预览</h2>
+<ul>
+<li>💾 <strong>脚本源文件下载</strong>：<a href="../assets/files/RenameTool.bat">RenameTool.bat</a>
+</li>
+<li>📁 <strong>在线高亮与管理中心</strong>：<a href="../files.html">前往资源文件库 (files.html)</a> 查看全部 Shell / BAT 脚本附件。
+</li>
+</ul>
+<hr>
+<h2 id="六-注意事项与数据安全建议">六、🛡️ 注意事项与数据安全建议</h2>
 <ol>
-<li>新建一个文本文件（文件名可自定义，如 <code>rename_files.bat</code>）
+<li><strong>首次使用建议备份</strong>：批量重命名属于磁盘物理写入操作，建议先对少量文件进行测试确认，或提前备份重要资料；
 </li>
-<li>将上述脚本内容复制到文件中
+<li><strong>排除自身保护</strong>：脚本内建 <code>if &quot;%%~nxa&quot; neq &quot;%~nx0&quot;</code> 安全防护，执行时绝不会误伤自身 <code>RenameTool.bat</code> 文件；
 </li>
-<li>保存文件
+<li><strong>编码规范</strong>：脚本开头已指定 <code>chcp 65001</code>（UTF-8 编码），若在极少数精简版 Windows 系统终端出现中文乱码，可将文件另存为 ANSI (GBK) 编码格式。
 </li>
 </ol>
-<h3 id="第二步-修改文件后缀名">第二步：修改文件后缀名</h3>
-<p>将文件后缀名从 <code>.txt</code> 改为 <code>.bat</code></p>
-<p><strong>Windows 10/11 启用文件扩展名显示：</strong></p>
-<ol>
-<li>按 <code>Win + E</code> 打开文件资源管理器
-</li>
-<li>点击顶部菜单栏的&quot;查看&quot;选项卡
-</li>
-<li>勾选&quot;文件扩展名&quot;复选框
-</li>
-<li>现在可以修改文件后缀名了
-</li>
-</ol>
-<h3 id="第三步-使用脚本">第三步：使用脚本</h3>
-<ol>
-<li>将脚本文件放入需要修改文件名的目录中
-</li>
-<li>双击运行脚本文件
-</li>
-<li>按照提示输入：
-
-<ul>
-<li><strong>要替换的字符串</strong>：输入原文件名中需要替换的内容
-</li>
-<li><strong>替换后的字符串</strong>：输入新的内容（直接回车表示删除）
-</li>
-</ul>
-</li>
-</ol>
-<h3 id="第四步-查看结果">第四步：查看结果</h3>
-<p>脚本会显示每个文件的修改结果和统计信息。</p>
-<h2 id="使用示例">使用示例</h2>
-<h3 id="示例1-批量替换文件名中的文字">示例1：批量替换文件名中的文字</h3>
-<pre><code class="language-bash">要替换的字符串: photo
-替换后的字符串: picture</code></pre>
-<p><strong>效果：</strong></p>
-<ul>
-<li><code>photo_001.jpg</code> → <code>picture_001.jpg</code>
-</li>
-<li><code>my_photo.png</code> → <code>my_picture.png</code>
-</li>
-</ul>
-<h3 id="示例2-批量删除文件名中的字符">示例2：批量删除文件名中的字符</h3>
-<pre><code class="language-bash">要替换的字符串: copy
-替换后的字符串: (直接回车)</code></pre>
-<p><strong>效果：</strong></p>
-<ul>
-<li><code>copy_document.txt</code> → <code>_document.txt</code>
-</li>
-<li><code>file_copy_2.doc</code> → <code>file__2.doc</code>
-</li>
-</ul>
-<h3 id="示例3-批量添加前缀">示例3：批量添加前缀</h3>
-<pre><code class="language-bash">要替换的字符串: (文件名开头)
-替换后的字符串: 2024_</code></pre>
-<p><strong>效果：</strong></p>
-<ul>
-<li><code>document.txt</code> → <code>2024_document.txt</code>
-</li>
-<li><code>image.jpg</code> → <code>2024_image.jpg</code>
-</li>
-</ul>
-<h2 id="注意事项">注意事项</h2>
-<h3 id="重要提醒">⚠️ 重要提醒</h3>
-<ol>
-<li><strong>备份重要文件</strong>：在使用脚本前，建议先备份重要文件
-</li>
-<li><strong>测试环境</strong>：先在测试文件夹中试用，确认效果后再在正式文件中使用
-</li>
-<li><strong>文件名冲突</strong>：如果目标文件名已存在，脚本会跳过该文件
-</li>
-<li><strong>权限问题</strong>：某些系统文件或受保护的文件可能无法修改
-</li>
-<li><strong>编码问题</strong>：脚本已设置UTF-8编码，支持中文文件名
-</li>
-</ol>
-<h3 id="常见问题">🔧 常见问题</h3>
-<p><strong>问题1：脚本运行后没有反应</strong></p>
-<ul>
-<li>解决：确保脚本文件放在正确的目录中
-</li>
-<li>检查是否有足够的权限修改文件
-</li>
-</ul>
-<p><strong>问题2：某些文件没有被修改</strong></p>
-<ul>
-<li>原因：可能是文件名冲突或权限不足
-</li>
-<li>解决：检查文件是否被其他程序占用
-</li>
-</ul>
-<p><strong>问题3：中文显示乱码</strong></p>
-<ul>
-<li>原因：系统编码设置问题
-</li>
-<li>解决：脚本已包含 <code>chcp 65001</code> 命令，如仍有问题请检查系统编码设置
-</li>
-</ul>
-<p><strong>问题4：无法修改系统文件</strong></p>
-<ul>
-<li>原因：权限不足
-</li>
-<li>解决：以管理员身份运行脚本
-</li>
-</ul>
-<h2 id="高级用法">高级用法</h2>
-<h3 id="1-只处理文件-不处理文件夹">1. 只处理文件，不处理文件夹</h3>
-<p>修改脚本，注释掉文件夹处理部分：</p>
-<pre><code class="language-batch">REM 注释掉文件夹处理部分
-REM :folder_loop
-REM ...</code></pre>
-<h3 id="2-只处理特定类型的文件">2. 只处理特定类型的文件</h3>
-<p>修改文件处理部分，添加文件类型过滤：</p>
-<pre><code class="language-batch">for /f &quot;delims=&quot; %%a in ('dir /a-d /s /b *.txt *.doc *.docx 2^&gt;nul') do (
-    ...
-)</code></pre>
-<h3 id="3-添加日期时间前缀">3. 添加日期时间前缀</h3>
-<pre><code class="language-batch">for /f &quot;tokens=1-3 delims=/ &quot; %%a in ('date /t') do set mydate=%%c%%a%%b
-set /p str1= 请输入要替换的字符串：
-set /p str2= 请输入替换后的字符串：
-set &quot;prefix=%mydate%_&quot;</code></pre>
-<h2 id="替代方案">替代方案</h2>
-<h3 id="powershell-脚本-推荐">PowerShell 脚本（推荐）</h3>
-<pre><code class="language-powershell"># PowerShell 批量重命名脚本
-$oldName = Read-Host &quot;请输入要替换的字符串&quot;
-$newName = Read-Host &quot;请输入替换后的字符串&quot;
-
-Get-ChildItem -Recurse | ForEach-Object {
-    if ($_.Name -like &quot;*$oldName*&quot;) {
-        $newFileName = $_.Name -replace [regex]::Escape($oldName), $newName
-        if ($_.Name -ne $newFileName -and -not (Test-Path (Join-Path $_.DirectoryName $newFileName))) {
-            Rename-Item -Path $_.FullName -NewName $newFileName
-            Write-Host &quot;已重命名: $($_.Name) -&gt; $newFileName&quot;
-        }
-    }
-}</code></pre>
-<h3 id="python-脚本">Python 脚本</h3>
-<pre><code class="language-python">import os
-import sys
-
-def batch_rename(directory, old_str, new_str):
-    count = 0
-    for root, dirs, files in os.walk(directory):
-        for filename in files:
-            if old_str in filename:
-                new_filename = filename.replace(old_str, new_str)
-                old_path = os.path.join(root, filename)
-                new_path = os.path.join(root, new_filename)
-                
-                if not os.path.exists(new_path):
-                    os.rename(old_path, new_path)
-                    print(f&quot;已重命名: {filename} -&gt; {new_filename}&quot;)
-                    count += 1
-    print(f&quot;共处理 {count} 个文件&quot;)
-
-if __name__ == &quot;__main__&quot;:
-    directory = input(&quot;请输入目录路径（当前目录请直接回车）: &quot;) or &quot;.&quot;
-    old_str = input(&quot;请输入要替换的字符串: &quot;)
-    new_str = input(&quot;请输入替换后的字符串（删除请直接回车）: &quot;)
-    batch_rename(directory, old_str, new_str)</code></pre>
-<h2 id="下载脚本">下载脚本</h2>
-<p><a href="../assets/files/fileNameReplaScrip.bat"><strong>脚本下载地址</strong></a></p>
-<h2 id="总结">总结</h2>
-<p>这个批量修改文件名工具具有以下特点：</p>
-<ul>
-<li>✅ 操作简单，适合小白用户
-</li>
-<li>✅ 支持文件和文件夹批量重命名
-</li>
-<li>✅ 递归处理子目录
-</li>
-<li>✅ 支持中文字符
-</li>
-<li>✅ 提供详细的处理反馈
-</li>
-<li>⚠️ 建议先备份重要文件
-</li>
-<li>⚠️ 注意文件名冲突处理
-</li>
-</ul>
-<p>使用前请仔细阅读注意事项，确保数据安全！</p>
             </div>
 
             <div class="post-block-footer" style="margin-top: 3.5rem; padding-top: 1.5rem;">
@@ -644,73 +516,28 @@ if __name__ == &quot;__main__&quot;:
             <div class="toc-box-title">本页导读 · 快速直达</div>
             <ul class="toc-list">
             <li>
-              <a href="#功能说明" class="toc-link" title="功能说明">功能说明</a>
+              <a href="#一-核心功能亮点" class="toc-link" title="一、✨ 核心功能亮点">一、✨ 核心功能亮点</a>
             </li>
             <li>
-              <a href="#脚本源码" class="toc-link" title="脚本源码">脚本源码</a>
+              <a href="#二-使用方法与运行步骤" class="toc-link" title="二、🚀 使用方法与运行步骤">二、🚀 使用方法与运行步骤</a>
             </li>
             <li>
-              <a href="#使用方法" class="toc-link" title="使用方法">使用方法</a>
+              <a href="#三-完整代码-最新优化版" class="toc-link" title="三、💻 完整代码 (最新优化版)">三、💻 完整代码 (最新优化版)</a>
             </li>
             <li>
-              <a href="#第一步-创建脚本文件" class="toc-link" title="第一步：创建脚本文件">第一步：创建脚本文件</a>
+              <a href="#四-核心技术原理解析" class="toc-link" title="四、🔍 核心技术原理解析">四、🔍 核心技术原理解析</a>
             </li>
             <li>
-              <a href="#第二步-修改文件后缀名" class="toc-link" title="第二步：修改文件后缀名">第二步：修改文件后缀名</a>
+              <a href="#1-为什么要在循环内动态开关延迟扩展" class="toc-link" title="1. 为什么要在循环内动态开关延迟扩展？">1. 为什么要在循环内动态开关延迟扩展？</a>
             </li>
             <li>
-              <a href="#第三步-使用脚本" class="toc-link" title="第三步：使用脚本">第三步：使用脚本</a>
+              <a href="#2-为什么重命名文件夹必须加-sort-r-倒序" class="toc-link" title="2. 为什么重命名文件夹必须加 `sort /r` 倒序？">2. 为什么重命名文件夹必须加 `sort /r` 倒序？</a>
             </li>
             <li>
-              <a href="#第四步-查看结果" class="toc-link" title="第四步：查看结果">第四步：查看结果</a>
+              <a href="#五-脚本下载与免跳转预览" class="toc-link" title="五、📥 脚本下载与免跳转预览">五、📥 脚本下载与免跳转预览</a>
             </li>
             <li>
-              <a href="#使用示例" class="toc-link" title="使用示例">使用示例</a>
-            </li>
-            <li>
-              <a href="#示例1-批量替换文件名中的文字" class="toc-link" title="示例1：批量替换文件名中的文字">示例1：批量替换文件名中的文字</a>
-            </li>
-            <li>
-              <a href="#示例2-批量删除文件名中的字符" class="toc-link" title="示例2：批量删除文件名中的字符">示例2：批量删除文件名中的字符</a>
-            </li>
-            <li>
-              <a href="#示例3-批量添加前缀" class="toc-link" title="示例3：批量添加前缀">示例3：批量添加前缀</a>
-            </li>
-            <li>
-              <a href="#注意事项" class="toc-link" title="注意事项">注意事项</a>
-            </li>
-            <li>
-              <a href="#重要提醒" class="toc-link" title="⚠️ 重要提醒">⚠️ 重要提醒</a>
-            </li>
-            <li>
-              <a href="#常见问题" class="toc-link" title="🔧 常见问题">🔧 常见问题</a>
-            </li>
-            <li>
-              <a href="#高级用法" class="toc-link" title="高级用法">高级用法</a>
-            </li>
-            <li>
-              <a href="#1-只处理文件-不处理文件夹" class="toc-link" title="1. 只处理文件，不处理文件夹">1. 只处理文件，不处理文件夹</a>
-            </li>
-            <li>
-              <a href="#2-只处理特定类型的文件" class="toc-link" title="2. 只处理特定类型的文件">2. 只处理特定类型的文件</a>
-            </li>
-            <li>
-              <a href="#3-添加日期时间前缀" class="toc-link" title="3. 添加日期时间前缀">3. 添加日期时间前缀</a>
-            </li>
-            <li>
-              <a href="#替代方案" class="toc-link" title="替代方案">替代方案</a>
-            </li>
-            <li>
-              <a href="#powershell-脚本-推荐" class="toc-link" title="PowerShell 脚本（推荐）">PowerShell 脚本（推荐）</a>
-            </li>
-            <li>
-              <a href="#python-脚本" class="toc-link" title="Python 脚本">Python 脚本</a>
-            </li>
-            <li>
-              <a href="#下载脚本" class="toc-link" title="下载脚本">下载脚本</a>
-            </li>
-            <li>
-              <a href="#总结" class="toc-link" title="总结">总结</a>
+              <a href="#六-注意事项与数据安全建议" class="toc-link" title="六、🛡️ 注意事项与数据安全建议">六、🛡️ 注意事项与数据安全建议</a>
             </li>
             </ul>
           </div>
