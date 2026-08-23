@@ -5,7 +5,7 @@
     <link>https://vmrey.github.io/</link>
     <description>构建工具，写干净的代码</description>
     <language>zh-CN</language>
-    <lastBuildDate>Sun, 23 Aug 2026 09:57:30 GMT</lastBuildDate>
+    <lastBuildDate>Sun, 23 Aug 2026 10:12:49 GMT</lastBuildDate>
     <atom:link href="https://vmrey.github.io/feed.xml" rel="self" type="application/rss+xml"/>
     <item>
       <title>微信小程序踩坑记录：如何完美解决图片强制刷新（彻底告别本地缓存）</title>
@@ -64,12 +64,12 @@
       <description>基于 Docker Compose 完整部署开源远程桌面 RustDesk 的 ID 注册服务器与中继服务，详解 21115-21119 端口映射、防火墙放行与客户端 Key 密钥联调。</description>
     </item>
     <item>
-      <title>Photoshop 批量压缩与图片重命名 ExtendScript (JSX) 脚本源码</title>
+      <title>Photoshop 批量图片压缩 ExtendScript (JSX) 自动化脚本（支持保留子目录结构）</title>
       <link>https://vmrey.github.io/posts/ps-batch-compress-0ecc.html</link>
       <guid isPermaLink="true">https://vmrey.github.io/posts/ps-batch-compress-0ecc.html</guid>
       <pubDate>Sun, 05 Jul 2026 00:00:00 GMT</pubDate>
       <category>效率工具与软件</category>
-      <description>使用 Adobe ExtendScript 编写 PS 自动化脚本，一键递归处理整个文件夹中的图片并按质量比导出。</description>
+      <description>Photoshop ExtendScript (JSX) 批量图片压缩脚本最新优化版。支持 JPG/PNG/GIF/JFIF 递归批量处理与自动保留多层子目录结构，内置防覆盖机制与稳健异常处理。</description>
     </item>
     <item>
       <title>Kodbox 可道云私有网盘部署实战指南（Docker 与源码双方案）</title>

@@ -3,9 +3,9 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-  <title>Photoshop 批量压缩与图片重命名 ExtendScript (JSX) 脚本源码 - vmrey.github.io</title>
-  <meta name="description" content="使用 Adobe ExtendScript 编写 PS 自动化脚本，一键递归处理整个文件夹中的图片并按质量比导出。">
-  <meta name="keywords" content="效率工具, Photoshop, JavaScript, 自动化">
+  <title>Photoshop 批量图片压缩 ExtendScript (JSX) 自动化脚本（支持保留子目录结构） - vmrey.github.io</title>
+  <meta name="description" content="Photoshop ExtendScript (JSX) 批量图片压缩脚本最新优化版。支持 JPG/PNG/GIF/JFIF 递归批量处理与自动保留多层子目录结构，内置防覆盖机制与稳健异常处理。">
+  <meta name="keywords" content="效率工具, Photoshop, JavaScript, 自动化, 图片压缩">
   <meta name="author" content="vmrey">
   <meta name="robots" content="index, follow">
   <meta name="google-site-verification" content="Vi8ircfK8SuZNzZBrtU7av_aXeiUKrLDKgef-84unTM">
@@ -17,15 +17,15 @@
   <!-- Open Graph 社交卡片 (微信/QQ/Telegram/GitHub) -->
   <meta property="og:site_name" content="vmrey's Blog">
   <meta property="og:type" content="article">
-  <meta property="og:title" content="Photoshop 批量压缩与图片重命名 ExtendScript (JSX) 脚本源码 - vmrey.github.io">
-  <meta property="og:description" content="使用 Adobe ExtendScript 编写 PS 自动化脚本，一键递归处理整个文件夹中的图片并按质量比导出。">
+  <meta property="og:title" content="Photoshop 批量图片压缩 ExtendScript (JSX) 自动化脚本（支持保留子目录结构） - vmrey.github.io">
+  <meta property="og:description" content="Photoshop ExtendScript (JSX) 批量图片压缩脚本最新优化版。支持 JPG/PNG/GIF/JFIF 递归批量处理与自动保留多层子目录结构，内置防覆盖机制与稳健异常处理。">
   <meta property="og:url" content="https://vmrey.github.io/posts/ps-batch-compress-0ecc.html">
   <meta property="og:image" content="https://vmrey.github.io/favicon.svg">
 
   <!-- Twitter / X 社交卡片 -->
   <meta name="twitter:card" content="summary">
-  <meta name="twitter:title" content="Photoshop 批量压缩与图片重命名 ExtendScript (JSX) 脚本源码 - vmrey.github.io">
-  <meta name="twitter:description" content="使用 Adobe ExtendScript 编写 PS 自动化脚本，一键递归处理整个文件夹中的图片并按质量比导出。">
+  <meta name="twitter:title" content="Photoshop 批量图片压缩 ExtendScript (JSX) 自动化脚本（支持保留子目录结构） - vmrey.github.io">
+  <meta name="twitter:description" content="Photoshop ExtendScript (JSX) 批量图片压缩脚本最新优化版。支持 JPG/PNG/GIF/JFIF 递归批量处理与自动保留多层子目录结构，内置防覆盖机制与稳健异常处理。">
   <meta name="twitter:image" content="https://vmrey.github.io/favicon.svg">
 
   <!-- 页面绘制前同步初始化深浅色主题，彻底杜绝首屏白屏闪烁 (Anti-FOUC) -->
@@ -46,8 +46,8 @@
   {
     "@context": "https://schema.org",
     "@type": "BlogPosting",
-    "headline": "Photoshop 批量压缩与图片重命名 ExtendScript (JSX) 脚本源码",
-    "description": "使用 Adobe ExtendScript 编写 PS 自动化脚本，一键递归处理整个文件夹中的图片并按质量比导出。",
+    "headline": "Photoshop 批量图片压缩 ExtendScript (JSX) 自动化脚本（支持保留子目录结构）",
+    "description": "Photoshop ExtendScript (JSX) 批量图片压缩脚本最新优化版。支持 JPG/PNG/GIF/JFIF 递归批量处理与自动保留多层子目录结构，内置防覆盖机制与稳健异常处理。",
     "datePublished": "2026-07-05",
     "dateModified": "2026-07-05",
     "author": {
@@ -67,7 +67,7 @@
       "@type": "WebPage",
       "@id": "https://vmrey.github.io/posts/ps-batch-compress-0ecc.html"
     },
-    "keywords": "效率工具, Photoshop, JavaScript, 自动化",
+    "keywords": "效率工具, Photoshop, JavaScript, 自动化, 图片压缩",
     "articleSection": "效率工具与软件"
   }
   </script>
@@ -315,13 +315,13 @@
             <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
             <span>返回文章列表</span>
           </a>
-          <h1 class="article-title">Photoshop 批量压缩与图片重命名 ExtendScript (JSX) 脚本源码</h1>
+          <h1 class="article-title">Photoshop 批量图片压缩 ExtendScript (JSX) 自动化脚本（支持保留子目录结构）</h1>
           <div class="article-meta">
             <span class="post-block-tag">效率工具与软件</span>
             <span>·</span>
             <time datetime="2026-07-05">2026-07-05</time>
             <span>·</span>
-            <span>18 分钟阅读</span>
+            <span>8 分钟阅读</span>
           </div>
         </header>
 
@@ -329,76 +329,49 @@
         <div class="article-layout">
           <article class="article-content" id="main-content">
             <div class="prose">
-<p>此脚本可以批量压缩图片，支持 JPG、PNG、GIF 格式，压缩质量可自定义。</p>
-<h2 id="脚本功能">📝 脚本功能</h2>
-<div class="table-container">
-<table class="markdown-table">
-  <thead>
-    <tr>
-      <th style="text-align: left">功能</th>
-      <th style="text-align: left">说明</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td style="text-align: left"><strong>批量处理</strong></td>
-      <td style="text-align: left">自动扫描指定文件夹及其子文件夹</td>
-    </tr>
-    <tr>
-      <td style="text-align: left"><strong>格式支持</strong></td>
-      <td style="text-align: left">JPG、PNG、GIF、JFIF</td>
-    </tr>
-    <tr>
-      <td style="text-align: left"><strong>质量控制</strong></td>
-      <td style="text-align: left">可自定义压缩质量（1-100）</td>
-    </tr>
-    <tr>
-      <td style="text-align: left"><strong>智能输出</strong></td>
-      <td style="text-align: left">自动在原文件夹创建压缩后目录</td>
-    </tr>
-    <tr>
-      <td style="text-align: left"><strong>错误处理</strong></td>
-      <td style="text-align: left">自动跳过损坏或无法打开的文件</td>
-    </tr>
-  </tbody>
-</table>
-</div>
-
-<h2 id="使用方法">🚀 使用方法</h2>
-<h3 id="方法一-快速使用-推荐">方法一：快速使用（推荐）</h3>
+<p>这是一个专为 Adobe Photoshop 编写的 ExtendScript (JSX) 自动化脚本，可以帮助你一键递归批量压缩指定文件夹内的所有图片，并完整保留原始子目录结构。</p>
+<hr>
+<h2 id="一-核心功能亮点">一、✨ 核心功能亮点</h2>
+<ul>
+<li><strong>多格式支持</strong>：全面支持批量扫描并处理 <code>.jpg</code>, <code>.jpeg</code>, <code>.jfif</code>, <code>.png</code>, <code>.gif</code> 格式图片。
+</li>
+<li><strong>智能保留目录结构</strong>：支持递归深度读取所有子文件夹中的图片，并在输出时<strong>自动还原原有的子目录结构</strong>，杜绝文件混杂和同名文件相互覆盖。
+</li>
+<li><strong>自定义压缩质量</strong>：运行后弹出交互输入框自由设定压缩质量（1-100），灵活控制输出体积（主要对 JPG/JFIF 格式生效，PNG 与 GIF 采用自适应 Web 优化算法）。
+</li>
+<li><strong>源文件安全隔离</strong>：所有压缩成果将自动存储在源文件夹同级的独立目录（默认带有 <code>_compressed</code> 后缀），<strong>绝对不修改或覆盖任何原始素材</strong>。
+</li>
+<li><strong>稳健异常防护</strong>：每个文件独立捕获处理异常，单张损坏图片自动跳过并记录日志，绝不中断整批任务。
+</li>
+</ul>
+<hr>
+<h2 id="二-使用方法与运行步骤">二、🚀 使用方法与运行步骤</h2>
 <ol>
-<li><strong>创建脚本文件</strong>：在桌面新建 <code>ImgCompress.jsx</code> 文件
+<li><strong>保存脚本文件</strong>：新建文本文件，将下方提供的完整源码粘贴进去，重命名保存为 <code>BatchCompress.jsx</code>。
 </li>
-<li><strong>复制源码</strong>：将下方源码复制进去
+<li><strong>在 Photoshop 中运行</strong>：打开 Photoshop，在顶部菜单栏依次点击：<code>文件 (File)</code> → <code>脚本 (Scripts)</code> → <code>浏览... (Browse...)</code>。
 </li>
-<li><strong>运行脚本</strong>：
+<li><strong>加载脚本</strong>：在文件选择窗口中，找到并选中刚才保存的 <code>BatchCompress.jsx</code>。
+</li>
+<li><strong>按弹窗提示操作</strong>：
 
 <ul>
-<li>打开 Photoshop
+<li><strong>选择源文件夹</strong>：在对话框中选取需要批量压缩的图片目录；
 </li>
-<li>菜单：<code>文件</code> → <code>脚本</code> → <code>浏览</code> → 选择 <code>ImgCompress.jsx</code>
+<li><strong>输入压缩质量</strong>：根据需求输入 <code>1-100</code> 的质量数值（默认为 <code>80</code>，数值越小体积越小）；
+</li>
+<li><strong>自动化处理</strong>：脚本将自动在后台进行多线程等效批处理，并在完成后弹出汇总弹窗。
 </li>
 </ul>
 </li>
-<li><strong>选择文件夹</strong>：在弹出的对话框中选择要压缩的图片文件夹
-</li>
-<li><strong>设置参数</strong>：在弹出的对话框中设置压缩质量
-</li>
 </ol>
-<h3 id="方法二-传统方式-需手动配置路径">方法二：传统方式（需手动配置路径）</h3>
-<pre><code class="language-javascript">// 手动配置方式（不推荐，建议使用方法一）
-var config = {
-    inputFolder: &quot;E:/images&quot;,    // 输入文件夹
-    outputFolder: &quot;E:/images_compressed&quot;, // 输出文件夹
-    quality: 80,                  // 压缩质量 (1-100)
-    overwriteOriginal: false      // 是否覆盖原文件
-};</code></pre>
 <hr>
-<h2 id="完整源码">📄 完整源码</h2>
+<h2 id="三-完整代码-最新优化版">三、💻 完整代码 (最新优化版)</h2>
+<div class="callout"><p>此优化版本彻底解决了旧版在部分 Photoshop 版本中由于 ExtendScript 严格模式导致的 API 兼容性报错，并重构了文件安全关闭机制与子目录镜像重建算法。</p></div>
 <pre><code class="language-javascript">/**
- * Photoshop 批量图片压缩脚本
+ * Photoshop 批量图片压缩脚本 (ExtendScript JSX)
  * 支持格式：JPG、PNG、GIF、JFIF
- * 作者：优化版
+ * 优化版：修复兼容性问题，支持递归保留原有子文件夹结构
  */
 
 // ==================== 配置参数 ====================
@@ -419,7 +392,7 @@ function main() {
         }
 
         // 2. 获取压缩质量
-        var quality = prompt(&quot;请输入压缩质量 (1-100，数值越大质量越好)&quot;, CONFIG.DEFAULT_QUALITY);
+        var quality = prompt(&quot;请输入压缩质量 (1-100，数值越大质量越好。注:仅对JPG生效)&quot;, CONFIG.DEFAULT_QUALITY);
         quality = parseInt(quality);
         
         if (isNaN(quality) || quality &lt; 1 || quality &gt; 100) {
@@ -453,7 +426,7 @@ function main() {
                 $.writeln(&quot;处理中: &quot; + progress + &quot;% - &quot; + file.name);
                 
                 // 压缩并保存
-                compressImage(file, outputFolder, quality);
+                compressImage(file, sourceFolder, outputFolder, quality);
                 successCount++;
                 
             } catch (e) {
@@ -480,6 +453,18 @@ function main() {
 // ==================== 工具函数 ====================
 
 /**
+ * 判断扩展名是否在支持列表中
+ */
+function isExtensionSupported(ext) {
+    for (var i = 0; i &lt; CONFIG.SUPPORTED_FORMATS.length; i++) {
+        if (CONFIG.SUPPORTED_FORMATS[i] === ext) {
+            return true;
+        }
+    }
+    return false;
+}
+
+/**
  * 获取文件夹中所有支持的图片文件（递归）
  * @param {Folder} folder - 文件夹对象
  * @returns {File[]} - 图片文件数组
@@ -496,9 +481,13 @@ function getImageFiles(folder) {
             files = files.concat(getImageFiles(item));
         } else if (item instanceof File) {
             // 检查是否为支持的格式
-            var ext = item.name.toLowerCase().substring(item.name.lastIndexOf(&quot;.&quot;));
-            if (CONFIG.SUPPORTED_FORMATS.indexOf(ext) !== -1) {
-                files.push(item);
+            var nameStr = item.name.toLowerCase();
+            var extIndex = nameStr.lastIndexOf(&quot;.&quot;);
+            if (extIndex !== -1) {
+                var ext = nameStr.substring(extIndex);
+                if (isExtensionSupported(ext)) {
+                    files.push(item);
+                }
             }
         }
     }
@@ -507,12 +496,13 @@ function getImageFiles(folder) {
 }
 
 /**
- * 压缩单张图片
+ * 压缩单张图片并保留子目录结构
  * @param {File} inputFile - 输入文件
- * @param {Folder} outputFolder - 输出文件夹
+ * @param {Folder} sourceFolder - 原始根文件夹 (用于计算相对路径)
+ * @param {Folder} outputFolder - 输出根文件夹
  * @param {number} quality - 压缩质量 (1-100)
  */
-function compressImage(inputFile, outputFolder, quality) {
+function compressImage(inputFile, sourceFolder, outputFolder, quality) {
     // 1. 打开图片
     var doc = app.open(inputFile);
     if (!doc) {
@@ -520,8 +510,17 @@ function compressImage(inputFile, outputFolder, quality) {
     }
 
     try {
-        // 2. 构建输出路径
-        var outputPath = outputFolder.fsName + &quot;/&quot; + inputFile.name;
+        // 2. 构建输出路径，保留原有的子目录结构
+        var relativePath = inputFile.path.replace(sourceFolder.fsName, &quot;&quot;);
+        var targetFolderPath = outputFolder.fsName + relativePath;
+        var targetFolder = new Folder(targetFolderPath);
+        
+        // 如果子目录不存在，则创建
+        if (!targetFolder.exists) {
+            targetFolder.create();
+        }
+
+        var outputPath = targetFolderPath + &quot;/&quot; + inputFile.name;
         
         // 3. 根据格式设置导出选项
         var exportOptions = getExportOptions(inputFile, quality);
@@ -534,15 +533,15 @@ function compressImage(inputFile, outputFolder, quality) {
         );
         
     } finally {
-        // 5. 关闭文档（不保存原文件）
-        if (app.activeDocument) {
-            app.activeDocument.close(SaveOptions.DONOTSAVECHANGES);
+        // 5. 确保安全关闭当前文档（避免内存泄漏）
+        if (doc) {
+            doc.close(SaveOptions.DONOTSAVECHANGES);
         }
     }
 }
 
 /**
- * 获取导出选项
+ * 获取 SaveForWeb 导出选项
  * @param {File} file - 文件对象
  * @param {number} quality - 压缩质量
  * @returns {ExportOptionsSaveForWeb}
@@ -561,7 +560,7 @@ function getExportOptions(file, quality) {
     } else if (ext.match(/\.png$/)) {
         // PNG 格式
         options.format = SaveDocumentType.PNG;
-        options.PNG8 = false; // 使用 PNG-24
+        options.PNG8 = false; // 使用 24位真彩色 PNG
         options.transparency = true;
         options.interlaced = false;
         
@@ -584,125 +583,134 @@ function getExportOptions(file, quality) {
 // ==================== 启动脚本 ====================
 main();</code></pre>
 <hr>
-<h2 id="参数说明">⚙️ 参数说明</h2>
+<h2 id="四-核心参数与质量选型参考">四、⚙️ 核心参数与质量选型参考</h2>
+<h3 id="1-配置参数说明">1. 配置参数说明</h3>
 <div class="table-container">
 <table class="markdown-table">
   <thead>
     <tr>
-      <th style="text-align: left">参数</th>
+      <th style="text-align: left">参数项</th>
       <th style="text-align: left">说明</th>
       <th style="text-align: left">默认值</th>
+      <th style="text-align: left">作用范围</th>
     </tr>
   </thead>
   <tbody>
     <tr>
       <td style="text-align: left"><code>DEFAULT_QUALITY</code></td>
-      <td style="text-align: left">默认压缩质量</td>
-      <td style="text-align: left">80</td>
+      <td style="text-align: left">默认压缩质量数值</td>
+      <td style="text-align: left"><code>80</code></td>
+      <td style="text-align: left">作用于 JPEG/JFIF 导出质量</td>
     </tr>
     <tr>
       <td style="text-align: left"><code>OUTPUT_SUFFIX</code></td>
-      <td style="text-align: left">输出文件夹后缀</td>
+      <td style="text-align: left">输出目录后缀标识</td>
       <td style="text-align: left"><code>_compressed</code></td>
+      <td style="text-align: left">在源目录同级自动新建</td>
     </tr>
     <tr>
       <td style="text-align: left"><code>SUPPORTED_FORMATS</code></td>
-      <td style="text-align: left">支持的图片格式</td>
-      <td style="text-align: left">JPG、PNG、GIF、JFIF</td>
+      <td style="text-align: left">支持处理的文件扩展名列表</td>
+      <td style="text-align: left"><code>JPG, PNG, GIF, JFIF</code></td>
+      <td style="text-align: left">自动过滤无关格式文件</td>
     </tr>
   </tbody>
 </table>
 </div>
 
-<h2 id="压缩质量参考">📊 压缩质量参考</h2>
+<h3 id="2-压缩质量参考推荐">2. 压缩质量参考推荐</h3>
 <div class="table-container">
 <table class="markdown-table">
   <thead>
     <tr>
-      <th style="text-align: left">质量值</th>
-      <th style="text-align: left">适用场景</th>
+      <th style="text-align: left">质量区间</th>
+      <th style="text-align: left">视觉效果</th>
+      <th style="text-align: left">推荐场景</th>
+      <th style="text-align: left">体积降幅预估</th>
     </tr>
   </thead>
   <tbody>
     <tr>
-      <td style="text-align: left">90-100</td>
-      <td style="text-align: left">高清图片、设计稿</td>
+      <td style="text-align: left"><strong>90 ~ 100</strong></td>
+      <td style="text-align: left">几乎无损，肉眼无法分辨差异</td>
+      <td style="text-align: left">印刷前预览、高保真设计交付</td>
+      <td style="text-align: left">体积缩减约 20% ~ 40%</td>
     </tr>
     <tr>
-      <td style="text-align: left">70-89</td>
-      <td style="text-align: left">网页图片、社交媒体</td>
+      <td style="text-align: left"><strong>75 ~ 85</strong></td>
+      <td style="text-align: left">画质极高，边缘清晰度完美</td>
+      <td style="text-align: left"><strong>网页展示、电商详情页、技术博客（推荐）</strong></td>
+      <td style="text-align: left">体积缩减约 60% ~ 75%</td>
     </tr>
     <tr>
-      <td style="text-align: left">50-69</td>
-      <td style="text-align: left">缩略图、预览图</td>
+      <td style="text-align: left"><strong>50 ~ 70</strong></td>
+      <td style="text-align: left">略有噪点，微距可见压缩伪影</td>
+      <td style="text-align: left">移动端预览缩略图、长列表瀑布流</td>
+      <td style="text-align: left">体积缩减约 75% ~ 85%</td>
     </tr>
     <tr>
-      <td style="text-align: left">1-49</td>
-      <td style="text-align: left">极低质量占位图</td>
+      <td style="text-align: left"><strong>1 ~ 49</strong></td>
+      <td style="text-align: left">压缩感明显</td>
+      <td style="text-align: left">极限低带宽占位骨架图</td>
+      <td style="text-align: left">体积缩减约 85% 以上</td>
     </tr>
   </tbody>
 </table>
 </div>
 
-<h2 id="注意事项">🛡️ 注意事项</h2>
-<h3 id="1-备份重要文件">1. 备份重要文件</h3>
-<ul>
-<li>建议在运行脚本前备份原始图片，以防意外！
-</li>
-</ul>
-<h3 id="2-photoshop-版本要求">2. Photoshop 版本要求</h3>
-<ul>
-<li>支持 Photoshop CS6 及以上版本
-</li>
-<li>需启用 JavaScript 脚本支持
-</li>
-</ul>
-<h3 id="3-常见问题">3. 常见问题</h3>
+<hr>
+<h2 id="五-镜像输出目录树结构示例">五、📁 镜像输出目录树结构示例</h2>
+<p>脚本执行后将自动递归镜像原有目录树，如下所示：</p>
+<pre><code class="language-text">源图片文件夹/
+├── header-banner.jpg
+├── logo.png
+├── icons/
+│   ├── icon-home.png
+│   └── icon-user.png
+└── product/
+    ├── item1.jpg
+    └── item2.jpg
+
+源图片文件夹_compressed/       ← 自动创建的输出目录
+├── header-banner.jpg
+├── logo.png
+├── icons/                    ← 自动还原的子目录
+│   ├── icon-home.png
+│   └── icon-user.png
+└── product/                  ← 自动还原的子目录
+    ├── item1.jpg
+    └── item2.jpg</code></pre>
+<hr>
+<h2 id="六-常见问题与排错指南">六、🛡️ 常见问题与排错指南</h2>
 <div class="table-container">
 <table class="markdown-table">
   <thead>
     <tr>
-      <th style="text-align: left">问题</th>
-      <th style="text-align: left">原因</th>
-      <th style="text-align: left">解决方案</th>
+      <th style="text-align: left">现象</th>
+      <th style="text-align: left">可能原因</th>
+      <th style="text-align: left">对应解决办法</th>
     </tr>
   </thead>
   <tbody>
     <tr>
-      <td style="text-align: left">脚本无法运行</td>
-      <td style="text-align: left">未启用脚本支持</td>
-      <td style="text-align: left">编辑 → 首选项 → 增效工具 → 勾选&quot;允许脚本连接到网络&quot;</td>
+      <td style="text-align: left"><strong>菜单中找不到脚本选项</strong></td>
+      <td style="text-align: left">脚本文件未命名为 <code>.jsx</code> 格式</td>
+      <td style="text-align: left">确保文件扩展名为标准的 <code>.jsx</code> 而非 <code>.txt</code></td>
     </tr>
     <tr>
-      <td style="text-align: left">图片无法打开</td>
-      <td style="text-align: left">文件损坏或格式不支持</td>
-      <td style="text-align: left">检查文件完整性，确保是支持的格式</td>
+      <td style="text-align: left"><strong>提示&quot;无权限创建目录&quot;</strong></td>
+      <td style="text-align: left">输出路径所在分区有写入权限限制</td>
+      <td style="text-align: left">以管理员身份运行 Photoshop 或更换工作目录</td>
     </tr>
     <tr>
-      <td style="text-align: left">输出为空</td>
-      <td style="text-align: left">没有找到图片文件</td>
-      <td style="text-align: left">确认文件夹中有 JPG/PNG/GIF 文件</td>
-    </tr>
-    <tr>
-      <td style="text-align: left">内存不足</td>
-      <td style="text-align: left">一次性处理过多大图片</td>
-      <td style="text-align: left">分批处理，或增加 Photoshop 内存分配</td>
+      <td style="text-align: left"><strong>大批量处理时内存上涨</strong></td>
+      <td style="text-align: left">打开过多超大尺寸图片</td>
+      <td style="text-align: left">脚本内置 <code>doc.close</code> 自动回收，极超大图建议分批执行</td>
     </tr>
   </tbody>
 </table>
 </div>
 
-<h2 id="输出结构">📁 输出结构</h2>
-<pre><code class="language-bash">原文件夹/
-├── photo1.jpg
-├── photo2.png
-├── subfolder/
-│   └── photo3.gif
-└── 原文件夹_compressed/      ← 自动创建
-    ├── photo1.jpg
-    ├── photo2.png
-    └── subfolder/
-        └── photo3.gif</code></pre>
             </div>
 
             <div class="post-block-footer" style="margin-top: 3.5rem; padding-top: 1.5rem;">
@@ -720,40 +728,28 @@ main();</code></pre>
             <div class="toc-box-title">本页导读 · 快速直达</div>
             <ul class="toc-list">
             <li>
-              <a href="#脚本功能" class="toc-link" title="📝 脚本功能">📝 脚本功能</a>
+              <a href="#一-核心功能亮点" class="toc-link" title="一、✨ 核心功能亮点">一、✨ 核心功能亮点</a>
             </li>
             <li>
-              <a href="#使用方法" class="toc-link" title="🚀 使用方法">🚀 使用方法</a>
+              <a href="#二-使用方法与运行步骤" class="toc-link" title="二、🚀 使用方法与运行步骤">二、🚀 使用方法与运行步骤</a>
             </li>
             <li>
-              <a href="#方法一-快速使用-推荐" class="toc-link" title="方法一：快速使用（推荐）">方法一：快速使用（推荐）</a>
+              <a href="#三-完整代码-最新优化版" class="toc-link" title="三、💻 完整代码 (最新优化版)">三、💻 完整代码 (最新优化版)</a>
             </li>
             <li>
-              <a href="#方法二-传统方式-需手动配置路径" class="toc-link" title="方法二：传统方式（需手动配置路径）">方法二：传统方式（需手动配置路径）</a>
+              <a href="#四-核心参数与质量选型参考" class="toc-link" title="四、⚙️ 核心参数与质量选型参考">四、⚙️ 核心参数与质量选型参考</a>
             </li>
             <li>
-              <a href="#完整源码" class="toc-link" title="📄 完整源码">📄 完整源码</a>
+              <a href="#1-配置参数说明" class="toc-link" title="1. 配置参数说明">1. 配置参数说明</a>
             </li>
             <li>
-              <a href="#参数说明" class="toc-link" title="⚙️ 参数说明">⚙️ 参数说明</a>
+              <a href="#2-压缩质量参考推荐" class="toc-link" title="2. 压缩质量参考推荐">2. 压缩质量参考推荐</a>
             </li>
             <li>
-              <a href="#压缩质量参考" class="toc-link" title="📊 压缩质量参考">📊 压缩质量参考</a>
+              <a href="#五-镜像输出目录树结构示例" class="toc-link" title="五、📁 镜像输出目录树结构示例">五、📁 镜像输出目录树结构示例</a>
             </li>
             <li>
-              <a href="#注意事项" class="toc-link" title="🛡️ 注意事项">🛡️ 注意事项</a>
-            </li>
-            <li>
-              <a href="#1-备份重要文件" class="toc-link" title="1. 备份重要文件">1. 备份重要文件</a>
-            </li>
-            <li>
-              <a href="#2-photoshop-版本要求" class="toc-link" title="2. Photoshop 版本要求">2. Photoshop 版本要求</a>
-            </li>
-            <li>
-              <a href="#3-常见问题" class="toc-link" title="3. 常见问题">3. 常见问题</a>
-            </li>
-            <li>
-              <a href="#输出结构" class="toc-link" title="📁 输出结构">📁 输出结构</a>
+              <a href="#六-常见问题与排错指南" class="toc-link" title="六、🛡️ 常见问题与排错指南">六、🛡️ 常见问题与排错指南</a>
             </li>
             </ul>
           </div>
