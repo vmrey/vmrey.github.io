@@ -37,6 +37,12 @@
     <priority>0.7</priority>
   </url>
   <url>
+    <loc>https://vmrey.github.io/posts/wx-img-refresh-ffc2.html</loc>
+    <lastmod>2026-08-23</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://vmrey.github.io/posts/claude-perms-08be.html</loc>
     <lastmod>2026-08-10</lastmod>
     <changefreq>monthly</changefreq>

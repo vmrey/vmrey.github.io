@@ -5,8 +5,16 @@
     <link>https://vmrey.github.io/</link>
     <description>构建工具，写干净的代码</description>
     <language>zh-CN</language>
-    <lastBuildDate>Sun, 23 Aug 2026 02:22:41 GMT</lastBuildDate>
+    <lastBuildDate>Sun, 23 Aug 2026 09:57:30 GMT</lastBuildDate>
     <atom:link href="https://vmrey.github.io/feed.xml" rel="self" type="application/rss+xml"/>
+    <item>
+      <title>微信小程序踩坑记录：如何完美解决图片强制刷新（彻底告别本地缓存）</title>
+      <link>https://vmrey.github.io/posts/wx-img-refresh-ffc2.html</link>
+      <guid isPermaLink="true">https://vmrey.github.io/posts/wx-img-refresh-ffc2.html</guid>
+      <pubDate>Sun, 23 Aug 2026 00:00:00 GMT</pubDate>
+      <category>前端开发</category>
+      <description>深度剖析微信小程序图片本地强缓存与渲染层复用机制，系统总结 URL 时间戳、HTTP 头控制、Base64 编码、wx:if 渲染层重建、云开发临时链接及 FileSystemManager 本地沙盒接管等 8 种全场景强制刷新实战方案。</description>
+    </item>
     <item>
       <title>Claude Code 开启 Bypass 免确认权限配置指南</title>
       <link>https://vmrey.github.io/posts/claude-perms-08be.html</link>
@@ -238,14 +246,6 @@
       <pubDate>Tue, 15 Feb 2022 00:00:00 GMT</pubDate>
       <category>前端开发</category>
       <description>严谨处理跨年、同月同日及生日未过情况，通过年月日时间差精准计算用户的实际周岁年龄并进行格式校验。</description>
-    </item>
-    <item>
-      <title>JavaScript 获取指定年份与月份的起始日期和结束日期</title>
-      <link>https://vmrey.github.io/posts/calc-month-range-bd66.html</link>
-      <guid isPermaLink="true">https://vmrey.github.io/posts/calc-month-range-bd66.html</guid>
-      <pubDate>Mon, 10 Jan 2022 00:00:00 GMT</pubDate>
-      <category>前端开发</category>
-      <description>利用 JavaScript Date 构造函数的第 0 天特性巧妙获取当月最后一天，高效返回准确的 YYYY-MM-01 与 YYYY-MM-DD。</description>
     </item>
   </channel>
 </rss>

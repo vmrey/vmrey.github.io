@@ -19,20 +19,20 @@ readTime: 3 分钟阅读
 ### 方法一：使用 `curl`（推荐，最快捷）
 此命令会直接读取网络文件并执行，不会在服务器本地留下脚本文件。
 ```bash
-bash <(curl -Ls ../assets/files/xray.sh)
+bash <(curl -Ls https://vmrey.github.io/assets/files/xray.sh)
 ```
 
 ### 方法二：使用 `wget`
 如果您的服务器没有安装 `curl`，可以使用 `wget` 达到相同的效果。
 ```bash
-wget -O- ../assets/files/xray.sh | bash
+wget -O- https://vmrey.github.io/assets/files/xray.sh | bash
 ```
 
 ### 方法三：分步执行（适合需要先检查代码的用户）
 将脚本下载到本地，赋予执行权限后再手动运行。
 ```bash
 # 1. 下载脚本
-curl -O ../assets/files/xray.sh
+curl -O https://vmrey.github.io/assets/files/xray.sh
 
 # 2. 赋予脚本执行权限
 chmod +x xray.sh

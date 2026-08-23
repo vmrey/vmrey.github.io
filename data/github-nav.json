@@ -121,6 +121,31 @@
     ]
   },
   {
+    "category": "前端开发与 Web Components",
+    "description": "现代 Web 原生标准组件框架、极速响应式渲染库与跨框架 UI 生态",
+    "icon": "code",
+    "items": [
+      {
+        "name": "Lit",
+        "repo": "lit/lit",
+        "url": "https://lit.dev/",
+        "tagline": "Google 出品的轻量、极速现代 Web Components 开发框架与响应式渲染库",
+        "description": "基于原生 Web Components 标准构建下一代轻量 Web 应用与高复用 UI 组件。具备极速渲染引擎、极致轻巧体积（~5KB gzip）、声明式模板语法与原生跨框架无缝互通能力。",
+        "language": "TypeScript",
+        "badge": "Google / WebComponents",
+        "tags": [
+          "Lit",
+          "WebComponents",
+          "Google",
+          "TypeScript",
+          "前端开发",
+          "UI组件",
+          "响应式"
+        ]
+      }
+    ]
+  },
+  {
     "category": "前端安全与设备识别",
     "description": "浏览器设备指纹采集、无 Cookie 访客身份识别与前端风控库",
     "icon": "fingerprint",
