@@ -409,9 +409,6 @@ function generateNodes() {
         return;
     }
 
-    const genBtn = document.getElementById('genBtn');
-    const originalBtnHtml = genBtn ? genBtn.innerHTML : '';
-
     const domainsText = getVal('domains');
     let finalDomains = [...new Set(
         domainsText.split('\n')
