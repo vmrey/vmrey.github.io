@@ -4,7 +4,7 @@
 const { renderToc } = require('../components/toc');
 const { renderBaseLayout } = require('./base');
 
-function renderVlessLayout({
+function renderNodeVleLayout({
   sidebarHtml,
   blogConfig
 }) {
@@ -316,9 +316,9 @@ ${renderToc(headings)}`;
     canonicalPath: 'node-vle.html',
     sidebarHtml,
     mainContentHtml,
-    extraScripts: ['js/vless.js'],
+    extraScripts: ['js/node-vle.js'],
     isSubfolder: false
   });
 }
 
-module.exports = { renderVlessLayout };
+module.exports = { renderNodeVleLayout };

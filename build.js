@@ -18,7 +18,7 @@ const { renderAboutLayout } = require('./templates/layouts/about');
 const { renderNavLayout } = require('./templates/layouts/nav');
 const { renderToolsLayout } = require('./templates/layouts/tools');
 const { renderAiLayout } = require('./templates/layouts/ai');
-const { renderVlessLayout } = require('./templates/layouts/vless');
+const { renderNodeVleLayout } = require('./templates/layouts/node-vle');
 
 const ROOT_DIR = __dirname;
 const DRAFTS_DIR = path.join(ROOT_DIR, 'markdown_drafts');
@@ -1009,12 +1009,12 @@ const vlessSidebarHtml = renderSidebar({
   resourceFilesCount: resourceFiles.length
 });
 
-const vlessPageHtml = renderVlessLayout({
+const nodeVlePageHtml = renderNodeVleLayout({
   sidebarHtml: vlessSidebarHtml,
   blogConfig: blogConfig
 });
 
-fs.writeFileSync(VLESS_HTML_PATH, vlessPageHtml, 'utf-8');
+fs.writeFileSync(VLESS_HTML_PATH, nodeVlePageHtml, 'utf-8');
 console.log(`⚡ 已成功生成 VLESS 节点生成器导航功能页: node-vle.html`);
 
 // ==============================================================================
