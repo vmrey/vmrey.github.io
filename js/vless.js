@@ -364,10 +364,10 @@ const BUILTIN_IP_POOLS = {
 // 快捷填入常用 API 预设 (自动去重)
 function insertApiPreset(type) {
     const presets = {
-        'cmcc': 'https://fastly.jsdelivr.net/gh/ymyuuu/IPDB@main/bestcf.txt\nhttps://cf.090227.xyz/cmcc?ips=8',
-        'ct': 'https://fastly.jsdelivr.net/gh/ymyuuu/IPDB@main/bestcf.txt\nhttps://cf.090227.xyz/ct?ips=8',
-        'cu': 'https://fastly.jsdelivr.net/gh/ymyuuu/IPDB@main/bestcf.txt\nhttps://cf.090227.xyz/cu?ips=8',
-        'all': 'https://fastly.jsdelivr.net/gh/ymyuuu/IPDB@main/bestcf.txt\nhttps://fastly.jsdelivr.net/gh/ymyuuu/IPDB@main/bestproxy.txt\nhttps://cf.090227.xyz/cmcc?ips=6'
+        'cmcc': 'https://fastly.jsdelivr.net/gh/ymyuuu/IPDB@main/bestcf.txt',
+        'ct': 'https://fastly.jsdelivr.net/gh/ymyuuu/IPDB@main/bestcf.txt',
+        'cu': 'https://fastly.jsdelivr.net/gh/ymyuuu/IPDB@main/bestcf.txt',
+        'all': 'https://fastly.jsdelivr.net/gh/ymyuuu/IPDB@main/bestcf.txt\nhttps://fastly.jsdelivr.net/gh/ymyuuu/IPDB@main/bestproxy.txt'
     };
     const textarea = document.getElementById('apiUrls');
     if (!textarea) return;
