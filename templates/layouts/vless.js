@@ -1,5 +1,5 @@
 /**
- * VLESS 节点生成器导航功能页面布局模板 (VLESS Generator Layout Template - 100% 博客统一视觉风格)
+ * VLESS 节点生成器导航功能页面布局模板 (VLESS Generator Layout Template - 纯本地无依赖极简高安全版)
  */
 const { renderToc } = require('../components/toc');
 const { renderBaseLayout } = require('./base');
@@ -13,7 +13,7 @@ function renderVlessLayout({
     { id: 'sec-core', title: '1. 核心与协议设置', level: 2 },
     { id: 'sec-transport', title: '2. 传输层高级参数', level: 2 },
     { id: 'sec-security', title: '3. 安全与加密层', level: 2 },
-    { id: 'sec-domains', title: '4. 域名注入与批量生成', level: 2 },
+    { id: 'sec-domains', title: '4. 目标节点与批量生成', level: 2 },
     { id: 'sec-result', title: '5. 生成结果与一键导出', level: 2 }
   ];
 
@@ -30,9 +30,9 @@ function renderVlessLayout({
             <span>·</span>
             <span>VLESS 协议全功能</span>
             <span>·</span>
-            <span>内置跨域 API 优选</span>
-            <span>·</span>
             <span>纯客户端本地生成</span>
+            <span>·</span>
+            <span>0 依赖高安全</span>
           </div>
         </header>
 
@@ -50,10 +50,10 @@ function renderVlessLayout({
                   </svg>
                   <span>0. 单节点一键导入 (解析并覆盖参数)</span>
                 </div>
-                <div id="parseStatus" class="gen-hint">粘贴单个 vless:// 链接将实时动态解析</div>
+                <div id="parseStatus" class="gen-hint">粘贴 vless:// 链接或 Base64 订阅将实时动态解析</div>
               </div>
               <div class="gen-form-group">
-                <textarea id="importUrl" rows="3" class="gen-textarea" placeholder="粘贴单个 vless:// 链接（每次导入将解析单个节点并精准填充所有参数与目标节点）..." oninput="handleImportInput(this)"></textarea>
+                <textarea id="importUrl" rows="3" class="gen-textarea" placeholder="粘贴单个 vless:// 链接或 Base64 订阅包（系统将自动提取第 1 个节点的核心参数与目标地址）..." oninput="handleImportInput(this)"></textarea>
               </div>
               <div class="gen-btn-row right">
                 <button type="button" class="gen-btn gen-btn-secondary" onclick="clearImportUrl()">
@@ -247,7 +247,7 @@ function renderVlessLayout({
               </div>
             </div>
 
-            <!-- 4. 域名注入与批量生成 -->
+            <!-- 4. 目标节点与批量生成 -->
             <div class="gen-card" id="sec-domains">
               <div class="gen-card-title">
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -255,66 +255,13 @@ function renderVlessLayout({
                   <line x1="2" y1="12" x2="22" y2="12"></line>
                   <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path>
                 </svg>
-                <span>4. 域名注入与批量生成</span>
-              </div>
-
-              <!-- API 抓取选项区 -->
-              <div class="gen-api-box">
-                <div class="gen-api-header">
-                  <div class="gen-api-title">
-                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>
-                    <span>API 优选提取接口 (支持多模式与高可用容灾)</span>
-                  </div>
-                  <div class="gen-mode-select-wrap">
-                    <label style="font-size: 0.775rem; color: var(--text-muted);">模式:</label>
-                    <select id="apiMode" class="gen-select-inline">
-                      <option value="auto">智能识别 (JSON/文本)</option>
-                      <option value="json">JSON 深度解析</option>
-                      <option value="text">纯文本按行解析</option>
-                    </select>
-                  </div>
-                </div>
-
-                <!-- 快捷常用 API 预设 -->
-                <div class="gen-presets-row">
-                  <span class="gen-hint" style="color: var(--text-muted); font-weight: 500;">快捷预设:</span>
-                  <button type="button" class="gen-preset-btn" onclick="insertApiPreset('cmcc')">
-                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.55a11 11 0 0 1 14.08 0"></path><path d="M1.42 9a16 16 0 0 1 21.16 0"></path><path d="M8.53 16.11a6 6 0 0 1 6.95 0"></path><line x1="12" y1="20" x2="12.01" y2="20"></line></svg>
-                    <span>移动优选</span>
-                  </button>
-                  <button type="button" class="gen-preset-btn" onclick="insertApiPreset('ct')">
-                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.55a11 11 0 0 1 14.08 0"></path><path d="M1.42 9a16 16 0 0 1 21.16 0"></path><path d="M8.53 16.11a6 6 0 0 1 6.95 0"></path><line x1="12" y1="20" x2="12.01" y2="20"></line></svg>
-                    <span>电信优选</span>
-                  </button>
-                  <button type="button" class="gen-preset-btn" onclick="insertApiPreset('cu')">
-                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.55a11 11 0 0 1 14.08 0"></path><path d="M1.42 9a16 16 0 0 1 21.16 0"></path><path d="M8.53 16.11a6 6 0 0 1 6.95 0"></path><line x1="12" y1="20" x2="12.01" y2="20"></line></svg>
-                    <span>联通优选</span>
-                  </button>
-                  <button type="button" class="gen-preset-btn" onclick="insertApiPreset('all')">
-                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>
-                    <span>三网混合</span>
-                  </button>
-                  <button type="button" class="gen-preset-btn" onclick="clearApiUrls()">
-                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
-                    <span>清空</span>
-                  </button>
-                </div>
-
-                <textarea id="apiUrls" rows="3" class="gen-textarea" placeholder="https://fastly.jsdelivr.net/gh/ymyuuu/IPDB@main/bestcf.txt&#10;支持多行，每行一个 API 链接（支持纯文本或 JSON 接口数据）..."></textarea>
-                
-                <div class="gen-api-footer">
-                  <div class="gen-hint">点击右侧按钮可抓取并追加到下方列表，也可直接点击下方生成按钮全自动处理。</div>
-                  <button type="button" id="fetchApiBtn" class="gen-btn gen-btn-primary" onclick="fetchAndAppendApiNodes(true)">
-                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
-                    <span>抓取并追加到列表</span>
-                  </button>
-                </div>
+                <span>4. 目标节点与批量生成</span>
               </div>
 
               <!-- 目标节点列表 -->
-              <div class="gen-form-group" style="margin-top: 16px;">
+              <div class="gen-form-group">
                 <div class="gen-label-row">
-                  <label>目标节点列表 (支持 IPv4 / IPv6 / 域名，可混合输入或 API 追加)</label>
+                  <label>目标节点列表 (支持 IPv4 / IPv6 / 域名，支持每行一个或直接粘贴测速结果)</label>
                   <div class="gen-btn-group">
                     <button type="button" class="gen-btn-mini primary" onclick="cleanAndDedupDomains()">
                       <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"></polygon></svg>
@@ -327,7 +274,7 @@ function renderVlessLayout({
                   </div>
                 </div>
                 <textarea id="domains" rows="8" style="min-height: 180px;" class="gen-textarea" placeholder="支持多种格式混合输入（每行一个）：&#10;1. 纯域名：hk.example.com&#10;2. 带端口域名：us.example.com:8443&#10;3. IPv4 地址：104.16.1.1 或 104.16.1.1:2053&#10;4. IPv6 地址：2606:4700::1 或 [2606:4700::1]:8443&#10;5. 带备注格式：104.16.1.1#香港 或 测速CSV数据"></textarea>
-                <div class="gen-hint">系统自动识别 IP/域名/自定义端口/节点备注，全量严格去重合并并生成最终可用节点。</div>
+                <div class="gen-hint">系统自动识别 IP/域名/自定义端口/节点备注，纯本地毫秒级严格去重合并并生成最终可用节点。</div>
               </div>
               
               <button id="genBtn" class="gen-btn-generate" onclick="generateNodes()">
@@ -364,8 +311,8 @@ ${renderToc(headings)}`;
 
   return renderBaseLayout({
     title: `节点生成器 · ${blogConfig.siteName}`,
-    description: `全协议 VLESS 节点批量生成与一键跨域 API 优选提取器，支持 IPv4/IPv6、REALITY、XHTTP 与 Cloudflare 优选 IP 抓取`,
-    keywords: `VLESS生成器, 节点生成, Cloudflare优选, 跨域API, IPv6节点, REALITY, XHTTP, ${blogConfig.siteName}`,
+    description: `全协议 VLESS 节点批量生成与智能去重配置工具，支持 IPv4/IPv6、REALITY、XHTTP、gRPC 与 UUID 快速生成`,
+    keywords: `VLESS生成器, 节点生成, IPv6节点, REALITY, XHTTP, gRPC, 节点配置, ${blogConfig.siteName}`,
     canonicalPath: 'node-vle.html',
     sidebarHtml,
     mainContentHtml,

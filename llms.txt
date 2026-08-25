@@ -6,7 +6,7 @@
 - [博客首页 (Blog Home)](https://vmrey.github.io/): 全部技术文章列表与专栏分类浏览
 - [AI 导航中心 (AI Navigation)](https://vmrey.github.io/ai.html): 精选收录 Gemini, ChatGPT, Claude, DeepSeek, Cursor 等 17+ 顶尖 AI 工具与智能体
 - [实用工具导航 (Developer Tools)](https://vmrey.github.io/tools.html): 精选收录 FlyEnv, DBeaver, 草料二维码, 1Password 等 15+ 开发者效率利器
-- [节点生成器 (VLESS Generator)](https://vmrey.github.io/node-vle.html): 全协议 VLESS 节点批量生成与一键跨域 API 优选提取器
+- [节点生成器 (VLESS Generator)](https://vmrey.github.io/node-vle.html): 全协议 VLESS 节点批量生成与智能去重配置工具
 - [GitHub 导航中心 (GitHub Repos)](https://vmrey.github.io/nav.html): 精选收录 fnm, nvm, Ventoy, Fail2Ban, acme.sh 等优质开源仓库
 - [资源文件库 (Resource Files)](https://vmrey.github.io/files.html): Vue 组件源码、Shell 脚本与配置附件在线高亮预览与下载
 - [关于本站 (About Author)](https://vmrey.github.io/about.html): 博主个人简介、技术栈与工程理念

@@ -3672,12 +3672,11 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
     "tags": [
       "VLESS",
       "节点生成器",
-      "Cloudflare优选",
-      "跨域API",
+      "配置生成",
       "网络工具"
     ],
-    "summary": "全协议 VLESS 节点批量生成与一键跨域 API 优选提取器 — 本站原生内置的纯前端 VLESS 节点生成工具，支持 IPv4/IPv6、REALITY、XHTTP、gRPC、UUID 生成与 Cloudflare 优选 IP 跨域自动提取。",
-    "content": "VLESS 节点生成器 https://vmrey.github.io/node-vle.html 全协议 VLESS 节点批量生成与一键跨域 API 优选提取器 本站原生内置的纯前端 VLESS 节点生成工具，支持 IPv4/IPv6、REALITY、XHTTP、gRPC、UUID 生成与 Cloudflare 优选 IP 跨域自动提取。 VLESS 节点生成器 Cloudflare优选 跨域API 网络工具",
+    "summary": "全协议 VLESS 节点批量生成与智能去重配置工具 — 本站原生内置的纯前端 VLESS 节点配置生成工具，支持 IPv4/IPv6、REALITY、XHTTP、gRPC 与 UUID 快速生成与一键导出。",
+    "content": "VLESS 节点生成器 https://vmrey.github.io/node-vle.html 全协议 VLESS 节点批量生成与智能去重配置工具 本站原生内置的纯前端 VLESS 节点配置生成工具，支持 IPv4/IPv6、REALITY、XHTTP、gRPC 与 UUID 快速生成与一键导出。 VLESS 节点生成器 配置生成 网络工具",
     "sections": []
   },
   {

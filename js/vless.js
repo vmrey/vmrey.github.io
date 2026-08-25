@@ -337,54 +337,6 @@ function parseUrl(silent = false) {
     }
 }
 
-// 常用高可用优选 IP/域名预设库
-const BUILTIN_IP_POOLS = {
-    cmcc: [
-        '104.17.20.81#CF 移动优选', '104.17.189.62#CF 移动优选', '104.16.153.174#CF 移动优选',
-        '104.17.223.38#CF 移动优选', '104.19.48.3#CF 移动优选', '104.18.23.117#CF 移动优选',
-        '104.16.241.229#CF 移动优选', '198.41.212.130#CF 移动优选'
-    ],
-    ct: [
-        '104.16.160.100#CF 电信优选', '104.17.150.120#CF 电信优选', '104.18.32.85#CF 电信优选',
-        '104.19.65.10#CF 电信优选', '104.22.5.120#CF 电信优选', '104.27.21.118#CF 电信优选',
-        '190.93.244.201#CF 电信优选', '188.114.96.125#CF 电信优选'
-    ],
-    cu: [
-        '104.16.80.50#CF 联通优选', '104.17.90.60#CF 联通优选', '104.18.110.70#CF 联通优选',
-        '104.19.120.80#CF 联通优选', '104.20.130.90#CF 联通优选', '104.25.140.100#CF 联通优选',
-        '172.67.180.20#CF 联通优选', '104.21.55.66#CF 联通优选'
-    ],
-    all: [
-        '104.17.20.81#CF 移动优选', '104.16.160.100#CF 电信优选', '104.16.80.50#CF 联通优选',
-        '198.41.212.130#CF 优选节点', '190.93.244.201#CF 优选节点', '104.16.232.223#CF 优选节点',
-        '188.114.96.125#CF 优选节点', '104.16.241.229#CF 优选节点'
-    ]
-};
-
-// 快捷填入常用 API 预设 (自动去重)
-function insertApiPreset(type) {
-    const presets = {
-        'cmcc': 'https://fastly.jsdelivr.net/gh/ymyuuu/IPDB@main/bestcf.txt',
-        'ct': 'https://fastly.jsdelivr.net/gh/ymyuuu/IPDB@main/bestcf.txt',
-        'cu': 'https://fastly.jsdelivr.net/gh/ymyuuu/IPDB@main/bestcf.txt',
-        'all': 'https://fastly.jsdelivr.net/gh/ymyuuu/IPDB@main/bestcf.txt\nhttps://fastly.jsdelivr.net/gh/ymyuuu/IPDB@main/bestproxy.txt'
-    };
-    const textarea = document.getElementById('apiUrls');
-    if (!textarea) return;
-    
-    const currentLines = textarea.value.split('\n').map(d => d.trim()).filter(Boolean);
-    const toAddLines = (presets[type] || '').split('\n').map(d => d.trim()).filter(Boolean);
-    
-    const mergedApiUrls = [...new Set([...currentLines, ...toAddLines])];
-    textarea.value = mergedApiUrls.join('\n');
-}
-
-// 清空 API 列表
-function clearApiUrls() {
-    const textarea = document.getElementById('apiUrls');
-    if (textarea) textarea.value = '';
-}
-
 // 清空目标节点列表
 function clearDomains() {
     const textarea = document.getElementById('domains');
@@ -448,214 +400,8 @@ function extractHostFromLine(line) {
     return remark ? `${text}#${remark}` : text;
 }
 
-// 结构化解析从 JSON 对象中提取 IP/域名/端口/备注
-function formatJsonNodeObject(item) {
-    if (!item || typeof item !== 'object') return null;
-    
-    const ipKey = ['ip', 'address', 'domain', 'host', 'server', 'node', 'addr', 'endpoint'].find(k => item[k]);
-    if (!ipKey) return null;
-
-    let host = String(item[ipKey]).trim();
-    if (!host) return null;
-
-    const portKey = ['port', 'nodePort', 'server_port'].find(k => item[k]);
-    let nodePort = portKey ? String(item[portKey]).trim() : '';
-
-    const remarkKey = ['colo', 'name', 'remark', 'isp', 'city', 'location', 'region', 'line'].find(k => item[k]);
-    let remark = remarkKey ? String(item[remarkKey]).trim() : '';
-
-    let formatted = host;
-    if (nodePort && !host.includes(':')) {
-        formatted = `${host}:${nodePort}`;
-    }
-    if (remark) {
-        formatted = `${formatted}#${remark}`;
-    }
-    return extractHostFromLine(formatted);
-}
-
-// 递归/深层扫描 JSON 数据中的节点
-function extractNodesFromJson(obj) {
-    let results = [];
-    if (!obj) return results;
-
-    if (Array.isArray(obj)) {
-        obj.forEach(item => {
-            if (typeof item === 'string') {
-                const host = extractHostFromLine(item);
-                if (host) results.push(host);
-            } else if (typeof item === 'object' && item !== null) {
-                const node = formatJsonNodeObject(item);
-                if (node) results.push(node);
-                else results.push(...extractNodesFromJson(item));
-            }
-        });
-    } else if (typeof obj === 'object') {
-        const node = formatJsonNodeObject(obj);
-        if (node) {
-            results.push(node);
-        } else {
-            for (const val of Object.values(obj)) {
-                if (typeof val === 'object' && val !== null) {
-                    results.push(...extractNodesFromJson(val));
-                }
-            }
-        }
-    }
-    return results;
-}
-
-// 根据模式统一解析 API 返回的纯文本或 JSON 内容
-function parseApiResponse(rawText, mode = 'auto') {
-    const text = rawText.trim();
-    if (!text) return [];
-
-    if (mode === 'json' || (mode === 'auto' && (text.startsWith('{') || text.startsWith('[')))) {
-        try {
-            const data = JSON.parse(text);
-            const items = extractNodesFromJson(data);
-            if (items.length > 0) return items;
-        } catch (e) {
-            if (mode === 'json') {
-                console.warn("JSON 解析错误:", e);
-            }
-        }
-    }
-
-    return text.split('\n').map(extractHostFromLine).filter(Boolean);
-}
-
-// 通过多策略高可用代理体系并行抓取单个 API (保证在本地 file://、localhost 与生产环境 100% 可用)
-async function fetchApiWithProxy(apiUrl) {
-    const cleanUrl = (apiUrl || '').trim();
-    if (!cleanUrl) return '';
-
-    // 1. 如果是 GitHub Raw，自动优先切换至超高速免跨域 CDN
-    let targetUrl = cleanUrl;
-    if (targetUrl.includes('raw.githubusercontent.com/')) {
-        targetUrl = targetUrl
-            .replace('https://raw.githubusercontent.com/', 'https://fastly.jsdelivr.net/gh/')
-            .replace(/\/main\//, '@main/')
-            .replace(/\/master\//, '@master/');
-    }
-
-    // 2. 尝试直接请求 (原生支持 CORS 的开放接口或 CDN)
-    try {
-        const ctrl = new AbortController();
-        const tid = setTimeout(() => ctrl.abort(), 2500);
-        const resp = await fetch(targetUrl, { mode: 'cors', signal: ctrl.signal });
-        clearTimeout(tid);
-        if (resp && resp.ok) {
-            const text = await resp.text();
-            if (text && !text.includes('<!DOCTYPE html>') && !text.includes('<html')) {
-                return text;
-            }
-        }
-    } catch (e) {}
-
-    // 3. 尝试高可用跨域中继服务池
-    const proxies = [
-        (u) => `https://api.allorigins.win/get?url=${encodeURIComponent(u)}`,
-        (u) => `https://api.codetabs.com/v1/proxy?quest=${encodeURIComponent(u)}`,
-        (u) => `https://cors.eu.org/${u}`
-    ];
-
-    for (const makeProxy of proxies) {
-        try {
-            const pUrl = makeProxy(cleanUrl);
-            const ctrl = new AbortController();
-            const tid = setTimeout(() => ctrl.abort(), 2500);
-            const resp = await fetch(pUrl, { signal: ctrl.signal });
-            clearTimeout(tid);
-            if (resp && resp.ok) {
-                let text = await resp.text();
-                if (pUrl.includes('allorigins.win/get')) {
-                    try {
-                        const json = JSON.parse(text);
-                        text = json.contents || '';
-                    } catch (err) {}
-                }
-                if (text && !text.includes('<!DOCTYPE html>') && !text.includes('<html')) {
-                    return text;
-                }
-            }
-        } catch (err) {}
-    }
-
-    // 4. 智能兜底：若受限网络 (如本地 file:// 协议沙箱拦截) 或目标 API 临时离线，根据关键词自动调入内置高质量节点库
-    const lower = cleanUrl.toLowerCase();
-    if (lower.includes('cmcc') || lower.includes('mobile')) return BUILTIN_IP_POOLS.cmcc.join('\n');
-    if (lower.includes('ct') || lower.includes('telecom')) return BUILTIN_IP_POOLS.ct.join('\n');
-    if (lower.includes('cu') || lower.includes('unicom')) return BUILTIN_IP_POOLS.cu.join('\n');
-    return BUILTIN_IP_POOLS.all.join('\n');
-}
-
-// 抓取并自动追加到目标节点列表
-async function fetchAndAppendApiNodes(showFeedback = true) {
-    const apiUrlsText = getVal('apiUrls');
-    const apiMode = getVal('apiMode') || 'auto';
-    
-    const apiUrls = [...new Set(
-        apiUrlsText.split('\n')
-            .map(d => d.trim())
-            .filter(d => d && (d.startsWith('http://') || d.startsWith('https://')))
-    )];
-
-    if (apiUrls.length === 0) {
-        if (showFeedback) alert("请先输入至少一个有效的 API 接口链接，或点击上方快捷预设！");
-        return [];
-    }
-
-    const fetchBtn = document.getElementById('fetchApiBtn');
-    const oldBtnHtml = fetchBtn ? fetchBtn.innerHTML : '';
-    if (fetchBtn) {
-        fetchBtn.innerHTML = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="2" x2="12" y2="6"></line><line x1="12" y1="18" x2="12" y2="22"></line><line x1="4.93" y1="4.93" x2="7.76" y2="7.76"></line><line x1="16.24" y1="16.24" x2="19.07" y2="19.07"></line><line x1="2" y1="12" x2="6" y2="12"></line><line x1="18" y1="12" x2="22" y2="12"></line><line x1="4.93" y1="19.07" x2="7.76" y2="16.24"></line><line x1="16.24" y1="7.76" x2="19.07" y2="4.93"></line></svg><span>正在抓取...</span>';
-        fetchBtn.disabled = true;
-    }
-
-    let fetchedDomains = [];
-
-    const results = await Promise.allSettled(apiUrls.map(url => fetchApiWithProxy(url)));
-
-    results.forEach((res, idx) => {
-        if (res.status === 'fulfilled' && res.value) {
-            const nodes = parseApiResponse(res.value, apiMode);
-            fetchedDomains.push(...nodes);
-        } else {
-            const fallbackNodes = parseApiResponse(BUILTIN_IP_POOLS.all.join('\n'), apiMode);
-            fetchedDomains.push(...fallbackNodes);
-        }
-    });
-
-    if (fetchBtn) {
-        fetchBtn.innerHTML = oldBtnHtml;
-        fetchBtn.disabled = false;
-    }
-
-    if (fetchedDomains.length > 0) {
-        const currentDomains = getVal('domains');
-        let manualDomains = currentDomains.split('\n').map(extractHostFromLine).filter(Boolean);
-        
-        const merged = [...new Set([...manualDomains, ...fetchedDomains])];
-        const domainsEl = document.getElementById('domains');
-        domainsEl.value = merged.join('\n');
-
-        domainsEl.style.transition = 'background-color 0.3s';
-        domainsEl.style.backgroundColor = 'var(--primary-soft)';
-        setTimeout(() => { domainsEl.style.backgroundColor = ''; }, 500);
-
-        if (showFeedback) {
-            alert(`✅ 成功提取到 ${fetchedDomains.length} 个节点，已自动追加并去重！当前列表中共有 ${merged.length} 个独立节点。`);
-        }
-    } else if (showFeedback) {
-        alert("⚠️ 未能提取到任何有效 IP/域名，请检查链接格式。");
-    }
-
-    return fetchedDomains;
-}
-
-// 抓取并批量生成节点
-async function generateNodes() {
+// 纯客户端本地一键批量生成节点
+function generateNodes() {
     const uuid = getVal('uuid');
     if (!uuid) {
         alert("请输入或生成 UUID！");
@@ -666,17 +412,6 @@ async function generateNodes() {
     const genBtn = document.getElementById('genBtn');
     const originalBtnHtml = genBtn ? genBtn.innerHTML : '';
 
-    const apiUrlsText = getVal('apiUrls');
-    const hasApiUrls = apiUrlsText.split('\n').some(d => d.trim().startsWith('http://') || d.trim().startsWith('https://'));
-    
-    if (hasApiUrls) {
-        if (genBtn) {
-            genBtn.innerHTML = '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="2" x2="12" y2="6"></line><line x1="12" y1="18" x2="12" y2="22"></line><line x1="4.93" y1="4.93" x2="7.76" y2="7.76"></line><line x1="16.24" y1="16.24" x2="19.07" y2="19.07"></line><line x1="2" y1="12" x2="6" y2="12"></line><line x1="18" y1="12" x2="22" y2="12"></line><line x1="4.93" y1="19.07" x2="7.76" y2="16.24"></line><line x1="16.24" y1="7.76" x2="19.07" y2="4.93"></line></svg><span>正在生成节点...</span>';
-            genBtn.disabled = true;
-        }
-        await fetchAndAppendApiNodes(false);
-    }
-
     const domainsText = getVal('domains');
     let finalDomains = [...new Set(
         domainsText.split('\n')
@@ -685,12 +420,8 @@ async function generateNodes() {
     )];
     
     if (finalDomains.length === 0) {
-        alert("请至少输入一个目标 IP/域名，或提供有效的 API 链接！");
+        alert("请至少输入一个目标 IP 或域名！");
         document.getElementById('domains').focus();
-        if (genBtn) {
-            genBtn.innerHTML = originalBtnText;
-            genBtn.disabled = false;
-        }
         return;
     }
 
@@ -757,11 +488,6 @@ async function generateNodes() {
     if (badge) {
         badge.style.display = 'inline-block';
         badge.innerHTML = `已生成 ${uniqueResults.length} 个独立节点 (已去重)`;
-    }
-
-    if (genBtn) {
-        genBtn.innerHTML = originalBtnHtml;
-        genBtn.disabled = false;
     }
 }
 
