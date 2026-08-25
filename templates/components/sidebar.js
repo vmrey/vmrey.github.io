@@ -14,6 +14,7 @@ function renderSidebar({
   const navUrl = isSubfolder ? '../nav.html' : 'nav.html';
   const toolsUrl = isSubfolder ? '../tools.html' : 'tools.html';
   const aiUrl = isSubfolder ? '../ai.html' : 'ai.html';
+  const vlessUrl = isSubfolder ? '../node-vle.html' : 'node-vle.html';
 
   const iconSvgs = {
     '前端开发': `<polyline points="16 18 22 12 16 6"></polyline><polyline points="8 6 2 12 8 18"></polyline>`,
@@ -148,6 +149,12 @@ ${navCategoriesHtml}
             <span class="nav-item-left">
               <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"></path></svg>
               <span class="nav-item-text">工具导航</span>
+            </span>
+          </a>
+          <a href="${vlessUrl}" class="sidebar-nav-item ${activePage === 'vless' ? 'active' : ''}" title="节点生成器">
+            <span class="nav-item-left">
+              <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>
+              <span class="nav-item-text">节点生成器</span>
             </span>
           </a>
           <a href="${navUrl}" class="sidebar-nav-item ${activePage === 'nav' ? 'active' : ''}" title="GitHub 导航">

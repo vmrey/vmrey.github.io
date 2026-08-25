@@ -14,6 +14,7 @@ const htmlFiles = [
   path.join(ROOT_DIR, 'nav.html'),
   path.join(ROOT_DIR, 'tools.html'),
   path.join(ROOT_DIR, 'ai.html'),
+  path.join(ROOT_DIR, 'node-vle.html'),
   ...fs.readdirSync(POSTS_DIR).filter(f => f.endsWith('.html')).map(f => path.join(POSTS_DIR, f))
 ];
 

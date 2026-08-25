@@ -18,6 +18,7 @@ const { renderAboutLayout } = require('./templates/layouts/about');
 const { renderNavLayout } = require('./templates/layouts/nav');
 const { renderToolsLayout } = require('./templates/layouts/tools');
 const { renderAiLayout } = require('./templates/layouts/ai');
+const { renderVlessLayout } = require('./templates/layouts/vless');
 
 const ROOT_DIR = __dirname;
 const DRAFTS_DIR = path.join(ROOT_DIR, 'markdown_drafts');
@@ -29,6 +30,7 @@ const FILES_HTML_PATH = path.join(ROOT_DIR, 'files.html');
 const NAV_HTML_PATH = path.join(ROOT_DIR, 'nav.html');
 const TOOLS_HTML_PATH = path.join(ROOT_DIR, 'tools.html');
 const AI_HTML_PATH = path.join(ROOT_DIR, 'ai.html');
+const VLESS_HTML_PATH = path.join(ROOT_DIR, 'node-vle.html');
 const CONFIG_PATH = path.join(ROOT_DIR, 'js', 'config.js');
 const FILES_DIR = path.join(ROOT_DIR, 'assets', 'files');
 const FILES_META_PATH = path.join(ROOT_DIR, 'data', 'files-meta.json');
@@ -997,7 +999,26 @@ const totalAi = aiCategories.reduce((acc, cat) => acc + (cat.items ? cat.items.l
 console.log(`🤖 已成功生成顶级 AI 导航中心: ai.html (${totalAi} 个 AI 工具与模型)`);
 
 // ==============================================================================
-// 13. 自动生成 robots.txt 搜索引擎爬虫协议
+// 13. 编译生成 node-vle.html 节点生成器页面
+// ==============================================================================
+const vlessSidebarHtml = renderSidebar({
+  isSubfolder: false,
+  activePage: 'vless',
+  blogConfig: blogConfig,
+  categoryStats: categoryStats,
+  resourceFilesCount: resourceFiles.length
+});
+
+const vlessPageHtml = renderVlessLayout({
+  sidebarHtml: vlessSidebarHtml,
+  blogConfig: blogConfig
+});
+
+fs.writeFileSync(VLESS_HTML_PATH, vlessPageHtml, 'utf-8');
+console.log(`⚡ 已成功生成 VLESS 节点生成器导航功能页: node-vle.html`);
+
+// ==============================================================================
+// 14. 自动生成 robots.txt 搜索引擎爬虫协议
 // ==============================================================================
 const robotsTxtContent = `User-agent: *
 Allow: /
@@ -1008,7 +1029,7 @@ fs.writeFileSync(ROBOTS_TXT_PATH, robotsTxtContent, 'utf-8');
 console.log('🤖 已全自动生成搜索引擎爬虫协议: robots.txt');
 
 // ==============================================================================
-// 14. 自动生成全量 sitemap.xml 站点地图
+// 15. 自动生成全量 sitemap.xml 站点地图
 // ==============================================================================
 function escapeXml(unsafeStr) {
   if (!unsafeStr) return '';
@@ -1024,6 +1045,7 @@ const staticPages = [
   { loc: 'https://vmrey.github.io/', priority: '1.0', changefreq: 'daily', lastmod: todayDateStr },
   { loc: 'https://vmrey.github.io/ai.html', priority: '0.9', changefreq: 'weekly', lastmod: todayDateStr },
   { loc: 'https://vmrey.github.io/tools.html', priority: '0.9', changefreq: 'weekly', lastmod: todayDateStr },
+  { loc: 'https://vmrey.github.io/node-vle.html', priority: '0.9', changefreq: 'weekly', lastmod: todayDateStr },
   { loc: 'https://vmrey.github.io/nav.html', priority: '0.8', changefreq: 'weekly', lastmod: todayDateStr },
   { loc: 'https://vmrey.github.io/files.html', priority: '0.8', changefreq: 'weekly', lastmod: todayDateStr },
   { loc: 'https://vmrey.github.io/about.html', priority: '0.7', changefreq: 'monthly', lastmod: todayDateStr }
@@ -1116,6 +1138,7 @@ const llmsTxtContent = `# vmrey.github.io
 - [博客首页 (Blog Home)](https://vmrey.github.io/): 全部技术文章列表与专栏分类浏览
 - [AI 导航中心 (AI Navigation)](https://vmrey.github.io/ai.html): 精选收录 Gemini, ChatGPT, Claude, DeepSeek, Cursor 等 17+ 顶尖 AI 工具与智能体
 - [实用工具导航 (Developer Tools)](https://vmrey.github.io/tools.html): 精选收录 FlyEnv, DBeaver, 草料二维码, 1Password 等 15+ 开发者效率利器
+- [节点生成器 (VLESS Generator)](https://vmrey.github.io/node-vle.html): 全协议 VLESS 节点批量生成与一键跨域 API 优选提取器
 - [GitHub 导航中心 (GitHub Repos)](https://vmrey.github.io/nav.html): 精选收录 fnm, nvm, Ventoy, Fail2Ban, acme.sh 等优质开源仓库
 - [资源文件库 (Resource Files)](https://vmrey.github.io/files.html): Vue 组件源码、Shell 脚本与配置附件在线高亮预览与下载
 - [关于本站 (About Author)](https://vmrey.github.io/about.html): 博主个人简介、技术栈与工程理念

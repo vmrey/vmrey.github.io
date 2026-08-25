@@ -3545,3 +3545,507 @@ del {
     justify-content: center;
   }
 }
+
+/* ==========================================================================
+/* ==========================================================================
+   VLESS 节点生成器模块样式 (Generator Component Styles - 100% 博客统一视觉体系)
+   ========================================================================== */
+.generator-container {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+  width: 100%;
+  max-width: 100%;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+.gen-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 1.5rem;
+  box-shadow: var(--card-shadow);
+  transition: var(--transition);
+}
+
+.gen-card:hover {
+  box-shadow: var(--card-shadow-hover);
+}
+
+.gen-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.85rem;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.gen-card-title {
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+  font-size: 0.975rem;
+  font-weight: 600;
+  color: var(--text-main);
+  margin-bottom: 0.85rem;
+  padding-bottom: 0.6rem;
+  border-bottom: 1px solid var(--border-subtle);
+}
+
+.gen-card-title svg {
+  color: var(--primary);
+  flex-shrink: 0;
+}
+
+.gen-card-header .gen-card-title {
+  margin-bottom: 0;
+  padding-bottom: 0;
+  border-bottom: none;
+}
+
+.gen-hint {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  line-height: 1.5;
+}
+
+.gen-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 1rem;
+}
+
+.gen-form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+}
+
+.gen-form-group.full {
+  grid-column: 1 / -1;
+}
+
+.gen-label-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.gen-form-group label {
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: var(--text-main);
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+}
+
+.gen-input, .gen-select, .gen-textarea {
+  width: 100%;
+  padding: 0.6rem 0.85rem;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  background-color: var(--bg);
+  color: var(--text-main);
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  line-height: 1.5;
+  transition: var(--transition);
+  box-sizing: border-box;
+}
+
+.gen-select {
+  font-family: var(--font-sans);
+  cursor: pointer;
+}
+
+.gen-input:focus, .gen-select:focus, .gen-textarea:focus {
+  outline: none;
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px var(--primary-soft);
+}
+
+.gen-input.readonly {
+  background-color: var(--bg-subtle);
+  cursor: default;
+  color: var(--text-muted);
+}
+
+.gen-textarea.result {
+  background-color: var(--bg-subtle);
+  font-size: 0.825rem;
+  line-height: 1.6;
+}
+
+.gen-badge {
+  display: inline-flex;
+  align-items: center;
+  font-size: 0.7rem;
+  padding: 0.1rem 0.45rem;
+  border-radius: var(--radius-sm);
+  background: var(--badge-bg);
+  color: var(--badge-text);
+  font-weight: normal;
+  cursor: default;
+  user-select: none;
+  pointer-events: none;
+}
+
+.gen-static-tag {
+  color: var(--text-muted);
+  background: var(--bg-subtle);
+  border: 1px solid var(--border);
+  font-weight: 500;
+  padding: 0.1rem 0.5rem;
+  border-radius: var(--radius-sm);
+  font-size: 0.725rem;
+  white-space: nowrap;
+  letter-spacing: 0.01em;
+  display: inline-flex;
+  align-items: center;
+  cursor: default;
+  user-select: none;
+  pointer-events: none;
+}
+
+.gen-badge.success {
+  background: var(--primary-soft);
+  color: var(--primary-soft-text);
+}
+
+.gen-btn-row {
+  display: flex;
+  gap: 0.65rem;
+  margin-top: 0.85rem;
+}
+
+.gen-btn-row.right {
+  justify-content: flex-end;
+}
+
+.gen-btn-group {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+}
+
+/* 博客统一按钮基类 */
+.gen-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.35rem;
+  padding: 0.45rem 0.95rem;
+  font-family: var(--font-sans);
+  font-size: 0.825rem;
+  font-weight: 500;
+  border-radius: var(--radius-md);
+  border: 1px solid transparent;
+  cursor: pointer;
+  transition: var(--transition);
+  white-space: nowrap;
+  text-decoration: none;
+}
+
+.gen-btn svg {
+  flex-shrink: 0;
+}
+
+.gen-btn-primary {
+  background: var(--primary);
+  color: #ffffff;
+  border-color: var(--primary);
+}
+
+.gen-btn-primary:hover {
+  background: var(--primary-hover);
+  border-color: var(--primary-hover);
+  transform: translateY(-1px);
+}
+
+.gen-btn-secondary {
+  background: var(--surface);
+  color: var(--text-muted);
+  border-color: var(--border);
+}
+
+.gen-btn-secondary:hover {
+  background: var(--surface-hover);
+  color: var(--text-main);
+  border-color: var(--border-focus);
+  transform: translateY(-1px);
+}
+
+.gen-btn-generate {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.85rem 1.25rem;
+  background: var(--primary);
+  color: #ffffff;
+  border: none;
+  border-radius: var(--radius-md);
+  font-size: 0.975rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: var(--transition);
+  box-shadow: var(--shadow-sm);
+  margin-top: 1.25rem;
+}
+
+.gen-btn-generate:hover {
+  background: var(--primary-hover);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+}
+
+.gen-btn-generate:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.gen-btn-mini {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  padding: 0.25rem 0.65rem;
+  font-size: 0.775rem;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border);
+  background: var(--bg-subtle);
+  color: var(--text-muted);
+  cursor: pointer;
+  transition: var(--transition);
+  font-family: var(--font-sans);
+}
+
+.gen-btn-mini:hover {
+  border-color: var(--border-focus);
+  color: var(--text-main);
+  background: var(--surface-hover);
+}
+
+.gen-btn-mini.primary {
+  background: var(--primary-soft);
+  color: var(--primary-soft-text);
+  border-color: transparent;
+}
+
+.gen-btn-mini.primary:hover {
+  background: var(--primary);
+  color: #ffffff;
+}
+
+.gen-api-box {
+  background: var(--bg-subtle);
+  border: 1px dashed var(--border);
+  border-radius: var(--radius-md);
+  padding: 1.15rem;
+}
+
+.gen-api-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.75rem;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.gen-api-title {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  color: var(--text-main);
+  font-weight: 600;
+  font-size: 0.875rem;
+}
+
+.gen-api-title svg {
+  color: var(--primary);
+}
+
+.gen-mode-select-wrap {
+  display: flex;
+  gap: 0.4rem;
+  align-items: center;
+}
+
+.gen-select-inline {
+  width: auto;
+  padding: 0.25rem 0.65rem;
+  font-size: 0.75rem;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  color: var(--text-main);
+  cursor: pointer;
+}
+
+.gen-presets-row {
+  display: flex;
+  gap: 0.45rem;
+  flex-wrap: wrap;
+  margin-bottom: 0.75rem;
+  align-items: center;
+}
+
+.gen-preset-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  padding: 0.25rem 0.7rem;
+  font-size: 0.775rem;
+  font-family: var(--font-sans);
+  border-radius: var(--radius-full);
+  border: 1px solid var(--border);
+  background: var(--surface);
+  color: var(--text-muted);
+  cursor: pointer;
+  transition: var(--transition);
+}
+
+.gen-preset-btn svg {
+  color: var(--primary);
+}
+
+.gen-preset-btn:hover {
+  background: var(--primary-soft);
+  color: var(--primary-soft-text);
+  border-color: var(--primary-soft-text);
+  transform: translateY(-1px);
+}
+
+.gen-api-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 0.85rem;
+  flex-wrap: wrap;
+  gap: 0.65rem;
+}
+
+.gen-result-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.6rem;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.gen-result-title {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+/* ==========================================================================
+   VLESS 生成器移动端 / 平板 / 桌面多端响应式适配
+   ========================================================================== */
+@media (max-width: 768px) {
+  .gen-card {
+    padding: 1.15rem 1rem;
+    border-radius: var(--radius-md);
+  }
+
+  .gen-card-title {
+    font-size: 0.925rem;
+  }
+
+  .gen-grid {
+    grid-template-columns: 1fr;
+    gap: 0.85rem;
+  }
+
+  .gen-api-box {
+    padding: 0.95rem;
+  }
+
+  .gen-api-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.6rem;
+  }
+
+  .gen-mode-select-wrap {
+    width: 100%;
+    justify-content: space-between;
+  }
+
+  .gen-select-inline {
+    flex: 1;
+    max-width: 220px;
+  }
+
+  .gen-api-footer {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0.75rem;
+  }
+
+  .gen-api-footer .gen-btn {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .gen-btn-row {
+    flex-direction: column;
+  }
+
+  .gen-btn-row .gen-btn {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .gen-result-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.6rem;
+  }
+
+  .gen-result-header .gen-btn {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .gen-btn-generate {
+    font-size: 0.925rem;
+    padding: 0.75rem 1rem;
+  }
+
+  /* 移动端防止 iOS Safari 聚焦输入框时自动放大页面 */
+  .gen-input, .gen-select, .gen-textarea {
+    font-size: 16px;
+    touch-action: manipulation;
+  }
+}
+
+@media (max-width: 480px) {
+  .gen-card {
+    padding: 0.95rem 0.85rem;
+  }
+
+  .gen-card-title {
+    font-size: 0.875rem;
+  }
+
+  .gen-presets-row {
+    gap: 0.35rem;
+  }
+
+  .gen-preset-btn {
+    font-size: 0.725rem;
+    padding: 0.2rem 0.55rem;
+  }
+}
+
+
+
