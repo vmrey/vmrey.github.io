@@ -76,6 +76,7 @@ npm run deploy                 # 或 git add . && git commit -m "feat: 发布新
 │       ├── nav.js               # GitHub 开源导航页装配模板 (nav.html)
 │       ├── tools.js             # 实用工具导航页装配模板 (tools.html)
 │       ├── ai.js                # 顶级 AI 导航页装配模板 (ai.html)
+│       ├── node-vle.js          # VLESS 节点生成器装配模板 (node-vle.html)
 │       └── about.js             # 关于本站页装配模板 (about.html)
 │
 ├── assets/                      # 静态资源目录
@@ -94,6 +95,7 @@ npm run deploy                 # 或 git add . && git commit -m "feat: 发布新
 │   ├── config.js                # 站点全局配置 (名称、专栏分类结构、每页条数等)
 │   ├── main.js                  # 核心交互逻辑 (翻页、就地筛选、树状专栏联动、日夜切换)
 │   ├── search.js                # ⌘K 全局全文检索弹窗控制器
+│   ├── node-vle.js              # VLESS 节点生成器客户端交互引擎
 │   ├── file-preview.js          # 附件源码免跳转在线高亮预览与复制弹窗
 │   └── prism.js                 # 代码语法高亮核心库
 │

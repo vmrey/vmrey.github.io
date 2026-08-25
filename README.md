@@ -39,6 +39,10 @@ npm run deploy
 
 ```text
 ├── index.html                   # 博客首页
+├── ai.html                      # AI 导航中心
+├── tools.html                   # 实用工具导航
+├── node-vle.html                # VLESS 节点配置生成器
+├── nav.html                     # GitHub 开源导航中心
 ├── files.html                   # 资源文件库（树状文件夹视图）
 ├── about.html                   # 关于本站
 ├── posts/                       # 编译后的静态文章详情页
