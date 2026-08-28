@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>前端踩坑记录：如何正确获取 textarea 的光标位置？ - vmrey.github.io</title>
+  <meta name="description" content="深度复盘与 Code Review：解析 textarea 标签赋值与事件监听误区，分享基于现代标准 API 的光标位置获取最佳实践。">
+  <meta name="keywords" content="前端开发, JavaScript, DOM, Textarea, 光标定位">
+  <meta name="author" content="vmrey">
+  <meta name="robots" content="index, follow">
+  <meta name="google-site-verification" content="Vi8ircfK8SuZNzZBrtU7av_aXeiUKrLDKgef-84unTM">
+  <link rel="canonical" href="https://vmrey.github.io/posts/textarea-9e34.html">
+  <link rel="alternate" type="application/rss+xml" title="vmrey.github.io RSS 订阅源" href="https://vmrey.github.io/feed.xml">
+  <link rel="alternate" type="text/plain" title="LLMs.txt AI 知识索引" href="https://vmrey.github.io/llms.txt">
+  <link rel="icon" type="image/svg+xml" href="../favicon.svg">
+
+  <!-- Open Graph 社交卡片 (微信/QQ/Telegram/GitHub) -->
+  <meta property="og:site_name" content="vmrey's Blog">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="前端踩坑记录：如何正确获取 textarea 的光标位置？ - vmrey.github.io">
+  <meta property="og:description" content="深度复盘与 Code Review：解析 textarea 标签赋值与事件监听误区，分享基于现代标准 API 的光标位置获取最佳实践。">
+  <meta property="og:url" content="https://vmrey.github.io/posts/textarea-9e34.html">
+  <meta property="og:image" content="https://vmrey.github.io/favicon.svg">
+
+  <!-- Twitter / X 社交卡片 -->
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="前端踩坑记录：如何正确获取 textarea 的光标位置？ - vmrey.github.io">
+  <meta name="twitter:description" content="深度复盘与 Code Review：解析 textarea 标签赋值与事件监听误区，分享基于现代标准 API 的光标位置获取最佳实践。">
+  <meta name="twitter:image" content="https://vmrey.github.io/favicon.svg">
+
+  <!-- 页面绘制前同步初始化深浅色主题，彻底杜绝首屏白屏闪烁 (Anti-FOUC) -->
+  <script>
+    (function() {
+      try {
+        var t = localStorage.getItem('theme');
+        if (!t) {
+          var isDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+          t = isDark ? 'dark' : 'light';
+        }
+        document.documentElement.setAttribute('data-theme', t);
+      } catch(e) {}
+    })();
+  </script>
+  
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "headline": "前端踩坑记录：如何正确获取 textarea 的光标位置？",
+    "description": "深度复盘与 Code Review：解析 textarea 标签赋值与事件监听误区，分享基于现代标准 API 的光标位置获取最佳实践。",
+    "datePublished": "2026-08-28",
+    "dateModified": "2026-08-28",
+    "author": {
+      "@type": "Person",
+      "name": "vmrey",
+      "url": "https://vmrey.github.io/about.html"
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "vmrey.github.io",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "https://vmrey.github.io/favicon.svg"
+      }
+    },
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": "https://vmrey.github.io/posts/textarea-9e34.html"
+    },
+    "keywords": "前端开发, JavaScript, DOM, Textarea, 光标定位",
+    "articleSection": "前端开发"
+  }
+  </script>
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="../css/prism.css">
+</head>
+<body>
+
+  <!-- 移动端顶部标题导航条 -->
+  <div class="mobile-header">
+    <div class="mobile-title-wrap">
+      <svg class="mobile-book-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path>
+        <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path>
+        <line x1="9" y1="7" x2="15" y2="7"></line>
+        <line x1="9" y1="11" x2="13" y2="11"></line>
+      </svg>
+      <div class="mobile-title">vmrey.github.io</div>
+    </div>
+    <button id="menu-toggle-btn" class="menu-toggle-btn" aria-label="切换侧边栏菜单">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <line x1="3" y1="12" x2="21" y2="12"></line>
+        <line x1="3" y1="6" x2="21" y2="6"></line>
+        <line x1="3" y1="18" x2="21" y2="18"></line>
+      </svg>
+    </button>
+  </div>
+
+  <div id="sidebar-overlay" class="sidebar-overlay"></div>
+
+  <div class="app-layout">
+    
+    <!-- 左侧常驻导航 -->
+    <aside class="app-sidebar" id="app-sidebar">
+      <!-- 顶部固定区域：Logo、标题与全局搜索 -->
+      <div class="sidebar-header-section">
+        <div class="sidebar-header-row">
+          <a href="../index.html" class="sidebar-brand">
+            <div class="sidebar-avatar" title="vmrey.github.io 博客">
+              <svg class="sidebar-avatar-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path>
+                <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path>
+                <line x1="9" y1="7" x2="15" y2="7"></line>
+                <line x1="9" y1="11" x2="13" y2="11"></line>
+              </svg>
+            </div>
+            <div class="sidebar-info">
+              <div class="sidebar-name">vmrey.github.io</div>
+              <div class="sidebar-tagline">构建工具，写干净的代码</div>
+            </div>
+          </a>
+          <button type="button" id="sidebar-collapse-btn" class="sidebar-collapse-btn" title="折叠/展开侧边栏 (PC)" aria-label="折叠侧边栏">
+            <svg class="collapse-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="15 18 9 12 15 6"></polyline>
+            </svg>
+          </button>
+        </div>
+
+        <!-- 左侧全局搜索快捷入口 (支持 ⌘K) -->
+        <button class="sidebar-search-btn open-search-modal" type="button" title="全站深度全文搜索 (Cmd+K)">
+          <span class="search-btn-left">
+            <svg class="search-icon" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="11" cy="11" r="8"></circle>
+              <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+            </svg>
+            <span class="search-btn-text">全文搜索...</span>
+          </span>
+          <kbd class="kbd-badge">⌘K</kbd>
+        </button>
+      </div>
+
+      <!-- 侧边栏菜单列表 -->
+      <div class="sidebar-nav-body">
+        <!-- 导航分组 1：分类专栏 (支持多层级子专栏) -->
+        <div class="sidebar-nav-group">
+          <div class="nav-group-title">文章专栏</div>
+          
+          <!-- 全部文章 -->
+          <a href="../index.html" class="sidebar-nav-item  category-filter-btn" data-tag="all" data-label="全部文章" title="全部文章">
+            <span class="nav-item-left">
+              <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg>
+              <span class="nav-item-text">全部文章</span>
+            </span>
+          </a>
+
+          <!-- 专栏：前端开发 -->
+          <div class="nav-item-tree">
+            <div class="tree-header-row">
+              <a href="../index.html?tag=%E5%89%8D%E7%AB%AF%E5%BC%80%E5%8F%91" class="sidebar-nav-item category-filter-btn" data-tag="前端开发" data-label="前端开发" title="前端开发">
+                <span class="nav-item-left">
+                  <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"></polyline><polyline points="8 6 2 12 8 18"></polyline></svg>
+                  <span class="nav-item-text">前端开发</span>
+                </span>
+              </a>
+              <button type="button" class="subtree-toggle-btn" aria-label="展开或折叠前端开发子菜单" title="展开或折叠前端开发">
+                <svg class="chevron-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+              </button>
+            </div>
+            <div class="nav-subtree">
+              <a href="../index.html?tag=Vue" class="subtree-item category-filter-btn" data-tag="Vue" data-label="Vue 与组件" title="Vue 与组件">
+                <span class="subtree-item-left">
+                  <span class="subtree-item-dot"></span>
+                  <span class="subtree-item-name">Vue 与组件</span>
+                </span>
+              </a>
+              <a href="../index.html?tag=JavaScript" class="subtree-item category-filter-btn" data-tag="JavaScript" data-label="JS 与工具函数" title="JS 与工具函数">
+                <span class="subtree-item-left">
+                  <span class="subtree-item-dot"></span>
+                  <span class="subtree-item-name">JS 与工具函数</span>
+                </span>
+              </a>
+              <a href="../index.html?tag=%E5%BE%AE%E4%BF%A1%E5%B0%8F%E7%A8%8B%E5%BA%8F" class="subtree-item category-filter-btn" data-tag="微信小程序" data-label="微信小程序" title="微信小程序">
+                <span class="subtree-item-left">
+                  <span class="subtree-item-dot"></span>
+                  <span class="subtree-item-name">微信小程序</span>
+                </span>
+              </a>
+            </div>
+          </div>
+
+          <!-- 专栏：Linux 与服务端 -->
+          <div class="nav-item-tree">
+            <div class="tree-header-row">
+              <a href="../index.html?tag=Linux" class="sidebar-nav-item category-filter-btn" data-tag="Linux" data-label="Linux 与服务端" title="Linux 与服务端">
+                <span class="nav-item-left">
+                  <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="8" rx="2" ry="2"></rect><rect x="2" y="14" width="20" height="8" rx="2" ry="2"></rect><line x1="6" y1="6" x2="6.01" y2="6"></line><line x1="6" y1="18" x2="6.01" y2="18"></line></svg>
+                  <span class="nav-item-text">Linux 与服务端</span>
+                </span>
+              </a>
+              <button type="button" class="subtree-toggle-btn" aria-label="展开或折叠Linux 与服务端子菜单" title="展开或折叠Linux 与服务端">
+                <svg class="chevron-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+              </button>
+            </div>
+            <div class="nav-subtree">
+              <a href="../index.html?tag=Docker" class="subtree-item category-filter-btn" data-tag="Docker" data-label="Docker 与容器" title="Docker 与容器">
+                <span class="subtree-item-left">
+                  <span class="subtree-item-dot"></span>
+                  <span class="subtree-item-name">Docker 与容器</span>
+                </span>
+              </a>
+              <a href="../index.html?tag=Nginx" class="subtree-item category-filter-btn" data-tag="Nginx" data-label="网络与反代" title="网络与反代">
+                <span class="subtree-item-left">
+                  <span class="subtree-item-dot"></span>
+                  <span class="subtree-item-name">网络与反代</span>
+                </span>
+              </a>
+              <a href="../index.html?tag=%E5%8E%8B%E5%8A%9B%E6%B5%8B%E8%AF%95" class="subtree-item category-filter-btn" data-tag="压力测试" data-label="性能与压测" title="性能与压测">
+                <span class="subtree-item-left">
+                  <span class="subtree-item-dot"></span>
+                  <span class="subtree-item-name">性能与压测</span>
+                </span>
+              </a>
+            </div>
+          </div>
+
+          <!-- 专栏：效率工具与软件 -->
+          <div class="nav-item-tree">
+            <div class="tree-header-row">
+              <a href="../index.html?tag=%E6%95%88%E7%8E%87%E5%B7%A5%E5%85%B7" class="sidebar-nav-item category-filter-btn" data-tag="效率工具" data-label="效率工具与软件" title="效率工具与软件">
+                <span class="nav-item-left">
+                  <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"></path></svg>
+                  <span class="nav-item-text">效率工具与软件</span>
+                </span>
+              </a>
+              <button type="button" class="subtree-toggle-btn" aria-label="展开或折叠效率工具与软件子菜单" title="展开或折叠效率工具与软件">
+                <svg class="chevron-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+              </button>
+            </div>
+            <div class="nav-subtree">
+              <a href="../index.html?tag=Git" class="subtree-item category-filter-btn" data-tag="Git" data-label="Git 与 SVN" title="Git 与 SVN">
+                <span class="subtree-item-left">
+                  <span class="subtree-item-dot"></span>
+                  <span class="subtree-item-name">Git 与 SVN</span>
+                </span>
+              </a>
+              <a href="../index.html?tag=Claude" class="subtree-item category-filter-btn" data-tag="Claude" data-label="Claude 与 AI" title="Claude 与 AI">
+                <span class="subtree-item-left">
+                  <span class="subtree-item-dot"></span>
+                  <span class="subtree-item-name">Claude 与 AI</span>
+                </span>
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <div class="sidebar-nav-group">
+          <div class="nav-group-title">导航与资源</div>
+          <a href="../ai.html" class="sidebar-nav-item " title="AI 导航">
+            <span class="nav-item-left">
+              <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+              <span class="nav-item-text">AI 导航</span>
+            </span>
+          </a>
+          <a href="../tools.html" class="sidebar-nav-item " title="工具导航">
+            <span class="nav-item-left">
+              <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"></path></svg>
+              <span class="nav-item-text">工具导航</span>
+            </span>
+          </a>
+          <a href="../node-vle.html" class="sidebar-nav-item " title="节点生成器">
+            <span class="nav-item-left">
+              <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>
+              <span class="nav-item-text">节点生成器</span>
+            </span>
+          </a>
+          <a href="../nav.html" class="sidebar-nav-item " title="GitHub 导航">
+            <span class="nav-item-left">
+              <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"></polygon></svg>
+              <span class="nav-item-text">GitHub 导航</span>
+            </span>
+          </a>
+          <a href="../files.html" class="sidebar-nav-item " title="资源文件库">
+            <span class="nav-item-left">
+              <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path><line x1="12" y1="11" x2="12" y2="17"></line><line x1="9" y1="14" x2="15" y2="14"></line></svg>
+              <span class="nav-item-text">资源文件库</span>
+            </span>
+          </a>
+          <a href="https://github.com/vmrey/vmrey.github.io" target="_blank" rel="noopener noreferrer" class="sidebar-nav-item" title="GitHub 源码">
+            <span class="nav-item-left">
+              <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0 9 18.13V22"></path></svg>
+              <span class="nav-item-text">GitHub 源码</span>
+            </span>
+          </a>
+          <a href="../about.html" class="sidebar-nav-item " title="关于本站">
+            <span class="nav-item-left">
+              <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+              <span class="nav-item-text">关于本站</span>
+            </span>
+          </a>
+        </div>
+      </div>
+
+      <!-- 底部区域：主题切换与版权声明 -->
+      <div class="sidebar-footer">
+        <div class="theme-toggle-row">
+          <span id="theme-mode-text">深色模式</span>
+          <button id="theme-toggle" class="theme-toggle-btn" type="button" title="切换主题外观"></button>
+        </div>
+        <div class="sidebar-copyright">
+          © 2018-<span class="current-year">2026</span> vmrey.github.io<br>用代码与文字记录探索
+        </div>
+      </div>
+    </aside>
+
+    <!-- 主内容区 -->
+    <main class="app-main">
+      <div class="article-container">
+        <!-- 文章标题与元数据头部 -->
+        <header class="article-header">
+          <a href="../index.html" class="back-link">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
+            <span>返回文章列表</span>
+          </a>
+          <h1 class="article-title">前端踩坑记录：如何正确获取 textarea 的光标位置？</h1>
+          <div class="article-meta">
+            <span class="post-block-tag">前端开发</span>
+            <span>·</span>
+            <time datetime="2026-08-28">2026-08-28</time>
+            <span>·</span>
+            <span>4 分钟阅读</span>
+          </div>
+        </header>
+
+        <!-- 正文内容区 -->
+        <div class="article-layout">
+          <article class="article-content" id="main-content">
+            <div class="prose">
+<p>在前端开发中，我们经常需要处理用户在输入框中的光标位置，比如实现“在光标处插入表情”、“@某人”或者“格式化特定文本”等功能。</p>
+<p>最近在做项目时，回顾了一段用于获取 <code>&lt;textarea&gt;</code> 焦点位置的 JavaScript 代码。虽然基本功能能跑通，但里面暗藏了不少新手容易踩的坑。今天就来做一次深度的 Code Review，并分享优化后的最佳实践。</p>
+<h2 id="那些年我们踩过的坑">❌ 那些年我们踩过的坑</h2>
+<p>在处理 <code>&lt;textarea&gt;</code> 时，常犯的几个错误：</p>
+<ol>
+<li><strong><code>&lt;textarea&gt;</code> 标签赋值的经典误区</strong>：
+</li>
+</ol>
+<p>   习惯了给 <code>&lt;input&gt;</code> 加 <code>value</code> 属性，很容易顺手写出 <code>&lt;textarea value=&quot;测试文本&quot;&gt;&lt;/textarea&gt;</code>。但实际上，<code>&lt;textarea&gt;</code> 是闭合标签，初始文本必须放在开闭标签之间：<code>&lt;textarea&gt;测试文本&lt;/textarea&gt;</code>。</p>
+<ol>
+<li><strong>事件监听不够全面</strong>：
+</li>
+</ol>
+<p>   很多时候我们只记得监听 <code>onclick</code>（鼠标点击）和 <code>oninput</code>（输入内容），却漏掉了<strong>键盘方向键（↑ ↓ ← →）</strong>移动光标的场景。如果没有 <code>onkeyup</code>，用户用键盘移动光标时，位置信息就不会更新。</p>
+<ol>
+<li><strong>现代语法与上古 IE 代码的“缝合”</strong>：
+</li>
+</ol>
+<p>   有些网上的代码片段不仅带着 IE8 时代的 <code>document.selection</code> API，还混用了 ES6 的 <code>let</code>。在现代浏览器环境下，直接使用 <code>selectionStart</code> 才是正解，祖传的兼容代码该断舍离就得断舍离。</p>
+<h2 id="优化后的最佳实践代码">✨ 优化后的最佳实践代码</h2>
+<p>针对以上痛点，这里给出一份干净、严谨的最佳实践代码：</p>
+<pre><code class="language-html">&lt;!DOCTYPE html&gt;
+&lt;html lang=&quot;en&quot;&gt;
+&lt;head&gt;
+    &lt;meta charset=&quot;UTF-8&quot;&gt;
+    &lt;meta http-equiv=&quot;X-UA-Compatible&quot; content=&quot;IE=edge&quot;&gt;
+    &lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1.0&quot;&gt;
+    &lt;title&gt;获取光标位置最佳实践&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+    &lt;!-- 修正了默认值的写法，并增加了 onkeyup 监听键盘方向键移动光标 --&gt;
+    &lt;textarea name=&quot;&quot; id=&quot;txt&quot; cols=&quot;30&quot; rows=&quot;10&quot; 
+              onclick=&quot;cursorMove()&quot; 
+              onkeyup=&quot;cursorMove()&quot; 
+              oninput=&quot;Vchange()&quot;&gt;测试文本&lt;/textarea&gt;
+    
+    &lt;script&gt;
+        // 统一处理光标移动的事件（点击、键盘导航）
+        function cursorMove() {
+            console.log('光标移动或点击------------', getPosition('txt'));
+        }
+        
+        // 处理内容输入的事件
+        function Vchange() {
+            console.log('用户输入------------', getPosition('txt'));
+        }
+
+        // 获取 input 或 textarea 焦点位置的核心函数
+        function getPosition(id) {
+            let oElement = document.getElementById(id);
+            let cursorPos = 0;
+            
+            // 现代浏览器标准写法优先，判断更加严谨
+            if (typeof oElement.selectionStart === 'number') {
+                cursorPos = oElement.selectionStart;
+            } else if (document.selection) { 
+                // 兼容旧版 IE (如果项目不需要兼容 IE8，这部分可以完全删除)
+                let selectRange = document.selection.createRange();
+                selectRange.moveStart('character', -oElement.value.length);
+                cursorPos = selectRange.text.length;
+            }
+            return cursorPos;
+        }
+    &lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;</code></pre>
+<h2 id="总结">💡 总结</h2>
+<p>处理 DOM 元素状态时，细节决定成败：</p>
+<ul>
+<li>赋值要注意标签的固有属性和结构。
+</li>
+<li>交互事件要考虑全面（鼠标 + 键盘）。
+</li>
+<li>借用代码时，务必结合当前的业务场景和兼容性要求进行裁剪。
+</li>
+</ul>
+<p>希望这篇简短的记录能帮你避开光标处理的坑！</p>
+            </div>
+
+            <div class="post-block-footer" style="margin-top: 3.5rem; padding-top: 1.5rem;">
+              <a href="../index.html" class="read-more-text">
+                <span>← 返回文章专栏</span>
+              </a>
+            </div>
+          </article>
+        </div>
+      </div>
+
+        <!-- 右侧文章大纲 TOC -->
+        <aside class="article-toc-panel" aria-label="文章目录大纲">
+          <div class="toc-box">
+            <div class="toc-box-title">本页导读 · 快速直达</div>
+            <ul class="toc-list">
+            <li>
+              <a href="#那些年我们踩过的坑" class="toc-link" title="❌ 那些年我们踩过的坑">❌ 那些年我们踩过的坑</a>
+            </li>
+            <li>
+              <a href="#优化后的最佳实践代码" class="toc-link" title="✨ 优化后的最佳实践代码">✨ 优化后的最佳实践代码</a>
+            </li>
+            <li>
+              <a href="#总结" class="toc-link" title="💡 总结">💡 总结</a>
+            </li>
+            </ul>
+          </div>
+        </aside>
+    </main>
+
+  </div>
+
+  <!-- 全局回到顶部按钮 (右下角固定) -->
+  <button id="back-to-top-btn" class="back-to-top-btn" type="button" title="回到顶部" aria-label="回到顶部">
+    <svg class="back-to-top-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+      <polyline points="18 15 12 9 6 15"></polyline>
+    </svg>
+  </button>
+
+  <script defer src="../js/config.js"></script>
+  <script defer src="../data/search-index.js"></script>
+  <script defer src="../js/main.js"></script>
+  <script defer src="../js/prism.js"></script>
+  <script defer src="../js/search.js"></script>
+  <script defer src="../js/file-preview.js"></script>
+
+</body>
+</html>

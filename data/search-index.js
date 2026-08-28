@@ -4,6 +4,100 @@
  */
 window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
   {
+    "id": "aliyun-b0c5",
+    "type": "post",
+    "title": "彻底卸载服务器阿里云盾（安骑士）与全盘清理实战",
+    "url": "posts/aliyun-b0c5.html",
+    "category": "Linux 与服务端",
+    "date": "2026-08-28",
+    "tags": [
+      "Linux",
+      "运维",
+      "阿里云",
+      "安骑士",
+      "系统清理",
+      "Shell"
+    ],
+    "summary": "详细记录云服务器卸载阿里云盾（安骑士）官方脚本流程、服务强制停止与全盘深度清理命令实战指南。",
+    "content": "彻底卸载服务器阿里云盾（安骑士）与全盘清理实战 在购买或使用一些云服务器时，系统中往往会预装厂商的安全服务（如阿里云盾、安骑士等）。如果你希望拥有一个纯净的系统，或者在非阿里云主机上误装了相关组件，可以通过以下步骤进行彻底卸载和清理。 > ⚠️ 危险操作预警 ：本文包含全局查找并强制删除（ rm -rf ）的命令。在正式环境执行前，请务必确认你明确知道这些命令的含义，并强烈建议提前做好系统快照或数据备份！ 一、 官方推荐卸载方式（首选） 最安全的卸载方式是使用官方提供的卸载脚本。请使用 root 权限登录服务器并执行对应命令： 1. 阿里云 ECS 服务器 bash wget \"http://update2.aegis.aliyun.com/download/uninstall.sh\" && chmod +x uninstall.sh && ./uninstall.sh 2. 非阿里云服务器 bash wget \"http://update.aegis.aliyun.com/download/uninstall.sh\" && chmod +x uninstall.sh && ./uninstall.sh --- 二、 强制停止服务与深度清理残留 如果脚本卸载不干净，或者你需要手动暴力清理，可以按照以下步骤执行。 1. 停止阿里云助手服务 首先需要停止正在运行的守护进程，否则文件可能无法删除或会自启动： bash systemctl stop aliyun.service 2. 全盘删除阿里云相关文件 利用 find 命令从根目录 / 开始深度查找，并忽略大小写（ -iname ）。 > 💡 避坑提示 ：原命令 find / -iname aliyun 中的通配符最好加上引号，写成 \"aliyun \" 。如果不加引号，当当前目录下恰好有匹配的文件时，Shell 会提前将其展开，导致 find 语法报错。 修正后的执行命令： bash find / -iname \"aliyun \" | xargs rm -rf --- 三、 扩展应用：全盘清理特定类型文件 find + xargs rm -rf 是一个非常强大的组合。比如你想清理系统中所有的 .php 文件，可以使用以下命令。 > 💡 避坑提示 ：同理， .php 必须加上引号，防止 Shell 提前解析。 修正后的执行命令： bash find / -name \" .php\" | xargs rm -rf 🛠️ 命令原理解析 find / ：从系统的根目录开始向下遍历所有子目录。 -name \" .php\" ：精确匹配以 .php 结尾的文件（区分大小写）。 | （管道符） ：将左边命令的输出结果，传递给右边的命令。 xargs ：将接收到的文件路径列表，转换为 rm -rf 命令的参数并执行。",
+    "sections": [
+      {
+        "title": "一、 官方推荐卸载方式（首选）",
+        "anchor": "#一-官方推荐卸载方式-首选",
+        "id": "一-官方推荐卸载方式-首选"
+      },
+      {
+        "title": "1. 阿里云 ECS 服务器",
+        "anchor": "#1-阿里云-ecs-服务器",
+        "id": "1-阿里云-ecs-服务器"
+      },
+      {
+        "title": "2. 非阿里云服务器",
+        "anchor": "#2-非阿里云服务器",
+        "id": "2-非阿里云服务器"
+      },
+      {
+        "title": "二、 强制停止服务与深度清理残留",
+        "anchor": "#二-强制停止服务与深度清理残留",
+        "id": "二-强制停止服务与深度清理残留"
+      },
+      {
+        "title": "1. 停止阿里云助手服务",
+        "anchor": "#1-停止阿里云助手服务",
+        "id": "1-停止阿里云助手服务"
+      },
+      {
+        "title": "2. 全盘删除阿里云相关文件",
+        "anchor": "#2-全盘删除阿里云相关文件",
+        "id": "2-全盘删除阿里云相关文件"
+      },
+      {
+        "title": "三、 扩展应用：全盘清理特定类型文件",
+        "anchor": "#三-扩展应用-全盘清理特定类型文件",
+        "id": "三-扩展应用-全盘清理特定类型文件"
+      },
+      {
+        "title": "🛠️ 命令原理解析",
+        "anchor": "#命令原理解析",
+        "id": "命令原理解析"
+      }
+    ]
+  },
+  {
+    "id": "textarea-9e34",
+    "type": "post",
+    "title": "前端踩坑记录：如何正确获取 textarea 的光标位置？",
+    "url": "posts/textarea-9e34.html",
+    "category": "前端开发",
+    "date": "2026-08-28",
+    "tags": [
+      "前端开发",
+      "JavaScript",
+      "DOM",
+      "Textarea",
+      "光标定位"
+    ],
+    "summary": "深度复盘与 Code Review：解析 textarea 标签赋值与事件监听误区，分享基于现代标准 API 的光标位置获取最佳实践。",
+    "content": "前端踩坑记录：如何正确获取 <textarea> 的光标位置？ 在前端开发中，我们经常需要处理用户在输入框中的光标位置，比如实现“在光标处插入表情”、“@某人”或者“格式化特定文本”等功能。 最近在做项目时，回顾了一段用于获取 <textarea> 焦点位置的 JavaScript 代码。虽然基本功能能跑通，但里面暗藏了不少新手容易踩的坑。今天就来做一次深度的 Code Review，并分享优化后的最佳实践。 ❌ 那些年我们踩过的坑 在处理 <textarea> 时，常犯的几个错误： 1. <textarea> 标签赋值的经典误区 ： 习惯了给 <input> 加 value 属性，很容易顺手写出 <textarea value=\"测试文本\"></textarea> 。但实际上， <textarea> 是闭合标签，初始文本必须放在开闭标签之间： <textarea>测试文本</textarea> 。 2. 事件监听不够全面 ： 很多时候我们只记得监听 onclick （鼠标点击）和 oninput （输入内容），却漏掉了 键盘方向键（↑ ↓ ← →） 移动光标的场景。如果没有 onkeyup ，用户用键盘移动光标时，位置信息就不会更新。 3. 现代语法与上古 IE 代码的“缝合” ： 有些网上的代码片段不仅带着 IE8 时代的 document.selection API，还混用了 ES6 的 let 。在现代浏览器环境下，直接使用 selectionStart 才是正解，祖传的兼容代码该断舍离就得断舍离。 ✨ 优化后的最佳实践代码 针对以上痛点，这里给出一份干净、严谨的最佳实践代码： html <!DOCTYPE html> <html lang=\"en\"> <head> <meta charset=\"UTF-8\"> <meta http-equiv=\"X-UA-Compatible\" content=\"IE=edge\"> <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\"> <title>获取光标位置最佳实践</title> </head> <body> <!-- 修正了默认值的写法，并增加了 onkeyup 监听键盘方向键移动光标 --> <textarea name=\"\" id=\"txt\" cols=\"30\" rows=\"10\" onclick=\"cursorMove \" onkeyup=\"cursorMove \" oninput=\"Vchange \">测试文本</textarea> <script> // 统一处理光标移动的事件（点击、键盘导航） function cursorMove { console.log '光标移动或点击------------', getPosition 'txt' ; } // 处理内容输入的事件 function Vchange { console.log '用户输入------------', getPosition 'txt' ; } // 获取 input 或 textarea 焦点位置的核心函数 function getPosition id { let oElement = document.getElementById id ; let cursorPos = 0; // 现代浏览器标准写法优先，判断更加严谨 if typeof oElement.selectionStart === 'number' { cursorPos = oElement.selectionStart; } else if document.selection { // 兼容旧版 IE 如果项目不需要兼容 IE8，这部分可以完全删除 let selectRange = document.selection.createRange ; selectRange.moveStart 'character', -oElement.value.length ; cursorPos = selectRange.text.length; } return cursorPos; } </script> </body> </html> 💡 总结 处理 DOM 元素状态时，细节决定成败： - 赋值要注意标签的固有属性和结构。 - 交互事件要考虑全面（鼠标 + 键盘）。 - 借用代码时，务必结合当前的业务场景和兼容性要求进行裁剪。 希望这篇简短的记录能帮你避开光标处理的坑！",
+    "sections": [
+      {
+        "title": "❌ 那些年我们踩过的坑",
+        "anchor": "#那些年我们踩过的坑",
+        "id": "那些年我们踩过的坑"
+      },
+      {
+        "title": "✨ 优化后的最佳实践代码",
+        "anchor": "#优化后的最佳实践代码",
+        "id": "优化后的最佳实践代码"
+      },
+      {
+        "title": "💡 总结",
+        "anchor": "#总结",
+        "id": "总结"
+      }
+    ]
+  },
+  {
     "id": "wx-img-refresh-ffc2",
     "type": "post",
     "title": "微信小程序踩坑记录：如何完美解决图片强制刷新（彻底告别本地缓存）",
@@ -2962,7 +3056,7 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
     "title": "Google Gemini",
     "url": "ai.html",
     "category": "AI 导航 · 前沿大模型与对话平台",
-    "date": "2026-08-25",
+    "date": "2026-08-28",
     "tags": [
       "Gemini",
       "Google",
@@ -2980,7 +3074,7 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
     "title": "ChatGPT",
     "url": "ai.html",
     "category": "AI 导航 · 前沿大模型与对话平台",
-    "date": "2026-08-25",
+    "date": "2026-08-28",
     "tags": [
       "ChatGPT",
       "OpenAI",
@@ -2998,7 +3092,7 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
     "title": "Claude",
     "url": "ai.html",
     "category": "AI 导航 · 前沿大模型与对话平台",
-    "date": "2026-08-25",
+    "date": "2026-08-28",
     "tags": [
       "Claude",
       "Anthropic",
@@ -3016,7 +3110,7 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
     "title": "DeepSeek (深度求索)",
     "url": "ai.html",
     "category": "AI 导航 · 前沿大模型与对话平台",
-    "date": "2026-08-25",
+    "date": "2026-08-28",
     "tags": [
       "DeepSeek",
       "R1推理",
@@ -3034,7 +3128,7 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
     "title": "Kimi (月之暗面)",
     "url": "ai.html",
     "category": "AI 导航 · 前沿大模型与对话平台",
-    "date": "2026-08-25",
+    "date": "2026-08-28",
     "tags": [
       "Kimi",
       "月之暗面",
@@ -3052,7 +3146,7 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
     "title": "Grok",
     "url": "ai.html",
     "category": "AI 导航 · 前沿大模型与对话平台",
-    "date": "2026-08-25",
+    "date": "2026-08-28",
     "tags": [
       "Grok",
       "xAI",
@@ -3070,7 +3164,7 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
     "title": "Claude Code",
     "url": "ai.html",
     "category": "AI 导航 · AI 智能体与自主编程",
-    "date": "2026-08-25",
+    "date": "2026-08-28",
     "tags": [
       "ClaudeCode",
       "AI编程",
@@ -3088,7 +3182,7 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
     "title": "Cursor",
     "url": "ai.html",
     "category": "AI 导航 · AI 智能体与自主编程",
-    "date": "2026-08-25",
+    "date": "2026-08-28",
     "tags": [
       "Cursor",
       "VSCode",
@@ -3106,7 +3200,7 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
     "title": "v0 by Vercel",
     "url": "ai.html",
     "category": "AI 导航 · AI 智能体与自主编程",
-    "date": "2026-08-25",
+    "date": "2026-08-28",
     "tags": [
       "v0",
       "Vercel",
@@ -3124,7 +3218,7 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
     "title": "Bolt.new",
     "url": "ai.html",
     "category": "AI 导航 · AI 智能体与自主编程",
-    "date": "2026-08-25",
+    "date": "2026-08-28",
     "tags": [
       "Bolt.new",
       "全栈开发",
@@ -3142,7 +3236,7 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
     "title": "Agnes AI",
     "url": "ai.html",
     "category": "AI 导航 · AI 智能体与自主编程",
-    "date": "2026-08-25",
+    "date": "2026-08-28",
     "tags": [
       "AgnesAI",
       "AI智能体",
@@ -3161,7 +3255,7 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
     "title": "Midjourney",
     "url": "ai.html",
     "category": "AI 导航 · AI 图像与多模态创作",
-    "date": "2026-08-25",
+    "date": "2026-08-28",
     "tags": [
       "Midjourney",
       "AI绘画",
@@ -3179,7 +3273,7 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
     "title": "FLUX.1 (Black Forest Labs)",
     "url": "ai.html",
     "category": "AI 导航 · AI 图像与多模态创作",
-    "date": "2026-08-25",
+    "date": "2026-08-28",
     "tags": [
       "FLUX.1",
       "开源模型",
@@ -3197,7 +3291,7 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
     "title": "Runway Gen-3",
     "url": "ai.html",
     "category": "AI 导航 · AI 图像与多模态创作",
-    "date": "2026-08-25",
+    "date": "2026-08-28",
     "tags": [
       "Runway",
       "Gen-3",
@@ -3215,7 +3309,7 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
     "title": "OpenRouter",
     "url": "ai.html",
     "category": "AI 导航 · AI 聚合平台与 API 服务",
-    "date": "2026-08-25",
+    "date": "2026-08-28",
     "tags": [
       "OpenRouter",
       "模型网关",
@@ -3233,7 +3327,7 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
     "title": "Hugging Face",
     "url": "ai.html",
     "category": "AI 导航 · AI 聚合平台与 API 服务",
-    "date": "2026-08-25",
+    "date": "2026-08-28",
     "tags": [
       "HuggingFace",
       "开源社区",
@@ -3251,7 +3345,7 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
     "title": "SiliconFlow (硅基流动)",
     "url": "ai.html",
     "category": "AI 导航 · AI 聚合平台与 API 服务",
-    "date": "2026-08-25",
+    "date": "2026-08-28",
     "tags": [
       "SiliconFlow",
       "硅基流动",
@@ -3269,7 +3363,7 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
     "title": "草料二维码",
     "url": "tools.html",
     "category": "工具导航 · 实用生成与办公工具",
-    "date": "2026-08-25",
+    "date": "2026-08-28",
     "tags": [
       "二维码",
       "QR Code",
@@ -3287,7 +3381,7 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
     "title": "1Password 强密码生成器",
     "url": "tools.html",
     "category": "工具导航 · 实用生成与办公工具",
-    "date": "2026-08-25",
+    "date": "2026-08-28",
     "tags": [
       "1Password",
       "密码生成器",
@@ -3305,7 +3399,7 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
     "title": "轻松传 (EasyChuan)",
     "url": "tools.html",
     "category": "工具导航 · 实用生成与办公工具",
-    "date": "2026-08-25",
+    "date": "2026-08-28",
     "tags": [
       "轻松传",
       "文件传输",
@@ -3324,7 +3418,7 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
     "title": "Smallpdf (PDF 转 Word)",
     "url": "tools.html",
     "category": "工具导航 · 实用生成与办公工具",
-    "date": "2026-08-25",
+    "date": "2026-08-28",
     "tags": [
       "Smallpdf",
       "PDF转Word",
@@ -3343,7 +3437,7 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
     "title": "MobaXterm",
     "url": "tools.html",
     "category": "工具导航 · 终端与远程运维工具",
-    "date": "2026-08-25",
+    "date": "2026-08-28",
     "tags": [
       "MobaXterm",
       "SSH",
@@ -3363,7 +3457,7 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
     "title": "FinalShell",
     "url": "tools.html",
     "category": "工具导航 · 终端与远程运维工具",
-    "date": "2026-08-25",
+    "date": "2026-08-28",
     "tags": [
       "FinalShell",
       "SSH",
@@ -3382,7 +3476,7 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
     "title": "aaPanel (宝塔国际版)",
     "url": "tools.html",
     "category": "工具导航 · 终端与远程运维工具",
-    "date": "2026-08-25",
+    "date": "2026-08-28",
     "tags": [
       "aaPanel",
       "宝塔面板",
@@ -3402,7 +3496,7 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
     "title": "MQTTX",
     "url": "tools.html",
     "category": "工具导航 · 终端与远程运维工具",
-    "date": "2026-08-25",
+    "date": "2026-08-28",
     "tags": [
       "MQTTX",
       "MQTT",
@@ -3422,7 +3516,7 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
     "title": "draw.io",
     "url": "tools.html",
     "category": "工具导航 · 架构设计与思维导图",
-    "date": "2026-08-25",
+    "date": "2026-08-28",
     "tags": [
       "架构图",
       "流程图",
@@ -3440,7 +3534,7 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
     "title": "PDManer (元数建模)",
     "url": "tools.html",
     "category": "工具导航 · 架构设计与思维导图",
-    "date": "2026-08-25",
+    "date": "2026-08-28",
     "tags": [
       "PDManer",
       "数据库建模",
@@ -3459,7 +3553,7 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
     "title": "DBeaver",
     "url": "tools.html",
     "category": "工具导航 · 架构设计与思维导图",
-    "date": "2026-08-25",
+    "date": "2026-08-28",
     "tags": [
       "DBeaver",
       "数据库管理",
@@ -3478,7 +3572,7 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
     "title": "Geek Uninstaller",
     "url": "tools.html",
     "category": "工具导航 · 系统优化与效率工具",
-    "date": "2026-08-25",
+    "date": "2026-08-28",
     "tags": [
       "Geek",
       "软件卸载",
@@ -3496,7 +3590,7 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
     "title": "KMS 在线激活服务 (KMS.cx)",
     "url": "tools.html",
     "category": "工具导航 · 系统优化与效率工具",
-    "date": "2026-08-25",
+    "date": "2026-08-28",
     "tags": [
       "KMS",
       "Windows激活",
@@ -3515,7 +3609,7 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
     "title": "FlyEnv",
     "url": "tools.html",
     "category": "工具导航 · 系统优化与效率工具",
-    "date": "2026-08-25",
+    "date": "2026-08-28",
     "tags": [
       "FlyEnv",
       "开发环境",
@@ -3535,7 +3629,7 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
     "title": "WinRAR (官方中文网)",
     "url": "tools.html",
     "category": "工具导航 · 系统优化与效率工具",
-    "date": "2026-08-25",
+    "date": "2026-08-28",
     "tags": [
       "WinRAR",
       "压缩工具",
@@ -3555,7 +3649,7 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
     "title": "CloudConvert (SVG to ICO)",
     "url": "tools.html",
     "category": "工具导航 · 图像与多媒体处理",
-    "date": "2026-08-25",
+    "date": "2026-08-28",
     "tags": [
       "SVG",
       "ICO",
@@ -3573,7 +3667,7 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
     "title": "Tinify (TinyPNG 中文网)",
     "url": "tools.html",
     "category": "工具导航 · 图像与多媒体处理",
-    "date": "2026-08-25",
+    "date": "2026-08-28",
     "tags": [
       "Tinify",
       "TinyPNG",
@@ -3592,7 +3686,7 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
     "title": "Hills Lite (Emby / Jellyfin 客户端)",
     "url": "tools.html",
     "category": "工具导航 · 图像与多媒体处理",
-    "date": "2026-08-25",
+    "date": "2026-08-28",
     "tags": [
       "HillsLite",
       "Emby",
@@ -3611,7 +3705,7 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
     "title": "FFmpeg",
     "url": "tools.html",
     "category": "工具导航 · 图像与多媒体处理",
-    "date": "2026-08-25",
+    "date": "2026-08-28",
     "tags": [
       "FFmpeg",
       "音视频处理",
@@ -3630,7 +3724,7 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
     "title": "IPPure (IP 纯净度检测)",
     "url": "tools.html",
     "category": "工具导航 · 网络诊断与安全检测",
-    "date": "2026-08-25",
+    "date": "2026-08-28",
     "tags": [
       "IPPure",
       "IP查询",
@@ -3649,7 +3743,7 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
     "title": "Cloudflare 优选 IP 节点库 (090227.xyz)",
     "url": "tools.html",
     "category": "工具导航 · 网络诊断与安全检测",
-    "date": "2026-08-25",
+    "date": "2026-08-28",
     "tags": [
       "Cloudflare",
       "CF优选",
@@ -3668,7 +3762,7 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
     "title": "VLESS 节点生成器",
     "url": "tools.html",
     "category": "工具导航 · 网络诊断与安全检测",
-    "date": "2026-08-25",
+    "date": "2026-08-28",
     "tags": [
       "VLESS",
       "节点生成器",
@@ -3685,7 +3779,7 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
     "title": "fnm (Schniz/fnm)",
     "url": "nav.html",
     "category": "GitHub 导航 · Node.js 版本管理",
-    "date": "2026-08-25",
+    "date": "2026-08-28",
     "tags": [
       "Rust",
       "Node.js",
@@ -3703,7 +3797,7 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
     "title": "nvm (nvm-sh/nvm)",
     "url": "nav.html",
     "category": "GitHub 导航 · Node.js 版本管理",
-    "date": "2026-08-25",
+    "date": "2026-08-28",
     "tags": [
       "Shell",
       "Bash",
@@ -3721,7 +3815,7 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
     "title": "Ventoy (ventoy/Ventoy)",
     "url": "nav.html",
     "category": "GitHub 导航 · 系统与装机利器",
-    "date": "2026-08-25",
+    "date": "2026-08-28",
     "tags": [
       "Ventoy",
       "启动盘",
@@ -3740,7 +3834,7 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
     "title": "LKY_OfficeTools (OdysseusYuan/LKY_OfficeTools)",
     "url": "nav.html",
     "category": "GitHub 导航 · 系统与装机利器",
-    "date": "2026-08-25",
+    "date": "2026-08-28",
     "tags": [
       "Office",
       "LKY",
@@ -3759,7 +3853,7 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
     "title": "Fail2Ban (fail2ban/fail2ban)",
     "url": "nav.html",
     "category": "GitHub 导航 · 服务器安全与防护",
-    "date": "2026-08-25",
+    "date": "2026-08-28",
     "tags": [
       "Fail2Ban",
       "Linux安全",
@@ -3778,7 +3872,7 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
     "title": "acme.sh (acmesh-official/acme.sh)",
     "url": "nav.html",
     "category": "GitHub 导航 · 服务器安全与防护",
-    "date": "2026-08-25",
+    "date": "2026-08-28",
     "tags": [
       "acme.sh",
       "SSL证书",
@@ -3797,7 +3891,7 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
     "title": "Lit (lit/lit)",
     "url": "nav.html",
     "category": "GitHub 导航 · 前端开发与 Web Components",
-    "date": "2026-08-25",
+    "date": "2026-08-28",
     "tags": [
       "Lit",
       "WebComponents",
@@ -3817,7 +3911,7 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
     "title": "FingerprintJS (fingerprintjs/fingerprintjs)",
     "url": "nav.html",
     "category": "GitHub 导航 · 前端安全与设备识别",
-    "date": "2026-08-25",
+    "date": "2026-08-28",
     "tags": [
       "Fingerprint",
       "设备指纹",
@@ -3836,7 +3930,7 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
     "title": "CloudflareSpeedTest (XIU2/CloudflareSpeedTest)",
     "url": "nav.html",
     "category": "GitHub 导航 · 网络加速与穿透工具",
-    "date": "2026-08-25",
+    "date": "2026-08-28",
     "tags": [
       "CloudflareSpeedTest",
       "Cloudflare",
@@ -3856,7 +3950,7 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
     "title": "frp (fatedier/frp)",
     "url": "nav.html",
     "category": "GitHub 导航 · 网络加速与穿透工具",
-    "date": "2026-08-25",
+    "date": "2026-08-28",
     "tags": [
       "frp",
       "内网穿透",
@@ -3875,7 +3969,7 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
     "title": "v2rayNG (2dust/v2rayNG)",
     "url": "nav.html",
     "category": "GitHub 导航 · 网络加速与穿透工具",
-    "date": "2026-08-25",
+    "date": "2026-08-28",
     "tags": [
       "v2rayNG",
       "Android",
@@ -3895,7 +3989,7 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
     "title": "v2rayN (2dust/v2rayN)",
     "url": "nav.html",
     "category": "GitHub 导航 · 网络加速与穿透工具",
-    "date": "2026-08-25",
+    "date": "2026-08-28",
     "tags": [
       "v2rayN",
       "Windows",
@@ -3915,7 +4009,7 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
     "title": "edgetunnel (cmliu/edgetunnel)",
     "url": "nav.html",
     "category": "GitHub 导航 · 网络加速与穿透工具",
-    "date": "2026-08-25",
+    "date": "2026-08-28",
     "tags": [
       "edgetunnel",
       "Cloudflare",
@@ -3930,12 +4024,32 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
     "sections": []
   },
   {
+    "id": "github-multi-easygost",
+    "type": "github",
+    "title": "Multi-EasyGost (KANIKIG/Multi-EasyGost)",
+    "url": "nav.html",
+    "category": "GitHub 导航 · 网络加速与穿透工具",
+    "date": "2026-08-28",
+    "tags": [
+      "Gost",
+      "端口转发",
+      "流量中转",
+      "隧道",
+      "网络加速",
+      "Shell",
+      "Linux"
+    ],
+    "summary": "⚡ 简单易用的 Gost 多功能端口转发与中转一键脚本 — 基于 GOST 核心的多功能流量中转与端口转发一键管理脚本，支持 TCP/UDP/TLS/WS 隧道转发、多节点中转链路管理与 systemd 服务守护。",
+    "content": "Multi-EasyGost KANIKIG/Multi-EasyGost https://github.com/KANIKIG/Multi-EasyGost ⚡ 简单易用的 Gost 多功能端口转发与中转一键脚本 基于 GOST 核心的多功能流量中转与端口转发一键管理脚本，支持 TCP/UDP/TLS/WS 隧道转发、多节点中转链路管理与 systemd 服务守护。 Gost 端口转发 流量中转 隧道 网络加速 Shell Linux",
+    "sections": []
+  },
+  {
     "id": "github-emqx",
     "type": "github",
     "title": "EMQX (emqx/emqx)",
     "url": "nav.html",
     "category": "GitHub 导航 · 物联网与消息中间件",
-    "date": "2026-08-25",
+    "date": "2026-08-28",
     "tags": [
       "EMQX",
       "MQTT",
@@ -3956,7 +4070,7 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
     "title": "FileUpload.vue",
     "url": "files.html",
     "category": "资源文件 · 前端组件",
-    "date": "2026-08-25",
+    "date": "2026-08-28",
     "tags": [
       "vue",
       "前端组件"
@@ -3971,7 +4085,7 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
     "title": "QueryForm.vue",
     "url": "files.html",
     "category": "资源文件 · 前端组件",
-    "date": "2026-08-25",
+    "date": "2026-08-28",
     "tags": [
       "vue",
       "前端组件"
@@ -3986,7 +4100,7 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
     "title": "tools.js",
     "url": "files.html",
     "category": "资源文件 · 代码库",
-    "date": "2026-08-25",
+    "date": "2026-08-28",
     "tags": [
       "js",
       "代码库"
@@ -4001,7 +4115,7 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
     "title": "frps.sh",
     "url": "files.html",
     "category": "资源文件 · Shell 脚本",
-    "date": "2026-08-25",
+    "date": "2026-08-28",
     "tags": [
       "sh",
       "Shell 脚本"
@@ -4016,7 +4130,7 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
     "title": "xray.sh",
     "url": "files.html",
     "category": "资源文件 · Shell 脚本",
-    "date": "2026-08-25",
+    "date": "2026-08-28",
     "tags": [
       "sh",
       "Shell 脚本"
@@ -4031,7 +4145,7 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
     "title": "RenameTool.bat",
     "url": "files.html",
     "category": "资源文件 · Windows 批处理",
-    "date": "2026-08-25",
+    "date": "2026-08-28",
     "tags": [
       "bat",
       "Windows 批处理"
@@ -4046,7 +4160,7 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
     "title": "cmd_proxy.bat",
     "url": "files.html",
     "category": "资源文件 · Windows 批处理",
-    "date": "2026-08-25",
+    "date": "2026-08-28",
     "tags": [
       "bat",
       "Windows 批处理"
@@ -4061,7 +4175,7 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
     "title": "cmd_proxy_agy.bat",
     "url": "files.html",
     "category": "资源文件 · Windows 批处理",
-    "date": "2026-08-25",
+    "date": "2026-08-28",
     "tags": [
       "bat",
       "Windows 批处理"
@@ -4071,12 +4185,27 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
     "sections": []
   },
   {
+    "id": "file-windows-activation-bat",
+    "type": "file",
+    "title": "windows_activation.bat",
+    "url": "files.html",
+    "category": "资源文件 · Windows 批处理",
+    "date": "2026-08-28",
+    "tags": [
+      "bat",
+      "Windows 批处理"
+    ],
+    "summary": "Windows 系统一键 KMS 激活与密钥配置批处理脚本 (217 B, undefined 行)",
+    "content": "windows_activation.bat Windows 系统一键 KMS 激活与密钥配置批处理脚本 Windows 批处理 bat",
+    "sections": []
+  },
+  {
     "id": "file-imghandle-jpg-zip",
     "type": "file",
     "title": "ImgHandle_jpg.zip",
     "url": "files.html",
     "category": "资源文件 · 压缩资源包",
-    "date": "2026-08-25",
+    "date": "2026-08-28",
     "tags": [
       "zip",
       "压缩资源包"
@@ -4091,7 +4220,7 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
     "title": "curveCharts.rar",
     "url": "files.html",
     "category": "资源文件 · 压缩资源包",
-    "date": "2026-08-25",
+    "date": "2026-08-28",
     "tags": [
       "rar",
       "压缩资源包"
@@ -4106,7 +4235,7 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
     "title": "优惠券弹框组件.zip",
     "url": "files.html",
     "category": "资源文件 · 压缩资源包",
-    "date": "2026-08-25",
+    "date": "2026-08-28",
     "tags": [
       "zip",
       "压缩资源包"

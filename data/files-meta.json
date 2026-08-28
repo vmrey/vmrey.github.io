@@ -31,6 +31,10 @@
     "desc": "Windows CMD 终端一键配置代理并自动开启 Antigravity (AGY) 免权限全自动运行脚本",
     "category": "Windows 批处理"
   },
+  "windows_activation.bat": {
+    "desc": "Windows 系统一键 KMS 激活与密钥配置批处理脚本",
+    "category": "Windows 批处理"
+  },
   "优惠券弹框组件.zip": {
     "desc": "Vue 前端业务优惠券领取与展示弹框交互组件完整工程包",
     "category": "压缩资源包"

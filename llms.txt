@@ -12,9 +12,23 @@
 - [关于本站 (About Author)](https://vmrey.github.io/about.html): 博主个人简介、技术栈与工程理念
 - [完整知识库快照 (Full Knowledge Digest)](https://vmrey.github.io/llms-full.txt): 全站技术文章详细摘要与纯文本知识库
 
-## 技术文章全景大纲 (Technical Articles - 共 65 篇)
+## 技术文章全景大纲 (Technical Articles - 共 67 篇)
 
-### 前端开发 (39 篇)
+### Linux 与服务端 (11 篇)
+- [彻底卸载服务器阿里云盾（安骑士）与全盘清理实战](https://vmrey.github.io/posts/aliyun-b0c5.html): 详细记录云服务器卸载阿里云盾（安骑士）官方脚本流程、服务强制停止与全盘深度清理命令实战指南。
+- [Nginx 全站反向代理配置说明文档（Cloudflare CDN + 流媒体优化版）](https://vmrey.github.io/posts/nginx-emby-proxy-b140.html): 专为 Cloudflare CDN + 全站反向代理架构设计，支持 Emby 流媒体大文件分片、WebSocket 实时长连接与 SNI 强校验。
+- [Shell 脚本自动获取 GitHub 开源项目最新 Releases 版本号](https://vmrey.github.io/posts/shell-github-release-8d73.html): 编写通用 Bash 脚本，自动通过正则解析 GitHub Releases 或通用开源软件下载页面的最新 Release Tag 版本号。
+- [Shell 脚本中输出红/绿/黄多色格式化终端文本函数](https://vmrey.github.io/posts/shell-color-echo-31e2.html): 封装基于 ANSI 转义码的通用 Shell 终端彩色文本打印函数，用于高亮显示部署脚本的成功、警告与错误日志。
+- [WordPress WP Super Cache 插件高并发 Nginx 静态伪静态规则](https://vmrey.github.io/posts/wp-super-cache-nginx-c033.html): 配置 Nginx 直接绕过 PHP-FPM 直读 WP Super Cache 生成的静态 HTML 缓存文件，实现高并发极速响应。
+- [WordPress 忘记管理员密码时的应急重置与修复方法](https://vmrey.github.io/posts/wp-reset-password-f1c8.html): 梳理 WordPress 管理员密码丢失后的两种快速重置手段：MySQL 数据库 MD5 哈希直接更新与临时 functions.php 代码注入。
+- [Nginx 媒体与静态资源防盗链配置实战（Valid Referers）](https://vmrey.github.io/posts/nginx-hotlink-guard-c2f7.html): 防止外部恶意网站盗用本站图片、视频与下载附件消耗服务器流量，利用 Nginx valid_referers 指令配置域名防盗链拦截。
+- [Nginx 静态资源长效缓存与 Expires 性能优化配置](https://vmrey.github.io/posts/nginx-cache-expires-16e0.html): 通过 Nginx 对 JS、CSS、图片、字体等静态资源配置 Cache-Control 与 Expires 头部，大幅降低服务器带宽与首屏加载耗时。
+- [CentOS 7 / RHEL Firewalld 防火墙常用命令与端口放行速查](https://vmrey.github.io/posts/firewalld-cheat-e029.html): 整理 Firewalld 核心操作指令：服务启停、开放/关闭指定 TCP/UDP 端口、查看放行清单及配置永久生效重载。
+- [CentOS 7 永久禁用 IPv6 网络协议的两种方法](https://vmrey.github.io/posts/centos-disable-ipv6-099b.html): 在仅需 IPv4 的服务器环境中，通过修改 sysctl 内核参数及网卡配置文件，彻底永久禁用 IPv6 避免网络请求异常超时。
+- [轻量级高性能内网穿透：frp 远程桌面 RDP 搭建与系统服务配置](https://vmrey.github.io/posts/frp-desktop-6af7.html): 基于 VPS 部署 frps 服务端并配置 systemd 守护进程开机自启，搭配 Windows 客户端通过 STCP 安全加密协议实现 3389 远程桌面穿透。
+
+### 前端开发 (40 篇)
+- [前端踩坑记录：如何正确获取 textarea 的光标位置？](https://vmrey.github.io/posts/textarea-9e34.html): 深度复盘与 Code Review：解析 textarea 标签赋值与事件监听误区，分享基于现代标准 API 的光标位置获取最佳实践。
 - [微信小程序踩坑记录：如何完美解决图片强制刷新（彻底告别本地缓存）](https://vmrey.github.io/posts/wx-img-refresh-ffc2.html): 深度剖析微信小程序图片本地强缓存与渲染层复用机制，系统总结 URL 时间戳、HTTP 头控制、Base64 编码、wx:if 渲染层重建、云开发临时链接及 FileSystemManager 本地沙盒接管等 8 种全场景强制刷新实战方案。
 - [Vue3 + Element Plus 文件上传组件封装：支持回显、批量与手动控制](https://vmrey.github.io/posts/vue3-file-upload-5890.html): 在实际业务中深入封装 el-upload，实现文件列表回显、多文件批量上传、类型大小校验与手动提交控制。
 - [Vue3 通用查询表单组件封装：JSON Schema 驱动与响应式联动](https://vmrey.github.io/posts/vue3-query-form-53a0.html): 基于 Vue 3 Composition API 与 Element Plus 打造轻量配置化查询表单组件，大幅提升后台开发效率。
@@ -74,17 +88,5 @@
 - [开源 HTTP 压力测试工具 Siege 从安装到生产实战指南](https://vmrey.github.io/posts/siege-benchmark-44e0.html): 详解轻量级 HTTP 负载压测工具 Siege：并发连接模拟、吞吐量 QPS 评估、响应延迟分析与测试报告解读。
 - [Xray-Core Linux 一键部署与自动化服务管理脚本](https://vmrey.github.io/posts/xray-core-script-c8e6.html): Linux 生产环境一键拉取并安装最新 Xray 核心，配置 Systemd 守护进程与日志轮转。
 - [Xray DNS 分流防污染优化与国内外路由分流规则配置](https://vmrey.github.io/posts/xray-dns-routing-b411.html): 详解 Xray 核心 DNS 分流配置与防污染机制，基于 Geosite 域名列表实现境外加密 DNS 解析与境内直连智能分流。
-
-### Linux 与服务端 (10 篇)
-- [Nginx 全站反向代理配置说明文档（Cloudflare CDN + 流媒体优化版）](https://vmrey.github.io/posts/nginx-emby-proxy-b140.html): 专为 Cloudflare CDN + 全站反向代理架构设计，支持 Emby 流媒体大文件分片、WebSocket 实时长连接与 SNI 强校验。
-- [Shell 脚本自动获取 GitHub 开源项目最新 Releases 版本号](https://vmrey.github.io/posts/shell-github-release-8d73.html): 编写通用 Bash 脚本，自动通过正则解析 GitHub Releases 或通用开源软件下载页面的最新 Release Tag 版本号。
-- [Shell 脚本中输出红/绿/黄多色格式化终端文本函数](https://vmrey.github.io/posts/shell-color-echo-31e2.html): 封装基于 ANSI 转义码的通用 Shell 终端彩色文本打印函数，用于高亮显示部署脚本的成功、警告与错误日志。
-- [WordPress WP Super Cache 插件高并发 Nginx 静态伪静态规则](https://vmrey.github.io/posts/wp-super-cache-nginx-c033.html): 配置 Nginx 直接绕过 PHP-FPM 直读 WP Super Cache 生成的静态 HTML 缓存文件，实现高并发极速响应。
-- [WordPress 忘记管理员密码时的应急重置与修复方法](https://vmrey.github.io/posts/wp-reset-password-f1c8.html): 梳理 WordPress 管理员密码丢失后的两种快速重置手段：MySQL 数据库 MD5 哈希直接更新与临时 functions.php 代码注入。
-- [Nginx 媒体与静态资源防盗链配置实战（Valid Referers）](https://vmrey.github.io/posts/nginx-hotlink-guard-c2f7.html): 防止外部恶意网站盗用本站图片、视频与下载附件消耗服务器流量，利用 Nginx valid_referers 指令配置域名防盗链拦截。
-- [Nginx 静态资源长效缓存与 Expires 性能优化配置](https://vmrey.github.io/posts/nginx-cache-expires-16e0.html): 通过 Nginx 对 JS、CSS、图片、字体等静态资源配置 Cache-Control 与 Expires 头部，大幅降低服务器带宽与首屏加载耗时。
-- [CentOS 7 / RHEL Firewalld 防火墙常用命令与端口放行速查](https://vmrey.github.io/posts/firewalld-cheat-e029.html): 整理 Firewalld 核心操作指令：服务启停、开放/关闭指定 TCP/UDP 端口、查看放行清单及配置永久生效重载。
-- [CentOS 7 永久禁用 IPv6 网络协议的两种方法](https://vmrey.github.io/posts/centos-disable-ipv6-099b.html): 在仅需 IPv4 的服务器环境中，通过修改 sysctl 内核参数及网卡配置文件，彻底永久禁用 IPv6 避免网络请求异常超时。
-- [轻量级高性能内网穿透：frp 远程桌面 RDP 搭建与系统服务配置](https://vmrey.github.io/posts/frp-desktop-6af7.html): 基于 VPS 部署 frps 服务端并配置 systemd 守护进程开机自启，搭配 Windows 客户端通过 STCP 安全加密协议实现 3389 远程桌面穿透。
 
 

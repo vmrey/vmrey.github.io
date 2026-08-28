@@ -263,6 +263,25 @@
         ],
         "repo": "cmliu/edgetunnel",
         "language": "JavaScript"
+      },
+      {
+        "name": "Multi-EasyGost",
+        "url": "https://github.com/KANIKIG/Multi-EasyGost",
+        "tagline": "⚡ 简单易用的 Gost 多功能端口转发与中转一键脚本",
+        "description": "基于 GOST 核心的多功能流量中转与端口转发一键管理脚本，支持 TCP/UDP/TLS/WS 隧道转发、多节点中转链路管理与 systemd 服务守护。",
+        "category": "网络加速与穿透工具",
+        "badge": "Shell / 流量中转神器",
+        "tags": [
+          "Gost",
+          "端口转发",
+          "流量中转",
+          "隧道",
+          "网络加速",
+          "Shell",
+          "Linux"
+        ],
+        "repo": "KANIKIG/Multi-EasyGost",
+        "language": "OpenSource"
       }
     ]
   },
