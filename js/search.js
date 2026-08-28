@@ -14,8 +14,11 @@
               <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
             </svg>
             <input type="text" id="global-search-input" class="search-modal-input" placeholder="搜索文章标题、正文内容、标签、专栏..." autocomplete="off" spellcheck="false">
-            <button id="search-modal-close" class="search-modal-close-btn" title="关闭 (Esc)">
-              <kbd class="kbd-badge">ESC</kbd>
+            <button id="search-modal-close" class="search-modal-close-btn" title="关闭搜索" aria-label="关闭搜索">
+              <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="18" y1="6" x2="6" y2="18"></line>
+                <line x1="6" y1="6" x2="18" y2="18"></line>
+              </svg>
             </button>
           </div>
 
@@ -92,15 +95,13 @@
       selectedResultIndex = -1;
     }
 
-    // 绑定全局快捷键 (Cmd+K / Ctrl+K / '/' / Esc)
+    // 绑定全局快捷键 (Cmd+K / Ctrl+K / '/' 打开搜索)
     document.addEventListener('keydown', (e) => {
       if (e.isComposing || e.keyCode === 229) return;
-      // Cmd+K 或 Ctrl+K 打开
+      // Cmd+K 或 Ctrl+K 仅负责打开，不通过快捷键关闭
       if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === 'k') {
         e.preventDefault();
-        if (modalContainer.style.display === 'flex') {
-          closeSearchModal();
-        } else {
+        if (modalContainer.style.display !== 'flex') {
           openSearchModal();
         }
       }
@@ -112,12 +113,6 @@
           e.preventDefault();
           openSearchModal();
         }
-      }
-
-      // Esc 键关闭
-      if (e.key === 'Escape' && modalContainer.style.display === 'flex') {
-        e.preventDefault();
-        closeSearchModal();
       }
 
       // 搜索列表键盘上下键与回车导航
@@ -134,27 +129,17 @@
           e.preventDefault();
           const selectedItem = currentResults[selectedResultIndex];
           if (selectedItem && selectedItem.targetUrl) {
-            closeSearchModal();
             window.location.href = pathPrefix + selectedItem.targetUrl;
           }
         }
       }
     });
 
-    // 弹窗关闭按钮与背景点击关闭
-    if (closeBtn) closeBtn.addEventListener('click', closeSearchModal);
-    if (modalContainer) {
-      modalContainer.addEventListener('click', (e) => {
-        if (e.target === modalContainer) closeSearchModal();
-      });
-    }
-
-    // 点击搜索结果项时自动关闭弹窗（解决同页面锚点跳转卡死问题）
-    if (resultsContainer) {
-      resultsContainer.addEventListener('click', (e) => {
-        if (e.target.closest('.search-result-item')) {
-          closeSearchModal();
-        }
+    // 仅允许通过关闭按钮关闭搜索弹窗（背景遮罩、Esc、结果点击等均不触发关闭）
+    if (closeBtn) {
+      closeBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        closeSearchModal();
       });
     }
 
