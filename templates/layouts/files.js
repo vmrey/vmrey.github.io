@@ -1,7 +1,7 @@
 /**
  * 资源文件库（嵌套树状文件夹管理器）布局模板 (Files Explorer Layout Template)
  */
-const { renderBaseLayout } = require('./base');
+const { renderBaseLayout, slugify } = require('./base');
 
 function renderFilesLayout({
   sidebarHtml,
@@ -24,7 +24,9 @@ function renderFilesLayout({
         </button>`;
       }
 
-      return `          <div class="nested-file-row" data-name="${file.name.toLowerCase()}" data-ext="${file.ext.toLowerCase()}" data-desc="${file.desc.toLowerCase()}">
+      const fileRowId = `file-${slugify(file.name)}`;
+
+      return `          <div class="nested-file-row" id="${fileRowId}" data-name="${file.name.toLowerCase()}" data-ext="${file.ext.toLowerCase()}" data-desc="${file.desc.toLowerCase()}">
             <div class="file-row-left">
               <div class="file-type-pill" style="color: ${file.badgeColor}; border-color: ${file.badgeColor}40; background: ${file.badgeBg};">
                 .${file.ext.toUpperCase()}

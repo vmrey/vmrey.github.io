@@ -1,7 +1,7 @@
 /**
  * 顶级 AI 导航页面布局模板 (AI Tools & Frontier Models Layout Template)
  */
-const { renderBaseLayout } = require('./base');
+const { renderBaseLayout, slugify } = require('./base');
 
 function renderAiLayout({
   sidebarHtml,
@@ -29,7 +29,7 @@ function renderAiLayout({
   const iconSvgs = {
     '前沿大模型与对话平台': `<polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>`,
     'AI 智能体与自主编程': `<polyline points="16 18 22 12 16 6"></polyline><polyline points="8 6 2 12 8 18"></polyline>`,
-    'AI 图像与多媒体创作': `<rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><circle cx="8.5" cy="8.5" r="1.5"></circle><polyline points="21 15 16 10 5 21"></polyline>`,
+    'AI 图像与多媒体创作': `<rect x="3" width="18" height="18" rx="2" ry="2"></rect><circle cx="8.5" cy="8.5" r="1.5"></circle><polyline points="21 15 16 10 5 21"></polyline>`,
     'AI 聚合平台与 API 服务': `<rect x="2" y="2" width="20" height="8" rx="2" ry="2"></rect><rect x="2" y="14" width="20" height="8" rx="2" ry="2"></rect><line x1="6" y1="6" x2="6.01" y2="6"></line><line x1="6" y1="18" x2="6.01" y2="18"></line>`
   };
 
@@ -39,9 +39,10 @@ function renderAiLayout({
 
     const cardsHtml = cat.items.map(item => {
       const tagsHtml = (item.tags || []).map(tag => `<span class="repo-tag">#${tag}</span>`).join('');
+      const cardId = `ai-${slugify(item.name)}`;
       
       return `          <!-- AI Card: ${item.name} -->
-          <div class="nav-repo-card" data-name="${item.name.toLowerCase()}" data-url="${(item.url || '').toLowerCase()}" data-desc="${(item.tagline + ' ' + item.description).toLowerCase()}" data-tags="${(item.tags || []).join(',').toLowerCase()}" data-cat="${cat.category}">
+          <div class="nav-repo-card" id="${cardId}" data-name="${item.name.toLowerCase()}" data-url="${(item.url || '').toLowerCase()}" data-desc="${(item.tagline + ' ' + item.description).toLowerCase()}" data-tags="${(item.tags || []).join(',').toLowerCase()}" data-cat="${cat.category}">
             <div class="repo-card-top">
               <div class="repo-header-info">
                 <div class="repo-icon-badge">

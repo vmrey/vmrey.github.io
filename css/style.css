@@ -2127,14 +2127,130 @@ del {
   display: flex;
   align-items: center;
   justify-content: space-between;
+  gap: 0.5rem;
   font-size: 0.775rem;
   color: var(--text-subtle);
-  margin-bottom: 0.35rem;
+  margin-bottom: 0.4rem;
+}
+
+.search-res-header-left {
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+  min-width: 0;
+  overflow: hidden;
+}
+
+.search-res-type-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  padding: 0.15rem 0.45rem;
+  border-radius: var(--radius-sm);
+  font-size: 0.7rem;
+  font-weight: 600;
+  line-height: 1.2;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.search-res-type-pill.type-post {
+  background: rgba(2, 132, 199, 0.1);
+  color: var(--primary);
+  border: 1px solid rgba(2, 132, 199, 0.2);
+}
+
+.search-res-type-pill.type-page {
+  background: rgba(168, 85, 247, 0.1);
+  color: #9333ea;
+  border: 1px solid rgba(168, 85, 247, 0.25);
+}
+
+.search-res-type-pill.type-ai {
+  background: rgba(245, 158, 11, 0.1);
+  color: #d97706;
+  border: 1px solid rgba(245, 158, 11, 0.25);
+}
+
+.search-res-type-pill.type-tool {
+  background: rgba(16, 185, 129, 0.1);
+  color: #059669;
+  border: 1px solid rgba(16, 185, 129, 0.25);
+}
+
+.search-res-type-pill.type-github {
+  background: rgba(99, 102, 241, 0.1);
+  color: #6366f1;
+  border: 1px solid rgba(99, 102, 241, 0.25);
+}
+
+.search-res-type-pill.type-file {
+  background: rgba(100, 116, 139, 0.1);
+  color: #475569;
+  border: 1px solid rgba(100, 116, 139, 0.25);
+}
+
+[data-theme="dark"] .search-res-type-pill.type-page { color: #c084fc; background: rgba(168, 85, 247, 0.18); }
+[data-theme="dark"] .search-res-type-pill.type-ai { color: #fbbf24; background: rgba(245, 158, 11, 0.18); }
+[data-theme="dark"] .search-res-type-pill.type-tool { color: #34d399; background: rgba(16, 185, 129, 0.18); }
+[data-theme="dark"] .search-res-type-pill.type-github { color: #818cf8; background: rgba(99, 102, 241, 0.18); }
+[data-theme="dark"] .search-res-type-pill.type-file { color: #94a3b8; background: rgba(100, 116, 139, 0.18); }
+
+.search-res-header-right {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex-shrink: 0;
+}
+
+.search-res-external-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  padding: 0.15rem 0.5rem;
+  font-size: 0.725rem;
+  font-weight: 600;
+  color: var(--primary);
+  background: var(--primary-soft);
+  border: 1px solid var(--primary);
+  border-radius: var(--radius-sm);
+  transition: var(--transition);
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.search-res-external-btn:hover {
+  background: var(--primary);
+  color: #ffffff;
+  transform: translateY(-1px);
 }
 
 .search-res-category {
-  color: var(--primary);
-  font-weight: 600;
+  color: var(--text-muted);
+  font-weight: 500;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+/* 导航卡片被锚点定位时的聚焦脉冲动效 */
+@keyframes navCardPulse {
+  0% { box-shadow: 0 0 0 0 rgba(2, 132, 199, 0.4); border-color: var(--primary); }
+  50% { box-shadow: 0 0 0 10px rgba(2, 132, 199, 0.15); border-color: var(--primary); transform: translateY(-2px); }
+  100% { box-shadow: 0 0 0 0 rgba(2, 132, 199, 0); border-color: var(--primary); }
+}
+
+[data-theme="dark"] @keyframes navCardPulse {
+  0% { box-shadow: 0 0 0 0 rgba(56, 189, 248, 0.5); border-color: var(--primary); }
+  50% { box-shadow: 0 0 0 10px rgba(56, 189, 248, 0.2); border-color: var(--primary); transform: translateY(-2px); }
+  100% { box-shadow: 0 0 0 0 rgba(56, 189, 248, 0); border-color: var(--primary); }
+}
+
+.nav-card-highlight-pulse {
+  animation: navCardPulse 1.2s ease-in-out 3;
+  border-color: var(--primary) !important;
+  z-index: 10;
+  position: relative;
 }
 
 .search-res-title {

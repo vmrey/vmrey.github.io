@@ -1,0 +1,465 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>Redis 核心操作：数据清空与内存淘汰策略详解 - vmrey.github.io</title>
+  <meta name="description" content="深入解析 Redis 核心清空命令 FLUSHDB/FLUSHALL 的同步与异步 ASYNC 机制，以及 8 种内存淘汰策略（LRU、LFU、TTL、noeviction）的工作原理与生产环境选型建议。">
+  <meta name="keywords" content="Redis, 缓存, 内存淘汰, 运维, Linux, 性能优化">
+  <meta name="author" content="vmrey">
+  <meta name="robots" content="index, follow">
+  <meta name="google-site-verification" content="Vi8ircfK8SuZNzZBrtU7av_aXeiUKrLDKgef-84unTM">
+  <link rel="canonical" href="https://vmrey.github.io/posts/redis-65f8.html">
+  <link rel="alternate" type="application/rss+xml" title="vmrey.github.io RSS 订阅源" href="https://vmrey.github.io/feed.xml">
+  <link rel="alternate" type="text/plain" title="LLMs.txt AI 知识索引" href="https://vmrey.github.io/llms.txt">
+  <link rel="icon" type="image/svg+xml" href="../favicon.svg">
+
+  <!-- Open Graph 社交卡片 (微信/QQ/Telegram/GitHub) -->
+  <meta property="og:site_name" content="vmrey's Blog">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="Redis 核心操作：数据清空与内存淘汰策略详解 - vmrey.github.io">
+  <meta property="og:description" content="深入解析 Redis 核心清空命令 FLUSHDB/FLUSHALL 的同步与异步 ASYNC 机制，以及 8 种内存淘汰策略（LRU、LFU、TTL、noeviction）的工作原理与生产环境选型建议。">
+  <meta property="og:url" content="https://vmrey.github.io/posts/redis-65f8.html">
+  <meta property="og:image" content="https://vmrey.github.io/favicon.svg">
+
+  <!-- Twitter / X 社交卡片 -->
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Redis 核心操作：数据清空与内存淘汰策略详解 - vmrey.github.io">
+  <meta name="twitter:description" content="深入解析 Redis 核心清空命令 FLUSHDB/FLUSHALL 的同步与异步 ASYNC 机制，以及 8 种内存淘汰策略（LRU、LFU、TTL、noeviction）的工作原理与生产环境选型建议。">
+  <meta name="twitter:image" content="https://vmrey.github.io/favicon.svg">
+
+  <!-- 页面绘制前同步初始化深浅色主题，彻底杜绝首屏白屏闪烁 (Anti-FOUC) -->
+  <script>
+    (function() {
+      try {
+        var t = localStorage.getItem('theme');
+        if (!t) {
+          var isDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+          t = isDark ? 'dark' : 'light';
+        }
+        document.documentElement.setAttribute('data-theme', t);
+      } catch(e) {}
+    })();
+  </script>
+  
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "headline": "Redis 核心操作：数据清空与内存淘汰策略详解",
+    "description": "深入解析 Redis 核心清空命令 FLUSHDB/FLUSHALL 的同步与异步 ASYNC 机制，以及 8 种内存淘汰策略（LRU、LFU、TTL、noeviction）的工作原理与生产环境选型建议。",
+    "datePublished": "2026-08-29",
+    "dateModified": "2026-08-29",
+    "author": {
+      "@type": "Person",
+      "name": "vmrey",
+      "url": "https://vmrey.github.io/about.html"
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "vmrey.github.io",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "https://vmrey.github.io/favicon.svg"
+      }
+    },
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": "https://vmrey.github.io/posts/redis-65f8.html"
+    },
+    "keywords": "Redis, 缓存, 内存淘汰, 运维, Linux, 性能优化",
+    "articleSection": "Linux 与服务端"
+  }
+  </script>
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="../css/prism.css">
+</head>
+<body>
+
+  <!-- 移动端顶部标题导航条 -->
+  <div class="mobile-header">
+    <div class="mobile-title-wrap">
+      <svg class="mobile-book-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path>
+        <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path>
+        <line x1="9" y1="7" x2="15" y2="7"></line>
+        <line x1="9" y1="11" x2="13" y2="11"></line>
+      </svg>
+      <div class="mobile-title">vmrey.github.io</div>
+    </div>
+    <button id="menu-toggle-btn" class="menu-toggle-btn" aria-label="切换侧边栏菜单">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <line x1="3" y1="12" x2="21" y2="12"></line>
+        <line x1="3" y1="6" x2="21" y2="6"></line>
+        <line x1="3" y1="18" x2="21" y2="18"></line>
+      </svg>
+    </button>
+  </div>
+
+  <div id="sidebar-overlay" class="sidebar-overlay"></div>
+
+  <div class="app-layout">
+    
+    <!-- 左侧常驻导航 -->
+    <aside class="app-sidebar" id="app-sidebar">
+      <!-- 顶部固定区域：Logo、标题与全局搜索 -->
+      <div class="sidebar-header-section">
+        <div class="sidebar-header-row">
+          <a href="../index.html" class="sidebar-brand">
+            <div class="sidebar-avatar" title="vmrey.github.io 博客">
+              <svg class="sidebar-avatar-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path>
+                <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path>
+                <line x1="9" y1="7" x2="15" y2="7"></line>
+                <line x1="9" y1="11" x2="13" y2="11"></line>
+              </svg>
+            </div>
+            <div class="sidebar-info">
+              <div class="sidebar-name">vmrey.github.io</div>
+              <div class="sidebar-tagline">构建工具，写干净的代码</div>
+            </div>
+          </a>
+          <button type="button" id="sidebar-collapse-btn" class="sidebar-collapse-btn" title="折叠/展开侧边栏 (PC)" aria-label="折叠侧边栏">
+            <svg class="collapse-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="15 18 9 12 15 6"></polyline>
+            </svg>
+          </button>
+        </div>
+
+        <!-- 左侧全局搜索快捷入口 (支持 ⌘K) -->
+        <button class="sidebar-search-btn open-search-modal" type="button" title="全站深度全文搜索 (Cmd+K)">
+          <span class="search-btn-left">
+            <svg class="search-icon" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="11" cy="11" r="8"></circle>
+              <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+            </svg>
+            <span class="search-btn-text">全文搜索...</span>
+          </span>
+          <kbd class="kbd-badge">⌘K</kbd>
+        </button>
+      </div>
+
+      <!-- 侧边栏菜单列表 -->
+      <div class="sidebar-nav-body">
+        <!-- 导航分组 1：分类专栏 (支持多层级子专栏) -->
+        <div class="sidebar-nav-group">
+          <div class="nav-group-title">文章专栏</div>
+          
+          <!-- 全部文章 -->
+          <a href="../index.html" class="sidebar-nav-item  category-filter-btn" data-tag="all" data-label="全部文章" title="全部文章">
+            <span class="nav-item-left">
+              <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg>
+              <span class="nav-item-text">全部文章</span>
+            </span>
+          </a>
+
+          <!-- 专栏：前端开发 -->
+          <div class="nav-item-tree">
+            <div class="tree-header-row">
+              <a href="../index.html?tag=%E5%89%8D%E7%AB%AF%E5%BC%80%E5%8F%91" class="sidebar-nav-item category-filter-btn" data-tag="前端开发" data-label="前端开发" title="前端开发">
+                <span class="nav-item-left">
+                  <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"></polyline><polyline points="8 6 2 12 8 18"></polyline></svg>
+                  <span class="nav-item-text">前端开发</span>
+                </span>
+              </a>
+              <button type="button" class="subtree-toggle-btn" aria-label="展开或折叠前端开发子菜单" title="展开或折叠前端开发">
+                <svg class="chevron-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+              </button>
+            </div>
+            <div class="nav-subtree">
+              <a href="../index.html?tag=Vue" class="subtree-item category-filter-btn" data-tag="Vue" data-label="Vue 与组件" title="Vue 与组件">
+                <span class="subtree-item-left">
+                  <span class="subtree-item-dot"></span>
+                  <span class="subtree-item-name">Vue 与组件</span>
+                </span>
+              </a>
+              <a href="../index.html?tag=JavaScript" class="subtree-item category-filter-btn" data-tag="JavaScript" data-label="JS 与工具函数" title="JS 与工具函数">
+                <span class="subtree-item-left">
+                  <span class="subtree-item-dot"></span>
+                  <span class="subtree-item-name">JS 与工具函数</span>
+                </span>
+              </a>
+              <a href="../index.html?tag=%E5%BE%AE%E4%BF%A1%E5%B0%8F%E7%A8%8B%E5%BA%8F" class="subtree-item category-filter-btn" data-tag="微信小程序" data-label="微信小程序" title="微信小程序">
+                <span class="subtree-item-left">
+                  <span class="subtree-item-dot"></span>
+                  <span class="subtree-item-name">微信小程序</span>
+                </span>
+              </a>
+            </div>
+          </div>
+
+          <!-- 专栏：Linux 与服务端 -->
+          <div class="nav-item-tree">
+            <div class="tree-header-row">
+              <a href="../index.html?tag=Linux" class="sidebar-nav-item category-filter-btn" data-tag="Linux" data-label="Linux 与服务端" title="Linux 与服务端">
+                <span class="nav-item-left">
+                  <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="8" rx="2" ry="2"></rect><rect x="2" y="14" width="20" height="8" rx="2" ry="2"></rect><line x1="6" y1="6" x2="6.01" y2="6"></line><line x1="6" y1="18" x2="6.01" y2="18"></line></svg>
+                  <span class="nav-item-text">Linux 与服务端</span>
+                </span>
+              </a>
+              <button type="button" class="subtree-toggle-btn" aria-label="展开或折叠Linux 与服务端子菜单" title="展开或折叠Linux 与服务端">
+                <svg class="chevron-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+              </button>
+            </div>
+            <div class="nav-subtree">
+              <a href="../index.html?tag=Docker" class="subtree-item category-filter-btn" data-tag="Docker" data-label="Docker 与容器" title="Docker 与容器">
+                <span class="subtree-item-left">
+                  <span class="subtree-item-dot"></span>
+                  <span class="subtree-item-name">Docker 与容器</span>
+                </span>
+              </a>
+              <a href="../index.html?tag=Nginx" class="subtree-item category-filter-btn" data-tag="Nginx" data-label="网络与反代" title="网络与反代">
+                <span class="subtree-item-left">
+                  <span class="subtree-item-dot"></span>
+                  <span class="subtree-item-name">网络与反代</span>
+                </span>
+              </a>
+              <a href="../index.html?tag=%E5%8E%8B%E5%8A%9B%E6%B5%8B%E8%AF%95" class="subtree-item category-filter-btn" data-tag="压力测试" data-label="性能与压测" title="性能与压测">
+                <span class="subtree-item-left">
+                  <span class="subtree-item-dot"></span>
+                  <span class="subtree-item-name">性能与压测</span>
+                </span>
+              </a>
+            </div>
+          </div>
+
+          <!-- 专栏：效率工具与软件 -->
+          <div class="nav-item-tree">
+            <div class="tree-header-row">
+              <a href="../index.html?tag=%E6%95%88%E7%8E%87%E5%B7%A5%E5%85%B7" class="sidebar-nav-item category-filter-btn" data-tag="效率工具" data-label="效率工具与软件" title="效率工具与软件">
+                <span class="nav-item-left">
+                  <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"></path></svg>
+                  <span class="nav-item-text">效率工具与软件</span>
+                </span>
+              </a>
+              <button type="button" class="subtree-toggle-btn" aria-label="展开或折叠效率工具与软件子菜单" title="展开或折叠效率工具与软件">
+                <svg class="chevron-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+              </button>
+            </div>
+            <div class="nav-subtree">
+              <a href="../index.html?tag=Git" class="subtree-item category-filter-btn" data-tag="Git" data-label="Git 与 SVN" title="Git 与 SVN">
+                <span class="subtree-item-left">
+                  <span class="subtree-item-dot"></span>
+                  <span class="subtree-item-name">Git 与 SVN</span>
+                </span>
+              </a>
+              <a href="../index.html?tag=Claude" class="subtree-item category-filter-btn" data-tag="Claude" data-label="Claude 与 AI" title="Claude 与 AI">
+                <span class="subtree-item-left">
+                  <span class="subtree-item-dot"></span>
+                  <span class="subtree-item-name">Claude 与 AI</span>
+                </span>
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <div class="sidebar-nav-group">
+          <div class="nav-group-title">导航与资源</div>
+          <a href="../ai.html" class="sidebar-nav-item " title="AI 导航">
+            <span class="nav-item-left">
+              <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+              <span class="nav-item-text">AI 导航</span>
+            </span>
+          </a>
+          <a href="../tools.html" class="sidebar-nav-item " title="工具导航">
+            <span class="nav-item-left">
+              <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"></path></svg>
+              <span class="nav-item-text">工具导航</span>
+            </span>
+          </a>
+          <a href="../node-vle.html" class="sidebar-nav-item " title="节点生成器">
+            <span class="nav-item-left">
+              <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>
+              <span class="nav-item-text">节点生成器</span>
+            </span>
+          </a>
+          <a href="../nav.html" class="sidebar-nav-item " title="GitHub 导航">
+            <span class="nav-item-left">
+              <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"></polygon></svg>
+              <span class="nav-item-text">GitHub 导航</span>
+            </span>
+          </a>
+          <a href="../files.html" class="sidebar-nav-item " title="资源文件库">
+            <span class="nav-item-left">
+              <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path><line x1="12" y1="11" x2="12" y2="17"></line><line x1="9" y1="14" x2="15" y2="14"></line></svg>
+              <span class="nav-item-text">资源文件库</span>
+            </span>
+          </a>
+          <a href="https://github.com/vmrey/vmrey.github.io" target="_blank" rel="noopener noreferrer" class="sidebar-nav-item" title="GitHub 源码">
+            <span class="nav-item-left">
+              <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0 9 18.13V22"></path></svg>
+              <span class="nav-item-text">GitHub 源码</span>
+            </span>
+          </a>
+          <a href="../about.html" class="sidebar-nav-item " title="关于本站">
+            <span class="nav-item-left">
+              <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+              <span class="nav-item-text">关于本站</span>
+            </span>
+          </a>
+        </div>
+      </div>
+
+      <!-- 底部区域：主题切换与版权声明 -->
+      <div class="sidebar-footer">
+        <div class="theme-toggle-row">
+          <span id="theme-mode-text">深色模式</span>
+          <button id="theme-toggle" class="theme-toggle-btn" type="button" title="切换主题外观"></button>
+        </div>
+        <div class="sidebar-copyright">
+          © 2018-<span class="current-year">2026</span> vmrey.github.io<br>用代码与文字记录探索
+        </div>
+      </div>
+    </aside>
+
+    <!-- 主内容区 -->
+    <main class="app-main">
+      <div class="article-container">
+        <!-- 文章标题与元数据头部 -->
+        <header class="article-header">
+          <a href="../index.html" class="back-link">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
+            <span>返回文章列表</span>
+          </a>
+          <h1 class="article-title">Redis 核心操作：数据清空与内存淘汰策略详解</h1>
+          <div class="article-meta">
+            <span class="post-block-tag">Linux 与服务端</span>
+            <span>·</span>
+            <time datetime="2026-08-29">2026-08-29</time>
+            <span>·</span>
+            <span>4 分钟阅读</span>
+          </div>
+        </header>
+
+        <!-- 正文内容区 -->
+        <div class="article-layout">
+          <article class="article-content" id="main-content">
+            <div class="prose">
+<p>在日常使用 Redis 的过程中，我们经常会面临两个问题：一是如何快速、安全地清理脏数据；二是当 Redis 内存满了之后，它会如何处理新写入的数据。本文将详细解答这两个问题。</p>
+<hr>
+<h2 id="一-redis-数据库清空命令">一、 Redis 数据库清空命令</h2>
+<p>Redis 提供了两个核心的清空命令，分别作用于不同的范围：</p>
+<ul>
+<li><strong>FLUSHDB</strong>：清空当前选中的数据库（默认是 DB 0）中的所有键值对。
+</li>
+<li><strong>FLUSHALL</strong>：清空 Redis 实例中所有数据库（默认 16 个）中的所有键值对。
+</li>
+</ul>
+<h3 id="1-同步与异步清空-async">1. 同步与异步清空 (ASYNC)</h3>
+<p>在 Redis 4.0 之前，清空操作是同步的。如果数据库中包含了数百万个 Key，执行 <code>FLUSHALL</code> 会导致 Redis 主线程长时间阻塞，期间无法响应任何其他客户端请求。</p>
+<p>为了解决这个问题，Redis 4.0 引入了 <code>ASYNC</code> 异步选项：</p>
+<pre><code class="language-bash"># 异步清空所有数据库数据
+redis-cli -h 127.0.0.1 -p 6379 FLUSHALL ASYNC
+
+# 异步清空当前数据库数据
+redis-cli -h 127.0.0.1 -p 6379 FLUSHDB ASYNC</code></pre>
+<p><strong>原理解析</strong>：加入 <code>ASYNC</code> 后，清空操作会被交由后台的新线程执行，Redis 主线程可以继续处理其他命令，极大降低了对业务的影响。</p>
+<div class="callout"><p>⚠️ <strong>生产环境避坑指南</strong>：  <br><code>FLUSHALL</code> 和 <code>FLUSHDB</code> 属于极其危险的操作。在生产环境中，强烈建议在 <code>redis.conf</code> 中通过 <code>rename-command FLUSHALL &quot;&quot;</code> 和 <code>rename-command FLUSHDB &quot;&quot;</code> 将其禁用，防止误操作导致数据灾难。</p></div>
+<hr>
+<h2 id="二-redis-内存淘汰策略-maxmemory-policy">二、 Redis 内存淘汰策略 (maxmemory-policy)</h2>
+<p>当 Redis 的内存使用量达到了配置的上限（由 <code>redis.conf</code> 中的 <code>maxmemory</code> 参数决定）时，如果继续向 Redis 中写入数据，Redis 就会触发内存淘汰机制。</p>
+<p>Redis 4.0 之后，提供了 <strong>8 种</strong> 不同的淘汰策略。为了方便记忆，我们可以将其分为三大类：</p>
+<h3 id="1-不淘汰策略">1. 不淘汰策略</h3>
+<ul>
+<li><strong>noeviction</strong>（默认策略）：当内存不足以容纳新写入数据时，新写入操作会报错。Redis 保证绝不主动删除任何数据。适用于将 Redis 作为纯持久化数据库使用的场景。
+</li>
+</ul>
+<h3 id="2-在-所有键-中进行淘汰-allkeys">2. 在“所有键”中进行淘汰 (allkeys)</h3>
+<p>这类策略会在 Redis 的整个键空间中寻找要淘汰的 Key，无论这些 Key 是否设置了过期时间。</p>
+<ul>
+<li><strong>allkeys-lru</strong>：尝试回收最长时间未使用的键（LRU，Least Recently Used），使得新添加的数据有空间存放。这是<strong>最常用的策略</strong>，适用于绝大多数缓存场景。
+</li>
+<li><strong>allkeys-lfu</strong>：尝试回收使用频率最少的键（LFU，Least Frequently Used）。(Redis 4.0+)
+</li>
+<li><strong>allkeys-random</strong>：在所有的键中，随机回收部分键。
+</li>
+</ul>
+<h3 id="3-在-设置了过期时间的键-中进行淘汰-volatile">3. 在“设置了过期时间的键”中进行淘汰 (volatile)</h3>
+<p>这类策略只会针对那些使用了 <code>EXPIRE</code> 设定期限的 Key 进行淘汰。如果没有这类 Key 可以淘汰，行为将退化为 <code>noeviction</code>。</p>
+<ul>
+<li><strong>volatile-lru</strong>：在设置了过期时间的键空间中，回收最长时间未使用的键。
+</li>
+<li><strong>volatile-lfu</strong>：在设置了过期时间的键空间中，回收使用频率最少的键。(Redis 4.0+)
+</li>
+<li><strong>volatile-random</strong>：在设置了过期时间的键空间中，随机回收部分键。
+</li>
+<li><strong>volatile-ttl</strong>：在设置了过期时间的键空间中，优先回收剩余存活时间（TTL）较短的键，即马上要过期的键。
+</li>
+</ul>
+<hr>
+<h2 id="三-总结与配置建议">三、 总结与配置建议</h2>
+<ul>
+<li><strong>如何查看当前策略</strong>：在命令行输入 <code>CONFIG GET maxmemory-policy</code>。
+</li>
+<li><strong>如何修改策略</strong>：可以通过 <code>CONFIG SET maxmemory-policy allkeys-lru</code> 动态修改，或直接修改 <code>redis.conf</code> 并重启。
+</li>
+<li><strong>选型建议</strong>：
+
+<ul>
+<li>如果你只是将 Redis 用作<strong>纯缓存</strong>，推荐使用 <strong><code>allkeys-lru</code></strong> 或 <strong><code>allkeys-lfu</code></strong>；
+</li>
+<li>如果你同时把 Redis 当作<strong>数据库和缓存混合使用</strong>，推荐使用 <strong><code>volatile-lru</code></strong>，确保未设置过期的核心业务数据不被意外删除。
+</li>
+</ul>
+</li>
+</ul>
+            </div>
+
+            <div class="post-block-footer" style="margin-top: 3.5rem; padding-top: 1.5rem;">
+              <a href="../index.html" class="read-more-text">
+                <span>← 返回文章专栏</span>
+              </a>
+            </div>
+          </article>
+        </div>
+      </div>
+
+        <!-- 右侧文章大纲 TOC -->
+        <aside class="article-toc-panel" aria-label="文章目录大纲">
+          <div class="toc-box">
+            <div class="toc-box-title">本页导读 · 快速直达</div>
+            <ul class="toc-list">
+            <li>
+              <a href="#一-redis-数据库清空命令" class="toc-link" title="一、 Redis 数据库清空命令">一、 Redis 数据库清空命令</a>
+            </li>
+            <li>
+              <a href="#1-同步与异步清空-async" class="toc-link" title="1. 同步与异步清空 (ASYNC)">1. 同步与异步清空 (ASYNC)</a>
+            </li>
+            <li>
+              <a href="#二-redis-内存淘汰策略-maxmemory-policy" class="toc-link" title="二、 Redis 内存淘汰策略 (maxmemory-policy)">二、 Redis 内存淘汰策略 (maxmemory-policy)</a>
+            </li>
+            <li>
+              <a href="#1-不淘汰策略" class="toc-link" title="1. 不淘汰策略">1. 不淘汰策略</a>
+            </li>
+            <li>
+              <a href="#2-在-所有键-中进行淘汰-allkeys" class="toc-link" title="2. 在“所有键”中进行淘汰 (allkeys)">2. 在“所有键”中进行淘汰 (allkeys)</a>
+            </li>
+            <li>
+              <a href="#3-在-设置了过期时间的键-中进行淘汰-volatile" class="toc-link" title="3. 在“设置了过期时间的键”中进行淘汰 (volatile)">3. 在“设置了过期时间的键”中进行淘汰 (volatile)</a>
+            </li>
+            <li>
+              <a href="#三-总结与配置建议" class="toc-link" title="三、 总结与配置建议">三、 总结与配置建议</a>
+            </li>
+            </ul>
+          </div>
+        </aside>
+    </main>
+
+  </div>
+
+  <!-- 全局回到顶部按钮 (右下角固定) -->
+  <button id="back-to-top-btn" class="back-to-top-btn" type="button" title="回到顶部" aria-label="回到顶部">
+    <svg class="back-to-top-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+      <polyline points="18 15 12 9 6 15"></polyline>
+    </svg>
+  </button>
+
+  <script defer src="../js/config.js"></script>
+  <script defer src="../data/search-index.js"></script>
+  <script defer src="../js/main.js"></script>
+  <script defer src="../js/prism.js"></script>
+  <script defer src="../js/search.js"></script>
+  <script defer src="../js/file-preview.js"></script>
+
+</body>
+</html>

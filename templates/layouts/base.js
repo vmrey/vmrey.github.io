@@ -12,6 +12,10 @@ function escapeAttr(str) {
     .replace(/>/g, '&gt;');
 }
 
+function slugify(text) {
+  return String(text || '').trim().toLowerCase().replace(/[^a-zA-Z0-9\u4e00-\u9fa5]+/g, '-').replace(/^-|-$/g, '') || `sec-${Math.random().toString(36).slice(2, 7)}`;
+}
+
 function renderBaseLayout({
   title = 'vmrey.github.io',
   description = '专注前端工程化、Vue组件设计、Linux系统运维与自动化脚本实战',
@@ -125,4 +129,4 @@ ${inlineScripts ? `  <script>\n${inlineScripts}\n  </script>` : ''}
 </html>`;
 }
 
-module.exports = { renderBaseLayout };
+module.exports = { renderBaseLayout, slugify, escapeAttr };

@@ -1,7 +1,7 @@
 /**
  * 实用在线开发工具导航页面布局模板 (Tools Navigation Layout Template)
  */
-const { renderBaseLayout } = require('./base');
+const { renderBaseLayout, slugify } = require('./base');
 
 function renderToolsLayout({
   sidebarHtml,
@@ -45,9 +45,10 @@ function renderToolsLayout({
 
     const cardsHtml = cat.items.map(item => {
       const tagsHtml = (item.tags || []).map(tag => `<span class="repo-tag">#${tag}</span>`).join('');
+      const cardId = `tool-${slugify(item.name)}`;
       
       return `          <!-- Tool Card: ${item.name} -->
-          <div class="nav-repo-card" data-name="${item.name.toLowerCase()}" data-url="${(item.url || '').toLowerCase()}" data-desc="${(item.tagline + ' ' + item.description).toLowerCase()}" data-tags="${(item.tags || []).join(',').toLowerCase()}" data-cat="${cat.category}">
+          <div class="nav-repo-card" id="${cardId}" data-name="${item.name.toLowerCase()}" data-url="${(item.url || '').toLowerCase()}" data-desc="${(item.tagline + ' ' + item.description).toLowerCase()}" data-tags="${(item.tags || []).join(',').toLowerCase()}" data-cat="${cat.category}">
             <div class="repo-card-top">
               <div class="repo-header-info">
                 <div class="repo-icon-badge">

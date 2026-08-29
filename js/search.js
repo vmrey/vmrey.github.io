@@ -129,11 +129,20 @@
           e.preventDefault();
           const selectedItem = currentResults[selectedResultIndex];
           if (selectedItem && selectedItem.targetUrl) {
-            window.location.href = pathPrefix + selectedItem.targetUrl;
+            closeSearchModal();
+            window.location.href = formatTargetUrl(selectedItem.targetUrl);
           }
         }
       }
     });
+
+    function formatTargetUrl(rawUrl) {
+      if (!rawUrl) return '#';
+      if (rawUrl.startsWith('http://') || rawUrl.startsWith('https://')) {
+        return rawUrl;
+      }
+      return pathPrefix + rawUrl;
+    }
 
     // 仅允许通过关闭按钮关闭搜索弹窗（背景遮罩、Esc、结果点击等均不触发关闭）
     if (closeBtn) {
@@ -173,7 +182,7 @@
     function renderInitialState() {
       currentResults = [];
       selectedResultIndex = -1;
-      statusText.innerHTML = '输入关键词开始全站深度搜索（支持标题、正文、代码、标签、专栏）';
+      statusText.innerHTML = '输入关键词开始全站深度搜索（支持文章、AI 工具、实用工具、GitHub 项目与资源）';
       resultsContainer.innerHTML = `
         <div class="search-quick-tags">
           <div class="quick-tags-title">热门标签与专栏检索</div>
@@ -184,8 +193,8 @@
             <button class="quick-tag-chip" data-query="Linux">#Linux</button>
             <button class="quick-tag-chip" data-query="Nginx">#Nginx</button>
             <button class="quick-tag-chip" data-query="Claude">#Claude</button>
+            <button class="quick-tag-chip" data-query="节点生成器">#节点生成器</button>
             <button class="quick-tag-chip" data-query="性能优化">#性能优化</button>
-            <button class="quick-tag-chip" data-query="微信小程序">#微信小程序</button>
           </div>
         </div>
       `;
@@ -269,7 +278,7 @@
 
           // 如果有匹配的具体小章节，优先生成章节锚点直达链接
           let targetUrl = article.url;
-          if (matchedSections.length > 0) {
+          if (matchedSections.length > 0 && !article.url.includes('#')) {
             const sec = matchedSections[0];
             const anchor = sec.anchor || (sec.id ? `#${sec.id}` : '');
             if (anchor) {
@@ -346,10 +355,19 @@
       return str.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
     }
 
+    const TYPE_BADGES = {
+      post: { text: '📝 文章', cls: 'type-post' },
+      page: { text: '⚡ 独立工具', cls: 'type-page' },
+      ai: { text: '🤖 AI 导航', cls: 'type-ai' },
+      tool: { text: '🛠️ 实用工具', cls: 'type-tool' },
+      github: { text: '🐙 GitHub', cls: 'type-github' },
+      file: { text: '📁 附件', cls: 'type-file' }
+    };
+
     // 渲染搜索结果列表
     function renderResults(results, keywords) {
       if (results.length === 0) {
-        statusText.innerHTML = `未找到与 “<strong>${escapeHTML(searchInput.value)}</strong>” 相关的文章内容`;
+        statusText.innerHTML = `未找到与 “<strong>${escapeHTML(searchInput.value)}</strong>” 相关的全站内容`;
         resultsContainer.innerHTML = `
           <div class="search-no-results">
             <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="color: var(--text-subtle); margin-bottom: 0.75rem;">
@@ -358,21 +376,39 @@
               <line x1="8" y1="11" x2="14" y2="11"></line>
             </svg>
             <p>未匹配到任何结果</p>
-            <span style="font-size: 0.85rem; color: var(--text-muted); margin-top: 0.25rem;">建议缩短搜索词、尝试技术专栏名称或核心概念（如 Agent / CSS / 架构 / 静态）。</span>
+            <span style="font-size: 0.85rem; color: var(--text-muted); margin-top: 0.25rem;">建议缩短搜索词、尝试技术专栏名称或工具名称（如 Gemini / VLESS / Docker / Vue）。</span>
           </div>
         `;
         return;
       }
 
-      statusText.innerHTML = `共找到 <strong>${results.length}</strong> 篇高度相关文章（支持标题、正文及章节直达）`;
+      statusText.innerHTML = `共找到 <strong>${results.length}</strong> 条相关结果（包含文章、AI 工具、开源项目与独立工具）`;
 
       let html = '<div class="search-results-list">';
       results.forEach((item, index) => {
         const art = item.article;
         const highlightedTitle = highlightKeywords(art.title, keywords);
         const highlightedSnippet = highlightKeywords(item.contextSnippet, keywords);
-        const tagsHtml = art.tags.map(t => `<span class="search-res-tag">${highlightKeywords(t, keywords)}</span>`).join('');
+        const tagsHtml = (art.tags || []).map(t => `<span class="search-res-tag">${highlightKeywords(t, keywords)}</span>`).join('');
         
+        const badgeInfo = TYPE_BADGES[art.type] || TYPE_BADGES.post;
+
+        let extBtnHtml = '';
+        if (art.externalUrl) {
+          const isGitHub = art.type === 'github';
+          const btnLabel = isGitHub ? '访问仓库' : '直达官网';
+          extBtnHtml = `
+            <a href="${art.externalUrl}" target="_blank" rel="noopener noreferrer" class="search-res-external-btn" title="在新标签页直接打开 ${escapeHTML(art.title)}" onclick="event.stopPropagation();">
+              <span>${btnLabel}</span>
+              <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
+                <polyline points="15 3 21 3 21 9"></polyline>
+                <line x1="10" y1="14" x2="21" y2="3"></line>
+              </svg>
+            </a>
+          `;
+        }
+
         let sectionBadge = '';
         if (item.matchedSections.length > 0) {
           const sec = item.matchedSections[0];
@@ -385,10 +421,16 @@
         }
 
         html += `
-          <a href="${pathPrefix}${item.targetUrl}" class="search-result-item ${index === selectedResultIndex ? 'selected' : ''}" data-index="${index}">
+          <a href="${formatTargetUrl(item.targetUrl)}" class="search-result-item ${index === selectedResultIndex ? 'selected' : ''}" data-index="${index}">
             <div class="search-res-header">
-              <span class="search-res-category">${art.category || '文章'}</span>
-              <span class="search-res-date">${art.date}</span>
+              <div class="search-res-header-left">
+                <span class="search-res-type-pill ${badgeInfo.cls}">${badgeInfo.text}</span>
+                <span class="search-res-category">${escapeHTML(art.category || '文章')}</span>
+              </div>
+              <div class="search-res-header-right">
+                ${extBtnHtml}
+                <span class="search-res-date">${art.date}</span>
+              </div>
             </div>
             <h3 class="search-res-title">${highlightedTitle}</h3>
             <p class="search-res-snippet">${highlightedSnippet}</p>
@@ -451,7 +493,7 @@
               const selectedItem = currentResults[targetIdx];
               if (selectedItem && selectedItem.targetUrl) {
                 closeSearchModal();
-                window.location.href = pathPrefix + selectedItem.targetUrl;
+                window.location.href = formatTargetUrl(selectedItem.targetUrl);
               }
             }
           }

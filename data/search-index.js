@@ -4,10 +4,67 @@
  */
 window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
   {
+    "id": "redis-65f8",
+    "type": "post",
+    "title": "Redis 核心操作：数据清空与内存淘汰策略详解",
+    "url": "posts/redis-65f8.html",
+    "externalUrl": "",
+    "category": "Linux 与服务端",
+    "date": "2026-08-29",
+    "tags": [
+      "Redis",
+      "缓存",
+      "内存淘汰",
+      "运维",
+      "Linux",
+      "性能优化"
+    ],
+    "summary": "深入解析 Redis 核心清空命令 FLUSHDB/FLUSHALL 的同步与异步 ASYNC 机制，以及 8 种内存淘汰策略（LRU、LFU、TTL、noeviction）的工作原理与生产环境选型建议。",
+    "content": "Redis 核心操作：数据清空与内存淘汰策略详解 在日常使用 Redis 的过程中，我们经常会面临两个问题：一是如何快速、安全地清理脏数据；二是当 Redis 内存满了之后，它会如何处理新写入的数据。本文将详细解答这两个问题。 --- 一、 Redis 数据库清空命令 Redis 提供了两个核心的清空命令，分别作用于不同的范围： FLUSHDB ：清空当前选中的数据库（默认是 DB 0）中的所有键值对。 FLUSHALL ：清空 Redis 实例中所有数据库（默认 16 个）中的所有键值对。 1. 同步与异步清空 ASYNC 在 Redis 4.0 之前，清空操作是同步的。如果数据库中包含了数百万个 Key，执行 FLUSHALL 会导致 Redis 主线程长时间阻塞，期间无法响应任何其他客户端请求。 为了解决这个问题，Redis 4.0 引入了 ASYNC 异步选项： bash 异步清空所有数据库数据 redis-cli -h 127.0.0.1 -p 6379 FLUSHALL ASYNC 异步清空当前数据库数据 redis-cli -h 127.0.0.1 -p 6379 FLUSHDB ASYNC 原理解析 ：加入 ASYNC 后，清空操作会被交由后台的新线程执行，Redis 主线程可以继续处理其他命令，极大降低了对业务的影响。 > ⚠️ 生产环境避坑指南 ： > FLUSHALL 和 FLUSHDB 属于极其危险的操作。在生产环境中，强烈建议在 redis.conf 中通过 rename-command FLUSHALL \"\" 和 rename-command FLUSHDB \"\" 将其禁用，防止误操作导致数据灾难。 --- 二、 Redis 内存淘汰策略 maxmemory-policy 当 Redis 的内存使用量达到了配置的上限（由 redis.conf 中的 maxmemory 参数决定）时，如果继续向 Redis 中写入数据，Redis 就会触发内存淘汰机制。 Redis 4.0 之后，提供了 8 种 不同的淘汰策略。为了方便记忆，我们可以将其分为三大类： 1. 不淘汰策略 noeviction （默认策略）：当内存不足以容纳新写入数据时，新写入操作会报错。Redis 保证绝不主动删除任何数据。适用于将 Redis 作为纯持久化数据库使用的场景。 2. 在“所有键”中进行淘汰 allkeys 这类策略会在 Redis 的整个键空间中寻找要淘汰的 Key，无论这些 Key 是否设置了过期时间。 allkeys-lru ：尝试回收最长时间未使用的键（LRU，Least Recently Used），使得新添加的数据有空间存放。这是 最常用的策略 ，适用于绝大多数缓存场景。 allkeys-lfu ：尝试回收使用频率最少的键（LFU，Least Frequently Used）。 Redis 4.0+ allkeys-random ：在所有的键中，随机回收部分键。 3. 在“设置了过期时间的键”中进行淘汰 volatile 这类策略只会针对那些使用了 EXPIRE 设定期限的 Key 进行淘汰。如果没有这类 Key 可以淘汰，行为将退化为 noeviction 。 volatile-lru ：在设置了过期时间的键空间中，回收最长时间未使用的键。 volatile-lfu ：在设置了过期时间的键空间中，回收使用频率最少的键。 Redis 4.0+ volatile-random ：在设置了过期时间的键空间中，随机回收部分键。 volatile-ttl ：在设置了过期时间的键空间中，优先回收剩余存活时间（TTL）较短的键，即马上要过期的键。 --- 三、 总结与配置建议 如何查看当前策略 ：在命令行输入 CONFIG GET maxmemory-policy 。 如何修改策略 ：可以通过 CONFIG SET maxmemory-policy allkeys-lru 动态修改，或直接修改 redis.conf 并重启。 选型建议 ： 如果你只是将 Redis 用作 纯缓存 ，推荐使用 allkeys-lru 或 allkeys-lfu ； 如果你同时把 Redis 当作 数据库和缓存混合使用 ，推荐使用 volatile-lru ，确保未设置过期的核心业务数据不被意外删除。",
+    "sections": [
+      {
+        "title": "一、 Redis 数据库清空命令",
+        "anchor": "#一-redis-数据库清空命令",
+        "id": "一-redis-数据库清空命令"
+      },
+      {
+        "title": "1. 同步与异步清空 (ASYNC)",
+        "anchor": "#1-同步与异步清空-async",
+        "id": "1-同步与异步清空-async"
+      },
+      {
+        "title": "二、 Redis 内存淘汰策略 (maxmemory-policy)",
+        "anchor": "#二-redis-内存淘汰策略-maxmemory-policy",
+        "id": "二-redis-内存淘汰策略-maxmemory-policy"
+      },
+      {
+        "title": "1. 不淘汰策略",
+        "anchor": "#1-不淘汰策略",
+        "id": "1-不淘汰策略"
+      },
+      {
+        "title": "2. 在“所有键”中进行淘汰 (allkeys)",
+        "anchor": "#2-在-所有键-中进行淘汰-allkeys",
+        "id": "2-在-所有键-中进行淘汰-allkeys"
+      },
+      {
+        "title": "3. 在“设置了过期时间的键”中进行淘汰 (volatile)",
+        "anchor": "#3-在-设置了过期时间的键-中进行淘汰-volatile",
+        "id": "3-在-设置了过期时间的键-中进行淘汰-volatile"
+      },
+      {
+        "title": "三、 总结与配置建议",
+        "anchor": "#三-总结与配置建议",
+        "id": "三-总结与配置建议"
+      }
+    ]
+  },
+  {
     "id": "aliyun-b0c5",
     "type": "post",
     "title": "彻底卸载服务器阿里云盾（安骑士）与全盘清理实战",
     "url": "posts/aliyun-b0c5.html",
+    "externalUrl": "",
     "category": "Linux 与服务端",
     "date": "2026-08-28",
     "tags": [
@@ -68,6 +125,7 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
     "type": "post",
     "title": "前端踩坑记录：如何正确获取 textarea 的光标位置？",
     "url": "posts/textarea-9e34.html",
+    "externalUrl": "",
     "category": "前端开发",
     "date": "2026-08-28",
     "tags": [
@@ -102,6 +160,7 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
     "type": "post",
     "title": "微信小程序踩坑记录：如何完美解决图片强制刷新（彻底告别本地缓存）",
     "url": "posts/wx-img-refresh-ffc2.html",
+    "externalUrl": "",
     "category": "前端开发",
     "date": "2026-08-23",
     "tags": [
@@ -175,6 +234,7 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
     "type": "post",
     "title": "Claude Code 开启 Bypass 免确认权限配置指南",
     "url": "posts/claude-perms-08be.html",
+    "externalUrl": "",
     "category": "效率工具与软件",
     "date": "2026-08-10",
     "tags": [
@@ -214,6 +274,7 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
     "type": "post",
     "title": "Git 常用高频命令与分支协同工作流速查清单",
     "url": "posts/git-cheatsheet-c495.html",
+    "externalUrl": "",
     "category": "效率工具与软件",
     "date": "2026-08-05",
     "tags": [
@@ -273,6 +334,7 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
     "type": "post",
     "title": "SVN (Subversion) 常用版本控制命令速查与批量清理指南",
     "url": "posts/svn-cheatsheet-1d69.html",
+    "externalUrl": "",
     "category": "效率工具与软件",
     "date": "2026-07-30",
     "tags": [
@@ -316,6 +378,7 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
     "type": "post",
     "title": "Linux 生产环境 Docker 官方一键安装脚本与国内镜像加速配置",
     "url": "posts/docker-mirror-5e12.html",
+    "externalUrl": "",
     "category": "Linux与服务端",
     "date": "2026-07-20",
     "tags": [
@@ -394,6 +457,7 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
     "type": "post",
     "title": "高质量无损图片压缩工具与批量处理方案横向评测",
     "url": "posts/img-compress-tools-4c4a.html",
+    "externalUrl": "",
     "category": "效率工具与软件",
     "date": "2026-07-15",
     "tags": [
@@ -501,6 +565,7 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
     "type": "post",
     "title": "使用 Docker Compose 快速搭建 RustDesk 自建远程桌面中继服务器（hbbs/hbbr）",
     "url": "posts/rustdesk-docker-6a97.html",
+    "externalUrl": "",
     "category": "Linux与服务端",
     "date": "2026-07-12",
     "tags": [
@@ -565,6 +630,7 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
     "type": "post",
     "title": "Photoshop 批量图片压缩 ExtendScript (JSX) 自动化脚本（支持保留子目录结构）",
     "url": "posts/ps-batch-compress-0ecc.html",
+    "externalUrl": "",
     "category": "效率工具与软件",
     "date": "2026-07-05",
     "tags": [
@@ -624,6 +690,7 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
     "type": "post",
     "title": "Kodbox 可道云私有网盘部署实战指南（Docker 与源码双方案）",
     "url": "posts/kodbox-docker-d549.html",
+    "externalUrl": "",
     "category": "Linux与服务端",
     "date": "2026-07-02",
     "tags": [
@@ -703,6 +770,7 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
     "type": "post",
     "title": "Windows 批量修改文件名与文件夹名自动化批处理 (BAT) 脚本实战（优化版）",
     "url": "posts/bat-rename-b2ae.html",
+    "externalUrl": "",
     "category": "效率工具与软件",
     "date": "2026-06-28",
     "tags": [
@@ -762,6 +830,7 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
     "type": "post",
     "title": "Nginx 全站反向代理配置说明文档（Cloudflare CDN + 流媒体优化版）",
     "url": "posts/nginx-emby-proxy-b140.html",
+    "externalUrl": "",
     "category": "Linux 与服务端",
     "date": "2026-06-25",
     "tags": [
@@ -802,6 +871,7 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
     "type": "post",
     "title": "FFmpeg 常用音视频推流、转码与循环直播命令速查指南",
     "url": "posts/ffmpeg-stream-5244.html",
+    "externalUrl": "",
     "category": "Linux与服务端",
     "date": "2026-06-18",
     "tags": [
@@ -856,6 +926,7 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
     "type": "post",
     "title": "Vue3 + Element Plus 文件上传组件封装：支持回显、批量与手动控制",
     "url": "posts/vue3-file-upload-5890.html",
+    "externalUrl": "",
     "category": "前端开发",
     "date": "2026-06-15",
     "tags": [
@@ -884,6 +955,7 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
     "type": "post",
     "title": "Linux 使用 acme.sh 自动化申请 Let's Encrypt 免费 SSL 证书与续期脚本",
     "url": "posts/acme-ssl-issue-1dd8.html",
+    "externalUrl": "",
     "category": "Linux与服务端",
     "date": "2026-06-10",
     "tags": [
@@ -927,6 +999,7 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
     "type": "post",
     "title": "Vue3 通用查询表单组件封装：JSON Schema 驱动与响应式联动",
     "url": "posts/vue3-query-form-53a0.html",
+    "externalUrl": "",
     "category": "前端开发",
     "date": "2026-06-08",
     "tags": [
@@ -955,6 +1028,7 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
     "type": "post",
     "title": "Vue 3 生产级高频插件与生态工具库精选清单",
     "url": "posts/vue-plugins-ecosystem-7e33.html",
+    "externalUrl": "",
     "category": "前端开发",
     "date": "2026-05-28",
     "tags": [
@@ -1009,6 +1083,7 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
     "type": "post",
     "title": "开源 HTTP 压力测试工具 Siege 从安装到生产实战指南",
     "url": "posts/siege-benchmark-44e0.html",
+    "externalUrl": "",
     "category": "Linux与服务端",
     "date": "2026-05-25",
     "tags": [
@@ -1132,6 +1207,7 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
     "type": "post",
     "title": "若依管理系统导航报错 reading 'nextSibling' 根因分析与解决方案",
     "url": "posts/ruoyi-nav-fix-3171.html",
+    "externalUrl": "",
     "category": "前端开发",
     "date": "2026-05-20",
     "tags": [
@@ -1175,6 +1251,7 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
     "type": "post",
     "title": "Xray-Core Linux 一键部署与自动化服务管理脚本",
     "url": "posts/xray-core-script-c8e6.html",
+    "externalUrl": "",
     "category": "Linux与服务端",
     "date": "2026-05-15",
     "tags": [
@@ -1217,6 +1294,7 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
     "type": "post",
     "title": "JavaScript 防抖与节流深度剖析：从原理实现到业务场景落地",
     "url": "posts/js-debounce-throttle-1d40.html",
+    "externalUrl": "",
     "category": "前端开发",
     "date": "2026-05-12",
     "tags": [
@@ -1350,6 +1428,7 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
     "type": "post",
     "title": "Xray DNS 分流防污染优化与国内外路由分流规则配置",
     "url": "posts/xray-dns-routing-b411.html",
+    "externalUrl": "",
     "category": "Linux与服务端",
     "date": "2026-05-08",
     "tags": [
@@ -1384,6 +1463,7 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
     "type": "post",
     "title": "常用树结构递归工具函数合集：树平铺、节点查找与层级过滤",
     "url": "posts/js-tree-recursion-209b.html",
+    "externalUrl": "",
     "category": "前端开发",
     "date": "2026-05-02",
     "tags": [
@@ -1417,6 +1497,7 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
     "type": "post",
     "title": "实现一个最优雅的微型 JavaScript 模板引擎：30 行代码解析核心原理",
     "url": "posts/mini-js-template-ee56.html",
+    "externalUrl": "",
     "category": "前端开发",
     "date": "2026-04-22",
     "tags": [
@@ -1495,6 +1576,7 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
     "type": "post",
     "title": "前端输入框严格限制只能输入中国手机号码的最佳实践",
     "url": "posts/mobile-verify-635b.html",
+    "externalUrl": "",
     "category": "前端开发",
     "date": "2026-04-15",
     "tags": [
@@ -1593,6 +1675,7 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
     "type": "post",
     "title": "使用 contenteditable 与 div 完美模拟 Textarea 高度自适应效果",
     "url": "posts/textarea-auto-height-8ea2.html",
+    "externalUrl": "",
     "category": "前端开发",
     "date": "2026-04-08",
     "tags": [
@@ -1681,6 +1764,7 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
     "type": "post",
     "title": "微信小程序将异步 API 封装为 Promise 同步调用（async/await）实战",
     "url": "posts/wx-async-promise-806e.html",
+    "externalUrl": "",
     "category": "前端开发",
     "date": "2026-03-25",
     "tags": [
@@ -1764,6 +1848,7 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
     "type": "post",
     "title": "微信小程序自定义组件监听 properties 属性变化的优雅实现",
     "url": "posts/wx-property-watch-0b0e.html",
+    "externalUrl": "",
     "category": "前端开发",
     "date": "2026-03-18",
     "tags": [
@@ -1897,6 +1982,7 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
     "type": "post",
     "title": "VSCode 前端开发高频实用正则表达式查找与批量替换清单",
     "url": "posts/vscode-regex-replace-df0f.html",
+    "externalUrl": "",
     "category": "效率工具与软件",
     "date": "2022-03-20",
     "tags": [
@@ -1945,6 +2031,7 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
     "type": "post",
     "title": "JavaScript 身份证、手机号与敏感证件信息脱敏掩码处理",
     "url": "posts/mask-sensitive-data-8698.html",
+    "externalUrl": "",
     "category": "前端开发",
     "date": "2022-03-01",
     "tags": [
@@ -1973,6 +2060,7 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
     "type": "post",
     "title": "JavaScript 根据出生年月日精准计算周岁年龄函数",
     "url": "posts/calc-exact-age-de3e.html",
+    "externalUrl": "",
     "category": "前端开发",
     "date": "2022-02-15",
     "tags": [
@@ -2001,6 +2089,7 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
     "type": "post",
     "title": "JavaScript 获取指定年份与月份的起始日期和结束日期",
     "url": "posts/calc-month-range-bd66.html",
+    "externalUrl": "",
     "category": "前端开发",
     "date": "2022-01-10",
     "tags": [
@@ -2029,6 +2118,7 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
     "type": "post",
     "title": "JavaScript 字符串指定长度截断并自动追加省略号",
     "url": "posts/js-string-ellipsis-d4cf.html",
+    "externalUrl": "",
     "category": "前端开发",
     "date": "2022-01-05",
     "tags": [
@@ -2052,6 +2142,7 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
     "type": "post",
     "title": "Shell 脚本自动获取 GitHub 开源项目最新 Releases 版本号",
     "url": "posts/shell-github-release-8d73.html",
+    "externalUrl": "",
     "category": "Linux 与服务端",
     "date": "2021-12-01",
     "tags": [
@@ -2081,6 +2172,7 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
     "type": "post",
     "title": "Shell 脚本中输出红/绿/黄多色格式化终端文本函数",
     "url": "posts/shell-color-echo-31e2.html",
+    "externalUrl": "",
     "category": "Linux 与服务端",
     "date": "2021-11-15",
     "tags": [
@@ -2110,6 +2202,7 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
     "type": "post",
     "title": "WordPress WP Super Cache 插件高并发 Nginx 静态伪静态规则",
     "url": "posts/wp-super-cache-nginx-c033.html",
+    "externalUrl": "",
     "category": "Linux 与服务端",
     "date": "2021-11-05",
     "tags": [
@@ -2139,6 +2232,7 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
     "type": "post",
     "title": "WordPress 忘记管理员密码时的应急重置与修复方法",
     "url": "posts/wp-reset-password-f1c8.html",
+    "externalUrl": "",
     "category": "Linux 与服务端",
     "date": "2021-10-20",
     "tags": [
@@ -2168,6 +2262,7 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
     "type": "post",
     "title": "Vue 优雅一键重置组件 data 到初始状态的技巧",
     "url": "posts/vue-reset-data-46af.html",
+    "externalUrl": "",
     "category": "前端开发",
     "date": "2021-10-10",
     "tags": [
@@ -2201,6 +2296,7 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
     "type": "post",
     "title": "Nginx 媒体与静态资源防盗链配置实战（Valid Referers）",
     "url": "posts/nginx-hotlink-guard-c2f7.html",
+    "externalUrl": "",
     "category": "Linux 与服务端",
     "date": "2021-09-15",
     "tags": [
@@ -2230,6 +2326,7 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
     "type": "post",
     "title": "Nginx 静态资源长效缓存与 Expires 性能优化配置",
     "url": "posts/nginx-cache-expires-16e0.html",
+    "externalUrl": "",
     "category": "Linux 与服务端",
     "date": "2021-09-05",
     "tags": [
@@ -2259,6 +2356,7 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
     "type": "post",
     "title": "CentOS 7 / RHEL Firewalld 防火墙常用命令与端口放行速查",
     "url": "posts/firewalld-cheat-e029.html",
+    "externalUrl": "",
     "category": "Linux 与服务端",
     "date": "2021-08-25",
     "tags": [
@@ -2293,6 +2391,7 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
     "type": "post",
     "title": "CentOS 7 永久禁用 IPv6 网络协议的两种方法",
     "url": "posts/centos-disable-ipv6-099b.html",
+    "externalUrl": "",
     "category": "Linux 与服务端",
     "date": "2021-08-10",
     "tags": [
@@ -2327,6 +2426,7 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
     "type": "post",
     "title": "轻量级高性能内网穿透：frp 远程桌面 RDP 搭建与系统服务配置",
     "url": "posts/frp-desktop-6af7.html",
+    "externalUrl": "",
     "category": "Linux 与服务端",
     "date": "2021-05-18",
     "tags": [
@@ -2366,6 +2466,7 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
     "type": "post",
     "title": "Element UI 中 el-calendar 日历组件禁用与灰色置灰点击处理",
     "url": "posts/el-calendar-style-bb16.html",
+    "externalUrl": "",
     "category": "前端开发",
     "date": "2021-05-12",
     "tags": [
@@ -2394,6 +2495,7 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
     "type": "post",
     "title": "VSCode 中使用正则表达式批量清理 console.log 打印语句",
     "url": "posts/vscode-clean-log-8fb9.html",
+    "externalUrl": "",
     "category": "效率工具与软件",
     "date": "2021-05-08",
     "tags": [
@@ -2427,6 +2529,7 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
     "type": "post",
     "title": "JavaScript 递归检索深层对象与数组中是否包含某个值",
     "url": "posts/js-tree-find-value-d75f.html",
+    "externalUrl": "",
     "category": "前端开发",
     "date": "2021-04-25",
     "tags": [
@@ -2455,6 +2558,7 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
     "type": "post",
     "title": "JavaScript 根据经纬度计算两地直线距离算法实现",
     "url": "posts/calc-coords-distance-2f2e.html",
+    "externalUrl": "",
     "category": "前端开发",
     "date": "2021-04-22",
     "tags": [
@@ -2483,6 +2587,7 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
     "type": "post",
     "title": "Vue 中 input 输入框实时校验与过滤邮箱格式输入",
     "url": "posts/vue-email-filter-eb21.html",
+    "externalUrl": "",
     "category": "前端开发",
     "date": "2021-04-20",
     "tags": [
@@ -2511,6 +2616,7 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
     "type": "post",
     "title": "JavaScript 字符串即时搜索与智能匹配排序算法",
     "url": "posts/js-search-ranking-87fa.html",
+    "externalUrl": "",
     "category": "前端开发",
     "date": "2021-04-18",
     "tags": [
@@ -2539,6 +2645,7 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
     "type": "post",
     "title": "Vue 中限制 input 输入框仅允许输入浮点数或金额格式",
     "url": "posts/vue-currency-filter-0ab5.html",
+    "externalUrl": "",
     "category": "前端开发",
     "date": "2021-04-15",
     "tags": [
@@ -2567,6 +2674,7 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
     "type": "post",
     "title": "JavaScript 递归扁平化深层嵌套数组与 JSON 结构实战",
     "url": "posts/js-flatten-json-4eca.html",
+    "externalUrl": "",
     "category": "前端开发",
     "date": "2021-04-12",
     "tags": [
@@ -2595,6 +2703,7 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
     "type": "post",
     "title": "Element UI 中 el-tree 树形结构生成唯一索引与父级回溯",
     "url": "posts/el-tree-index-240e.html",
+    "externalUrl": "",
     "category": "前端开发",
     "date": "2021-04-10",
     "tags": [
@@ -2628,6 +2737,7 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
     "type": "post",
     "title": "JavaScript 递归批量重命名 JSON 对象中的键名 (Key)",
     "url": "posts/js-rename-json-keys-eba7.html",
+    "externalUrl": "",
     "category": "前端开发",
     "date": "2021-04-05",
     "tags": [
@@ -2656,6 +2766,7 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
     "type": "post",
     "title": "JavaScript 获取与控制 input 及 textarea 文本框光标位置",
     "url": "posts/textarea-cursor-pos-9496.html",
+    "externalUrl": "",
     "category": "前端开发",
     "date": "2021-03-28",
     "tags": [
@@ -2684,6 +2795,7 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
     "type": "post",
     "title": "JavaScript 数组与字符串去重深度实战（支持嵌套对象去重）",
     "url": "posts/js-dedup-1e34.html",
+    "externalUrl": "",
     "category": "前端开发",
     "date": "2021-03-25",
     "tags": [
@@ -2712,6 +2824,7 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
     "type": "post",
     "title": "JavaScript 数组与对象数组自定义排序算法实战",
     "url": "posts/js-select-sort-267c.html",
+    "externalUrl": "",
     "category": "前端开发",
     "date": "2021-03-20",
     "tags": [
@@ -2740,6 +2853,7 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
     "type": "post",
     "title": "CSS 元素水平垂直居中的常用核心方案总结",
     "url": "posts/css-center-8da2.html",
+    "externalUrl": "",
     "category": "前端开发",
     "date": "2021-03-15",
     "tags": [
@@ -2773,6 +2887,7 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
     "type": "post",
     "title": "基于 Unicode 编码的原生 JavaScript 字符串加解密方法",
     "url": "posts/unicode-crypto-str-16d8.html",
+    "externalUrl": "",
     "category": "前端开发",
     "date": "2021-03-05",
     "tags": [
@@ -2801,6 +2916,7 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
     "type": "post",
     "title": "深入浅出：使用 setTimeout 精准模拟 setInterval 及其核心优势",
     "url": "posts/settimeout-interval-ee29.html",
+    "externalUrl": "",
     "category": "前端开发",
     "date": "2021-03-01",
     "tags": [
@@ -2829,6 +2945,7 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
     "type": "post",
     "title": "JavaScript 中交换两个变量值的五种经典实现方法",
     "url": "posts/js-swap-variables-3796.html",
+    "externalUrl": "",
     "category": "前端开发",
     "date": "2021-02-20",
     "tags": [
@@ -2867,6 +2984,7 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
     "type": "post",
     "title": "JavaScript 引用类型对象深拷贝与 JSON 序列化技巧",
     "url": "posts/json-deep-clone-423f.html",
+    "externalUrl": "",
     "category": "前端开发",
     "date": "2021-02-15",
     "tags": [
@@ -2900,6 +3018,7 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
     "type": "post",
     "title": "JavaScript 获取当前页面 URL 查询参数的高效解析方案",
     "url": "posts/js-get-url-params-aa13.html",
+    "externalUrl": "",
     "category": "前端开发",
     "date": "2021-01-25",
     "tags": [
@@ -2928,6 +3047,7 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
     "type": "post",
     "title": "微信小程序自定义高颜值 Loading 加载动画组件",
     "url": "posts/wx-loading-anim-2498.html",
+    "externalUrl": "",
     "category": "前端开发",
     "date": "2021-01-20",
     "tags": [
@@ -2961,6 +3081,7 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
     "type": "post",
     "title": "微信小程序新手专属优惠券领取弹框组件封装实战",
     "url": "posts/wx-coupon-modal-b6eb.html",
+    "externalUrl": "",
     "category": "前端开发",
     "date": "2021-01-15",
     "tags": [
@@ -2994,6 +3115,7 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
     "type": "post",
     "title": "微信小程序中对象数组冒泡排序算法实现与实战",
     "url": "posts/wx-bubble-sort-6378.html",
+    "externalUrl": "",
     "category": "前端开发",
     "date": "2021-01-10",
     "tags": [
@@ -3022,6 +3144,7 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
     "type": "post",
     "title": "微信小程序原生 Canvas 绘制平滑贝塞尔曲线图组件",
     "url": "posts/wx-canvas-curve-75af.html",
+    "externalUrl": "",
     "category": "前端开发",
     "date": "2020-12-31",
     "tags": [
@@ -3054,9 +3177,10 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
     "id": "ai-google-gemini",
     "type": "ai",
     "title": "Google Gemini",
-    "url": "ai.html",
+    "url": "ai.html#ai-google-gemini",
+    "externalUrl": "https://gemini.google.com/",
     "category": "AI 导航 · 前沿大模型与对话平台",
-    "date": "2026-08-28",
+    "date": "2026-08-29",
     "tags": [
       "Gemini",
       "Google",
@@ -3072,9 +3196,10 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
     "id": "ai-chatgpt",
     "type": "ai",
     "title": "ChatGPT",
-    "url": "ai.html",
+    "url": "ai.html#ai-chatgpt",
+    "externalUrl": "https://chatgpt.com/",
     "category": "AI 导航 · 前沿大模型与对话平台",
-    "date": "2026-08-28",
+    "date": "2026-08-29",
     "tags": [
       "ChatGPT",
       "OpenAI",
@@ -3090,9 +3215,10 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
     "id": "ai-claude",
     "type": "ai",
     "title": "Claude",
-    "url": "ai.html",
+    "url": "ai.html#ai-claude",
+    "externalUrl": "https://claude.ai/",
     "category": "AI 导航 · 前沿大模型与对话平台",
-    "date": "2026-08-28",
+    "date": "2026-08-29",
     "tags": [
       "Claude",
       "Anthropic",
@@ -3108,9 +3234,10 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
     "id": "ai-deepseek-深度求索",
     "type": "ai",
     "title": "DeepSeek (深度求索)",
-    "url": "ai.html",
+    "url": "ai.html#ai-deepseek-深度求索",
+    "externalUrl": "https://chat.deepseek.com/",
     "category": "AI 导航 · 前沿大模型与对话平台",
-    "date": "2026-08-28",
+    "date": "2026-08-29",
     "tags": [
       "DeepSeek",
       "R1推理",
@@ -3126,9 +3253,10 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
     "id": "ai-kimi-月之暗面",
     "type": "ai",
     "title": "Kimi (月之暗面)",
-    "url": "ai.html",
+    "url": "ai.html#ai-kimi-月之暗面",
+    "externalUrl": "https://kimi.moonshot.cn/",
     "category": "AI 导航 · 前沿大模型与对话平台",
-    "date": "2026-08-28",
+    "date": "2026-08-29",
     "tags": [
       "Kimi",
       "月之暗面",
@@ -3144,9 +3272,10 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
     "id": "ai-grok",
     "type": "ai",
     "title": "Grok",
-    "url": "ai.html",
+    "url": "ai.html#ai-grok",
+    "externalUrl": "https://grok.com/",
     "category": "AI 导航 · 前沿大模型与对话平台",
-    "date": "2026-08-28",
+    "date": "2026-08-29",
     "tags": [
       "Grok",
       "xAI",
@@ -3162,9 +3291,10 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
     "id": "ai-claude-code",
     "type": "ai",
     "title": "Claude Code",
-    "url": "ai.html",
+    "url": "ai.html#ai-claude-code",
+    "externalUrl": "https://github.com/anthropics/claude-code",
     "category": "AI 导航 · AI 智能体与自主编程",
-    "date": "2026-08-28",
+    "date": "2026-08-29",
     "tags": [
       "ClaudeCode",
       "AI编程",
@@ -3180,9 +3310,10 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
     "id": "ai-cursor",
     "type": "ai",
     "title": "Cursor",
-    "url": "ai.html",
+    "url": "ai.html#ai-cursor",
+    "externalUrl": "https://www.cursor.com/",
     "category": "AI 导航 · AI 智能体与自主编程",
-    "date": "2026-08-28",
+    "date": "2026-08-29",
     "tags": [
       "Cursor",
       "VSCode",
@@ -3198,9 +3329,10 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
     "id": "ai-v0-by-vercel",
     "type": "ai",
     "title": "v0 by Vercel",
-    "url": "ai.html",
+    "url": "ai.html#ai-v0-by-vercel",
+    "externalUrl": "https://v0.dev/",
     "category": "AI 导航 · AI 智能体与自主编程",
-    "date": "2026-08-28",
+    "date": "2026-08-29",
     "tags": [
       "v0",
       "Vercel",
@@ -3216,9 +3348,10 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
     "id": "ai-bolt-new",
     "type": "ai",
     "title": "Bolt.new",
-    "url": "ai.html",
+    "url": "ai.html#ai-bolt-new",
+    "externalUrl": "https://bolt.new/",
     "category": "AI 导航 · AI 智能体与自主编程",
-    "date": "2026-08-28",
+    "date": "2026-08-29",
     "tags": [
       "Bolt.new",
       "全栈开发",
@@ -3234,9 +3367,10 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
     "id": "ai-agnes-ai",
     "type": "ai",
     "title": "Agnes AI",
-    "url": "ai.html",
+    "url": "ai.html#ai-agnes-ai",
+    "externalUrl": "https://platform.agnes-ai.com/",
     "category": "AI 导航 · AI 智能体与自主编程",
-    "date": "2026-08-28",
+    "date": "2026-08-29",
     "tags": [
       "AgnesAI",
       "AI智能体",
@@ -3253,9 +3387,10 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
     "id": "ai-midjourney",
     "type": "ai",
     "title": "Midjourney",
-    "url": "ai.html",
+    "url": "ai.html#ai-midjourney",
+    "externalUrl": "https://www.midjourney.com/",
     "category": "AI 导航 · AI 图像与多模态创作",
-    "date": "2026-08-28",
+    "date": "2026-08-29",
     "tags": [
       "Midjourney",
       "AI绘画",
@@ -3271,9 +3406,10 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
     "id": "ai-flux-1-black-forest-labs",
     "type": "ai",
     "title": "FLUX.1 (Black Forest Labs)",
-    "url": "ai.html",
+    "url": "ai.html#ai-flux-1-black-forest-labs",
+    "externalUrl": "https://blackforestlabs.ai/",
     "category": "AI 导航 · AI 图像与多模态创作",
-    "date": "2026-08-28",
+    "date": "2026-08-29",
     "tags": [
       "FLUX.1",
       "开源模型",
@@ -3289,9 +3425,10 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
     "id": "ai-runway-gen-3",
     "type": "ai",
     "title": "Runway Gen-3",
-    "url": "ai.html",
+    "url": "ai.html#ai-runway-gen-3",
+    "externalUrl": "https://runwayml.com/",
     "category": "AI 导航 · AI 图像与多模态创作",
-    "date": "2026-08-28",
+    "date": "2026-08-29",
     "tags": [
       "Runway",
       "Gen-3",
@@ -3307,9 +3444,10 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
     "id": "ai-openrouter",
     "type": "ai",
     "title": "OpenRouter",
-    "url": "ai.html",
+    "url": "ai.html#ai-openrouter",
+    "externalUrl": "https://openrouter.ai/",
     "category": "AI 导航 · AI 聚合平台与 API 服务",
-    "date": "2026-08-28",
+    "date": "2026-08-29",
     "tags": [
       "OpenRouter",
       "模型网关",
@@ -3325,9 +3463,10 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
     "id": "ai-hugging-face",
     "type": "ai",
     "title": "Hugging Face",
-    "url": "ai.html",
+    "url": "ai.html#ai-hugging-face",
+    "externalUrl": "https://huggingface.co/",
     "category": "AI 导航 · AI 聚合平台与 API 服务",
-    "date": "2026-08-28",
+    "date": "2026-08-29",
     "tags": [
       "HuggingFace",
       "开源社区",
@@ -3343,9 +3482,10 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
     "id": "ai-siliconflow-硅基流动",
     "type": "ai",
     "title": "SiliconFlow (硅基流动)",
-    "url": "ai.html",
+    "url": "ai.html#ai-siliconflow-硅基流动",
+    "externalUrl": "https://siliconflow.cn/",
     "category": "AI 导航 · AI 聚合平台与 API 服务",
-    "date": "2026-08-28",
+    "date": "2026-08-29",
     "tags": [
       "SiliconFlow",
       "硅基流动",
@@ -3361,9 +3501,10 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
     "id": "tool-草料二维码",
     "type": "tool",
     "title": "草料二维码",
-    "url": "tools.html",
+    "url": "tools.html#tool-草料二维码",
+    "externalUrl": "https://cli.im/",
     "category": "工具导航 · 实用生成与办公工具",
-    "date": "2026-08-28",
+    "date": "2026-08-29",
     "tags": [
       "二维码",
       "QR Code",
@@ -3379,9 +3520,10 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
     "id": "tool-1password-强密码生成器",
     "type": "tool",
     "title": "1Password 强密码生成器",
-    "url": "tools.html",
+    "url": "tools.html#tool-1password-强密码生成器",
+    "externalUrl": "https://1password.com/zh-cn/password-generator",
     "category": "工具导航 · 实用生成与办公工具",
-    "date": "2026-08-28",
+    "date": "2026-08-29",
     "tags": [
       "1Password",
       "密码生成器",
@@ -3397,9 +3539,10 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
     "id": "tool-轻松传-easychuan",
     "type": "tool",
     "title": "轻松传 (EasyChuan)",
-    "url": "tools.html",
+    "url": "tools.html#tool-轻松传-easychuan",
+    "externalUrl": "https://easychuan.cn/",
     "category": "工具导航 · 实用生成与办公工具",
-    "date": "2026-08-28",
+    "date": "2026-08-29",
     "tags": [
       "轻松传",
       "文件传输",
@@ -3416,9 +3559,10 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
     "id": "tool-smallpdf-pdf-转-word",
     "type": "tool",
     "title": "Smallpdf (PDF 转 Word)",
-    "url": "tools.html",
+    "url": "tools.html#tool-smallpdf-pdf-转-word",
+    "externalUrl": "https://smallpdf.com/cn/pdf-to-word",
     "category": "工具导航 · 实用生成与办公工具",
-    "date": "2026-08-28",
+    "date": "2026-08-29",
     "tags": [
       "Smallpdf",
       "PDF转Word",
@@ -3435,9 +3579,10 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
     "id": "tool-mobaxterm",
     "type": "tool",
     "title": "MobaXterm",
-    "url": "tools.html",
+    "url": "tools.html#tool-mobaxterm",
+    "externalUrl": "https://mobaxterm.mobatek.net/",
     "category": "工具导航 · 终端与远程运维工具",
-    "date": "2026-08-28",
+    "date": "2026-08-29",
     "tags": [
       "MobaXterm",
       "SSH",
@@ -3455,9 +3600,10 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
     "id": "tool-finalshell",
     "type": "tool",
     "title": "FinalShell",
-    "url": "tools.html",
+    "url": "tools.html#tool-finalshell",
+    "externalUrl": "http://www.hostbuf.com/",
     "category": "工具导航 · 终端与远程运维工具",
-    "date": "2026-08-28",
+    "date": "2026-08-29",
     "tags": [
       "FinalShell",
       "SSH",
@@ -3474,9 +3620,10 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
     "id": "tool-aapanel-宝塔国际版",
     "type": "tool",
     "title": "aaPanel (宝塔国际版)",
-    "url": "tools.html",
+    "url": "tools.html#tool-aapanel-宝塔国际版",
+    "externalUrl": "https://www.aapanel.com/new/download.html",
     "category": "工具导航 · 终端与远程运维工具",
-    "date": "2026-08-28",
+    "date": "2026-08-29",
     "tags": [
       "aaPanel",
       "宝塔面板",
@@ -3494,9 +3641,10 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
     "id": "tool-mqttx",
     "type": "tool",
     "title": "MQTTX",
-    "url": "tools.html",
+    "url": "tools.html#tool-mqttx",
+    "externalUrl": "https://mqttx.app/zh/downloads",
     "category": "工具导航 · 终端与远程运维工具",
-    "date": "2026-08-28",
+    "date": "2026-08-29",
     "tags": [
       "MQTTX",
       "MQTT",
@@ -3514,9 +3662,10 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
     "id": "tool-draw-io",
     "type": "tool",
     "title": "draw.io",
-    "url": "tools.html",
+    "url": "tools.html#tool-draw-io",
+    "externalUrl": "https://app.diagrams.net/",
     "category": "工具导航 · 架构设计与思维导图",
-    "date": "2026-08-28",
+    "date": "2026-08-29",
     "tags": [
       "架构图",
       "流程图",
@@ -3532,9 +3681,10 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
     "id": "tool-pdmaner-元数建模",
     "type": "tool",
     "title": "PDManer (元数建模)",
-    "url": "tools.html",
+    "url": "tools.html#tool-pdmaner-元数建模",
+    "externalUrl": "https://www.pdmaas.cn/Download",
     "category": "工具导航 · 架构设计与思维导图",
-    "date": "2026-08-28",
+    "date": "2026-08-29",
     "tags": [
       "PDManer",
       "数据库建模",
@@ -3551,9 +3701,10 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
     "id": "tool-dbeaver",
     "type": "tool",
     "title": "DBeaver",
-    "url": "tools.html",
+    "url": "tools.html#tool-dbeaver",
+    "externalUrl": "https://dbeaver.io/download/",
     "category": "工具导航 · 架构设计与思维导图",
-    "date": "2026-08-28",
+    "date": "2026-08-29",
     "tags": [
       "DBeaver",
       "数据库管理",
@@ -3570,9 +3721,10 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
     "id": "tool-geek-uninstaller",
     "type": "tool",
     "title": "Geek Uninstaller",
-    "url": "tools.html",
+    "url": "tools.html#tool-geek-uninstaller",
+    "externalUrl": "https://geekuninstaller.com/",
     "category": "工具导航 · 系统优化与效率工具",
-    "date": "2026-08-28",
+    "date": "2026-08-29",
     "tags": [
       "Geek",
       "软件卸载",
@@ -3588,9 +3740,10 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
     "id": "tool-kms-在线激活服务-kms-cx",
     "type": "tool",
     "title": "KMS 在线激活服务 (KMS.cx)",
-    "url": "tools.html",
+    "url": "tools.html#tool-kms-在线激活服务-kms-cx",
+    "externalUrl": "https://kms.cx/",
     "category": "工具导航 · 系统优化与效率工具",
-    "date": "2026-08-28",
+    "date": "2026-08-29",
     "tags": [
       "KMS",
       "Windows激活",
@@ -3607,9 +3760,10 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
     "id": "tool-flyenv",
     "type": "tool",
     "title": "FlyEnv",
-    "url": "tools.html",
+    "url": "tools.html#tool-flyenv",
+    "externalUrl": "https://flyenv.com/download.html",
     "category": "工具导航 · 系统优化与效率工具",
-    "date": "2026-08-28",
+    "date": "2026-08-29",
     "tags": [
       "FlyEnv",
       "开发环境",
@@ -3627,9 +3781,10 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
     "id": "tool-winrar-官方中文网",
     "type": "tool",
     "title": "WinRAR (官方中文网)",
-    "url": "tools.html",
+    "url": "tools.html#tool-winrar-官方中文网",
+    "externalUrl": "https://www.winrar.com.cn/",
     "category": "工具导航 · 系统优化与效率工具",
-    "date": "2026-08-28",
+    "date": "2026-08-29",
     "tags": [
       "WinRAR",
       "压缩工具",
@@ -3647,9 +3802,10 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
     "id": "tool-cloudconvert-svg-to-ico",
     "type": "tool",
     "title": "CloudConvert (SVG to ICO)",
-    "url": "tools.html",
+    "url": "tools.html#tool-cloudconvert-svg-to-ico",
+    "externalUrl": "https://cloudconvert.com/svg-to-ico",
     "category": "工具导航 · 图像与多媒体处理",
-    "date": "2026-08-28",
+    "date": "2026-08-29",
     "tags": [
       "SVG",
       "ICO",
@@ -3665,9 +3821,10 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
     "id": "tool-tinify-tinypng-中文网",
     "type": "tool",
     "title": "Tinify (TinyPNG 中文网)",
-    "url": "tools.html",
+    "url": "tools.html#tool-tinify-tinypng-中文网",
+    "externalUrl": "https://tinify.cn/",
     "category": "工具导航 · 图像与多媒体处理",
-    "date": "2026-08-28",
+    "date": "2026-08-29",
     "tags": [
       "Tinify",
       "TinyPNG",
@@ -3684,9 +3841,10 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
     "id": "tool-hills-lite-emby-jellyfin-客户端",
     "type": "tool",
     "title": "Hills Lite (Emby / Jellyfin 客户端)",
-    "url": "tools.html",
+    "url": "tools.html#tool-hills-lite-emby-jellyfin-客户端",
+    "externalUrl": "https://apps.microsoft.com/detail/9nxnzfrllwzx?hl=zh-CN&gl=CN",
     "category": "工具导航 · 图像与多媒体处理",
-    "date": "2026-08-28",
+    "date": "2026-08-29",
     "tags": [
       "HillsLite",
       "Emby",
@@ -3703,9 +3861,10 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
     "id": "tool-ffmpeg",
     "type": "tool",
     "title": "FFmpeg",
-    "url": "tools.html",
+    "url": "tools.html#tool-ffmpeg",
+    "externalUrl": "https://www.ffmpeg.org/",
     "category": "工具导航 · 图像与多媒体处理",
-    "date": "2026-08-28",
+    "date": "2026-08-29",
     "tags": [
       "FFmpeg",
       "音视频处理",
@@ -3722,9 +3881,10 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
     "id": "tool-ippure-ip-纯净度检测",
     "type": "tool",
     "title": "IPPure (IP 纯净度检测)",
-    "url": "tools.html",
+    "url": "tools.html#tool-ippure-ip-纯净度检测",
+    "externalUrl": "https://ippure.com/",
     "category": "工具导航 · 网络诊断与安全检测",
-    "date": "2026-08-28",
+    "date": "2026-08-29",
     "tags": [
       "IPPure",
       "IP查询",
@@ -3741,9 +3901,10 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
     "id": "tool-cloudflare-优选-ip-节点库-090227-xyz",
     "type": "tool",
     "title": "Cloudflare 优选 IP 节点库 (090227.xyz)",
-    "url": "tools.html",
+    "url": "tools.html#tool-cloudflare-优选-ip-节点库-090227-xyz",
+    "externalUrl": "https://cf.090227.xyz/",
     "category": "工具导航 · 网络诊断与安全检测",
-    "date": "2026-08-28",
+    "date": "2026-08-29",
     "tags": [
       "Cloudflare",
       "CF优选",
@@ -3758,11 +3919,12 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
   },
   {
     "id": "tool-vless-节点生成器",
-    "type": "tool",
+    "type": "page",
     "title": "VLESS 节点生成器",
-    "url": "tools.html",
-    "category": "工具导航 · 网络诊断与安全检测",
-    "date": "2026-08-28",
+    "url": "node-vle.html",
+    "externalUrl": "",
+    "category": "独立工具 · 网络与部署运维",
+    "date": "2026-08-29",
     "tags": [
       "VLESS",
       "节点生成器",
@@ -3777,9 +3939,10 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
     "id": "github-fnm",
     "type": "github",
     "title": "fnm (Schniz/fnm)",
-    "url": "nav.html",
+    "url": "nav.html#github-fnm",
+    "externalUrl": "https://github.com/Schniz/fnm",
     "category": "GitHub 导航 · Node.js 版本管理",
-    "date": "2026-08-28",
+    "date": "2026-08-29",
     "tags": [
       "Rust",
       "Node.js",
@@ -3795,9 +3958,10 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
     "id": "github-nvm",
     "type": "github",
     "title": "nvm (nvm-sh/nvm)",
-    "url": "nav.html",
+    "url": "nav.html#github-nvm",
+    "externalUrl": "https://github.com/nvm-sh/nvm",
     "category": "GitHub 导航 · Node.js 版本管理",
-    "date": "2026-08-28",
+    "date": "2026-08-29",
     "tags": [
       "Shell",
       "Bash",
@@ -3813,9 +3977,10 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
     "id": "github-ventoy",
     "type": "github",
     "title": "Ventoy (ventoy/Ventoy)",
-    "url": "nav.html",
+    "url": "nav.html#github-ventoy",
+    "externalUrl": "https://github.com/ventoy/Ventoy",
     "category": "GitHub 导航 · 系统与装机利器",
-    "date": "2026-08-28",
+    "date": "2026-08-29",
     "tags": [
       "Ventoy",
       "启动盘",
@@ -3832,9 +3997,10 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
     "id": "github-lky-officetools",
     "type": "github",
     "title": "LKY_OfficeTools (OdysseusYuan/LKY_OfficeTools)",
-    "url": "nav.html",
+    "url": "nav.html#github-lky-officetools",
+    "externalUrl": "https://github.com/OdysseusYuan/LKY_OfficeTools",
     "category": "GitHub 导航 · 系统与装机利器",
-    "date": "2026-08-28",
+    "date": "2026-08-29",
     "tags": [
       "Office",
       "LKY",
@@ -3851,9 +4017,10 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
     "id": "github-fail2ban",
     "type": "github",
     "title": "Fail2Ban (fail2ban/fail2ban)",
-    "url": "nav.html",
+    "url": "nav.html#github-fail2ban",
+    "externalUrl": "https://github.com/fail2ban/fail2ban",
     "category": "GitHub 导航 · 服务器安全与防护",
-    "date": "2026-08-28",
+    "date": "2026-08-29",
     "tags": [
       "Fail2Ban",
       "Linux安全",
@@ -3870,9 +4037,10 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
     "id": "github-acme-sh",
     "type": "github",
     "title": "acme.sh (acmesh-official/acme.sh)",
-    "url": "nav.html",
+    "url": "nav.html#github-acme-sh",
+    "externalUrl": "https://github.com/acmesh-official/acme.sh",
     "category": "GitHub 导航 · 服务器安全与防护",
-    "date": "2026-08-28",
+    "date": "2026-08-29",
     "tags": [
       "acme.sh",
       "SSL证书",
@@ -3889,9 +4057,10 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
     "id": "github-lit",
     "type": "github",
     "title": "Lit (lit/lit)",
-    "url": "nav.html",
+    "url": "nav.html#github-lit",
+    "externalUrl": "https://lit.dev/",
     "category": "GitHub 导航 · 前端开发与 Web Components",
-    "date": "2026-08-28",
+    "date": "2026-08-29",
     "tags": [
       "Lit",
       "WebComponents",
@@ -3909,9 +4078,10 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
     "id": "github-fingerprintjs",
     "type": "github",
     "title": "FingerprintJS (fingerprintjs/fingerprintjs)",
-    "url": "nav.html",
+    "url": "nav.html#github-fingerprintjs",
+    "externalUrl": "https://github.com/fingerprintjs/fingerprintjs",
     "category": "GitHub 导航 · 前端安全与设备识别",
-    "date": "2026-08-28",
+    "date": "2026-08-29",
     "tags": [
       "Fingerprint",
       "设备指纹",
@@ -3928,9 +4098,10 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
     "id": "github-cloudflarespeedtest",
     "type": "github",
     "title": "CloudflareSpeedTest (XIU2/CloudflareSpeedTest)",
-    "url": "nav.html",
+    "url": "nav.html#github-cloudflarespeedtest",
+    "externalUrl": "https://github.com/XIU2/CloudflareSpeedTest",
     "category": "GitHub 导航 · 网络加速与穿透工具",
-    "date": "2026-08-28",
+    "date": "2026-08-29",
     "tags": [
       "CloudflareSpeedTest",
       "Cloudflare",
@@ -3948,9 +4119,10 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
     "id": "github-frp",
     "type": "github",
     "title": "frp (fatedier/frp)",
-    "url": "nav.html",
+    "url": "nav.html#github-frp",
+    "externalUrl": "https://github.com/fatedier/frp",
     "category": "GitHub 导航 · 网络加速与穿透工具",
-    "date": "2026-08-28",
+    "date": "2026-08-29",
     "tags": [
       "frp",
       "内网穿透",
@@ -3967,9 +4139,10 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
     "id": "github-v2rayng",
     "type": "github",
     "title": "v2rayNG (2dust/v2rayNG)",
-    "url": "nav.html",
+    "url": "nav.html#github-v2rayng",
+    "externalUrl": "https://github.com/2dust/v2rayNG",
     "category": "GitHub 导航 · 网络加速与穿透工具",
-    "date": "2026-08-28",
+    "date": "2026-08-29",
     "tags": [
       "v2rayNG",
       "Android",
@@ -3987,9 +4160,10 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
     "id": "github-v2rayn",
     "type": "github",
     "title": "v2rayN (2dust/v2rayN)",
-    "url": "nav.html",
+    "url": "nav.html#github-v2rayn",
+    "externalUrl": "https://github.com/2dust/v2rayN",
     "category": "GitHub 导航 · 网络加速与穿透工具",
-    "date": "2026-08-28",
+    "date": "2026-08-29",
     "tags": [
       "v2rayN",
       "Windows",
@@ -4007,9 +4181,10 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
     "id": "github-edgetunnel",
     "type": "github",
     "title": "edgetunnel (cmliu/edgetunnel)",
-    "url": "nav.html",
+    "url": "nav.html#github-edgetunnel",
+    "externalUrl": "https://github.com/cmliu/edgetunnel",
     "category": "GitHub 导航 · 网络加速与穿透工具",
-    "date": "2026-08-28",
+    "date": "2026-08-29",
     "tags": [
       "edgetunnel",
       "Cloudflare",
@@ -4027,9 +4202,10 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
     "id": "github-multi-easygost",
     "type": "github",
     "title": "Multi-EasyGost (KANIKIG/Multi-EasyGost)",
-    "url": "nav.html",
+    "url": "nav.html#github-multi-easygost",
+    "externalUrl": "https://github.com/KANIKIG/Multi-EasyGost",
     "category": "GitHub 导航 · 网络加速与穿透工具",
-    "date": "2026-08-28",
+    "date": "2026-08-29",
     "tags": [
       "Gost",
       "端口转发",
@@ -4047,9 +4223,10 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
     "id": "github-emqx",
     "type": "github",
     "title": "EMQX (emqx/emqx)",
-    "url": "nav.html",
+    "url": "nav.html#github-emqx",
+    "externalUrl": "https://github.com/emqx/emqx",
     "category": "GitHub 导航 · 物联网与消息中间件",
-    "date": "2026-08-28",
+    "date": "2026-08-29",
     "tags": [
       "EMQX",
       "MQTT",
@@ -4068,9 +4245,10 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
     "id": "file-fileupload-vue",
     "type": "file",
     "title": "FileUpload.vue",
-    "url": "files.html",
+    "url": "files.html#file-fileupload-vue",
+    "externalUrl": "",
     "category": "资源文件 · 前端组件",
-    "date": "2026-08-28",
+    "date": "2026-08-29",
     "tags": [
       "vue",
       "前端组件"
@@ -4083,9 +4261,10 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
     "id": "file-queryform-vue",
     "type": "file",
     "title": "QueryForm.vue",
-    "url": "files.html",
+    "url": "files.html#file-queryform-vue",
+    "externalUrl": "",
     "category": "资源文件 · 前端组件",
-    "date": "2026-08-28",
+    "date": "2026-08-29",
     "tags": [
       "vue",
       "前端组件"
@@ -4098,9 +4277,10 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
     "id": "file-tools-js",
     "type": "file",
     "title": "tools.js",
-    "url": "files.html",
+    "url": "files.html#file-tools-js",
+    "externalUrl": "",
     "category": "资源文件 · 代码库",
-    "date": "2026-08-28",
+    "date": "2026-08-29",
     "tags": [
       "js",
       "代码库"
@@ -4113,9 +4293,10 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
     "id": "file-frps-sh",
     "type": "file",
     "title": "frps.sh",
-    "url": "files.html",
+    "url": "files.html#file-frps-sh",
+    "externalUrl": "",
     "category": "资源文件 · Shell 脚本",
-    "date": "2026-08-28",
+    "date": "2026-08-29",
     "tags": [
       "sh",
       "Shell 脚本"
@@ -4128,9 +4309,10 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
     "id": "file-xray-sh",
     "type": "file",
     "title": "xray.sh",
-    "url": "files.html",
+    "url": "files.html#file-xray-sh",
+    "externalUrl": "",
     "category": "资源文件 · Shell 脚本",
-    "date": "2026-08-28",
+    "date": "2026-08-29",
     "tags": [
       "sh",
       "Shell 脚本"
@@ -4143,9 +4325,10 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
     "id": "file-renametool-bat",
     "type": "file",
     "title": "RenameTool.bat",
-    "url": "files.html",
+    "url": "files.html#file-renametool-bat",
+    "externalUrl": "",
     "category": "资源文件 · Windows 批处理",
-    "date": "2026-08-28",
+    "date": "2026-08-29",
     "tags": [
       "bat",
       "Windows 批处理"
@@ -4158,9 +4341,10 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
     "id": "file-cmd-proxy-bat",
     "type": "file",
     "title": "cmd_proxy.bat",
-    "url": "files.html",
+    "url": "files.html#file-cmd-proxy-bat",
+    "externalUrl": "",
     "category": "资源文件 · Windows 批处理",
-    "date": "2026-08-28",
+    "date": "2026-08-29",
     "tags": [
       "bat",
       "Windows 批处理"
@@ -4173,9 +4357,10 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
     "id": "file-cmd-proxy-agy-bat",
     "type": "file",
     "title": "cmd_proxy_agy.bat",
-    "url": "files.html",
+    "url": "files.html#file-cmd-proxy-agy-bat",
+    "externalUrl": "",
     "category": "资源文件 · Windows 批处理",
-    "date": "2026-08-28",
+    "date": "2026-08-29",
     "tags": [
       "bat",
       "Windows 批处理"
@@ -4188,9 +4373,10 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
     "id": "file-windows-activation-bat",
     "type": "file",
     "title": "windows_activation.bat",
-    "url": "files.html",
+    "url": "files.html#file-windows-activation-bat",
+    "externalUrl": "",
     "category": "资源文件 · Windows 批处理",
-    "date": "2026-08-28",
+    "date": "2026-08-29",
     "tags": [
       "bat",
       "Windows 批处理"
@@ -4203,9 +4389,10 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
     "id": "file-imghandle-jpg-zip",
     "type": "file",
     "title": "ImgHandle_jpg.zip",
-    "url": "files.html",
+    "url": "files.html#file-imghandle-jpg-zip",
+    "externalUrl": "",
     "category": "资源文件 · 压缩资源包",
-    "date": "2026-08-28",
+    "date": "2026-08-29",
     "tags": [
       "zip",
       "压缩资源包"
@@ -4218,9 +4405,10 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
     "id": "file-curvecharts-rar",
     "type": "file",
     "title": "curveCharts.rar",
-    "url": "files.html",
+    "url": "files.html#file-curvecharts-rar",
+    "externalUrl": "",
     "category": "资源文件 · 压缩资源包",
-    "date": "2026-08-28",
+    "date": "2026-08-29",
     "tags": [
       "rar",
       "压缩资源包"
@@ -4233,9 +4421,10 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
     "id": "file-优惠券弹框组件-zip",
     "type": "file",
     "title": "优惠券弹框组件.zip",
-    "url": "files.html",
+    "url": "files.html#file-优惠券弹框组件-zip",
+    "externalUrl": "",
     "category": "资源文件 · 压缩资源包",
-    "date": "2026-08-28",
+    "date": "2026-08-29",
     "tags": [
       "zip",
       "压缩资源包"

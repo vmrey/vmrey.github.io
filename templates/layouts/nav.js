@@ -1,7 +1,7 @@
 /**
  * GitHub 优质开源项目导航页面布局模板 (GitHub Navigation Layout Template)
  */
-const { renderBaseLayout } = require('./base');
+const { renderBaseLayout, slugify } = require('./base');
 
 function renderNavLayout({
   sidebarHtml,
@@ -42,9 +42,10 @@ function renderNavLayout({
 
     const cardsHtml = cat.items.map(item => {
       const tagsHtml = (item.tags || []).map(tag => `<span class="repo-tag">#${tag}</span>`).join('');
+      const cardId = `github-${slugify(item.name)}`;
       
       return `          <!-- Repo Card: ${item.name} -->
-          <div class="nav-repo-card" data-name="${item.name.toLowerCase()}" data-repo="${item.repo.toLowerCase()}" data-url="${(item.url || '').toLowerCase()}" data-desc="${(item.tagline + ' ' + item.description).toLowerCase()}" data-tags="${(item.tags || []).join(',').toLowerCase()}" data-cat="${cat.category}">
+          <div class="nav-repo-card" id="${cardId}" data-name="${item.name.toLowerCase()}" data-repo="${item.repo.toLowerCase()}" data-url="${(item.url || '').toLowerCase()}" data-desc="${(item.tagline + ' ' + item.description).toLowerCase()}" data-tags="${(item.tags || []).join(',').toLowerCase()}" data-cat="${cat.category}">
             <div class="repo-card-top">
               <div class="repo-header-info">
                 <div class="repo-icon-badge">

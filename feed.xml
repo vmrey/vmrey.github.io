@@ -5,8 +5,16 @@
     <link>https://vmrey.github.io/</link>
     <description>构建工具，写干净的代码</description>
     <language>zh-CN</language>
-    <lastBuildDate>Fri, 28 Aug 2026 12:06:12 GMT</lastBuildDate>
+    <lastBuildDate>Sat, 29 Aug 2026 01:39:00 GMT</lastBuildDate>
     <atom:link href="https://vmrey.github.io/feed.xml" rel="self" type="application/rss+xml"/>
+    <item>
+      <title>Redis 核心操作：数据清空与内存淘汰策略详解</title>
+      <link>https://vmrey.github.io/posts/redis-65f8.html</link>
+      <guid isPermaLink="true">https://vmrey.github.io/posts/redis-65f8.html</guid>
+      <pubDate>Sat, 29 Aug 2026 00:00:00 GMT</pubDate>
+      <category>Linux 与服务端</category>
+      <description>深入解析 Redis 核心清空命令 FLUSHDB/FLUSHALL 的同步与异步 ASYNC 机制，以及 8 种内存淘汰策略（LRU、LFU、TTL、noeviction）的工作原理与生产环境选型建议。</description>
+    </item>
     <item>
       <title>彻底卸载服务器阿里云盾（安骑士）与全盘清理实战</title>
       <link>https://vmrey.github.io/posts/aliyun-b0c5.html</link>
@@ -238,14 +246,6 @@
       <pubDate>Wed, 18 Mar 2026 00:00:00 GMT</pubDate>
       <category>前端开发</category>
       <description>详解小程序 Component 中的 observer 监听机制，以及在 Page 页面中通过 Object.defineProperty 实现 Watch 监听。</description>
-    </item>
-    <item>
-      <title>VSCode 前端开发高频实用正则表达式查找与批量替换清单</title>
-      <link>https://vmrey.github.io/posts/vscode-regex-replace-df0f.html</link>
-      <guid isPermaLink="true">https://vmrey.github.io/posts/vscode-regex-replace-df0f.html</guid>
-      <pubDate>Sun, 20 Mar 2022 00:00:00 GMT</pubDate>
-      <category>效率工具与软件</category>
-      <description>精选 VSCode 全局重构高频正则：快速批量将 v-model 改为 v-model.trim、清理行尾空格及修正多余空行。</description>
     </item>
   </channel>
 </rss>

@@ -754,6 +754,7 @@ const postSearchItems = postsList.map(p => {
     type: 'post',
     title: p.title,
     url: p.url,
+    externalUrl: '',
     category: p.category,
     date: p.date,
     tags: p.tags,
@@ -766,11 +767,13 @@ const postSearchItems = postsList.map(p => {
 const aiSearchItems = [];
 allNavAi.forEach(cat => {
   (cat.items || []).forEach(item => {
+    const slugId = `ai-${slugify(item.name)}`;
     aiSearchItems.push({
-      id: `ai-${slugify(item.name)}`,
+      id: slugId,
       type: 'ai',
       title: item.name,
-      url: 'ai.html',
+      url: `ai.html#${slugId}`,
+      externalUrl: item.url || '',
       category: `AI 导航 · ${cat.category}`,
       date: todayDateStr,
       tags: item.tags || [],
@@ -784,12 +787,19 @@ allNavAi.forEach(cat => {
 const toolsSearchItems = [];
 allNavTools.forEach(cat => {
   (cat.items || []).forEach(item => {
+    const isNodeVle = (item.name && item.name.includes('节点生成器')) || (item.url && item.url.includes('node-vle.html'));
+    const slugId = `tool-${slugify(item.name)}`;
+    const targetUrl = isNodeVle ? 'node-vle.html' : `tools.html#${slugId}`;
+    const targetType = isNodeVle ? 'page' : 'tool';
+    const externalUrl = isNodeVle ? '' : (item.url || '');
+
     toolsSearchItems.push({
-      id: `tool-${slugify(item.name)}`,
-      type: 'tool',
+      id: slugId,
+      type: targetType,
       title: item.name,
-      url: 'tools.html',
-      category: `工具导航 · ${cat.category}`,
+      url: targetUrl,
+      externalUrl: externalUrl,
+      category: isNodeVle ? '独立工具 · 网络与部署运维' : `工具导航 · ${cat.category}`,
       date: todayDateStr,
       tags: item.tags || [],
       summary: `${item.tagline} — ${item.description}`,
@@ -802,11 +812,14 @@ allNavTools.forEach(cat => {
 const githubSearchItems = [];
 allNavGithub.forEach(cat => {
   (cat.items || []).forEach(item => {
+    const slugId = `github-${slugify(item.name)}`;
+    const extUrl = item.url || (item.repo ? `https://github.com/${item.repo}` : '');
     githubSearchItems.push({
-      id: `github-${slugify(item.name)}`,
+      id: slugId,
       type: 'github',
       title: `${item.name} (${item.repo})`,
-      url: 'nav.html',
+      url: `nav.html#${slugId}`,
+      externalUrl: extUrl,
       category: `GitHub 导航 · ${cat.category}`,
       date: todayDateStr,
       tags: item.tags || [],
@@ -817,18 +830,22 @@ allNavGithub.forEach(cat => {
   });
 });
 
-const fileSearchItems = (resourceFiles || []).map(f => ({
-  id: `file-${slugify(f.name)}`,
-  type: 'file',
-  title: f.name,
-  url: 'files.html',
-  category: `资源文件 · ${f.category}`,
-  date: todayDateStr,
-  tags: [f.ext, f.category],
-  summary: `${f.desc} (${f.size}, ${f.lines} 行)`,
-  content: `${f.name} ${f.desc} ${f.category} ${f.ext}`,
-  sections: []
-}));
+const fileSearchItems = (resourceFiles || []).map(f => {
+  const slugId = `file-${slugify(f.name)}`;
+  return {
+    id: slugId,
+    type: 'file',
+    title: f.name,
+    url: `files.html#${slugId}`,
+    externalUrl: '',
+    category: `资源文件 · ${f.category}`,
+    date: todayDateStr,
+    tags: [f.ext, f.category],
+    summary: `${f.desc} (${f.size}, ${f.lines} 行)`,
+    content: `${f.name} ${f.desc} ${f.category} ${f.ext}`,
+    sections: []
+  };
+});
 
 const searchIndexItems = [
   ...postSearchItems,

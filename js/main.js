@@ -802,4 +802,57 @@ document.addEventListener('DOMContentLoaded', () => {
       typeName: '精选项目'
     });
   }
+
+  // =========================================================================
+  // 导航与资源锚点自动定位、展开分类与脉冲高亮联动
+  // =========================================================================
+  function handleNavHashHighlight() {
+    const hash = window.location.hash;
+    if (!hash || hash.length < 2) return;
+    
+    let targetId = '';
+    try {
+      targetId = decodeURIComponent(hash.substring(1));
+    } catch (e) {
+      targetId = hash.substring(1);
+    }
+    if (!targetId) return;
+
+    const targetEl = document.getElementById(targetId);
+    if (!targetEl) return;
+
+    // 1. 如果在导航页且卡片所在的分类被隐藏，自动重置分类筛选为“全部”
+    const pillBtns = document.querySelectorAll('.nav-pill-btn');
+    const categorySections = document.querySelectorAll('.nav-category-section');
+    const filterInput = document.getElementById('ai-filter-input') || document.getElementById('tools-filter-input') || document.getElementById('nav-filter-input');
+    
+    if (pillBtns.length > 0) {
+      if (filterInput) filterInput.value = '';
+      pillBtns.forEach(b => b.classList.toggle('active', b.getAttribute('data-filter-cat') === 'all'));
+      categorySections.forEach(sec => { sec.style.display = 'flex'; });
+      const allCards = document.querySelectorAll('.nav-repo-card');
+      allCards.forEach(c => { c.style.display = 'flex'; });
+    }
+
+    // 2. 如果在文件资源库，若目标文件在折叠文件夹内，自动展开该文件夹
+    const parentFolder = targetEl.closest('.explorer-folder-block');
+    if (parentFolder && !parentFolder.classList.contains('open')) {
+      parentFolder.classList.add('open');
+    }
+
+    // 3. 延迟平滑滚动并触发脉冲聚焦动效
+    setTimeout(() => {
+      targetEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      targetEl.classList.remove('nav-card-highlight-pulse');
+      void targetEl.offsetWidth; // 触发 reflow 重启动画
+      targetEl.classList.add('nav-card-highlight-pulse');
+      setTimeout(() => {
+        targetEl.classList.remove('nav-card-highlight-pulse');
+      }, 3600);
+    }, 150);
+  }
+
+  // 页面就绪以及 hashchange 时自动检测触发
+  handleNavHashHighlight();
+  window.addEventListener('hashchange', handleNavHashHighlight, { passive: true });
 });
