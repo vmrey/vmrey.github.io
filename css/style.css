@@ -2153,26 +2153,28 @@ del {
   display: flex;
   align-items: center;
   justify-content: center;
-  max-width: 90vw;
-  max-height: 85vh;
-  padding: 2rem;
+  min-width: 65vw;
+  max-width: 92vw;
+  max-height: 86vh;
+  padding: 2rem 2.5rem;
   background: var(--surface, #1e293b);
-  border-radius: 12px;
-  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  transition: transform 0.08s cubic-bezier(0.16, 1, 0.3, 1);
+  border-radius: 14px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.6);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  transition: transform 0.06s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 /* 浅色模式背景自适应 */
 [data-theme="light"] .diagram-lightbox-canvas {
   background: #ffffff;
-  border-color: rgba(0, 0, 0, 0.1);
-  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
+  border-color: rgba(0, 0, 0, 0.12);
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.25);
 }
 
 .diagram-lightbox-canvas svg {
+  width: 100% !important;
   max-width: 100%;
-  max-height: 80vh;
+  max-height: 76vh;
   height: auto;
   display: block;
 }

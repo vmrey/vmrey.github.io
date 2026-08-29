@@ -943,6 +943,17 @@ document.addEventListener('DOMContentLoaded', () => {
       applyTransform();
     }
 
+    function getDiagramTitle(wrap) {
+      let prev = wrap.previousElementSibling;
+      while (prev) {
+        if (/^H[1-4]$/i.test(prev.tagName)) {
+          return prev.textContent.trim().replace(/^[#\s\d一二三四五六七八九十、.]+/, '').trim() || prev.textContent.trim();
+        }
+        prev = prev.previousElementSibling;
+      }
+      return '架构流程图';
+    }
+
     function openLightbox({ type, element, title = '全屏查看' }) {
       if (!canvas || !lightboxBackdrop) return;
       currentType = type;
@@ -952,14 +963,15 @@ document.addEventListener('DOMContentLoaded', () => {
       resetView();
 
       if (type === 'svg') {
-        badgeEl.textContent = '矢量图表';
-        nameEl.textContent = title || 'Mermaid 架构流程图';
+        badgeEl.textContent = '矢量架构图';
+        nameEl.textContent = title || '架构流程图';
         const clonedSvg = element.cloneNode(true);
-        clonedSvg.removeAttribute('id');
+        // 保留原 svg 的 viewBox 与属性以确保箭头、节点样式与文字绝对保真
         clonedSvg.style.maxWidth = '100%';
-        clonedSvg.style.maxHeight = '75vh';
-        clonedSvg.style.width = 'auto';
+        clonedSvg.style.maxHeight = '78vh';
+        clonedSvg.style.width = '100%';
         clonedSvg.style.height = 'auto';
+        clonedSvg.style.display = 'block';
         canvas.appendChild(clonedSvg);
       } else {
         badgeEl.textContent = '高清图片';
@@ -1129,14 +1141,14 @@ document.addEventListener('DOMContentLoaded', () => {
     // 2. 装饰并监听 Mermaid 流程图容器
     function decorateMermaidWraps() {
       document.querySelectorAll('.mermaid-wrap').forEach(wrap => {
-        if (wrap.dataset.lightboxInited) return;
+        const diagramTitle = getDiagramTitle(wrap);
 
         // 注入全屏查看按钮
         if (!wrap.querySelector('.mermaid-fullscreen-btn')) {
           const btn = document.createElement('button');
           btn.type = 'button';
           btn.className = 'mermaid-fullscreen-btn';
-          btn.title = '全屏高清查看图表';
+          btn.title = `全屏查看「${diagramTitle}」`;
           btn.innerHTML = `
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
               <path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"></path>
@@ -1147,22 +1159,23 @@ document.addEventListener('DOMContentLoaded', () => {
             e.stopPropagation();
             const svg = wrap.querySelector('svg');
             if (svg) {
-              openLightbox({ type: 'svg', element: svg, title: '架构流程图' });
+              openLightbox({ type: 'svg', element: svg, title: diagramTitle });
             }
           });
           wrap.appendChild(btn);
         }
 
-        // 点击整个 wrap 也可唤起全屏
-        wrap.addEventListener('click', (e) => {
-          if (e.target.closest('.mermaid-fullscreen-btn')) return;
-          const svg = wrap.querySelector('svg');
-          if (svg) {
-            openLightbox({ type: 'svg', element: svg, title: '架构流程图' });
-          }
-        });
-
-        wrap.dataset.lightboxInited = 'true';
+        if (!wrap.dataset.lightboxClickBound) {
+          wrap.dataset.lightboxClickBound = 'true';
+          // 点击整个 wrap 也可唤起全屏
+          wrap.addEventListener('click', (e) => {
+            if (e.target.closest('.mermaid-fullscreen-btn')) return;
+            const svg = wrap.querySelector('svg');
+            if (svg) {
+              openLightbox({ type: 'svg', element: svg, title: diagramTitle });
+            }
+          });
+        }
       });
     }
 
