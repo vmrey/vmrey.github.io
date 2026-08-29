@@ -5,7 +5,7 @@
     <link>https://vmrey.github.io/</link>
     <description>构建工具，写干净的代码</description>
     <language>zh-CN</language>
-    <lastBuildDate>Sat, 29 Aug 2026 11:49:24 GMT</lastBuildDate>
+    <lastBuildDate>Sat, 29 Aug 2026 12:18:54 GMT</lastBuildDate>
     <atom:link href="https://vmrey.github.io/feed.xml" rel="self" type="application/rss+xml"/>
     <item>
       <title>微信小程序与跨端开发排坑：彻底搞定键盘遮挡与输入框文字溢出（全平台兼容指南）</title>
@@ -14,6 +14,14 @@
       <pubDate>Sat, 29 Aug 2026 00:00:00 GMT</pubDate>
       <category>前端开发</category>
       <description>深入剖析微信小程序与移动端跨端（uni-app/H5）开发中两大高频表单交互 Bug——软键盘遮挡输入框与 Flex 占位符溢出挤压，提供小程序、iOS、Android、HarmonyOS 与 H5 全系统兼容解决方案与避坑清单。</description>
+    </item>
+    <item>
+      <title>Nginx 极简动态配置指南：一套规则承载 N 个微信小程序普通二维码与 H5 智能兜底</title>
+      <link>https://vmrey.github.io/posts/nginx-wx-qrcode-7fef.html</link>
+      <guid isPermaLink="true">https://vmrey.github.io/posts/nginx-wx-qrcode-7fef.html</guid>
+      <pubDate>Sat, 29 Aug 2026 00:00:00 GMT</pubDate>
+      <category>Linux 与服务端</category>
+      <description>深入解析微信小程序「普通链接二维码」底层工作机制，提供基于 Nginx 正则与 $host 动态变量的零运维重载架构，一套配置通吃成百上千个小程序的域名校验与 H5 智能唤起兜底。</description>
     </item>
     <item>
       <title>Redis 核心操作：数据清空与内存淘汰策略详解</title>
@@ -238,14 +246,6 @@
       <pubDate>Wed, 08 Apr 2026 00:00:00 GMT</pubDate>
       <category>前端开发</category>
       <description>解决传统 textarea 滚动条闪烁与高度伸缩卡顿问题，通过 contenteditable 与 CSS 构建丝滑自适应输入框。</description>
-    </item>
-    <item>
-      <title>微信小程序将异步 API 封装为 Promise 同步调用（async/await）实战</title>
-      <link>https://vmrey.github.io/posts/wx-async-promise-806e.html</link>
-      <guid isPermaLink="true">https://vmrey.github.io/posts/wx-async-promise-806e.html</guid>
-      <pubDate>Wed, 25 Mar 2026 00:00:00 GMT</pubDate>
-      <category>前端开发</category>
-      <description>利用 Promisify 模式批量将 wx.request、wx.showModal 等回调式 API 转为标准的 async/await 同步写法。</description>
     </item>
   </channel>
 </rss>

@@ -12,7 +12,7 @@
 - [关于本站 (About Author)](https://vmrey.github.io/about.html): 博主个人简介、技术栈与工程理念
 - [完整知识库快照 (Full Knowledge Digest)](https://vmrey.github.io/llms-full.txt): 全站技术文章详细摘要与纯文本知识库
 
-## 技术文章全景大纲 (Technical Articles - 共 69 篇)
+## 技术文章全景大纲 (Technical Articles - 共 70 篇)
 
 ### 前端开发 (41 篇)
 - [微信小程序与跨端开发排坑：彻底搞定键盘遮挡与输入框文字溢出（全平台兼容指南）](https://vmrey.github.io/posts/miniprogram-form-bugs-248d.html): 深入剖析微信小程序与移动端跨端（uni-app/H5）开发中两大高频表单交互 Bug——软键盘遮挡输入框与 Flex 占位符溢出挤压，提供小程序、iOS、Android、HarmonyOS 与 H5 全系统兼容解决方案与避坑清单。
@@ -57,7 +57,8 @@
 - [微信小程序中对象数组冒泡排序算法实现与实战](https://vmrey.github.io/posts/wx-bubble-sort-6378.html): 详细解析在微信小程序环境下，对复杂对象数组根据价格、销量或 ID 字段进行冒泡升序与降序排序的稳定实现。
 - [微信小程序原生 Canvas 绘制平滑贝塞尔曲线图组件](https://vmrey.github.io/posts/wx-canvas-curve-75af.html): 无需引入重量级图表库，利用微信小程序原生 Canvas 2D 绘制轻量、高帧率且支持动态数据折线/平滑曲线图。
 
-### Linux 与服务端 (12 篇)
+### Linux 与服务端 (13 篇)
+- [Nginx 极简动态配置指南：一套规则承载 N 个微信小程序普通二维码与 H5 智能兜底](https://vmrey.github.io/posts/nginx-wx-qrcode-7fef.html): 深入解析微信小程序「普通链接二维码」底层工作机制，提供基于 Nginx 正则与 $host 动态变量的零运维重载架构，一套配置通吃成百上千个小程序的域名校验与 H5 智能唤起兜底。
 - [Redis 核心操作：数据清空与内存淘汰策略详解](https://vmrey.github.io/posts/redis-65f8.html): 深入解析 Redis 核心清空命令 FLUSHDB/FLUSHALL 的同步与异步 ASYNC 机制，以及 8 种内存淘汰策略（LRU、LFU、TTL、noeviction）的工作原理与生产环境选型建议。
 - [彻底卸载服务器阿里云盾（安骑士）与全盘清理实战](https://vmrey.github.io/posts/aliyun-b0c5.html): 详细记录云服务器卸载阿里云盾（安骑士）官方脚本流程、服务强制停止与全盘深度清理命令实战指南。
 - [Nginx 全站反向代理配置说明文档（Cloudflare CDN + 流媒体优化版）](https://vmrey.github.io/posts/nginx-emby-proxy-b140.html): 专为 Cloudflare CDN + 全站反向代理架构设计，支持 Emby 流媒体大文件分片、WebSocket 实时长连接与 SNI 强校验。
