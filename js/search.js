@@ -129,8 +129,7 @@
           e.preventDefault();
           const selectedItem = currentResults[selectedResultIndex];
           if (selectedItem && selectedItem.targetUrl) {
-            closeSearchModal();
-            window.location.href = formatTargetUrl(selectedItem.targetUrl);
+            navigateToResult(selectedItem.targetUrl);
           }
         }
       }
@@ -144,11 +143,71 @@
       return pathPrefix + rawUrl;
     }
 
-    // 仅允许通过关闭按钮关闭搜索弹窗（背景遮罩、Esc、结果点击等均不触发关闭）
+    // 核心统一导航与弹窗关闭调度
+    function navigateToResult(rawUrl) {
+      if (!rawUrl || rawUrl === '#') return;
+      
+      // 1. 立即关闭搜索弹窗并恢复页面正常滚动
+      closeSearchModal();
+
+      const formattedUrl = formatTargetUrl(rawUrl);
+
+      // 2. 如果是外部完整链接直接跳转
+      if (rawUrl.startsWith('http://') || rawUrl.startsWith('https://')) {
+        window.location.href = rawUrl;
+        return;
+      }
+
+      // 3. 判断是否为同页面锚点定位
+      const currentPath = window.location.pathname.replace(/^\/+/, '').split('#')[0].split('?')[0] || 'index.html';
+      const cleanTarget = rawUrl.replace(/^\.\.\//, '').replace(/^\/+/, '');
+      const [targetPath, targetHash] = cleanTarget.split('#');
+
+      const isCurrentPage = (
+        currentPath === targetPath ||
+        (currentPath === '' && targetPath === 'index.html') ||
+        (currentPath === 'index.html' && targetPath === 'index.html')
+      );
+
+      if (isCurrentPage && targetHash) {
+        if (window.location.hash !== `#${targetHash}`) {
+          window.location.hash = `#${targetHash}`;
+        }
+        if (typeof window.handleNavHashHighlight === 'function') {
+          window.handleNavHashHighlight(targetHash);
+        }
+      } else {
+        window.location.href = formattedUrl;
+      }
+    }
+
+    // 仅允许通过关闭按钮关闭搜索弹窗（背景遮罩、Esc 均不误关）
     if (closeBtn) {
       closeBtn.addEventListener('click', (e) => {
         e.stopPropagation();
         closeSearchModal();
+      });
+    }
+
+    // 搜索结果列表点击事件委托（点击条目立即跳转并关闭弹窗）
+    if (resultsContainer) {
+      resultsContainer.addEventListener('click', (e) => {
+        // 若点击的是直达官网外链按钮，允许在新标签页打开，不拦截
+        if (e.target.closest('.search-res-external-btn')) {
+          return;
+        }
+
+        const resultItem = e.target.closest('.search-result-item');
+        if (!resultItem) return;
+
+        const targetIdx = parseInt(resultItem.getAttribute('data-index'), 10);
+        const selectedItem = currentResults[targetIdx];
+        const targetUrl = (selectedItem && selectedItem.targetUrl) || resultItem.getAttribute('href');
+
+        if (targetUrl) {
+          e.preventDefault();
+          navigateToResult(targetUrl);
+        }
       });
     }
 
@@ -492,8 +551,7 @@
               const targetIdx = selectedResultIndex >= 0 ? selectedResultIndex : 0;
               const selectedItem = currentResults[targetIdx];
               if (selectedItem && selectedItem.targetUrl) {
-                closeSearchModal();
-                window.location.href = formatTargetUrl(selectedItem.targetUrl);
+                navigateToResult(selectedItem.targetUrl);
               }
             }
           }

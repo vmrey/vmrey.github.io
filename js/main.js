@@ -806,15 +806,16 @@ document.addEventListener('DOMContentLoaded', () => {
   // =========================================================================
   // 导航与资源锚点自动定位、展开分类与脉冲高亮联动
   // =========================================================================
-  function handleNavHashHighlight() {
-    const hash = window.location.hash;
-    if (!hash || hash.length < 2) return;
-    
-    let targetId = '';
-    try {
-      targetId = decodeURIComponent(hash.substring(1));
-    } catch (e) {
-      targetId = hash.substring(1);
+  function handleNavHashHighlight(explicitId = '') {
+    let targetId = explicitId;
+    if (!targetId) {
+      const hash = window.location.hash;
+      if (!hash || hash.length < 2) return;
+      try {
+        targetId = decodeURIComponent(hash.substring(1));
+      } catch (e) {
+        targetId = hash.substring(1);
+      }
     }
     if (!targetId) return;
 
@@ -849,10 +850,13 @@ document.addEventListener('DOMContentLoaded', () => {
       setTimeout(() => {
         targetEl.classList.remove('nav-card-highlight-pulse');
       }, 3600);
-    }, 150);
+    }, 100);
   }
+
+  // 暴露给全局以便从搜索弹窗点击时即时调用
+  window.handleNavHashHighlight = handleNavHashHighlight;
 
   // 页面就绪以及 hashchange 时自动检测触发
   handleNavHashHighlight();
-  window.addEventListener('hashchange', handleNavHashHighlight, { passive: true });
+  window.addEventListener('hashchange', () => handleNavHashHighlight(), { passive: true });
 });
