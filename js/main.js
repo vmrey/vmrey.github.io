@@ -859,4 +859,344 @@ document.addEventListener('DOMContentLoaded', () => {
   // 页面就绪以及 hashchange 时自动检测触发
   handleNavHashHighlight();
   window.addEventListener('hashchange', () => handleNavHashHighlight(), { passive: true });
+
+  // =========================================================================
+  // 全局图表 (Mermaid) 与文章图片全屏高清灯箱查看器 (Diagram & Image Lightbox)
+  // =========================================================================
+  function initDiagramAndImageLightbox() {
+    // 1. 创建或获取全局灯箱 DOM
+    let lightboxBackdrop = document.getElementById('diagram-lightbox');
+    if (!lightboxBackdrop) {
+      lightboxBackdrop = document.createElement('div');
+      lightboxBackdrop.id = 'diagram-lightbox';
+      lightboxBackdrop.className = 'diagram-lightbox-backdrop';
+      lightboxBackdrop.innerHTML = `
+        <div class="diagram-lightbox-header">
+          <div class="diagram-lightbox-title">
+            <span class="diagram-lightbox-badge" id="diagram-lightbox-badge">矢量图表</span>
+            <span id="diagram-lightbox-name">图表全屏查看</span>
+          </div>
+          <div class="diagram-lightbox-actions">
+            <button class="diagram-lightbox-btn" id="diagram-zoom-out" title="缩小 (快捷键: -)">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+            </button>
+            <span class="diagram-zoom-label" id="diagram-zoom-text" title="点击重置为 100%">100%</span>
+            <button class="diagram-lightbox-btn" id="diagram-zoom-in" title="放大 (快捷键: +)">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+            </button>
+            <button class="diagram-lightbox-btn" id="diagram-zoom-reset" title="自适应居中 (快捷键: 0)">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"></path><path d="M3 3v5h5"></path></svg>
+            </button>
+            <button class="diagram-lightbox-btn" id="diagram-download-btn" title="下载原图 / SVG">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+            </button>
+            <button class="diagram-lightbox-btn btn-close" id="diagram-lightbox-close" title="退出全屏 (快捷键: Esc)">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+            </button>
+          </div>
+        </div>
+        <div class="diagram-lightbox-viewport" id="diagram-lightbox-viewport">
+          <div class="diagram-lightbox-canvas" id="diagram-lightbox-canvas"></div>
+        </div>
+        <div class="diagram-lightbox-footer">
+          <span class="diagram-lightbox-hint"><kbd>滚轮 / 捏合</kbd> 无级缩放</span>
+          <span class="diagram-lightbox-hint"><kbd>按住拖拽</kbd> 自由平移</span>
+          <span class="diagram-lightbox-hint"><kbd>双击</kbd> 快速切换 2x</span>
+          <span class="diagram-lightbox-hint"><kbd>Esc</kbd> 退出全屏</span>
+        </div>
+      `;
+      document.body.appendChild(lightboxBackdrop);
+    }
+
+    const viewport = document.getElementById('diagram-lightbox-viewport');
+    const canvas = document.getElementById('diagram-lightbox-canvas');
+    const zoomText = document.getElementById('diagram-zoom-text');
+    const badgeEl = document.getElementById('diagram-lightbox-badge');
+    const nameEl = document.getElementById('diagram-lightbox-name');
+    const closeBtn = document.getElementById('diagram-lightbox-close');
+    const zoomInBtn = document.getElementById('diagram-zoom-in');
+    const zoomOutBtn = document.getElementById('diagram-zoom-out');
+    const resetBtn = document.getElementById('diagram-zoom-reset');
+    const downloadBtn = document.getElementById('diagram-download-btn');
+
+    let currentScale = 1.0;
+    let translateX = 0;
+    let translateY = 0;
+    let isDragging = false;
+    let startX = 0;
+    let startY = 0;
+    let currentType = 'svg';
+    let rawContent = null;
+
+    function applyTransform() {
+      if (!canvas) return;
+      canvas.style.transform = `translate(${translateX}px, ${translateY}px) scale(${currentScale})`;
+      if (zoomText) {
+        zoomText.textContent = `${Math.round(currentScale * 100)}%`;
+      }
+    }
+
+    function resetView() {
+      currentScale = 1.0;
+      translateX = 0;
+      translateY = 0;
+      applyTransform();
+    }
+
+    function openLightbox({ type, element, title = '全屏查看' }) {
+      if (!canvas || !lightboxBackdrop) return;
+      currentType = type;
+      rawContent = element;
+
+      canvas.innerHTML = '';
+      resetView();
+
+      if (type === 'svg') {
+        badgeEl.textContent = '矢量图表';
+        nameEl.textContent = title || 'Mermaid 架构流程图';
+        const clonedSvg = element.cloneNode(true);
+        clonedSvg.removeAttribute('id');
+        clonedSvg.style.maxWidth = '100%';
+        clonedSvg.style.maxHeight = '75vh';
+        clonedSvg.style.width = 'auto';
+        clonedSvg.style.height = 'auto';
+        canvas.appendChild(clonedSvg);
+      } else {
+        badgeEl.textContent = '高清图片';
+        nameEl.textContent = title || '文章插图';
+        const img = document.createElement('img');
+        img.src = element.src;
+        img.alt = element.alt || title;
+        canvas.appendChild(img);
+      }
+
+      document.body.style.overflow = 'hidden';
+      lightboxBackdrop.classList.add('active');
+    }
+
+    function closeLightbox() {
+      if (!lightboxBackdrop) return;
+      lightboxBackdrop.classList.remove('active');
+      document.body.style.overflow = '';
+      setTimeout(() => {
+        if (canvas) canvas.innerHTML = '';
+      }, 250);
+    }
+
+    function zoom(delta) {
+      const newScale = Math.min(Math.max(0.2, currentScale + delta), 5.0);
+      currentScale = Math.round(newScale * 100) / 100;
+      applyTransform();
+    }
+
+    // 绑定控制器按钮
+    if (closeBtn) closeBtn.onclick = closeLightbox;
+    if (zoomInBtn) zoomInBtn.onclick = () => zoom(0.25);
+    if (zoomOutBtn) zoomOutBtn.onclick = () => zoom(-0.25);
+    if (resetBtn) resetBtn.onclick = resetView;
+    if (zoomText) zoomText.onclick = resetView;
+
+    // 下载功能
+    if (downloadBtn) {
+      downloadBtn.onclick = () => {
+        if (currentType === 'svg') {
+          const svgEl = canvas.querySelector('svg');
+          if (!svgEl) return;
+          const svgData = new XMLSerializer().serializeToString(svgEl);
+          const blob = new Blob([svgData], { type: 'image/svg+xml;charset=utf-8' });
+          const url = URL.createObjectURL(blob);
+          const a = document.createElement('a');
+          a.href = url;
+          a.download = `${(nameEl.textContent || 'diagram').trim().replace(/\s+/g, '_')}.svg`;
+          document.body.appendChild(a);
+          a.click();
+          document.body.removeChild(a);
+          URL.revokeObjectURL(url);
+        } else {
+          const imgEl = canvas.querySelector('img');
+          if (!imgEl || !imgEl.src) return;
+          const a = document.createElement('a');
+          a.href = imgEl.src;
+          a.download = imgEl.alt || 'image';
+          a.target = '_blank';
+          document.body.appendChild(a);
+          a.click();
+          document.body.removeChild(a);
+        }
+      };
+    }
+
+    // 鼠标滚轮缩放
+    if (viewport) {
+      viewport.addEventListener('wheel', (e) => {
+        e.preventDefault();
+        const delta = e.deltaY < 0 ? 0.15 : -0.15;
+        zoom(delta);
+      }, { passive: false });
+
+      // 拖拽平移
+      viewport.addEventListener('mousedown', (e) => {
+        if (e.target === closeBtn || e.target.closest('.diagram-lightbox-actions')) return;
+        isDragging = true;
+        startX = e.clientX - translateX;
+        startY = e.clientY - translateY;
+        viewport.classList.add('grabbing');
+      });
+
+      window.addEventListener('mousemove', (e) => {
+        if (!isDragging) return;
+        translateX = e.clientX - startX;
+        translateY = e.clientY - startY;
+        applyTransform();
+      });
+
+      window.addEventListener('mouseup', () => {
+        if (isDragging) {
+          isDragging = false;
+          if (viewport) viewport.classList.remove('grabbing');
+        }
+      });
+
+      // 双击快速切换 1x ↔ 2x
+      viewport.addEventListener('dblclick', (e) => {
+        if (e.target.closest('.diagram-lightbox-header') || e.target.closest('.diagram-lightbox-footer')) return;
+        if (currentScale > 1.2) {
+          resetView();
+        } else {
+          currentScale = 2.0;
+          applyTransform();
+        }
+      });
+
+      // 触屏手势（双指捏合缩放与单指拖拽）
+      let initialPinchDistance = null;
+      let initialScale = 1.0;
+
+      viewport.addEventListener('touchstart', (e) => {
+        if (e.touches.length === 1) {
+          isDragging = true;
+          startX = e.touches[0].clientX - translateX;
+          startY = e.touches[0].clientY - translateY;
+        } else if (e.touches.length === 2) {
+          isDragging = false;
+          initialPinchDistance = Math.hypot(
+            e.touches[0].clientX - e.touches[1].clientX,
+            e.touches[0].clientY - e.touches[1].clientY
+          );
+          initialScale = currentScale;
+        }
+      }, { passive: true });
+
+      viewport.addEventListener('touchmove', (e) => {
+        if (e.touches.length === 1 && isDragging) {
+          translateX = e.touches[0].clientX - startX;
+          translateY = e.touches[0].clientY - startY;
+          applyTransform();
+        } else if (e.touches.length === 2 && initialPinchDistance) {
+          const currentDistance = Math.hypot(
+            e.touches[0].clientX - e.touches[1].clientX,
+            e.touches[0].clientY - e.touches[1].clientY
+          );
+          const scaleMultiplier = currentDistance / initialPinchDistance;
+          currentScale = Math.min(Math.max(0.2, initialScale * scaleMultiplier), 5.0);
+          applyTransform();
+        }
+      }, { passive: true });
+
+      viewport.addEventListener('touchend', () => {
+        isDragging = false;
+        initialPinchDistance = null;
+      });
+    }
+
+    // 键盘监听 (Esc 退出, + / - 缩放, 0 重置)
+    window.addEventListener('keydown', (e) => {
+      if (!lightboxBackdrop.classList.contains('active')) return;
+      if (e.key === 'Escape') {
+        closeLightbox();
+      } else if (e.key === '+' || e.key === '=') {
+        e.preventDefault();
+        zoom(0.25);
+      } else if (e.key === '-' || e.key === '_') {
+        e.preventDefault();
+        zoom(-0.25);
+      } else if (e.key === '0') {
+        e.preventDefault();
+        resetView();
+      }
+    });
+
+    // 2. 装饰并监听 Mermaid 流程图容器
+    function decorateMermaidWraps() {
+      document.querySelectorAll('.mermaid-wrap').forEach(wrap => {
+        if (wrap.dataset.lightboxInited) return;
+
+        // 注入全屏查看按钮
+        if (!wrap.querySelector('.mermaid-fullscreen-btn')) {
+          const btn = document.createElement('button');
+          btn.type = 'button';
+          btn.className = 'mermaid-fullscreen-btn';
+          btn.title = '全屏高清查看图表';
+          btn.innerHTML = `
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"></path>
+            </svg>
+            <span>全屏查看</span>
+          `;
+          btn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            const svg = wrap.querySelector('svg');
+            if (svg) {
+              openLightbox({ type: 'svg', element: svg, title: '架构流程图' });
+            }
+          });
+          wrap.appendChild(btn);
+        }
+
+        // 点击整个 wrap 也可唤起全屏
+        wrap.addEventListener('click', (e) => {
+          if (e.target.closest('.mermaid-fullscreen-btn')) return;
+          const svg = wrap.querySelector('svg');
+          if (svg) {
+            openLightbox({ type: 'svg', element: svg, title: '架构流程图' });
+          }
+        });
+
+        wrap.dataset.lightboxInited = 'true';
+      });
+    }
+
+    // 3. 装饰并监听文章插图
+    function decorateArticleImages() {
+      document.querySelectorAll('.article-image, .prose img').forEach(img => {
+        if (img.dataset.lightboxInited) return;
+        img.dataset.lightboxInited = 'true';
+        img.addEventListener('click', (e) => {
+          e.stopPropagation();
+          openLightbox({
+            type: 'image',
+            element: img,
+            title: img.alt || '文章插图'
+          });
+        });
+      });
+    }
+
+    decorateMermaidWraps();
+    decorateArticleImages();
+
+    // 监听 DOM 变化以兼容异步渲染的 Mermaid 图表
+    const observer = new MutationObserver(() => {
+      decorateMermaidWraps();
+      decorateArticleImages();
+    });
+    observer.observe(document.body, { childList: true, subtree: true });
+  }
+
+  // 暴露给全局以便随时手动触发
+  window.initDiagramViewer = initDiagramAndImageLightbox;
+
+  // 自动初始化灯箱
+  initDiagramAndImageLightbox();
 });
+
