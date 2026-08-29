@@ -89,13 +89,23 @@ ${renderToc(post.headings)}`;
     sidebarHtml: sidebarHtml,
     mainContentHtml: mainContentHtml,
     inlineScripts: hasMermaid ? `
-    function initMermaidChart() {
+    async function initMermaidChart() {
       if (window.mermaid) {
+        const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
         mermaid.initialize({
-          startOnLoad: true,
-          theme: document.documentElement.getAttribute('data-theme') === 'dark' ? 'dark' : 'neutral',
-          securityLevel: 'loose'
+          startOnLoad: false,
+          theme: isDark ? 'dark' : 'neutral',
+          securityLevel: 'loose',
+          fontFamily: 'inherit'
         });
+        try {
+          await mermaid.run({ querySelector: '.mermaid' });
+        } catch (e) {
+          console.warn('Mermaid render notice:', e);
+        }
+        if (typeof window.initDiagramViewer === 'function') {
+          window.initDiagramViewer();
+        }
       }
     }
     if (document.readyState === 'loading') {
