@@ -1,0 +1,590 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>Nginx 路径重写进阶：告别正则变量冲突，掌握命名捕获与内置变量极致写法 - vmrey.github.io</title>
+  <meta name="description" content="深入剖析 Nginx 中 location 与 rewrite 嵌套时 $1 位置变量被无情覆盖的经典根因，提供基于 PCRE 命名捕获 (?&lt;name&gt;) 与全局内置变量 $uri 的两种高级生产级重写写法及性能对比。">
+  <meta name="keywords" content="Linux 与服务端, Nginx, 反向代理, 路径重写, PCRE, 性能优化, 避坑指南">
+  <meta name="author" content="vmrey">
+  <meta name="robots" content="index, follow">
+  <meta name="google-site-verification" content="Vi8ircfK8SuZNzZBrtU7av_aXeiUKrLDKgef-84unTM">
+  <link rel="canonical" href="https://vmrey.github.io/posts/nginx-rewrite-vars-f411.html">
+  <link rel="alternate" type="application/rss+xml" title="vmrey.github.io RSS 订阅源" href="https://vmrey.github.io/feed.xml">
+  <link rel="alternate" type="text/plain" title="LLMs.txt AI 知识索引" href="https://vmrey.github.io/llms.txt">
+  <link rel="icon" type="image/svg+xml" href="../favicon.svg">
+
+  <!-- Open Graph 社交卡片 (微信/QQ/Telegram/GitHub) -->
+  <meta property="og:site_name" content="vmrey's Blog">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="Nginx 路径重写进阶：告别正则变量冲突，掌握命名捕获与内置变量极致写法 - vmrey.github.io">
+  <meta property="og:description" content="深入剖析 Nginx 中 location 与 rewrite 嵌套时 $1 位置变量被无情覆盖的经典根因，提供基于 PCRE 命名捕获 (?&lt;name&gt;) 与全局内置变量 $uri 的两种高级生产级重写写法及性能对比。">
+  <meta property="og:url" content="https://vmrey.github.io/posts/nginx-rewrite-vars-f411.html">
+  <meta property="og:image" content="https://vmrey.github.io/favicon.svg">
+
+  <!-- Twitter / X 社交卡片 -->
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Nginx 路径重写进阶：告别正则变量冲突，掌握命名捕获与内置变量极致写法 - vmrey.github.io">
+  <meta name="twitter:description" content="深入剖析 Nginx 中 location 与 rewrite 嵌套时 $1 位置变量被无情覆盖的经典根因，提供基于 PCRE 命名捕获 (?&lt;name&gt;) 与全局内置变量 $uri 的两种高级生产级重写写法及性能对比。">
+  <meta name="twitter:image" content="https://vmrey.github.io/favicon.svg">
+
+  <!-- 页面绘制前同步初始化深浅色主题，彻底杜绝首屏白屏闪烁 (Anti-FOUC) -->
+  <script>
+    (function() {
+      try {
+        var t = localStorage.getItem('theme');
+        if (!t) {
+          var isDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+          t = isDark ? 'dark' : 'light';
+        }
+        document.documentElement.setAttribute('data-theme', t);
+      } catch(e) {}
+    })();
+  </script>
+  
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "headline": "Nginx 路径重写进阶：告别正则变量冲突，掌握命名捕获与内置变量极致写法",
+    "description": "深入剖析 Nginx 中 location 与 rewrite 嵌套时 $1 位置变量被无情覆盖的经典根因，提供基于 PCRE 命名捕获 (?<name>) 与全局内置变量 $uri 的两种高级生产级重写写法及性能对比。",
+    "datePublished": "2026-08-29",
+    "dateModified": "2026-08-29",
+    "author": {
+      "@type": "Person",
+      "name": "vmrey",
+      "url": "https://vmrey.github.io/about.html"
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "vmrey.github.io",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "https://vmrey.github.io/favicon.svg"
+      }
+    },
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": "https://vmrey.github.io/posts/nginx-rewrite-vars-f411.html"
+    },
+    "keywords": "Linux 与服务端, Nginx, 反向代理, 路径重写, PCRE, 性能优化, 避坑指南",
+    "articleSection": "Linux 与服务端"
+  }
+  </script>
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="../css/prism.css">
+</head>
+<body>
+
+  <!-- 移动端顶部标题导航条 -->
+  <div class="mobile-header">
+    <div class="mobile-title-wrap">
+      <svg class="mobile-book-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path>
+        <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path>
+        <line x1="9" y1="7" x2="15" y2="7"></line>
+        <line x1="9" y1="11" x2="13" y2="11"></line>
+      </svg>
+      <div class="mobile-title">vmrey.github.io</div>
+    </div>
+    <button id="menu-toggle-btn" class="menu-toggle-btn" aria-label="切换侧边栏菜单">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <line x1="3" y1="12" x2="21" y2="12"></line>
+        <line x1="3" y1="6" x2="21" y2="6"></line>
+        <line x1="3" y1="18" x2="21" y2="18"></line>
+      </svg>
+    </button>
+  </div>
+
+  <div id="sidebar-overlay" class="sidebar-overlay"></div>
+
+  <div class="app-layout">
+    
+    <!-- 左侧常驻导航 -->
+    <aside class="app-sidebar" id="app-sidebar">
+      <!-- 顶部固定区域：Logo、标题与全局搜索 -->
+      <div class="sidebar-header-section">
+        <div class="sidebar-header-row">
+          <a href="../index.html" class="sidebar-brand">
+            <div class="sidebar-avatar" title="vmrey.github.io 博客">
+              <svg class="sidebar-avatar-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path>
+                <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path>
+                <line x1="9" y1="7" x2="15" y2="7"></line>
+                <line x1="9" y1="11" x2="13" y2="11"></line>
+              </svg>
+            </div>
+            <div class="sidebar-info">
+              <div class="sidebar-name">vmrey.github.io</div>
+              <div class="sidebar-tagline">构建工具，写干净的代码</div>
+            </div>
+          </a>
+          <button type="button" id="sidebar-collapse-btn" class="sidebar-collapse-btn" title="折叠/展开侧边栏 (PC)" aria-label="折叠侧边栏">
+            <svg class="collapse-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="15 18 9 12 15 6"></polyline>
+            </svg>
+          </button>
+        </div>
+
+        <!-- 左侧全局搜索快捷入口 (支持 ⌘K) -->
+        <button class="sidebar-search-btn open-search-modal" type="button" title="全站深度全文搜索 (Cmd+K)">
+          <span class="search-btn-left">
+            <svg class="search-icon" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="11" cy="11" r="8"></circle>
+              <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+            </svg>
+            <span class="search-btn-text">全文搜索...</span>
+          </span>
+          <kbd class="kbd-badge">⌘K</kbd>
+        </button>
+      </div>
+
+      <!-- 侧边栏菜单列表 -->
+      <div class="sidebar-nav-body">
+        <!-- 导航分组 1：分类专栏 (支持多层级子专栏) -->
+        <div class="sidebar-nav-group">
+          <div class="nav-group-title">文章专栏</div>
+          
+          <!-- 全部文章 -->
+          <a href="../index.html" class="sidebar-nav-item  category-filter-btn" data-tag="all" data-label="全部文章" title="全部文章">
+            <span class="nav-item-left">
+              <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg>
+              <span class="nav-item-text">全部文章</span>
+            </span>
+          </a>
+
+          <!-- 专栏：前端开发 -->
+          <div class="nav-item-tree">
+            <div class="tree-header-row">
+              <a href="../index.html?tag=%E5%89%8D%E7%AB%AF%E5%BC%80%E5%8F%91" class="sidebar-nav-item category-filter-btn" data-tag="前端开发" data-label="前端开发" title="前端开发">
+                <span class="nav-item-left">
+                  <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"></polyline><polyline points="8 6 2 12 8 18"></polyline></svg>
+                  <span class="nav-item-text">前端开发</span>
+                </span>
+              </a>
+              <button type="button" class="subtree-toggle-btn" aria-label="展开或折叠前端开发子菜单" title="展开或折叠前端开发">
+                <svg class="chevron-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+              </button>
+            </div>
+            <div class="nav-subtree">
+              <a href="../index.html?tag=Vue" class="subtree-item category-filter-btn" data-tag="Vue" data-label="Vue 与组件" title="Vue 与组件">
+                <span class="subtree-item-left">
+                  <span class="subtree-item-dot"></span>
+                  <span class="subtree-item-name">Vue 与组件</span>
+                </span>
+              </a>
+              <a href="../index.html?tag=JavaScript" class="subtree-item category-filter-btn" data-tag="JavaScript" data-label="JS 与工具函数" title="JS 与工具函数">
+                <span class="subtree-item-left">
+                  <span class="subtree-item-dot"></span>
+                  <span class="subtree-item-name">JS 与工具函数</span>
+                </span>
+              </a>
+              <a href="../index.html?tag=%E5%BE%AE%E4%BF%A1%E5%B0%8F%E7%A8%8B%E5%BA%8F" class="subtree-item category-filter-btn" data-tag="微信小程序" data-label="微信小程序" title="微信小程序">
+                <span class="subtree-item-left">
+                  <span class="subtree-item-dot"></span>
+                  <span class="subtree-item-name">微信小程序</span>
+                </span>
+              </a>
+            </div>
+          </div>
+
+          <!-- 专栏：Linux 与服务端 -->
+          <div class="nav-item-tree">
+            <div class="tree-header-row">
+              <a href="../index.html?tag=Linux" class="sidebar-nav-item category-filter-btn" data-tag="Linux" data-label="Linux 与服务端" title="Linux 与服务端">
+                <span class="nav-item-left">
+                  <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="8" rx="2" ry="2"></rect><rect x="2" y="14" width="20" height="8" rx="2" ry="2"></rect><line x1="6" y1="6" x2="6.01" y2="6"></line><line x1="6" y1="18" x2="6.01" y2="18"></line></svg>
+                  <span class="nav-item-text">Linux 与服务端</span>
+                </span>
+              </a>
+              <button type="button" class="subtree-toggle-btn" aria-label="展开或折叠Linux 与服务端子菜单" title="展开或折叠Linux 与服务端">
+                <svg class="chevron-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+              </button>
+            </div>
+            <div class="nav-subtree">
+              <a href="../index.html?tag=Docker" class="subtree-item category-filter-btn" data-tag="Docker" data-label="Docker 与容器" title="Docker 与容器">
+                <span class="subtree-item-left">
+                  <span class="subtree-item-dot"></span>
+                  <span class="subtree-item-name">Docker 与容器</span>
+                </span>
+              </a>
+              <a href="../index.html?tag=Nginx" class="subtree-item category-filter-btn" data-tag="Nginx" data-label="网络与反代" title="网络与反代">
+                <span class="subtree-item-left">
+                  <span class="subtree-item-dot"></span>
+                  <span class="subtree-item-name">网络与反代</span>
+                </span>
+              </a>
+              <a href="../index.html?tag=%E5%8E%8B%E5%8A%9B%E6%B5%8B%E8%AF%95" class="subtree-item category-filter-btn" data-tag="压力测试" data-label="性能与压测" title="性能与压测">
+                <span class="subtree-item-left">
+                  <span class="subtree-item-dot"></span>
+                  <span class="subtree-item-name">性能与压测</span>
+                </span>
+              </a>
+            </div>
+          </div>
+
+          <!-- 专栏：效率工具与软件 -->
+          <div class="nav-item-tree">
+            <div class="tree-header-row">
+              <a href="../index.html?tag=%E6%95%88%E7%8E%87%E5%B7%A5%E5%85%B7" class="sidebar-nav-item category-filter-btn" data-tag="效率工具" data-label="效率工具与软件" title="效率工具与软件">
+                <span class="nav-item-left">
+                  <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"></path></svg>
+                  <span class="nav-item-text">效率工具与软件</span>
+                </span>
+              </a>
+              <button type="button" class="subtree-toggle-btn" aria-label="展开或折叠效率工具与软件子菜单" title="展开或折叠效率工具与软件">
+                <svg class="chevron-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+              </button>
+            </div>
+            <div class="nav-subtree">
+              <a href="../index.html?tag=Git" class="subtree-item category-filter-btn" data-tag="Git" data-label="Git 与 SVN" title="Git 与 SVN">
+                <span class="subtree-item-left">
+                  <span class="subtree-item-dot"></span>
+                  <span class="subtree-item-name">Git 与 SVN</span>
+                </span>
+              </a>
+              <a href="../index.html?tag=Claude" class="subtree-item category-filter-btn" data-tag="Claude" data-label="Claude 与 AI" title="Claude 与 AI">
+                <span class="subtree-item-left">
+                  <span class="subtree-item-dot"></span>
+                  <span class="subtree-item-name">Claude 与 AI</span>
+                </span>
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <div class="sidebar-nav-group">
+          <div class="nav-group-title">导航与资源</div>
+          <a href="../ai.html" class="sidebar-nav-item " title="AI 导航">
+            <span class="nav-item-left">
+              <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+              <span class="nav-item-text">AI 导航</span>
+            </span>
+          </a>
+          <a href="../tools.html" class="sidebar-nav-item " title="工具导航">
+            <span class="nav-item-left">
+              <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"></path></svg>
+              <span class="nav-item-text">工具导航</span>
+            </span>
+          </a>
+          <a href="../node-vle.html" class="sidebar-nav-item " title="节点生成器">
+            <span class="nav-item-left">
+              <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>
+              <span class="nav-item-text">节点生成器</span>
+            </span>
+          </a>
+          <a href="../nav.html" class="sidebar-nav-item " title="GitHub 导航">
+            <span class="nav-item-left">
+              <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"></polygon></svg>
+              <span class="nav-item-text">GitHub 导航</span>
+            </span>
+          </a>
+          <a href="../files.html" class="sidebar-nav-item " title="资源文件库">
+            <span class="nav-item-left">
+              <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path><line x1="12" y1="11" x2="12" y2="17"></line><line x1="9" y1="14" x2="15" y2="14"></line></svg>
+              <span class="nav-item-text">资源文件库</span>
+            </span>
+          </a>
+          <a href="https://github.com/vmrey/vmrey.github.io" target="_blank" rel="noopener noreferrer" class="sidebar-nav-item" title="GitHub 源码">
+            <span class="nav-item-left">
+              <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0 9 18.13V22"></path></svg>
+              <span class="nav-item-text">GitHub 源码</span>
+            </span>
+          </a>
+          <a href="../about.html" class="sidebar-nav-item " title="关于本站">
+            <span class="nav-item-left">
+              <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+              <span class="nav-item-text">关于本站</span>
+            </span>
+          </a>
+        </div>
+      </div>
+
+      <!-- 底部区域：主题切换与版权声明 -->
+      <div class="sidebar-footer">
+        <div class="theme-toggle-row">
+          <span id="theme-mode-text">深色模式</span>
+          <button id="theme-toggle" class="theme-toggle-btn" type="button" title="切换主题外观"></button>
+        </div>
+        <div class="sidebar-copyright">
+          © 2018-<span class="current-year">2026</span> vmrey.github.io<br>用代码与文字记录探索
+        </div>
+      </div>
+    </aside>
+
+    <!-- 主内容区 -->
+    <main class="app-main">
+      <div class="article-container">
+        <!-- 文章标题与元数据头部 -->
+        <header class="article-header">
+          <a href="../index.html" class="back-link">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
+            <span>返回文章列表</span>
+          </a>
+          <h1 class="article-title">Nginx 路径重写进阶：告别正则变量冲突，掌握命名捕获与内置变量极致写法</h1>
+          <div class="article-meta">
+            <span class="post-block-tag">Linux 与服务端</span>
+            <span>·</span>
+            <time datetime="2026-08-29">2026-08-29</time>
+            <span>·</span>
+            <span>6 分钟阅读</span>
+          </div>
+        </header>
+
+        <!-- 正文内容区 -->
+        <div class="article-layout">
+          <article class="article-content" id="main-content">
+            <div class="prose">
+<p>在 Nginx 配置中，为静态资源（如 <code>js</code>、<code>css</code>、<code>png</code>）配置长效浏览器缓存，并将它们在后台透明重定向到特定的缓存存储目录，是非常经典的反代与动静分离场景。</p>
+<p>然而，很多开发者在编写正则表达式时，习惯使用系统默认的位置变量 <code>$1</code>、<code>$2</code>。这往往会埋下一个极其隐蔽的致命陷阱：<strong>当外层 <code>location</code> 与内层 <code>rewrite</code> 同时使用了正则表达式时，内层的正则捕获会直接覆盖外层的 <code>$1</code>，导致重定向逻辑错乱或频繁出现 404</strong>。</p>
+<p>本文将通过静态资源缓存重写的经典案例，深入剖析变量覆盖的底层根因，并分享两种高级、安全且极度优雅的生产级 Nginx 配置方案。</p>
+<hr>
+<h2 id="一-核心问题-位置变量-1-的覆盖与污染">🧭 一、核心问题：位置变量 $1 的覆盖与污染</h2>
+<p>在排查 Bug 之前，我们先理清位置捕获变量 <code>$1</code> 在 Nginx 执行上下文中的流转机制：</p>
+<div class="mermaid-wrap"><pre class="mermaid">flowchart TB
+    Req[&quot;用户请求: /assets/js/main.js&quot;]
+    
+    subgraph BugCase[&quot;❌ 传统位置变量覆盖陷阱&quot;]
+        L1[&quot;location ~* \.(js|css)$ 匹配成功&lt;br/&gt;📌 $1 赋值为 'js'&quot;]
+        R1[&quot;rewrite ^(.*)$ /cache/$1 break&lt;br/&gt;💥 触发新正则，$1 被强制覆盖为 '/assets/js/main.js'&quot;]
+        Err[&quot;最终拼接结果失控或丢失扩展名，引发 404&quot;]
+        L1 --&gt; R1 --&gt; Err
+    end
+
+    subgraph FixCase[&quot;✅ 现代化命名捕获与内置变量&quot;]
+        L2[&quot;location ~* \.(?&lt;ext&gt;js|css)$&lt;br/&gt;🏷️ 独立命名变量 $ext = 'js' (永不被冲刷)&quot;]
+        R2[&quot;rewrite ^ /cache$uri break&lt;br/&gt;⚡ 零正则计算，直接引用全局内置变量 $uri&quot;]
+        Ok[&quot;路径精准拼接，CPU 开销最低，100% 健壮&quot;]
+        L2 --&gt; R2 --&gt; Ok
+    end
+
+    Req --&gt; BugCase
+    Req --&gt; FixCase</pre></div>
+<hr>
+<h2 id="二-典型业务场景需求">🎯 二、典型业务场景需求</h2>
+<p>假设我们有以下常见的生产配置需求：</p>
+<ol>
+<li><strong>后缀拦截</strong>：拦截所有以 <code>.js</code> 或 <code>.css</code> 结尾的静态文件请求；
+</li>
+<li><strong>长效缓存</strong>：设置 <code>expires 30d;</code>（30 天浏览器客户端强缓存）；
+</li>
+<li><strong>静默重定向</strong>：在后台透明重写到服务器本地的 <code>/wp-content/cache/staticfile/</code> 静态缓存目录，且不改变浏览器地址栏 URL。
+</li>
+</ol>
+<hr>
+<h2 id="三-写法一-pcre-正则命名捕获-安全自解释">💡 三、写法一：PCRE 正则命名捕获（安全自解释）</h2>
+<p>利用 PCRE（Perl Compatible Regular Expressions）的<strong>命名捕获（Named Capture）</strong>特性，我们可以直接给正则匹配到的分组成果“显式贴上命名标签”，彻底避免 <code>$1</code> 被后续逻辑无情冲刷：</p>
+<pre><code class="language-nginx">location ~* \.(?&lt;ext&gt;js|css)$ {
+    # 开启客户端强缓存 30 天
+    expires 30d;
+    add_header Cache-Control &quot;public, no-transform&quot;;
+
+    # 将完整路径 (.*) 显式命名为 fullpath，生成独立变量 $fullpath
+    rewrite ^(?&lt;fullpath&gt;.*)$ /wp-content/cache/staticfile$fullpath break;
+}</code></pre>
+<h3 id="逐行原理解析">逐行原理解析：</h3>
+<ol>
+<li><strong><code>(?&lt;ext&gt;js|css)</code></strong>：相比传统的 <code>(js|css)</code>，加上 <code>?&lt;ext&gt;</code> 后，Nginx 会在内存中自动生成一个名为 <strong><code>$ext</code></strong> 的专属变量，其值为 <code>js</code> 或 <code>css</code>。它拥有独立的命名空间，绝对不会被后续的任何正则覆盖；
+</li>
+<li><strong><code>^(?&lt;fullpath&gt;.*)$</code></strong>：在 <code>rewrite</code> 指令中同样使用命名捕获，将用户请求的完整路径存入 <strong><code>$fullpath</code></strong> 变量；
+</li>
+<li><strong><code>break</code> 标志位</strong>：完成内部路径重写后，立即终止当前阶段的 rewrite 规则，直接去磁盘寻找对应文件并返回，不再参与后续其他 location 的重新匹配。
+</li>
+</ol>
+<div class="callout"><p>[!TIP]<br><strong>适用场景</strong>：代码“自解释”能力极强。团队接手维护时，无需反复数括号推测 <code>$1</code>、<code>$2</code> 代表什么，<code>$ext</code> 和 <code>$fullpath</code> 的业务意图一目了然。</p></div>
+<hr>
+<h2 id="四-写法二-内置变量-uri-极致优雅-性能最高">⚡ 四、写法二：内置变量 $uri（极致优雅、性能最高）</h2>
+<p>虽然“命名捕获”非常清晰，但针对“获取当前请求的完整 URI 路径”这一需求，Nginx 原生提供了性能更高的全局内置变量：<strong><code>$uri</code></strong>。</p>
+<p>既然 <code>$uri</code> 本身就代表了当前的完整规范化请求路径（如 <code>/assets/js/main.js</code>），我们完全可以省去 <code>rewrite</code> 中的正则匹配与字符串捕获开销：</p>
+<pre><code class="language-nginx"># ✅ 专家级推荐：极致优雅且性能最高的写法
+location ~* \.(?&lt;ext&gt;js|css)$ {
+    # 开启客户端强缓存 30 天
+    expires 30d;
+    add_header Cache-Control &quot;public, no-transform&quot;;
+
+    # rewrite 正则缩减为单个 ^，直接拼接全局变量 $uri
+    rewrite ^ /wp-content/cache/staticfile$uri break;
+}</code></pre>
+<h3 id="逐行原理解析">逐行原理解析：</h3>
+<ol>
+<li><strong><code>location</code> 块保留命名捕获</strong>：保留 <code>(?&lt;ext&gt;...)</code> 是良好习惯，方便后续如果需要在响应头输出 <code>add_header X-Asset-Type $ext;</code> 时随取随用；
+</li>
+<li><strong><code>rewrite ^</code></strong>：这里的正则表达式被精简到了极致——只有一个 <code>^</code>（匹配任意请求的起点）。<strong>完全没有捕获括号，省去了正则回溯与内存分配的 CPU 开销</strong>；
+</li>
+<li><strong><code>$uri</code></strong>：直接读取 Nginx 内核在解析请求行时就已初始化的内置变量 <code>$uri</code>，实现纳秒级的高效无缝拼接。
+</li>
+</ol>
+<hr>
+<h2 id="五-三种写法深度对比矩阵">📊 五、三种写法深度对比矩阵</h2>
+<div class="table-container">
+<table class="markdown-table">
+  <thead>
+    <tr>
+      <th style="text-align: left">对比维度</th>
+      <th style="text-align: left">传统写法 (<code>$1</code> / <code>$2</code>)</th>
+      <th style="text-align: left">进阶写法一 (命名捕获 <code>(?&lt;name&gt;)</code>)</th>
+      <th style="text-align: left">进阶写法二 (内置变量 <code>$uri</code>)</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: left"><strong>可读性与自解释</strong></td>
+      <td style="text-align: left">🔴 极差（容易数错分组）</td>
+      <td style="text-align: left">🟢 极佳（显式语义化变量名）</td>
+      <td style="text-align: left">🟢 极佳（极简直观）</td>
+    </tr>
+    <tr>
+      <td style="text-align: left"><strong>抗覆盖安全性</strong></td>
+      <td style="text-align: left">🔴 极易被嵌套 rewrite 污染</td>
+      <td style="text-align: left">🟢 100% 隔离安全</td>
+      <td style="text-align: left">🟢 100% 隔离安全</td>
+    </tr>
+    <tr>
+      <td style="text-align: left"><strong>CPU 正则开销</strong></td>
+      <td style="text-align: left">🟡 两次正则捕获开销</td>
+      <td style="text-align: left">🟡 两次正则命名捕获开销</td>
+      <td style="text-align: left">🟢 <strong>最低（仅一次后缀正则，重写 0 计算）</strong></td>
+    </tr>
+    <tr>
+      <td style="text-align: left"><strong>维护成本</strong></td>
+      <td style="text-align: left">🔴 易踩 404 隐蔽 Bug</td>
+      <td style="text-align: left">🟢 低</td>
+      <td style="text-align: left">🟢 极低</td>
+    </tr>
+    <tr>
+      <td style="text-align: left"><strong>综合推荐指数</strong></td>
+      <td style="text-align: left">❌ 强烈弃用</td>
+      <td style="text-align: left">⭐⭐⭐⭐</td>
+      <td style="text-align: left">⭐⭐⭐⭐⭐ <strong>(首选)</strong></td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+<hr>
+<h2 id="六-常见疑问-需要安装第三方模块吗">❓ 六、常见疑问：需要安装第三方模块吗？</h2>
+<p>很多开发者在看到 <code>(?&lt;name&gt;...)</code> 这类语法时，常常会有疑虑：<em>“我的 Nginx 支持这种写法吗？需要额外编译 Lua 模块或第三方扩展吗？”</em></p>
+<p><strong>答案是：100% 原生支持，零额外依赖！</strong></p>
+<ol>
+<li><strong>PCRE 命名捕获支持</strong>：Nginx 底层正则引擎基于 PCRE。早在 <strong>Nginx 0.8.25（2009 年发布）</strong> 版本起，官方就已原生打通了命名捕获与 Nginx 变量系统的无缝绑定；
+</li>
+<li><strong><code>$uri</code> 与 <code>rewrite</code></strong>：分别内置于 <code>ngx_http_core_module</code>（核心模块）与 <code>ngx_http_rewrite_module</code>（重写模块），是 Nginx 默认编译的核心基石。
+</li>
+</ol>
+<p>无论是通过 <code>apt</code> / <code>yum</code>、宝塔面板、1Panel、Docker 容器还是官方源码编译安装的 Nginx，均可直接使用。</p>
+<hr>
+<h2 id="七-生产环境重载自检-checklist">📋 七、生产环境重载自检 Checklist</h2>
+<p>在更新线上 Nginx 配置时，请严格遵守以下自检流程：</p>
+<ul class="task-list">
+<li class="task-list-item"><input type="checkbox" disabled  class="task-checkbox"> <span><strong>语法自检</strong>：执行 <code>nginx -t</code>，确认输出 <code>syntax is ok</code> 与 <code>test is successful</code>；</span>
+</li>
+<li class="task-list-item"><input type="checkbox" disabled  class="task-checkbox"> <span><strong>重写验证</strong>：使用 <code>curl -I https://yourdomain.com/assets/js/app.js</code> 检查返回的 <code>HTTP/2 200</code> 状态码与 <code>Cache-Control</code> 标头；</span>
+</li>
+<li class="task-list-item"><input type="checkbox" disabled  class="task-checkbox"> <span><strong>平滑重载</strong>：执行 <code>nginx -s reload</code>，实现毫秒级无损热生效。</span>
+</li>
+</ul>
+<hr>
+<h2 id="八-总结">🎯 八、总结</h2>
+<p>在编写现代 Nginx 配置时，请牢记两条黄金法则：</p>
+<ol>
+<li><strong>远离未知风险</strong>：坚决摒弃脆弱的 <code>$1</code> / <code>$2</code> 位置变量，复杂匹配优先选用 <strong><code>(?&lt;name&gt;...)</code> 命名捕获</strong>；
+</li>
+<li><strong>性能与简洁至上</strong>：能用 Nginx 原生全局变量（如 <code>$uri</code>、<code>$host</code>、<code>$request_uri</code>）解决的场景，<strong>优先使用内置变量直接拼接</strong>。
+</li>
+</ol>
+            </div>
+
+            <div class="post-block-footer" style="margin-top: 3.5rem; padding-top: 1.5rem;">
+              <a href="../index.html" class="read-more-text">
+                <span>← 返回文章专栏</span>
+              </a>
+            </div>
+          </article>
+        </div>
+      </div>
+
+        <!-- 右侧文章大纲 TOC -->
+        <aside class="article-toc-panel" aria-label="文章目录大纲">
+          <div class="toc-box">
+            <div class="toc-box-title">本页导读 · 快速直达</div>
+            <ul class="toc-list">
+            <li>
+              <a href="#一-核心问题-位置变量-1-的覆盖与污染" class="toc-link" title="🧭 一、核心问题：位置变量 $1 的覆盖与污染">🧭 一、核心问题：位置变量 $1 的覆盖与污染</a>
+            </li>
+            <li>
+              <a href="#二-典型业务场景需求" class="toc-link" title="🎯 二、典型业务场景需求">🎯 二、典型业务场景需求</a>
+            </li>
+            <li>
+              <a href="#三-写法一-pcre-正则命名捕获-安全自解释" class="toc-link" title="💡 三、写法一：PCRE 正则命名捕获（安全自解释）">💡 三、写法一：PCRE 正则命名捕获（安全自解释）</a>
+            </li>
+            <li>
+              <a href="#逐行原理解析" class="toc-link" title="逐行原理解析：">逐行原理解析：</a>
+            </li>
+            <li>
+              <a href="#四-写法二-内置变量-uri-极致优雅-性能最高" class="toc-link" title="⚡ 四、写法二：内置变量 $uri（极致优雅、性能最高）">⚡ 四、写法二：内置变量 $uri（极致优雅、性能最高）</a>
+            </li>
+            <li>
+              <a href="#逐行原理解析" class="toc-link" title="逐行原理解析：">逐行原理解析：</a>
+            </li>
+            <li>
+              <a href="#五-三种写法深度对比矩阵" class="toc-link" title="📊 五、三种写法深度对比矩阵">📊 五、三种写法深度对比矩阵</a>
+            </li>
+            <li>
+              <a href="#六-常见疑问-需要安装第三方模块吗" class="toc-link" title="❓ 六、常见疑问：需要安装第三方模块吗？">❓ 六、常见疑问：需要安装第三方模块吗？</a>
+            </li>
+            <li>
+              <a href="#七-生产环境重载自检-checklist" class="toc-link" title="📋 七、生产环境重载自检 Checklist">📋 七、生产环境重载自检 Checklist</a>
+            </li>
+            <li>
+              <a href="#八-总结" class="toc-link" title="🎯 八、总结">🎯 八、总结</a>
+            </li>
+            </ul>
+          </div>
+        </aside>
+    </main>
+
+  </div>
+
+  <!-- 全局回到顶部按钮 (右下角固定) -->
+  <button id="back-to-top-btn" class="back-to-top-btn" type="button" title="回到顶部" aria-label="回到顶部">
+    <svg class="back-to-top-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+      <polyline points="18 15 12 9 6 15"></polyline>
+    </svg>
+  </button>
+
+  <script defer src="../js/config.js"></script>
+  <script defer src="../data/search-index.js"></script>
+  <script defer src="../js/main.js"></script>
+  <script defer src="../js/prism.js"></script>
+  <script defer src="../js/search.js"></script>
+  <script defer src="../js/file-preview.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+  <script>
+
+    async function initMermaidChart() {
+      if (window.mermaid) {
+        const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+        mermaid.initialize({
+          startOnLoad: false,
+          theme: isDark ? 'dark' : 'neutral',
+          securityLevel: 'loose',
+          fontFamily: 'inherit'
+        });
+        try {
+          await mermaid.run({ querySelector: '.mermaid' });
+        } catch (e) {
+          console.warn('Mermaid render notice:', e);
+        }
+        if (typeof window.initDiagramViewer === 'function') {
+          window.initDiagramViewer();
+        }
+      }
+    }
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', initMermaidChart);
+    } else {
+      initMermaidChart();
+    }
+  </script>
+</body>
+</html>

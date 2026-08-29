@@ -49,6 +49,12 @@
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://vmrey.github.io/posts/nginx-rewrite-vars-f411.html</loc>
+    <lastmod>2026-08-29</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://vmrey.github.io/posts/nginx-wx-qrcode-7fef.html</loc>
     <lastmod>2026-08-29</lastmod>
     <changefreq>monthly</changefreq>

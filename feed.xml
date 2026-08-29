@@ -5,7 +5,7 @@
     <link>https://vmrey.github.io/</link>
     <description>构建工具，写干净的代码</description>
     <language>zh-CN</language>
-    <lastBuildDate>Sat, 29 Aug 2026 12:30:13 GMT</lastBuildDate>
+    <lastBuildDate>Sat, 29 Aug 2026 13:06:41 GMT</lastBuildDate>
     <atom:link href="https://vmrey.github.io/feed.xml" rel="self" type="application/rss+xml"/>
     <item>
       <title>微信小程序与跨端开发排坑：彻底搞定键盘遮挡与输入框文字溢出（全平台兼容指南）</title>
@@ -14,6 +14,14 @@
       <pubDate>Sat, 29 Aug 2026 00:00:00 GMT</pubDate>
       <category>前端开发</category>
       <description>深入剖析微信小程序与移动端跨端（uni-app/H5）开发中两大高频表单交互 Bug——软键盘遮挡输入框与 Flex 占位符溢出挤压，提供小程序、iOS、Android、HarmonyOS 与 H5 全系统兼容解决方案与避坑清单。</description>
+    </item>
+    <item>
+      <title>Nginx 路径重写进阶：告别正则变量冲突，掌握命名捕获与内置变量极致写法</title>
+      <link>https://vmrey.github.io/posts/nginx-rewrite-vars-f411.html</link>
+      <guid isPermaLink="true">https://vmrey.github.io/posts/nginx-rewrite-vars-f411.html</guid>
+      <pubDate>Sat, 29 Aug 2026 00:00:00 GMT</pubDate>
+      <category>Linux 与服务端</category>
+      <description>深入剖析 Nginx 中 location 与 rewrite 嵌套时 $1 位置变量被无情覆盖的经典根因，提供基于 PCRE 命名捕获 (?&lt;name&gt;) 与全局内置变量 $uri 的两种高级生产级重写写法及性能对比。</description>
     </item>
     <item>
       <title>Nginx 极简动态配置指南：一套规则承载 N 个微信小程序普通二维码与 H5 智能兜底</title>
@@ -238,14 +246,6 @@
       <pubDate>Wed, 15 Apr 2026 00:00:00 GMT</pubDate>
       <category>前端开发</category>
       <description>结合 input 事件过滤、粘贴拦截与最新 11 位号段正则，打造极致体验的手机号输入框校验。</description>
-    </item>
-    <item>
-      <title>使用 contenteditable 与 div 完美模拟 Textarea 高度自适应效果</title>
-      <link>https://vmrey.github.io/posts/textarea-auto-height-8ea2.html</link>
-      <guid isPermaLink="true">https://vmrey.github.io/posts/textarea-auto-height-8ea2.html</guid>
-      <pubDate>Wed, 08 Apr 2026 00:00:00 GMT</pubDate>
-      <category>前端开发</category>
-      <description>解决传统 textarea 滚动条闪烁与高度伸缩卡顿问题，通过 contenteditable 与 CSS 构建丝滑自适应输入框。</description>
     </item>
   </channel>
 </rss>
