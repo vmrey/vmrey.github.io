@@ -5,8 +5,16 @@
     <link>https://vmrey.github.io/</link>
     <description>构建工具，写干净的代码</description>
     <language>zh-CN</language>
-    <lastBuildDate>Sat, 29 Aug 2026 01:45:32 GMT</lastBuildDate>
+    <lastBuildDate>Sat, 29 Aug 2026 11:49:24 GMT</lastBuildDate>
     <atom:link href="https://vmrey.github.io/feed.xml" rel="self" type="application/rss+xml"/>
+    <item>
+      <title>微信小程序与跨端开发排坑：彻底搞定键盘遮挡与输入框文字溢出（全平台兼容指南）</title>
+      <link>https://vmrey.github.io/posts/miniprogram-form-bugs-248d.html</link>
+      <guid isPermaLink="true">https://vmrey.github.io/posts/miniprogram-form-bugs-248d.html</guid>
+      <pubDate>Sat, 29 Aug 2026 00:00:00 GMT</pubDate>
+      <category>前端开发</category>
+      <description>深入剖析微信小程序与移动端跨端（uni-app/H5）开发中两大高频表单交互 Bug——软键盘遮挡输入框与 Flex 占位符溢出挤压，提供小程序、iOS、Android、HarmonyOS 与 H5 全系统兼容解决方案与避坑清单。</description>
+    </item>
     <item>
       <title>Redis 核心操作：数据清空与内存淘汰策略详解</title>
       <link>https://vmrey.github.io/posts/redis-65f8.html</link>
@@ -238,14 +246,6 @@
       <pubDate>Wed, 25 Mar 2026 00:00:00 GMT</pubDate>
       <category>前端开发</category>
       <description>利用 Promisify 模式批量将 wx.request、wx.showModal 等回调式 API 转为标准的 async/await 同步写法。</description>
-    </item>
-    <item>
-      <title>微信小程序自定义组件监听 properties 属性变化的优雅实现</title>
-      <link>https://vmrey.github.io/posts/wx-property-watch-0b0e.html</link>
-      <guid isPermaLink="true">https://vmrey.github.io/posts/wx-property-watch-0b0e.html</guid>
-      <pubDate>Wed, 18 Mar 2026 00:00:00 GMT</pubDate>
-      <category>前端开发</category>
-      <description>详解小程序 Component 中的 observer 监听机制，以及在 Page 页面中通过 Object.defineProperty 实现 Watch 监听。</description>
     </item>
   </channel>
 </rss>

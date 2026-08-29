@@ -1,0 +1,856 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>微信小程序与跨端开发排坑：彻底搞定键盘遮挡与输入框文字溢出（全平台兼容指南） - vmrey.github.io</title>
+  <meta name="description" content="深入剖析微信小程序与移动端跨端（uni-app/H5）开发中两大高频表单交互 Bug——软键盘遮挡输入框与 Flex 占位符溢出挤压，提供小程序、iOS、Android、HarmonyOS 与 H5 全系统兼容解决方案与避坑清单。">
+  <meta name="keywords" content="前端开发, 微信小程序, uni-app, 跨端开发, CSS, 避坑指南">
+  <meta name="author" content="vmrey">
+  <meta name="robots" content="index, follow">
+  <meta name="google-site-verification" content="Vi8ircfK8SuZNzZBrtU7av_aXeiUKrLDKgef-84unTM">
+  <link rel="canonical" href="https://vmrey.github.io/posts/miniprogram-form-bugs-248d.html">
+  <link rel="alternate" type="application/rss+xml" title="vmrey.github.io RSS 订阅源" href="https://vmrey.github.io/feed.xml">
+  <link rel="alternate" type="text/plain" title="LLMs.txt AI 知识索引" href="https://vmrey.github.io/llms.txt">
+  <link rel="icon" type="image/svg+xml" href="../favicon.svg">
+
+  <!-- Open Graph 社交卡片 (微信/QQ/Telegram/GitHub) -->
+  <meta property="og:site_name" content="vmrey's Blog">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="微信小程序与跨端开发排坑：彻底搞定键盘遮挡与输入框文字溢出（全平台兼容指南） - vmrey.github.io">
+  <meta property="og:description" content="深入剖析微信小程序与移动端跨端（uni-app/H5）开发中两大高频表单交互 Bug——软键盘遮挡输入框与 Flex 占位符溢出挤压，提供小程序、iOS、Android、HarmonyOS 与 H5 全系统兼容解决方案与避坑清单。">
+  <meta property="og:url" content="https://vmrey.github.io/posts/miniprogram-form-bugs-248d.html">
+  <meta property="og:image" content="https://vmrey.github.io/favicon.svg">
+
+  <!-- Twitter / X 社交卡片 -->
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="微信小程序与跨端开发排坑：彻底搞定键盘遮挡与输入框文字溢出（全平台兼容指南） - vmrey.github.io">
+  <meta name="twitter:description" content="深入剖析微信小程序与移动端跨端（uni-app/H5）开发中两大高频表单交互 Bug——软键盘遮挡输入框与 Flex 占位符溢出挤压，提供小程序、iOS、Android、HarmonyOS 与 H5 全系统兼容解决方案与避坑清单。">
+  <meta name="twitter:image" content="https://vmrey.github.io/favicon.svg">
+
+  <!-- 页面绘制前同步初始化深浅色主题，彻底杜绝首屏白屏闪烁 (Anti-FOUC) -->
+  <script>
+    (function() {
+      try {
+        var t = localStorage.getItem('theme');
+        if (!t) {
+          var isDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+          t = isDark ? 'dark' : 'light';
+        }
+        document.documentElement.setAttribute('data-theme', t);
+      } catch(e) {}
+    })();
+  </script>
+  
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "headline": "微信小程序与跨端开发排坑：彻底搞定键盘遮挡与输入框文字溢出（全平台兼容指南）",
+    "description": "深入剖析微信小程序与移动端跨端（uni-app/H5）开发中两大高频表单交互 Bug——软键盘遮挡输入框与 Flex 占位符溢出挤压，提供小程序、iOS、Android、HarmonyOS 与 H5 全系统兼容解决方案与避坑清单。",
+    "datePublished": "2026-08-29",
+    "dateModified": "2026-08-29",
+    "author": {
+      "@type": "Person",
+      "name": "vmrey",
+      "url": "https://vmrey.github.io/about.html"
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "vmrey.github.io",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "https://vmrey.github.io/favicon.svg"
+      }
+    },
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": "https://vmrey.github.io/posts/miniprogram-form-bugs-248d.html"
+    },
+    "keywords": "前端开发, 微信小程序, uni-app, 跨端开发, CSS, 避坑指南",
+    "articleSection": "前端开发"
+  }
+  </script>
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="../css/prism.css">
+</head>
+<body>
+
+  <!-- 移动端顶部标题导航条 -->
+  <div class="mobile-header">
+    <div class="mobile-title-wrap">
+      <svg class="mobile-book-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path>
+        <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path>
+        <line x1="9" y1="7" x2="15" y2="7"></line>
+        <line x1="9" y1="11" x2="13" y2="11"></line>
+      </svg>
+      <div class="mobile-title">vmrey.github.io</div>
+    </div>
+    <button id="menu-toggle-btn" class="menu-toggle-btn" aria-label="切换侧边栏菜单">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <line x1="3" y1="12" x2="21" y2="12"></line>
+        <line x1="3" y1="6" x2="21" y2="6"></line>
+        <line x1="3" y1="18" x2="21" y2="18"></line>
+      </svg>
+    </button>
+  </div>
+
+  <div id="sidebar-overlay" class="sidebar-overlay"></div>
+
+  <div class="app-layout">
+    
+    <!-- 左侧常驻导航 -->
+    <aside class="app-sidebar" id="app-sidebar">
+      <!-- 顶部固定区域：Logo、标题与全局搜索 -->
+      <div class="sidebar-header-section">
+        <div class="sidebar-header-row">
+          <a href="../index.html" class="sidebar-brand">
+            <div class="sidebar-avatar" title="vmrey.github.io 博客">
+              <svg class="sidebar-avatar-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path>
+                <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path>
+                <line x1="9" y1="7" x2="15" y2="7"></line>
+                <line x1="9" y1="11" x2="13" y2="11"></line>
+              </svg>
+            </div>
+            <div class="sidebar-info">
+              <div class="sidebar-name">vmrey.github.io</div>
+              <div class="sidebar-tagline">构建工具，写干净的代码</div>
+            </div>
+          </a>
+          <button type="button" id="sidebar-collapse-btn" class="sidebar-collapse-btn" title="折叠/展开侧边栏 (PC)" aria-label="折叠侧边栏">
+            <svg class="collapse-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="15 18 9 12 15 6"></polyline>
+            </svg>
+          </button>
+        </div>
+
+        <!-- 左侧全局搜索快捷入口 (支持 ⌘K) -->
+        <button class="sidebar-search-btn open-search-modal" type="button" title="全站深度全文搜索 (Cmd+K)">
+          <span class="search-btn-left">
+            <svg class="search-icon" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="11" cy="11" r="8"></circle>
+              <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+            </svg>
+            <span class="search-btn-text">全文搜索...</span>
+          </span>
+          <kbd class="kbd-badge">⌘K</kbd>
+        </button>
+      </div>
+
+      <!-- 侧边栏菜单列表 -->
+      <div class="sidebar-nav-body">
+        <!-- 导航分组 1：分类专栏 (支持多层级子专栏) -->
+        <div class="sidebar-nav-group">
+          <div class="nav-group-title">文章专栏</div>
+          
+          <!-- 全部文章 -->
+          <a href="../index.html" class="sidebar-nav-item  category-filter-btn" data-tag="all" data-label="全部文章" title="全部文章">
+            <span class="nav-item-left">
+              <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg>
+              <span class="nav-item-text">全部文章</span>
+            </span>
+          </a>
+
+          <!-- 专栏：前端开发 -->
+          <div class="nav-item-tree">
+            <div class="tree-header-row">
+              <a href="../index.html?tag=%E5%89%8D%E7%AB%AF%E5%BC%80%E5%8F%91" class="sidebar-nav-item category-filter-btn" data-tag="前端开发" data-label="前端开发" title="前端开发">
+                <span class="nav-item-left">
+                  <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"></polyline><polyline points="8 6 2 12 8 18"></polyline></svg>
+                  <span class="nav-item-text">前端开发</span>
+                </span>
+              </a>
+              <button type="button" class="subtree-toggle-btn" aria-label="展开或折叠前端开发子菜单" title="展开或折叠前端开发">
+                <svg class="chevron-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+              </button>
+            </div>
+            <div class="nav-subtree">
+              <a href="../index.html?tag=Vue" class="subtree-item category-filter-btn" data-tag="Vue" data-label="Vue 与组件" title="Vue 与组件">
+                <span class="subtree-item-left">
+                  <span class="subtree-item-dot"></span>
+                  <span class="subtree-item-name">Vue 与组件</span>
+                </span>
+              </a>
+              <a href="../index.html?tag=JavaScript" class="subtree-item category-filter-btn" data-tag="JavaScript" data-label="JS 与工具函数" title="JS 与工具函数">
+                <span class="subtree-item-left">
+                  <span class="subtree-item-dot"></span>
+                  <span class="subtree-item-name">JS 与工具函数</span>
+                </span>
+              </a>
+              <a href="../index.html?tag=%E5%BE%AE%E4%BF%A1%E5%B0%8F%E7%A8%8B%E5%BA%8F" class="subtree-item category-filter-btn" data-tag="微信小程序" data-label="微信小程序" title="微信小程序">
+                <span class="subtree-item-left">
+                  <span class="subtree-item-dot"></span>
+                  <span class="subtree-item-name">微信小程序</span>
+                </span>
+              </a>
+            </div>
+          </div>
+
+          <!-- 专栏：Linux 与服务端 -->
+          <div class="nav-item-tree">
+            <div class="tree-header-row">
+              <a href="../index.html?tag=Linux" class="sidebar-nav-item category-filter-btn" data-tag="Linux" data-label="Linux 与服务端" title="Linux 与服务端">
+                <span class="nav-item-left">
+                  <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="8" rx="2" ry="2"></rect><rect x="2" y="14" width="20" height="8" rx="2" ry="2"></rect><line x1="6" y1="6" x2="6.01" y2="6"></line><line x1="6" y1="18" x2="6.01" y2="18"></line></svg>
+                  <span class="nav-item-text">Linux 与服务端</span>
+                </span>
+              </a>
+              <button type="button" class="subtree-toggle-btn" aria-label="展开或折叠Linux 与服务端子菜单" title="展开或折叠Linux 与服务端">
+                <svg class="chevron-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+              </button>
+            </div>
+            <div class="nav-subtree">
+              <a href="../index.html?tag=Docker" class="subtree-item category-filter-btn" data-tag="Docker" data-label="Docker 与容器" title="Docker 与容器">
+                <span class="subtree-item-left">
+                  <span class="subtree-item-dot"></span>
+                  <span class="subtree-item-name">Docker 与容器</span>
+                </span>
+              </a>
+              <a href="../index.html?tag=Nginx" class="subtree-item category-filter-btn" data-tag="Nginx" data-label="网络与反代" title="网络与反代">
+                <span class="subtree-item-left">
+                  <span class="subtree-item-dot"></span>
+                  <span class="subtree-item-name">网络与反代</span>
+                </span>
+              </a>
+              <a href="../index.html?tag=%E5%8E%8B%E5%8A%9B%E6%B5%8B%E8%AF%95" class="subtree-item category-filter-btn" data-tag="压力测试" data-label="性能与压测" title="性能与压测">
+                <span class="subtree-item-left">
+                  <span class="subtree-item-dot"></span>
+                  <span class="subtree-item-name">性能与压测</span>
+                </span>
+              </a>
+            </div>
+          </div>
+
+          <!-- 专栏：效率工具与软件 -->
+          <div class="nav-item-tree">
+            <div class="tree-header-row">
+              <a href="../index.html?tag=%E6%95%88%E7%8E%87%E5%B7%A5%E5%85%B7" class="sidebar-nav-item category-filter-btn" data-tag="效率工具" data-label="效率工具与软件" title="效率工具与软件">
+                <span class="nav-item-left">
+                  <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"></path></svg>
+                  <span class="nav-item-text">效率工具与软件</span>
+                </span>
+              </a>
+              <button type="button" class="subtree-toggle-btn" aria-label="展开或折叠效率工具与软件子菜单" title="展开或折叠效率工具与软件">
+                <svg class="chevron-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+              </button>
+            </div>
+            <div class="nav-subtree">
+              <a href="../index.html?tag=Git" class="subtree-item category-filter-btn" data-tag="Git" data-label="Git 与 SVN" title="Git 与 SVN">
+                <span class="subtree-item-left">
+                  <span class="subtree-item-dot"></span>
+                  <span class="subtree-item-name">Git 与 SVN</span>
+                </span>
+              </a>
+              <a href="../index.html?tag=Claude" class="subtree-item category-filter-btn" data-tag="Claude" data-label="Claude 与 AI" title="Claude 与 AI">
+                <span class="subtree-item-left">
+                  <span class="subtree-item-dot"></span>
+                  <span class="subtree-item-name">Claude 与 AI</span>
+                </span>
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <div class="sidebar-nav-group">
+          <div class="nav-group-title">导航与资源</div>
+          <a href="../ai.html" class="sidebar-nav-item " title="AI 导航">
+            <span class="nav-item-left">
+              <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+              <span class="nav-item-text">AI 导航</span>
+            </span>
+          </a>
+          <a href="../tools.html" class="sidebar-nav-item " title="工具导航">
+            <span class="nav-item-left">
+              <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"></path></svg>
+              <span class="nav-item-text">工具导航</span>
+            </span>
+          </a>
+          <a href="../node-vle.html" class="sidebar-nav-item " title="节点生成器">
+            <span class="nav-item-left">
+              <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>
+              <span class="nav-item-text">节点生成器</span>
+            </span>
+          </a>
+          <a href="../nav.html" class="sidebar-nav-item " title="GitHub 导航">
+            <span class="nav-item-left">
+              <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"></polygon></svg>
+              <span class="nav-item-text">GitHub 导航</span>
+            </span>
+          </a>
+          <a href="../files.html" class="sidebar-nav-item " title="资源文件库">
+            <span class="nav-item-left">
+              <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path><line x1="12" y1="11" x2="12" y2="17"></line><line x1="9" y1="14" x2="15" y2="14"></line></svg>
+              <span class="nav-item-text">资源文件库</span>
+            </span>
+          </a>
+          <a href="https://github.com/vmrey/vmrey.github.io" target="_blank" rel="noopener noreferrer" class="sidebar-nav-item" title="GitHub 源码">
+            <span class="nav-item-left">
+              <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0 9 18.13V22"></path></svg>
+              <span class="nav-item-text">GitHub 源码</span>
+            </span>
+          </a>
+          <a href="../about.html" class="sidebar-nav-item " title="关于本站">
+            <span class="nav-item-left">
+              <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+              <span class="nav-item-text">关于本站</span>
+            </span>
+          </a>
+        </div>
+      </div>
+
+      <!-- 底部区域：主题切换与版权声明 -->
+      <div class="sidebar-footer">
+        <div class="theme-toggle-row">
+          <span id="theme-mode-text">深色模式</span>
+          <button id="theme-toggle" class="theme-toggle-btn" type="button" title="切换主题外观"></button>
+        </div>
+        <div class="sidebar-copyright">
+          © 2018-<span class="current-year">2026</span> vmrey.github.io<br>用代码与文字记录探索
+        </div>
+      </div>
+    </aside>
+
+    <!-- 主内容区 -->
+    <main class="app-main">
+      <div class="article-container">
+        <!-- 文章标题与元数据头部 -->
+        <header class="article-header">
+          <a href="../index.html" class="back-link">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
+            <span>返回文章列表</span>
+          </a>
+          <h1 class="article-title">微信小程序与跨端开发排坑：彻底搞定键盘遮挡与输入框文字溢出（全平台兼容指南）</h1>
+          <div class="article-meta">
+            <span class="post-block-tag">前端开发</span>
+            <span>·</span>
+            <time datetime="2026-08-29">2026-08-29</time>
+            <span>·</span>
+            <span>10 分钟阅读</span>
+          </div>
+        </header>
+
+        <!-- 正文内容区 -->
+        <div class="article-layout">
+          <article class="article-content" id="main-content">
+            <div class="prose">
+<p>在移动端与跨端开发（微信小程序、uni-app、移动端 H5、混合 Webview）中，表单页面的 UI 布局与输入交互向来是线上 Bug 的高发区。开发者经常会遇到两类极其顽固且在多端表现各异的体验问题：</p>
+<ol>
+<li><strong>软键盘弹起时输入框“半遮面”</strong>：键盘升起后，页面虽有推顶，但输入框只露出一半，下半部及下边框被键盘死死遮挡；
+</li>
+<li><strong>多列表单横向挤压变形</strong>：在双列或多列等分栅格中，右侧输入框的长 placeholder 占位符越界撑爆父容器，导致相邻的左侧输入框被挤压甚至无法点击。
+</li>
+</ol>
+<p>本文针对 <strong>微信小程序（Android / iOS / 鸿蒙 HarmonyOS NEXT）</strong>、<strong>移动端 H5（iOS Safari / Android Chrome / 鸿蒙 ArkWeb）</strong> 以及 <strong>uni-app 跨端 App</strong> 进行底层原理解析，并提供完整的全平台兼容适配代码与实战自检清单。</p>
+<hr>
+<h2 id="一-全平台兼容性与底层机制矩阵">📊 一、全平台兼容性与底层机制矩阵</h2>
+<p>不同操作系统与运行时环境处理软键盘与表单渲染的底层机制差异极大，了解这些机制是写出高健壮性代码的前提：</p>
+<div class="table-container">
+<table class="markdown-table">
+  <thead>
+    <tr>
+      <th style="text-align: left">平台 / 操作系统</th>
+      <th style="text-align: left">键盘弹起核心机制</th>
+      <th style="text-align: left"><code>cursor-spacing</code> 属性支持度</th>
+      <th style="text-align: left"><code>adjust-position</code> 属性支持度</th>
+      <th style="text-align: left">Flex <code>min-width: 0</code> CSS 规范支持度</th>
+      <th style="text-align: left">核心失效 / 踩坑场景</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: left"><strong>微信小程序 (iOS)</strong></td>
+      <td style="text-align: left">微信原生渲染层推顶</td>
+      <td style="text-align: left">🟢 完美支持 (单位 px)</td>
+      <td style="text-align: left">🟢 完美支持</td>
+      <td style="text-align: left">🟢 100% 完美支持</td>
+      <td style="text-align: left">页面套用了固定高度 <code>height: 100%</code> 或 <code>overflow: hidden</code> 导致推顶被阻断</td>
+    </tr>
+    <tr>
+      <td style="text-align: left"><strong>微信小程序 (Android)</strong></td>
+      <td style="text-align: left">微信原生渲染层推顶</td>
+      <td style="text-align: left">🟢 完美支持 (单位 px)</td>
+      <td style="text-align: left">🟢 完美支持</td>
+      <td style="text-align: left">🟢 100% 完美支持</td>
+      <td style="text-align: left">默认 24px 间距过小，高尺寸输入框下半截被键盘遮挡</td>
+    </tr>
+    <tr>
+      <td style="text-align: left"><strong>微信小程序 (HarmonyOS NEXT)</strong></td>
+      <td style="text-align: left">遵循微信官方跨平台基础库</td>
+      <td style="text-align: left">🟢 完美支持 (单位 px)</td>
+      <td style="text-align: left">🟢 完美支持</td>
+      <td style="text-align: left">🟢 100% 完美支持</td>
+      <td style="text-align: left">行为与 iOS/Android 微信基础库一致</td>
+    </tr>
+    <tr>
+      <td style="text-align: left"><strong>移动端 H5 (iOS Safari / Webview)</strong></td>
+      <td style="text-align: left">WebKit 视口自动滚动 (Scroll)</td>
+      <td style="text-align: left">⚪ 无效（标准 HTML 无此属性）</td>
+      <td style="text-align: left">⚪ 无效（标准 HTML 无此属性）</td>
+      <td style="text-align: left">🟢 100% 完美支持</td>
+      <td style="text-align: left">键盘收起后页面偶尔不回弹出现“大灰底”；绝对定位吸底按钮被顶乱</td>
+    </tr>
+    <tr>
+      <td style="text-align: left"><strong>移动端 H5 (Android Chrome)</strong></td>
+      <td style="text-align: left">Webview Resize / Pan</td>
+      <td style="text-align: left">⚪ 无效</td>
+      <td style="text-align: left">⚪ 无效</td>
+      <td style="text-align: left">🟢 100% 完美支持</td>
+      <td style="text-align: left">键盘弹起导致 <code>window.innerHeight</code> 缩小，影响绝对定位容器</td>
+    </tr>
+    <tr>
+      <td style="text-align: left"><strong>移动端 H5 (HarmonyOS 浏览器/ArkWeb)</strong></td>
+      <td style="text-align: left">ArkWeb 视口联动调整</td>
+      <td style="text-align: left">⚪ 无效</td>
+      <td style="text-align: left">⚪ 无效</td>
+      <td style="text-align: left">🟢 100% 完美支持</td>
+      <td style="text-align: left">遵循现代 Chromium/W3C 规范</td>
+    </tr>
+    <tr>
+      <td style="text-align: left"><strong>uni-app 跨端 App (iOS / Android / 鸿蒙)</strong></td>
+      <td style="text-align: left">原生窗口模式 (<code>softinputMode</code>)</td>
+      <td style="text-align: left">🟢 小程序/App 模式均支持</td>
+      <td style="text-align: left">🟢 小程序/App 模式均支持</td>
+      <td style="text-align: left">🟢 100% 完美支持</td>
+      <td style="text-align: left">复杂嵌套滚动视图未留足底部安全距离</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+<div class="callout"><p>[!NOTE]<br>- <strong>小程序专属属性</strong>：<code>adjust-position</code> 和 <code>cursor-spacing</code> 属于微信/支付宝等小程序规范扩展，在原生 HTML/H5 中会被浏览器当成未知属性忽略。<br>- <strong>CSS3 标准规范</strong>：Flex 容器子项的 <code>min-width: 0</code> 属于 W3C 现代标准规范，在所有现代移动浏览器、小程序、Webview 及各操作系统中均 <strong>100% 表现一致</strong>。</p></div>
+<hr>
+<h2 id="二-坑位一-键盘抬起遮挡输入框">🕳️ 二、坑位一：键盘抬起遮挡输入框</h2>
+<h3 id="1-现象描述">1. 现象描述</h3>
+<p>用户点击页面下半部分的输入框时，软键盘弹起，页面产生上移，但<strong>输入框仅露出上方文字，下半部边框甚至光标底端被键盘压住</strong>。在长表单或高度较大的输入框（如高度 50px 以上或多行 <code>textarea</code>）中尤为明显。</p>
+<h3 id="2-根因剖析">2. 根因剖析</h3>
+<ul>
+<li><strong>小程序底层逻辑</strong>：<code>&lt;input&gt;</code> 与 <code>&lt;textarea&gt;</code> 属于原生组件层。微信默认提供的 <code>cursor-spacing=&quot;24&quot;</code> 仅能保证光标点距离键盘 24px。如果输入框本身设计有较大的内边距（padding）或边框，光标露出来了，但输入框底部仍深陷键盘下方；
+</li>
+<li><strong>H5 端底层逻辑</strong>：H5 没有小程序的 <code>cursor-spacing</code> 机制，浏览器仅依据默认对齐算法尝试把焦点元素推入可视视口。一旦外层套了 <code>position: absolute</code>、<code>overflow: hidden</code> 或使用了局部滚动容器，浏览器自动滚动就会彻底失效。
+</li>
+</ul>
+<hr>
+<h3 id="3-针对不同场景的解决方案">3. 针对不同场景的解决方案</h3>
+<h4 id="方案-a-微信小程序-uni-app-小程序端专属参数调优-最简高效">方案 A：微信小程序 / uni-app 小程序端专属参数调优（最简高效）</h4>
+<p>针对微信小程序（iOS / Android / 鸿蒙 NEXT），显式声明 <code>:adjust-position=&quot;true&quot;</code>，并将 <code>cursor-spacing</code> 调大至 <code>80~100</code>：</p>
+<pre><code class="language-html">&lt;!-- 单行输入框 (Vue 3 / uni-app 语法) --&gt;
+&lt;input
+  v-model=&quot;formData.name&quot;
+  class=&quot;custom-input&quot;
+  type=&quot;text&quot;
+  placeholder=&quot;请输入联系人姓名&quot;
+  placeholder-class=&quot;placeholder-gray&quot;
+  :adjust-position=&quot;true&quot;
+  :cursor-spacing=&quot;100&quot; 
+/&gt;
+
+&lt;!-- 多行文本域 --&gt;
+&lt;textarea
+  v-model=&quot;formData.remark&quot;
+  class=&quot;custom-textarea&quot;
+  placeholder=&quot;请输入详细备注说明&quot;
+  placeholder-class=&quot;placeholder-gray&quot;
+  :adjust-position=&quot;true&quot;
+  :cursor-spacing=&quot;100&quot;
+/&gt;</code></pre>
+<div class="callout"><p>[!TIP]<br>- <strong>长表单页面</strong>：统一建议设置 <code>:cursor-spacing=&quot;100&quot;</code>（单位 px），保证输入框与操作提示完全露出；<br>- <strong>弹窗/Modal 表单</strong>：短表单建议保持 <code>24~40</code>，防止弹窗整体被推移出屏幕可见范围顶部。</p></div>
+<hr>
+<h4 id="方案-b-移动端-h5-专用平滑居中滚动与收起回弹方案">方案 B：移动端 H5 专用平滑居中滚动与收起回弹方案</h4>
+<p>在纯 H5 环境下（iOS Safari、Android Chrome、鸿蒙浏览器），通过 Vue 组合式 Hook 实现聚焦居中滚动与失焦回弹：</p>
+<pre><code class="language-typescript">// useH5InputScroll.ts - 移动端 H5 输入框聚焦与回弹解决方案
+import { onMounted, onUnmounted } from 'vue';
+
+export function useH5InputScroll() {
+  /**
+   * 输入框聚焦：平滑将元素滚动至屏幕中央
+   */
+  const handleFocus = (e: FocusEvent) =&gt; {
+    const target = e.target as HTMLElement;
+    if (!target) return;
+
+    // 延时 300ms 等待 iOS / Android 键盘弹起动画完成
+    setTimeout(() =&gt; {
+      if (typeof target.scrollIntoView === 'function') {
+        target.scrollIntoView({
+          behavior: 'smooth',
+          block: 'center', // 滚动到屏幕正中间，彻底避开键盘遮挡
+          inline: 'nearest'
+        });
+      }
+    }, 300);
+  };
+
+  /**
+   * 输入框失焦：解决 iOS Safari 键盘收起后页面留白卡住不回弹的 Bug
+   */
+  const handleBlur = () =&gt; {
+    // 仅在 iOS 环境下需要手动触发微小滚动回弹
+    const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent);
+    if (isIOS) {
+      setTimeout(() =&gt; {
+        const currentScrollY = window.scrollY || document.documentElement.scrollTop || 0;
+        window.scrollTo({
+          top: Math.max(currentScrollY - 1, 0),
+          behavior: 'smooth'
+        });
+      }, 100);
+    }
+  };
+
+  return { handleFocus, handleBlur };
+}</code></pre>
+<p>在模板中直接使用：</p>
+<pre><code class="language-html">&lt;template&gt;
+  &lt;input 
+    type=&quot;text&quot; 
+    class=&quot;h5-input&quot; 
+    placeholder=&quot;请输入手机号&quot; 
+    @focus=&quot;handleFocus&quot; 
+    @blur=&quot;handleBlur&quot; 
+  /&gt;
+&lt;/template&gt;
+
+&lt;script setup lang=&quot;ts&quot;&gt;
+import { useH5InputScroll } from './useH5InputScroll';
+const { handleFocus, handleBlur } = useH5InputScroll();
+&lt;/script&gt;</code></pre>
+<hr>
+<h4 id="方案-c-跨端通用终极方案-动态底部安全-padding-垫高">方案 C：跨端通用终极方案（动态底部安全 Padding 垫高）</h4>
+<p>对于使用 <code>&lt;scroll-view&gt;</code> 或局部滚动容器的复杂页面，通过监听键盘高度，在滚动容器底部<strong>动态垫出等于键盘高度的空白区</strong>：</p>
+<pre><code class="language-html">&lt;template&gt;
+  &lt;view class=&quot;page-wrapper&quot;&gt;
+    &lt;!-- 主滚动容器：动态绑定 padding-bottom --&gt;
+    &lt;scroll-view 
+      scroll-y 
+      class=&quot;form-scroll-view&quot; 
+      :style=&quot;{ paddingBottom: keyboardPadding + 'px' }&quot;
+    &gt;
+      &lt;view class=&quot;form-container&quot;&gt;
+        &lt;!-- 你的各类表单项 --&gt;
+        &lt;view class=&quot;form-item&quot; v-for=&quot;i in 10&quot; :key=&quot;i&quot;&gt;
+          &lt;text class=&quot;label&quot;&gt;字段 {{ i }}：&lt;/text&gt;
+          &lt;input class=&quot;input&quot; placeholder=&quot;点击输入内容&quot; /&gt;
+        &lt;/view&gt;
+      &lt;/view&gt;
+    &lt;/scroll-view&gt;
+
+    &lt;!-- 底部固定操作栏 --&gt;
+    &lt;view class=&quot;bottom-bar&quot; :style=&quot;{ transform: `translateY(-${keyboardHeight}px)` }&quot;&gt;
+      &lt;button class=&quot;submit-btn&quot;&gt;立即提交&lt;/button&gt;
+    &lt;/view&gt;
+  &lt;/view&gt;
+&lt;/template&gt;
+
+&lt;script setup&gt;
+import { ref, computed, onMounted, onUnmounted } from 'vue';
+
+const keyboardHeight = ref(0);
+
+// 计算动态 Padding：键盘高度 + 底部安全区
+const keyboardPadding = computed(() =&gt; {
+  return keyboardHeight.value &gt; 0 ? keyboardHeight.value + 20 : 0;
+});
+
+const onKeyboardHeightChange = (res) =&gt; {
+  keyboardHeight.value = res.height || 0;
+};
+
+onMounted(() =&gt; {
+  // #ifdef MP-WEIXIN || APP-PLUS
+  if (typeof uni !== 'undefined' &amp;&amp; uni.onKeyboardHeightChange) {
+    uni.onKeyboardHeightChange(onKeyboardHeightChange);
+  }
+  // #endif
+
+  // #ifdef H5
+  // H5 端通过现代 VisualViewport API 精确监听
+  if (window.visualViewport) {
+    const handleResize = () =&gt; {
+      const offset = window.innerHeight - window.visualViewport.height;
+      keyboardHeight.value = offset &gt; 100 ? offset : 0;
+    };
+    window.visualViewport.addEventListener('resize', handleResize);
+  }
+  // #endif
+});
+
+onUnmounted(() =&gt; {
+  // #ifdef MP-WEIXIN || APP-PLUS
+  if (typeof uni !== 'undefined' &amp;&amp; uni.offKeyboardHeightChange) {
+    uni.offKeyboardHeightChange(onKeyboardHeightChange);
+  }
+  // #endif
+});
+&lt;/script&gt;
+
+&lt;style scoped&gt;
+.page-wrapper {
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.form-scroll-view {
+  flex: 1;
+  box-sizing: border-box;
+  transition: padding-bottom 0.25s ease-out;
+}
+
+.bottom-bar {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  padding-bottom: env(safe-area-inset-bottom);
+  background: #ffffff;
+  transition: transform 0.25s ease-out;
+  box-shadow: 0 -2rpx 10rpx rgba(0, 0, 0, 0.05);
+}
+&lt;/style&gt;</code></pre>
+<hr>
+<h2 id="三-坑位二-flex-布局中-placeholder-溢出遮挡相邻元素">🕳️ 三、坑位二：Flex 布局中 placeholder 溢出遮挡相邻元素</h2>
+<h3 id="1-现象描述">1. 现象描述</h3>
+<p>在窄屏设备上采用双列栅格等分布局（例如并排展示“预付定金”与“尾款金额”）：</p>
+<ul>
+<li>当输入框右对齐且占位符较长（如 <code>placeholder=&quot;请输入预付款金额&quot;</code>）时；
+</li>
+<li>右侧输入框会<strong>强行向左横向撑大</strong>，突破自身划分的 50% 宽度，直接覆盖在左侧输入框上方；
+</li>
+<li>导致左侧输入框被压住无法点击，界面错位。
+</li>
+</ul>
+<div class="mermaid-wrap"><pre class="mermaid">flowchart TB
+    subgraph Bug[&quot;❌ 默认未修复状态：min-width: auto 导致撑破覆盖&quot;]
+        direction LR
+        L1[&quot;【左列】 flex: 1&lt;br/&gt;被右侧强行挤压&lt;br/&gt;❌ 无法正常点击 / 文字被盖&quot;] --- R1[&quot;【右列】 flex: 1 但 min-width: auto&lt;br/&gt;因长占位符『请输入预计尾款金额』拒绝收缩&lt;br/&gt;💥 宽度严重超标，向左越界覆盖&quot;]
+    end
+
+    subgraph Fix[&quot;✅ 标准修复状态：min-width: 0 优雅弹性均分&quot;]
+        direction LR
+        L2[&quot;【左列】 flex: 1; min-width: 0&lt;br/&gt;稳定平分 50% 宽度&lt;br/&gt;✔️ 正常聚焦点击&quot;] --- R2[&quot;【右列】 flex: 1; min-width: 0&lt;br/&gt;overflow: hidden; text-overflow: ellipsis&lt;br/&gt;✔️ 超长占位符优雅省略，稳定 50%&quot;]
+    end
+
+    Bug -.-&gt;|&quot;加入 min-width: 0 与 overflow: hidden&quot;| Fix</pre></div>
+<h3 id="2-根因剖析">2. 根因剖析</h3>
+<p>这是 CSS Flexbox 规范中极易被忽略的 <strong><code>min-width: auto</code> 机制</strong>：</p>
+<ol>
+<li><strong>W3C 规范</strong>：Flex 容器内子项的 <code>min-width</code> 默认值不是 <code>0</code>，而是 <code>auto</code>；
+</li>
+<li><strong>拒绝收缩</strong>：子项的最小宽度由其内部的内容固有尺寸（content size）决定。如果子项里的 input placeholder 长度超过了 flex 分配的宽度，<code>min-width: auto</code> 会强制保持内容完整性，<strong>拒绝响应 <code>flex: 1</code> 的收缩指令</strong>；
+</li>
+<li><strong>溢出覆盖</strong>：输入框强行撑开，打破了栅格比例，越界遮挡左侧同级兄弟元素。
+</li>
+</ol>
+<hr>
+<h3 id="3-全平台完美兼容解决方案">3. 全平台完美兼容解决方案</h3>
+<p>只需要两步核心 CSS 配置：</p>
+<ol>
+<li><strong>解除子项限制</strong>：为 flex 子项容器显式加上 <code>min-width: 0</code>；
+</li>
+<li><strong>输入控件裁剪</strong>：为 input 自身设置 <code>min-width: 0</code> 与 <code>overflow: hidden</code>。
+</li>
+</ol>
+<pre><code class="language-css">/* 双列行容器 */
+.form-row-group {
+  display: flex;
+  align-items: center;
+  gap: 16rpx;
+  width: 100%;
+}
+
+/* 栅格列容器：核心是 min-width: 0 */
+.form-row-group .form-col {
+  flex: 1;
+  min-width: 0; /* 核心：解除默认的 min-width: auto，允许列弹性收缩 */
+  display: flex;
+  align-items: center;
+}
+
+/* 输入框本身：必须同时配置 min-width: 0 与 overflow: hidden */
+.input-control {
+  flex: 1;
+  min-width: 0;       /* 核心：允许 input 自身收缩到父容器分配宽度以内 */
+  width: 100%;
+  font-size: 28rpx;
+  color: #333333;
+  text-align: right;
+  overflow: hidden;    /* 核心：截断超出宽度的长占位符文本 */
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}</code></pre>
+<pre><code class="language-html">&lt;view class=&quot;form-row-group&quot;&gt;
+  &lt;!-- 左侧列 --&gt;
+  &lt;view class=&quot;form-col&quot;&gt;
+    &lt;text class=&quot;label&quot;&gt;定金：&lt;/text&gt;
+    &lt;input class=&quot;input-control&quot; placeholder=&quot;请输入金额&quot; /&gt;
+  &lt;/view&gt;
+  
+  &lt;!-- 右侧列：长 placeholder 不会再撑破容器 --&gt;
+  &lt;view class=&quot;form-col&quot;&gt;
+    &lt;text class=&quot;label&quot;&gt;尾款：&lt;/text&gt;
+    &lt;input class=&quot;input-control&quot; placeholder=&quot;请输入预计尾款金额&quot; /&gt;
+  &lt;/view&gt;
+&lt;/view&gt;</code></pre>
+<div class="callout"><p>[!IMPORTANT]<br><strong>兼容性结论</strong>：该 CSS 方案基于 W3C Flexbox 现代标准规范，在 <strong>微信小程序、H5、iOS Safari、Android Chrome、HarmonyOS ArkWeb、uni-app App</strong> 均 100% 完美支持，且零平台副作用。</p></div>
+<hr>
+<h2 id="四-移动端表单开发自检速查清单-checklist">📋 四、移动端表单开发自检速查清单 (Checklist)</h2>
+<p>在上线微信小程序或移动跨端表单页面前，建议使用以下清单逐项自检：</p>
+<h3 id="1-属性与参数自检">1. 属性与参数自检</h3>
+<ul class="task-list">
+<li class="task-list-item"><input type="checkbox" disabled  class="task-checkbox"> <span>微信小程序中的 <code>&lt;input&gt;</code> 与 <code>&lt;textarea&gt;</code> 是否显式配置了 <code>:adjust-position=&quot;true&quot;</code>？</span>
+</li>
+<li class="task-list-item"><input type="checkbox" disabled  class="task-checkbox"> <span>表单中下部字段或高度较大的输入框是否设置了 <code>:cursor-spacing=&quot;100&quot;</code>（单位 px）？</span>
+</li>
+<li class="task-list-item"><input type="checkbox" disabled  class="task-checkbox"> <span>居中弹窗（Modal）中的输入框是否将 <code>cursor-spacing</code> 调小（24~40px）以防推顶越界？</span>
+</li>
+</ul>
+<h3 id="2-css-布局与防挤压自检">2. CSS 布局与防挤压自检</h3>
+<ul class="task-list">
+<li class="task-list-item"><input type="checkbox" disabled  class="task-checkbox"> <span>所有包含 <code>input</code> / <code>textarea</code> / <code>text</code> 的 Flex 子项是否均显式声明了 <code>min-width: 0</code>？</span>
+</li>
+<li class="task-list-item"><input type="checkbox" disabled  class="task-checkbox"> <span>多列输入框是否增加了 <code>overflow: hidden</code> 与 <code>text-overflow: ellipsis</code> 防长占位符撑爆？</span>
+</li>
+<li class="task-list-item"><input type="checkbox" disabled  class="task-checkbox"> <span>页面外层是否避免了不当的 <code>position: fixed</code> 或非全屏 <code>overflow: hidden</code>？</span>
+</li>
+</ul>
+<h3 id="3-多端与-h5-专属自检">3. 多端与 H5 专属自检</h3>
+<ul class="task-list">
+<li class="task-list-item"><input type="checkbox" disabled  class="task-checkbox"> <span>纯 H5 页面是否在 <code>@focus</code> 中绑定了 <code>scrollIntoView({ block: 'center' })</code>？</span>
+</li>
+<li class="task-list-item"><input type="checkbox" disabled  class="task-checkbox"> <span>纯 H5 页面是否在 <code>@blur</code> 中加入了针对 iOS Safari 的滚动复位（防空白卡死）处理？</span>
+</li>
+<li class="task-list-item"><input type="checkbox" disabled  class="task-checkbox"> <span>复杂局部滚动页是否采用了 <code>keyboardHeight</code> 动态垫高 <code>paddingBottom</code>？</span>
+</li>
+<li class="task-list-item"><input type="checkbox" disabled  class="task-checkbox"> <span>底部固定按钮栏是否适配了底部安全区 <code>padding-bottom: env(safe-area-inset-bottom)</code>？</span>
+</li>
+</ul>
+<h3 id="4-真机测试覆盖自检">4. 真机测试覆盖自检</h3>
+<ul class="task-list">
+<li class="task-list-item"><input type="checkbox" disabled  class="task-checkbox"> <span><strong>iOS 真机测试</strong>：系统键盘与第三方输入法（搜狗/百度）弹起时是否平滑回弹、不挡框；</span>
+</li>
+<li class="task-list-item"><input type="checkbox" disabled  class="task-checkbox"> <span><strong>Android / 鸿蒙真机测试</strong>：不同屏幕比例下多列长 placeholder 是否正确裁剪不遮挡邻居。</span>
+</li>
+</ul>
+<hr>
+<h2 id="五-总结">🎯 五、总结</h2>
+<p>移动端跨端表单体验的健壮性取决于对底层渲染机制的深刻理解：</p>
+<ol>
+<li><strong>键盘遮挡</strong>：微信小程序优先使用 <code>:adjust-position=&quot;true&quot; :cursor-spacing=&quot;100&quot;</code>；H5 环境使用 <code>scrollIntoView({ block: 'center' })</code>；复杂容器使用动态 Padding 垫高；
+</li>
+<li><strong>横向挤压</strong>：在任何 Flex 布局中，凡是使用了 <code>flex: 1</code> 且内部装有输入框或不可控长文本，<strong>无条件为其加上 <code>min-width: 0</code> 与 <code>overflow: hidden</code></strong>。
+</li>
+</ol>
+            </div>
+
+            <div class="post-block-footer" style="margin-top: 3.5rem; padding-top: 1.5rem;">
+              <a href="../index.html" class="read-more-text">
+                <span>← 返回文章专栏</span>
+              </a>
+            </div>
+          </article>
+        </div>
+      </div>
+
+        <!-- 右侧文章大纲 TOC -->
+        <aside class="article-toc-panel" aria-label="文章目录大纲">
+          <div class="toc-box">
+            <div class="toc-box-title">本页导读 · 快速直达</div>
+            <ul class="toc-list">
+            <li>
+              <a href="#一-全平台兼容性与底层机制矩阵" class="toc-link" title="📊 一、全平台兼容性与底层机制矩阵">📊 一、全平台兼容性与底层机制矩阵</a>
+            </li>
+            <li>
+              <a href="#二-坑位一-键盘抬起遮挡输入框" class="toc-link" title="🕳️ 二、坑位一：键盘抬起遮挡输入框">🕳️ 二、坑位一：键盘抬起遮挡输入框</a>
+            </li>
+            <li>
+              <a href="#1-现象描述" class="toc-link" title="1. 现象描述">1. 现象描述</a>
+            </li>
+            <li>
+              <a href="#2-根因剖析" class="toc-link" title="2. 根因剖析">2. 根因剖析</a>
+            </li>
+            <li>
+              <a href="#3-针对不同场景的解决方案" class="toc-link" title="3. 针对不同场景的解决方案">3. 针对不同场景的解决方案</a>
+            </li>
+            <li>
+              <a href="#方案-a-微信小程序-uni-app-小程序端专属参数调优-最简高效" class="toc-link" title="方案 A：微信小程序 / uni-app 小程序端专属参数调优（最简高效）">方案 A：微信小程序 / uni-app 小程序端专属参数调优（最简高效）</a>
+            </li>
+            <li>
+              <a href="#方案-b-移动端-h5-专用平滑居中滚动与收起回弹方案" class="toc-link" title="方案 B：移动端 H5 专用平滑居中滚动与收起回弹方案">方案 B：移动端 H5 专用平滑居中滚动与收起回弹方案</a>
+            </li>
+            <li>
+              <a href="#方案-c-跨端通用终极方案-动态底部安全-padding-垫高" class="toc-link" title="方案 C：跨端通用终极方案（动态底部安全 Padding 垫高）">方案 C：跨端通用终极方案（动态底部安全 Padding 垫高）</a>
+            </li>
+            <li>
+              <a href="#三-坑位二-flex-布局中-placeholder-溢出遮挡相邻元素" class="toc-link" title="🕳️ 三、坑位二：Flex 布局中 placeholder 溢出遮挡相邻元素">🕳️ 三、坑位二：Flex 布局中 placeholder 溢出遮挡相邻元素</a>
+            </li>
+            <li>
+              <a href="#1-现象描述" class="toc-link" title="1. 现象描述">1. 现象描述</a>
+            </li>
+            <li>
+              <a href="#2-根因剖析" class="toc-link" title="2. 根因剖析">2. 根因剖析</a>
+            </li>
+            <li>
+              <a href="#3-全平台完美兼容解决方案" class="toc-link" title="3. 全平台完美兼容解决方案">3. 全平台完美兼容解决方案</a>
+            </li>
+            <li>
+              <a href="#四-移动端表单开发自检速查清单-checklist" class="toc-link" title="📋 四、移动端表单开发自检速查清单 (Checklist)">📋 四、移动端表单开发自检速查清单 (Checklist)</a>
+            </li>
+            <li>
+              <a href="#1-属性与参数自检" class="toc-link" title="1. 属性与参数自检">1. 属性与参数自检</a>
+            </li>
+            <li>
+              <a href="#2-css-布局与防挤压自检" class="toc-link" title="2. CSS 布局与防挤压自检">2. CSS 布局与防挤压自检</a>
+            </li>
+            <li>
+              <a href="#3-多端与-h5-专属自检" class="toc-link" title="3. 多端与 H5 专属自检">3. 多端与 H5 专属自检</a>
+            </li>
+            <li>
+              <a href="#4-真机测试覆盖自检" class="toc-link" title="4. 真机测试覆盖自检">4. 真机测试覆盖自检</a>
+            </li>
+            <li>
+              <a href="#五-总结" class="toc-link" title="🎯 五、总结">🎯 五、总结</a>
+            </li>
+            </ul>
+          </div>
+        </aside>
+    </main>
+
+  </div>
+
+  <!-- 全局回到顶部按钮 (右下角固定) -->
+  <button id="back-to-top-btn" class="back-to-top-btn" type="button" title="回到顶部" aria-label="回到顶部">
+    <svg class="back-to-top-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+      <polyline points="18 15 12 9 6 15"></polyline>
+    </svg>
+  </button>
+
+  <script defer src="../js/config.js"></script>
+  <script defer src="../data/search-index.js"></script>
+  <script defer src="../js/main.js"></script>
+  <script defer src="../js/prism.js"></script>
+  <script defer src="../js/search.js"></script>
+  <script defer src="../js/file-preview.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+  <script>
+
+    function initMermaidChart() {
+      if (window.mermaid) {
+        mermaid.initialize({
+          startOnLoad: true,
+          theme: document.documentElement.getAttribute('data-theme') === 'dark' ? 'dark' : 'neutral',
+          securityLevel: 'loose'
+        });
+      }
+    }
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', initMermaidChart);
+    } else {
+      initMermaidChart();
+    }
+  </script>
+</body>
+</html>

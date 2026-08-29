@@ -43,6 +43,12 @@
     <priority>0.7</priority>
   </url>
   <url>
+    <loc>https://vmrey.github.io/posts/miniprogram-form-bugs-248d.html</loc>
+    <lastmod>2026-08-29</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://vmrey.github.io/posts/redis-65f8.html</loc>
     <lastmod>2026-08-29</lastmod>
     <changefreq>monthly</changefreq>
