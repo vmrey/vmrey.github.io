@@ -17,7 +17,7 @@ readTime: 6 分钟阅读
 * **前端轻量缓存混淆**：避免明文直接暴露在 `localStorage` 或 `sessionStorage` 中；
 * **纯 TypeScript、零外部依赖**：即拷即用，体积不到 2KB，性能达到毫秒级。
 
-本文将为您分享一套经过工业级打磨的纯 TypeScript 轻量可逆加密工具库，提供在线交互演示、完整源码、调用示范与绝对路径下载地址。
+本文将为您分享一套经过工业级打磨的纯 TypeScript 轻量可逆加密工具库，提供在线交互演示、调用示范与源码下载。
 
 ---
 
@@ -28,7 +28,7 @@ readTime: 6 分钟阅读
 <div style="background: rgba(26, 115, 232, 0.04); border: 1px solid rgba(26, 115, 232, 0.2); border-radius: 12px; padding: 20px; margin: 24px 0;">
     <div style="margin-bottom: 14px;">
         <label style="display: block; font-weight: 600; margin-bottom: 6px; font-size: 14px;">🔑 自定义加密口令 (Key Phrase)：</label>
-        <input type="text" id="demoKeyInput" placeholder="输入任意自定义文本（支持重复字符，如 my_super_key），留空使用默认" style="width: 100%; padding: 9px 12px; border: 1px solid #dcdcdc; border-radius: 6px; font-size: 14px; box-sizing: border-box; outline: none;">
+        <input type="text" id="demoKeyInput" placeholder="输入任意自定义文本（支持重复字符，如 my_super_secure_key），留空使用默认" style="width: 100%; padding: 9px 12px; border: 1px solid #dcdcdc; border-radius: 6px; font-size: 14px; box-sizing: border-box; outline: none;">
         <div style="font-size: 12px; color: #666; margin-top: 4px;">💡 支持任意长度与重复字符，系统自动由此口令洗牌生成专属 64 位暗号表。</div>
     </div>
 
@@ -172,7 +172,7 @@ readTime: 6 分钟阅读
         return bytesToUtf8(decoded);
     };
 
-    window.addEventListener('DOMContentLoaded', () => {
+    const bindEvents = () => {
         const keyEl = document.getElementById('demoKeyInput');
         const plainEl = document.getElementById('demoPlainInput');
         const outputEl = document.getElementById('demoResultOutput');
@@ -182,7 +182,7 @@ readTime: 6 分钟阅读
 
         if (!encBtn) return;
 
-        encBtn.addEventListener('click', () => {
+        encBtn.onclick = () => {
             try {
                 const res = encryptCore(plainEl.value, keyEl.value);
                 outputEl.style.color = '#137333';
@@ -192,9 +192,9 @@ readTime: 6 分钟阅读
                 outputEl.style.color = '#c5221f';
                 outputEl.innerText = '加密失败: ' + e.message;
             }
-        });
+        };
 
-        decBtn.addEventListener('click', () => {
+        decBtn.onclick = () => {
             try {
                 const res = decryptCore(plainEl.value, keyEl.value);
                 if (!res) {
@@ -208,9 +208,9 @@ readTime: 6 分钟阅读
                 outputEl.style.color = '#c5221f';
                 outputEl.innerText = '解密失败: ' + e.message;
             }
-        });
+        };
 
-        copyBtn.addEventListener('click', () => {
+        copyBtn.onclick = () => {
             const txt = outputEl.innerText;
             if (!txt || txt.includes('点击上方') || txt.includes('失败')) return;
             navigator.clipboard.writeText(txt).then(() => {
@@ -218,19 +218,37 @@ readTime: 6 分钟阅读
                 copyBtn.innerText = '已复制!';
                 setTimeout(() => copyBtn.innerText = old, 1500);
             });
-        });
-    });
+        };
+    };
+
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', bindEvents);
+    } else {
+        bindEvents();
+    }
 })();
 </script>
 
 ---
 
-## 二、资源文件与快速进入
+## 二、源码获取与下载中心
 
-该工具已收录至本站文件管理中心，支持在线高亮预览与直接下载：
+该工具已收录至本站文件管理中心，无需复制大段代码，点击下方按钮即可直接获取完整 TypeScript 源码：
 
-* 🌐 **文件管理中心在线预览**：[https://vmrey.github.io/files.html](https://vmrey.github.io/files.html)
-* 📥 **TypeScript 源码文件直接下载**：[https://vmrey.github.io/assets/files/cipherTool.ts](https://vmrey.github.io/assets/files/cipherTool.ts)
+<div style="background: rgba(0, 0, 0, 0.02); border: 1px solid rgba(0, 0, 0, 0.08); border-radius: 8px; padding: 16px 20px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px; margin: 20px 0;">
+    <div>
+        <div style="font-weight: 600; font-size: 15px; color: #1a73e8;">📦 cipherTool.ts (TypeScript 核心工具库)</div>
+        <div style="font-size: 12px; color: #666; margin-top: 4px;">纯 TypeScript 编写 · 零第三方依赖 · 支持中文/Emoji 与自定义口令</div>
+    </div>
+    <div style="display: flex; gap: 10px;">
+        <a href="https://vmrey.github.io/assets/files/cipherTool.ts" target="_blank" download style="display: inline-flex; align-items: center; gap: 6px; padding: 8px 16px; background-color: #1a73e8; color: #fff; border-radius: 6px; text-decoration: none; font-size: 13px; font-weight: 600;">
+            <span>📥 直接下载源码</span>
+        </a>
+        <a href="https://vmrey.github.io/files.html" style="display: inline-flex; align-items: center; gap: 6px; padding: 8px 16px; background-color: #f1f3f4; color: #3c4043; border: 1px solid #dadce0; border-radius: 6px; text-decoration: none; font-size: 13px; font-weight: 600;">
+            <span>🌐 文件管理在线预览</span>
+        </a>
+    </div>
+</div>
 
 ---
 
@@ -279,213 +297,7 @@ console.log("完美还原:", restoredParam);
 
 ---
 
-## 四、完整 TypeScript 工具源码 (`cipherTool.ts`)
-
-以下是该工具库的完整源代码实现：
-
-```typescript
-/**
- * 轻量可逆加密工具库 (TypeScript 版)
- * 特性：
- * 1. 纯 TypeScript 实现，零外部依赖，极度轻量；
- * 2. 基于 64 位打乱码表 + 动态异或 (XOR) 双重混淆；
- * 3. 完美兼容中文、Emoji、URL 参数串及各类特殊符号；
- * 4. 支持任意文本口令（支持重复字符），自动衍生专属暗号字典。
- */
-
-interface DerivedKeys {
-    cipherMap: string;
-    xorKey: number;
-}
-
-// 基础 64 位 URL-Safe 字符原料（已随机打乱顺序，即使不输入口令也是混淆暗号表）
-const BASE_ALPHABET: string = 'X0qP-4iIdcUrmtGnLWw531shzKavoT8bufRMZlDHSFye2Q76CgxjBpA_Vk9YNOJE';
-
-/**
- * 根据用户输入的任意口令，确定性衍生出专属暗号表与异或密钥
- */
-const deriveKeys = (keyPhrase: string = ''): DerivedKeys => {
-    const text: string = String(keyPhrase).trim();
-    if (!text) {
-        return {
-            cipherMap: BASE_ALPHABET,
-            xorKey: 88
-        };
-    }
-
-    const chars: string[] = BASE_ALPHABET.split('');
-
-    // FNV-1a 哈希生成 32 位种子
-    let seed: number = 0x811c9dc5;
-    for (let i = 0; i < text.length; i++) {
-        seed ^= text.charCodeAt(i);
-        seed = Math.imul(seed, 0x01000193) >>> 0;
-    }
-
-    // 异或动态扰动偏置 (0~255)
-    const xorKey: number = seed & 0xff;
-
-    // Mulberry32 确定性随机数发生器
-    const prng = (): number => {
-        seed = (seed + 0x6D2B79F5) >>> 0;
-        let t: number = Math.imul(seed ^ (seed >>> 15), 1 | seed);
-        t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t;
-        return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
-    };
-
-    // Fisher-Yates 确定性洗牌算法
-    for (let i = chars.length - 1; i > 0; i--) {
-        const j: number = Math.floor(prng() * (i + 1));
-        const temp = chars[i];
-        chars[i] = chars[j];
-        chars[j] = temp;
-    }
-
-    return {
-        cipherMap: chars.join(''),
-        xorKey
-    };
-};
-
-/**
- * 字符串 -> UTF-8 字节数组
- */
-const utf8ToBytes = (str: string): number[] => {
-    const bytes: number[] = [];
-    for (let i = 0; i < str.length; i++) {
-        let code: number = str.charCodeAt(i);
-        if (code >= 0xd800 && code <= 0xdbff) {
-            const low: number = str.charCodeAt(++i);
-            code = (code - 0xd800) * 0x400 + (low - 0xdc00) + 0x10000;
-        }
-        if (code < 0x80) {
-            bytes.push(code);
-        } else if (code < 0x800) {
-            bytes.push(0xc0 | (code >> 6), 0x80 | (code & 0x3f));
-        } else if (code < 0x10000) {
-            bytes.push(0xe0 | (code >> 12), 0x80 | ((code >> 6) & 0x3f), 0x80 | (code & 0x3f));
-        } else {
-            bytes.push(0xf0 | (code >> 18), 0x80 | ((code >> 12) & 0x3f), 0x80 | ((code >> 6) & 0x3f), 0x80 | (code & 0x3f));
-        }
-    }
-    return bytes;
-};
-
-/**
- * UTF-8 字节数组 -> 还原为字符串
- */
-const bytesToUtf8 = (bytes: number[]): string => {
-    const chars: string[] = [];
-    let i = 0;
-    while (i < bytes.length) {
-        const b = bytes[i];
-        let code: number, extra: number;
-        if (b < 0x80) {
-            code = b; extra = 0;
-        } else if ((b & 0xe0) === 0xc0) {
-            code = b & 0x1f; extra = 1;
-        } else if ((b & 0xf0) === 0xe0) {
-            code = b & 0x0f; extra = 2;
-        } else if ((b & 0xf8) === 0xf0) {
-            code = b & 0x07; extra = 3;
-        } else {
-            chars.push(''); i++; continue;
-        }
-        if (i + extra >= bytes.length) {
-            chars.push(''); break;
-        }
-        for (let j = 0; j < extra; j++) {
-            code = (code << 6) | (bytes[++i] & 0x3f);
-        }
-        i++;
-        if (code > 0xffff) {
-            code -= 0x10000;
-            chars.push(String.fromCharCode(0xd800 | (code >> 10), 0xdc00 | (code & 0x3ff)));
-        } else {
-            chars.push(String.fromCharCode(code));
-        }
-    }
-    return chars.join('');
-};
-
-/**
- * 字节数组 -> Base64 密文字符串
- */
-const bytesToBase64 = (bytes: number[], cipherMap: string): string => {
-    let out = '';
-    for (let i = 0; i < bytes.length; i += 3) {
-        const b0 = bytes[i];
-        const b1 = i + 1 < bytes.length ? bytes[i + 1] : 0;
-        const b2 = i + 2 < bytes.length ? bytes[i + 2] : 0;
-        out += cipherMap[b0 >> 2];
-        out += cipherMap[((b0 & 0x03) << 4) | (b1 >> 4)];
-        out += i + 1 < bytes.length ? cipherMap[((b1 & 0x0f) << 2) | (b2 >> 6)] : '=';
-        out += i + 2 < bytes.length ? cipherMap[b2 & 0x3f] : '=';
-    }
-    return out;
-};
-
-/**
- * Base64 密文字符串 -> 还原为字节数组
- */
-const base64ToBytes = (base64: string, cipherMap: string): number[] | null => {
-    if (!base64) return null;
-    let clean = String(base64).trim();
-    while (clean.endsWith('=')) clean = clean.slice(0, -1);
-    if (!clean) return null;
-    const bytes: number[] = [];
-    let buffer = 0, bits = 0;
-    for (let i = 0; i < clean.length; i++) {
-        const value = cipherMap.indexOf(clean[i]);
-        if (value < 0) return null;
-        buffer = ((buffer << 6) | value) & 0xffffffff;
-        bits += 6;
-        if (bits >= 8) {
-            bits -= 8;
-            bytes.push((buffer >> bits) & 0xff);
-        }
-    }
-    return bytes;
-};
-
-/**
- * 加密函数
- * @param str 需要加密的明文（支持中文、Emoji、URL 参数等）
- * @param keyPhrase 可选的加密口令（支持任意长度与重复字符）
- * @returns 经过混淆编码后的密文字符串
- */
-export const encrypt = (str: string, keyPhrase: string = ''): string => {
-    if (!str) return '';
-    const { cipherMap, xorKey } = deriveKeys(keyPhrase);
-    const bytes = utf8ToBytes(str);
-    for (let i = 0; i < bytes.length; i++) {
-        bytes[i] = (bytes[i] ^ ((xorKey + i) & 0xff)) & 0xff;
-    }
-    return bytesToBase64(bytes, cipherMap);
-};
-
-/**
- * 解密函数
- * @param cipher 需要解密的密文
- * @param keyPhrase 可选的解密口令（必须与加密时一致）
- * @returns 还原出的原始明文字符串，失败返回空字符串
- */
-export const decrypt = (cipher: string, keyPhrase: string = ''): string => {
-    if (!cipher) return '';
-    const { cipherMap, xorKey } = deriveKeys(keyPhrase);
-    const bytes = base64ToBytes(cipher, cipherMap);
-    if (!bytes) return '';
-    const decoded: number[] = [];
-    for (let i = 0; i < bytes.length; i++) {
-        decoded.push((bytes[i] ^ ((xorKey + i) & 0xff)) & 0xff);
-    }
-    return bytesToUtf8(decoded);
-};
-```
-
----
-
-## 五、核心技术设计与亮点
+## 四、核心技术设计与亮点
 
 1. **口令衍生字典（Key-to-Alphabet Derivation）**：
    * 区别于传统算法要求用户记忆复杂的无重复密钥，本工具允许用户随心输入包含**中文、特殊符号、重复字符**的口令；
@@ -501,7 +313,7 @@ export const decrypt = (cipher: string, keyPhrase: string = ''): string => {
 
 ---
 
-## 六、总结与适用边界
+## 五、总结与适用边界
 
 * **推荐场景**：业务 Query 参数防直视、二维码混淆、防初级爬虫、轻量级敏感标记；
 * **注意事项**：本工具主要定位为**强力混淆（Heavy Obfuscation）**，兼顾极致轻量与易用性。若涉及银行密码、资金交易等极高安全等级场景，建议配合服务端非对称加密或 AES-GCM 协议使用。

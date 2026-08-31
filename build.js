@@ -274,8 +274,65 @@ function parseFrontMatterAndMarkdown(raw) {
     blockquoteBuffer = [];
   }
 
+  let inHtmlBlock = false;
+  let htmlBuffer = [];
+  let htmlBlockTag = '';
+  let htmlTagDepth = 0;
+
   for (let i = 0; i < lines.length; i++) {
     const line = lines[i];
+
+    // 0. 原生 HTML/JS/CSS 交互演示组件块保护 (透传不转义)
+    if (!inCodeBlock && !inTable && !inBlockquote && !inList) {
+      if (!inHtmlBlock) {
+        const openMatch = line.trim().match(/^<([a-zA-Z0-9_-]+)(\s+[^>]*)?>/);
+        if (openMatch) {
+          const tagName = openMatch[1].toLowerCase();
+          const blockTags = ['div', 'script', 'style', 'section', 'details', 'form', 'table', 'iframe', 'canvas'];
+          if (blockTags.includes(tagName)) {
+            inHtmlBlock = true;
+            htmlBlockTag = tagName;
+            htmlBuffer = [line];
+            if (tagName === 'script' || tagName === 'style') {
+              if (line.includes('</' + tagName + '>')) {
+                out.push(htmlBuffer.join('\n'));
+                inHtmlBlock = false;
+                htmlBuffer = [];
+              }
+            } else {
+              const opens = (line.match(new RegExp('<' + tagName + '(\\s+[^>]*)?>', 'gi')) || []).length;
+              const closes = (line.match(new RegExp('</' + tagName + '>', 'gi')) || []).length;
+              htmlTagDepth = opens - closes;
+              if (htmlTagDepth <= 0) {
+                out.push(htmlBuffer.join('\n'));
+                inHtmlBlock = false;
+                htmlBuffer = [];
+              }
+            }
+            continue;
+          }
+        }
+      } else {
+        htmlBuffer.push(line);
+        if (htmlBlockTag === 'script' || htmlBlockTag === 'style') {
+          if (line.includes('</' + htmlBlockTag + '>')) {
+            out.push(htmlBuffer.join('\n'));
+            inHtmlBlock = false;
+            htmlBuffer = [];
+          }
+        } else {
+          const opens = (line.match(new RegExp('<' + htmlBlockTag + '(\\s+[^>]*)?>', 'gi')) || []).length;
+          const closes = (line.match(new RegExp('</' + htmlBlockTag + '>', 'gi')) || []).length;
+          htmlTagDepth += (opens - closes);
+          if (htmlTagDepth <= 0) {
+            out.push(htmlBuffer.join('\n'));
+            inHtmlBlock = false;
+            htmlBuffer = [];
+          }
+        }
+        continue;
+      }
+    }
 
     // 1. 代码块与结构图 (```mermaid / ```js / ```bash 等)
     const codeMatch = line.match(/^\s*```(\w+)?/);
