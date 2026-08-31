@@ -346,9 +346,193 @@
 <li><strong>纯 TypeScript、零外部依赖</strong>：即拷即用，体积不到 2KB，性能达到毫秒级。
 </li>
 </ul>
-<p>本文将为您分享一套经过工业级打磨的纯 TypeScript 轻量可逆加密工具库，并提供完整的源码、调用示范与绝对路径下载地址。</p>
+<p>本文将为您分享一套经过工业级打磨的纯 TypeScript 轻量可逆加密工具库，提供在线交互演示、完整源码、调用示范与绝对路径下载地址。</p>
 <hr>
-<h2 id="一-资源文件与快速进入">一、资源文件与快速进入</h2>
+<h2 id="一-在线交互演示面板-live-playground">一、在线交互演示面板 (Live Playground)</h2>
+<p>您可以在下方直接输入文本与自定义口令，实时体验加解密效果：</p>
+<p>&lt;div style=&quot;background: rgba(26, 115, 232, 0.04); border: 1px solid rgba(26, 115, 232, 0.2); border-radius: 12px; padding: 20px; margin: 24px 0;&quot;&gt;</p>
+<p>    &lt;div style=&quot;margin-bottom: 14px;&quot;&gt;</p>
+<p>        &lt;label style=&quot;display: block; font-weight: 600; margin-bottom: 6px; font-size: 14px;&quot;&gt;🔑 自定义加密口令 (Key Phrase)：&lt;/label&gt;</p>
+<p>        &lt;input type=&quot;text&quot; id=&quot;demoKeyInput&quot; placeholder=&quot;输入任意自定义文本（支持重复字符，如 my_super_key），留空使用默认&quot; style=&quot;width: 100%; padding: 9px 12px; border: 1px solid #dcdcdc; border-radius: 6px; font-size: 14px; box-sizing: border-box; outline: none;&quot;&gt;</p>
+<p>        &lt;div style=&quot;font-size: 12px; color: #666; margin-top: 4px;&quot;&gt;💡 支持任意长度与重复字符，系统自动由此口令洗牌生成专属 64 位暗号表。&lt;/div&gt;</p>
+<p>    &lt;/div&gt;</p>
+<p>    &lt;div style=&quot;margin-bottom: 14px;&quot;&gt;</p>
+<p>        &lt;label style=&quot;display: block; font-weight: 600; margin-bottom: 6px; font-size: 14px;&quot;&gt;📝 明文 / 密文字符串 (支持中文/Emoji/URL参数)：&lt;/label&gt;</p>
+<p>        &lt;textarea id=&quot;demoPlainInput&quot; style=&quot;width: 100%; height: 80px; padding: 9px 12px; border: 1px solid #dcdcdc; border-radius: 6px; font-size: 14px; box-sizing: border-box; resize: vertical; outline: none; font-family: inherit;&quot;&gt;qrcodeNo=12345&amp;name=张三😂&amp;status=VIP&lt;/textarea&gt;</p>
+<p>    &lt;/div&gt;</p>
+<p>    &lt;div style=&quot;display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 14px;&quot;&gt;</p>
+<p>        &lt;button id=&quot;demoEncryptBtn&quot; style=&quot;flex: 1; min-width: 120px; padding: 10px 16px; background-color: #1a73e8; color: white; border: none; border-radius: 6px; font-size: 14px; font-weight: 600; cursor: pointer; transition: background 0.2s;&quot;&gt;🔒 加密 (Encrypt)&lt;/button&gt;</p>
+<p>        &lt;button id=&quot;demoDecryptBtn&quot; style=&quot;flex: 1; min-width: 120px; padding: 10px 16px; background-color: #5f6368; color: white; border: none; border-radius: 6px; font-size: 14px; font-weight: 600; cursor: pointer; transition: background 0.2s;&quot;&gt;🔓 解密 (Decrypt)&lt;/button&gt;</p>
+<p>        &lt;button id=&quot;demoCopyBtn&quot; style=&quot;flex: 0.6; min-width: 100px; padding: 10px 16px; background-color: #f1f3f4; color: #3c4043; border: 1px solid #dadce0; border-radius: 6px; font-size: 14px; font-weight: 600; cursor: pointer; transition: background 0.2s;&quot;&gt;📋 复制结果&lt;/button&gt;</p>
+<p>    &lt;/div&gt;</p>
+<p>    &lt;div&gt;</p>
+<p>        &lt;label style=&quot;display: block; font-weight: 600; margin-bottom: 6px; font-size: 14px;&quot;&gt;📊 输出结果：&lt;/label&gt;</p>
+<p>        &lt;div id=&quot;demoResultOutput&quot; style=&quot;background: rgba(0,0,0,0.03); border: 1px dashed #bbb; padding: 12px; border-radius: 6px; word-break: break-all; font-family: monospace; font-size: 13px; min-height: 24px; color: #1a73e8; font-weight: 600;&quot;&gt;点击上方按钮查看实时运行结果...&lt;/div&gt;</p>
+<p>    &lt;/div&gt;</p>
+<p>&lt;/div&gt;</p>
+<p>&lt;script&gt;</p>
+<p>(() =&gt; {</p>
+<p>    const BASE_ALPHABET = 'X0qP-4iIdcUrmtGnLWw531shzKavoT8bufRMZlDHSFye2Q76CgxjBpA_Vk9YNOJE';</p>
+<p>    const deriveKeys = (keyPhrase = '') =&gt; {</p>
+<p>        const text = String(keyPhrase).trim();</p>
+<p>        if (!text) return { cipherMap: BASE_ALPHABET, xorKey: 88 };</p>
+<p>        const chars = BASE_ALPHABET.split('');</p>
+<p>        let seed = 0x811c9dc5;</p>
+<p>        for (let i = 0; i &lt; text.length; i++) {</p>
+<p>            seed ^= text.charCodeAt(i);</p>
+<p>            seed = Math.imul(seed, 0x01000193) &gt;&gt;&gt; 0;</p>
+<p>        }</p>
+<p>        const xorKey = seed &amp; 0xff;</p>
+<p>        const prng = () =&gt; {</p>
+<p>            seed = (seed + 0x6D2B79F5) &gt;&gt;&gt; 0;</p>
+<p>            let t = Math.imul(seed ^ (seed &gt;&gt;&gt; 15), 1 | seed);</p>
+<p>            t = (t + Math.imul(t ^ (t &gt;&gt;&gt; 7), 61 | t)) ^ t;</p>
+<p>            return ((t ^ (t &gt;&gt;&gt; 14)) &gt;&gt;&gt; 0) / 4294967296;</p>
+<p>        };</p>
+<p>        for (let i = chars.length - 1; i &gt; 0; i--) {</p>
+<p>            const j = Math.floor(prng() * (i + 1));</p>
+<p>            [chars[i], chars[j]] = [chars[j], chars[i]];</p>
+<p>        }</p>
+<p>        return { cipherMap: chars.join(''), xorKey };</p>
+<p>    };</p>
+<p>    const utf8ToBytes = (str) =&gt; {</p>
+<p>        const bytes = [];</p>
+<p>        for (let i = 0; i &lt; str.length; i++) {</p>
+<p>            let code = str.charCodeAt(i);</p>
+<p>            if (code &gt;= 0xd800 &amp;&amp; code &lt;= 0xdbff) {</p>
+<p>                const low = str.charCodeAt(++i);</p>
+<p>                code = (code - 0xd800) * 0x400 + (low - 0xdc00) + 0x10000;</p>
+<p>            }</p>
+<p>            if (code &lt; 0x80) bytes.push(code);</p>
+<p>            else if (code &lt; 0x800) bytes.push(0xc0 | (code &gt;&gt; 6), 0x80 | (code &amp; 0x3f));</p>
+<p>            else if (code &lt; 0x10000) bytes.push(0xe0 | (code &gt;&gt; 12), 0x80 | ((code &gt;&gt; 6) &amp; 0x3f), 0x80 | (code &amp; 0x3f));</p>
+<p>            else bytes.push(0xf0 | (code &gt;&gt; 18), 0x80 | ((code &gt;&gt; 12) &amp; 0x3f), 0x80 | ((code &gt;&gt; 6) &amp; 0x3f), 0x80 | (code &amp; 0x3f));</p>
+<p>        }</p>
+<p>        return bytes;</p>
+<p>    };</p>
+<p>    const bytesToUtf8 = (bytes) =&gt; {</p>
+<p>        const chars = [];</p>
+<p>        let i = 0;</p>
+<p>        while (i &lt; bytes.length) {</p>
+<p>            const b = bytes[i];</p>
+<p>            let code, extra;</p>
+<p>            if (b &lt; 0x80) { code = b; extra = 0; }</p>
+<p>            else if ((b &amp; 0xe0) === 0xc0) { code = b &amp; 0x1f; extra = 1; }</p>
+<p>            else if ((b &amp; 0xf0) === 0xe0) { code = b &amp; 0x0f; extra = 2; }</p>
+<p>            else if ((b &amp; 0xf8) === 0xf0) { code = b &amp; 0x07; extra = 3; }</p>
+<p>            else { chars.push(''); i++; continue; }</p>
+<p>            if (i + extra &gt;= bytes.length) { chars.push(''); break; }</p>
+<p>            for (let j = 0; j &lt; extra; j++) code = (code &lt;&lt; 6) | (bytes[++i] &amp; 0x3f);</p>
+<p>            i++;</p>
+<p>            if (code &gt; 0xffff) {</p>
+<p>                code -= 0x10000;</p>
+<p>                chars.push(String.fromCharCode(0xd800 | (code &gt;&gt; 10), 0xdc00 | (code &amp; 0x3ff)));</p>
+<p>            } else {</p>
+<p>                chars.push(String.fromCharCode(code));</p>
+<p>            }</p>
+<p>        }</p>
+<p>        return chars.join('');</p>
+<p>    };</p>
+<p>    const bytesToBase64 = (bytes, cipherMap) =&gt; {</p>
+<p>        let out = '';</p>
+<p>        for (let i = 0; i &lt; bytes.length; i += 3) {</p>
+<p>            const b0 = bytes[i];</p>
+<p>            const b1 = i + 1 &lt; bytes.length ? bytes[i + 1] : 0;</p>
+<p>            const b2 = i + 2 &lt; bytes.length ? bytes[i + 2] : 0;</p>
+<p>            out += cipherMap[b0 &gt;&gt; 2];</p>
+<p>            out += cipherMap[((b0 &amp; 0x03) &lt;&lt; 4) | (b1 &gt;&gt; 4)];</p>
+<p>            out += i + 1 &lt; bytes.length ? cipherMap[((b1 &amp; 0x0f) &lt;&lt; 2) | (b2 &gt;&gt; 6)] : '=';</p>
+<p>            out += i + 2 &lt; bytes.length ? cipherMap[b2 &amp; 0x3f] : '=';</p>
+<p>        }</p>
+<p>        return out;</p>
+<p>    };</p>
+<p>    const base64ToBytes = (base64, cipherMap) =&gt; {</p>
+<p>        if (!base64) return null;</p>
+<p>        let clean = String(base64).trim();</p>
+<p>        while (clean.endsWith('=')) clean = clean.slice(0, -1);</p>
+<p>        if (!clean) return null;</p>
+<p>        const bytes = [];</p>
+<p>        let buffer = 0, bits = 0;</p>
+<p>        for (let i = 0; i &lt; clean.length; i++) {</p>
+<p>            const value = cipherMap.indexOf(clean[i]);</p>
+<p>            if (value &lt; 0) return null;</p>
+<p>            buffer = ((buffer &lt;&lt; 6) | value) &amp; 0xffffffff;</p>
+<p>            bits += 6;</p>
+<p>            if (bits &gt;= 8) {</p>
+<p>                bits -= 8;</p>
+<p>                bytes.push((buffer &gt;&gt; bits) &amp; 0xff);</p>
+<p>            }</p>
+<p>        }</p>
+<p>        return bytes;</p>
+<p>    };</p>
+<p>    const encryptCore = (str, keyPhrase = '') =&gt; {</p>
+<p>        if (!str) return '';</p>
+<p>        const { cipherMap, xorKey } = deriveKeys(keyPhrase);</p>
+<p>        const bytes = utf8ToBytes(str);</p>
+<p>        for (let i = 0; i &lt; bytes.length; i++) {</p>
+<p>            bytes[i] = (bytes[i] ^ ((xorKey + i) &amp; 0xff)) &amp; 0xff;</p>
+<p>        }</p>
+<p>        return bytesToBase64(bytes, cipherMap);</p>
+<p>    };</p>
+<p>    const decryptCore = (cipher, keyPhrase = '') =&gt; {</p>
+<p>        if (!cipher) return '';</p>
+<p>        const { cipherMap, xorKey } = deriveKeys(keyPhrase);</p>
+<p>        const bytes = base64ToBytes(cipher, cipherMap);</p>
+<p>        if (!bytes) return '';</p>
+<p>        const decoded = [];</p>
+<p>        for (let i = 0; i &lt; bytes.length; i++) {</p>
+<p>            decoded.push((bytes[i] ^ ((xorKey + i) &amp; 0xff)) &amp; 0xff);</p>
+<p>        }</p>
+<p>        return bytesToUtf8(decoded);</p>
+<p>    };</p>
+<p>    window.addEventListener('DOMContentLoaded', () =&gt; {</p>
+<p>        const keyEl = document.getElementById('demoKeyInput');</p>
+<p>        const plainEl = document.getElementById('demoPlainInput');</p>
+<p>        const outputEl = document.getElementById('demoResultOutput');</p>
+<p>        const encBtn = document.getElementById('demoEncryptBtn');</p>
+<p>        const decBtn = document.getElementById('demoDecryptBtn');</p>
+<p>        const copyBtn = document.getElementById('demoCopyBtn');</p>
+<p>        if (!encBtn) return;</p>
+<p>        encBtn.addEventListener('click', () =&gt; {</p>
+<p>            try {</p>
+<p>                const res = encryptCore(plainEl.value, keyEl.value);</p>
+<p>                outputEl.style.color = '#137333';</p>
+<p>                outputEl.innerText = res || '(明文为空)';</p>
+<p>                plainEl.value = res;</p>
+<p>            } catch (e) {</p>
+<p>                outputEl.style.color = '#c5221f';</p>
+<p>                outputEl.innerText = '加密失败: ' + e.message;</p>
+<p>            }</p>
+<p>        });</p>
+<p>        decBtn.addEventListener('click', () =&gt; {</p>
+<p>            try {</p>
+<p>                const res = decryptCore(plainEl.value, keyEl.value);</p>
+<p>                if (!res) {</p>
+<p>                    outputEl.style.color = '#c5221f';</p>
+<p>                    outputEl.innerText = '解密失败：密文不合法或口令不匹配';</p>
+<p>                } else {</p>
+<p>                    outputEl.style.color = '#137333';</p>
+<p>                    outputEl.innerText = res;</p>
+<p>                }</p>
+<p>            } catch (e) {</p>
+<p>                outputEl.style.color = '#c5221f';</p>
+<p>                outputEl.innerText = '解密失败: ' + e.message;</p>
+<p>            }</p>
+<p>        });</p>
+<p>        copyBtn.addEventListener('click', () =&gt; {</p>
+<p>            const txt = outputEl.innerText;</p>
+<p>            if (!txt || txt.includes('点击上方') || txt.includes('失败')) return;</p>
+<p>            navigator.clipboard.writeText(txt).then(() =&gt; {</p>
+<p>                const old = copyBtn.innerText;</p>
+<p>                copyBtn.innerText = '已复制!';</p>
+<p>                setTimeout(() =&gt; copyBtn.innerText = old, 1500);</p>
+<p>            });</p>
+<p>        });</p>
+<p>    });</p>
+<p>})();</p>
+<p>&lt;/script&gt;</p>
+<hr>
+<h2 id="二-资源文件与快速进入">二、资源文件与快速进入</h2>
 <p>该工具已收录至本站文件管理中心，支持在线高亮预览与直接下载：</p>
 <ul>
 <li>🌐 <strong>文件管理中心在线预览</strong>：<a href="https://vmrey.github.io/files.html" target="_blank" rel="noopener noreferrer">https://vmrey.github.io/files.html</a>
@@ -357,7 +541,7 @@
 </li>
 </ul>
 <hr>
-<h2 id="二-调用示范与实战代码">二、调用示范与实战代码</h2>
+<h2 id="三-调用示范与实战代码">三、调用示范与实战代码</h2>
 <p>在项目中将 <code>cipherTool.ts</code> 放置于工具目录（例如 <code>src/utils/cipherTool.ts</code>），即可直接导入并调用：</p>
 <pre><code class="language-typescript">// 导入 encrypt 和 decrypt 函数（根据你的文件实际路径调整相对路径）
 import { encrypt, decrypt } from './utils/cipherTool';
@@ -392,7 +576,7 @@ const restoredParam = decrypt(encryptedUrlParam, customPassword);
 console.log(&quot;完美还原:&quot;, restoredParam);
 // 输出: qrcodeNo=88888&amp;user=张三&amp;status=VIP🎉</code></pre>
 <hr>
-<h2 id="三-完整-typescript-工具源码-ciphertool-ts">三、完整 TypeScript 工具源码 (<code>cipherTool.ts</code>)</h2>
+<h2 id="四-完整-typescript-工具源码-ciphertool-ts">四、完整 TypeScript 工具源码 (<code>cipherTool.ts</code>)</h2>
 <p>以下是该工具库的完整源代码实现：</p>
 <pre><code class="language-typescript">/**
  * 轻量可逆加密工具库 (TypeScript 版)
@@ -592,7 +776,7 @@ export const decrypt = (cipher: string, keyPhrase: string = ''): string =&gt; {
     return bytesToUtf8(decoded);
 };</code></pre>
 <hr>
-<h2 id="四-核心技术设计与亮点">四、核心技术设计与亮点</h2>
+<h2 id="五-核心技术设计与亮点">五、核心技术设计与亮点</h2>
 <ol>
 <li><strong>口令衍生字典（Key-to-Alphabet Derivation）</strong>：
 
@@ -623,7 +807,7 @@ export const decrypt = (cipher: string, keyPhrase: string = ''): string =&gt; {
 </li>
 </ol>
 <hr>
-<h2 id="五-总结与适用边界">五、总结与适用边界</h2>
+<h2 id="六-总结与适用边界">六、总结与适用边界</h2>
 <ul>
 <li><strong>推荐场景</strong>：业务 Query 参数防直视、二维码混淆、防初级爬虫、轻量级敏感标记；
 </li>
@@ -647,22 +831,25 @@ export const decrypt = (cipher: string, keyPhrase: string = ''): string =&gt; {
             <div class="toc-box-title">本页导读 · 快速直达</div>
             <ul class="toc-list">
             <li>
-              <a href="#一-资源文件与快速进入" class="toc-link" title="一、资源文件与快速进入">一、资源文件与快速进入</a>
+              <a href="#一-在线交互演示面板-live-playground" class="toc-link" title="一、在线交互演示面板 (Live Playground)">一、在线交互演示面板 (Live Playground)</a>
             </li>
             <li>
-              <a href="#二-调用示范与实战代码" class="toc-link" title="二、调用示范与实战代码">二、调用示范与实战代码</a>
+              <a href="#二-资源文件与快速进入" class="toc-link" title="二、资源文件与快速进入">二、资源文件与快速进入</a>
+            </li>
+            <li>
+              <a href="#三-调用示范与实战代码" class="toc-link" title="三、调用示范与实战代码">三、调用示范与实战代码</a>
             </li>
             <li>
               <a href="#进阶用例-中文-emoji-表情与-url-参数" class="toc-link" title="进阶用例：中文、Emoji 表情与 URL 参数">进阶用例：中文、Emoji 表情与 URL 参数</a>
             </li>
             <li>
-              <a href="#三-完整-typescript-工具源码-ciphertool-ts" class="toc-link" title="三、完整 TypeScript 工具源码 (`cipherTool.ts`)">三、完整 TypeScript 工具源码 (`cipherTool.ts`)</a>
+              <a href="#四-完整-typescript-工具源码-ciphertool-ts" class="toc-link" title="四、完整 TypeScript 工具源码 (`cipherTool.ts`)">四、完整 TypeScript 工具源码 (`cipherTool.ts`)</a>
             </li>
             <li>
-              <a href="#四-核心技术设计与亮点" class="toc-link" title="四、核心技术设计与亮点">四、核心技术设计与亮点</a>
+              <a href="#五-核心技术设计与亮点" class="toc-link" title="五、核心技术设计与亮点">五、核心技术设计与亮点</a>
             </li>
             <li>
-              <a href="#五-总结与适用边界" class="toc-link" title="五、总结与适用边界">五、总结与适用边界</a>
+              <a href="#六-总结与适用边界" class="toc-link" title="六、总结与适用边界">六、总结与适用边界</a>
             </li>
             </ul>
           </div>
