@@ -1,0 +1,689 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>TypeScript 轻量可逆加密与混淆工具实战 - vmrey.github.io</title>
+  <meta name="description" content="深度解析基于 64 位随机打乱码表与动态异或偏移的纯 TypeScript 轻量可逆加密方案，零外部依赖，完美兼容中文、Emoji、URL 安全与自定义口令。">
+  <meta name="keywords" content="前端开发, TypeScript, 加解密, 工具函数, 数据安全">
+  <meta name="author" content="vmrey">
+  <meta name="robots" content="index, follow">
+  <meta name="google-site-verification" content="Vi8ircfK8SuZNzZBrtU7av_aXeiUKrLDKgef-84unTM">
+  <link rel="canonical" href="https://vmrey.github.io/posts/cipher-tool-03b7.html">
+  <link rel="alternate" type="application/rss+xml" title="vmrey.github.io RSS 订阅源" href="https://vmrey.github.io/feed.xml">
+  <link rel="alternate" type="text/plain" title="LLMs.txt AI 知识索引" href="https://vmrey.github.io/llms.txt">
+  <link rel="icon" type="image/svg+xml" href="../favicon.svg">
+
+  <!-- Open Graph 社交卡片 (微信/QQ/Telegram/GitHub) -->
+  <meta property="og:site_name" content="vmrey's Blog">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="TypeScript 轻量可逆加密与混淆工具实战 - vmrey.github.io">
+  <meta property="og:description" content="深度解析基于 64 位随机打乱码表与动态异或偏移的纯 TypeScript 轻量可逆加密方案，零外部依赖，完美兼容中文、Emoji、URL 安全与自定义口令。">
+  <meta property="og:url" content="https://vmrey.github.io/posts/cipher-tool-03b7.html">
+  <meta property="og:image" content="https://vmrey.github.io/favicon.svg">
+
+  <!-- Twitter / X 社交卡片 -->
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="TypeScript 轻量可逆加密与混淆工具实战 - vmrey.github.io">
+  <meta name="twitter:description" content="深度解析基于 64 位随机打乱码表与动态异或偏移的纯 TypeScript 轻量可逆加密方案，零外部依赖，完美兼容中文、Emoji、URL 安全与自定义口令。">
+  <meta name="twitter:image" content="https://vmrey.github.io/favicon.svg">
+
+  <!-- 页面绘制前同步初始化深浅色主题，彻底杜绝首屏白屏闪烁 (Anti-FOUC) -->
+  <script>
+    (function() {
+      try {
+        var t = localStorage.getItem('theme');
+        if (!t) {
+          var isDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+          t = isDark ? 'dark' : 'light';
+        }
+        document.documentElement.setAttribute('data-theme', t);
+      } catch(e) {}
+    })();
+  </script>
+  
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "headline": "TypeScript 轻量可逆加密与混淆工具实战",
+    "description": "深度解析基于 64 位随机打乱码表与动态异或偏移的纯 TypeScript 轻量可逆加密方案，零外部依赖，完美兼容中文、Emoji、URL 安全与自定义口令。",
+    "datePublished": "2026-08-31",
+    "dateModified": "2026-08-31",
+    "author": {
+      "@type": "Person",
+      "name": "vmrey",
+      "url": "https://vmrey.github.io/about.html"
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "vmrey.github.io",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "https://vmrey.github.io/favicon.svg"
+      }
+    },
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": "https://vmrey.github.io/posts/cipher-tool-03b7.html"
+    },
+    "keywords": "前端开发, TypeScript, 加解密, 工具函数, 数据安全",
+    "articleSection": "前端开发"
+  }
+  </script>
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="../css/prism.css">
+</head>
+<body>
+
+  <!-- 移动端顶部标题导航条 -->
+  <div class="mobile-header">
+    <div class="mobile-title-wrap">
+      <svg class="mobile-book-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path>
+        <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path>
+        <line x1="9" y1="7" x2="15" y2="7"></line>
+        <line x1="9" y1="11" x2="13" y2="11"></line>
+      </svg>
+      <div class="mobile-title">vmrey.github.io</div>
+    </div>
+    <button id="menu-toggle-btn" class="menu-toggle-btn" aria-label="切换侧边栏菜单">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <line x1="3" y1="12" x2="21" y2="12"></line>
+        <line x1="3" y1="6" x2="21" y2="6"></line>
+        <line x1="3" y1="18" x2="21" y2="18"></line>
+      </svg>
+    </button>
+  </div>
+
+  <div id="sidebar-overlay" class="sidebar-overlay"></div>
+
+  <div class="app-layout">
+    
+    <!-- 左侧常驻导航 -->
+    <aside class="app-sidebar" id="app-sidebar">
+      <!-- 顶部固定区域：Logo、标题与全局搜索 -->
+      <div class="sidebar-header-section">
+        <div class="sidebar-header-row">
+          <a href="../index.html" class="sidebar-brand">
+            <div class="sidebar-avatar" title="vmrey.github.io 博客">
+              <svg class="sidebar-avatar-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path>
+                <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path>
+                <line x1="9" y1="7" x2="15" y2="7"></line>
+                <line x1="9" y1="11" x2="13" y2="11"></line>
+              </svg>
+            </div>
+            <div class="sidebar-info">
+              <div class="sidebar-name">vmrey.github.io</div>
+              <div class="sidebar-tagline">构建工具，写干净的代码</div>
+            </div>
+          </a>
+          <button type="button" id="sidebar-collapse-btn" class="sidebar-collapse-btn" title="折叠/展开侧边栏 (PC)" aria-label="折叠侧边栏">
+            <svg class="collapse-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="15 18 9 12 15 6"></polyline>
+            </svg>
+          </button>
+        </div>
+
+        <!-- 左侧全局搜索快捷入口 (支持 ⌘K) -->
+        <button class="sidebar-search-btn open-search-modal" type="button" title="全站深度全文搜索 (Cmd+K)">
+          <span class="search-btn-left">
+            <svg class="search-icon" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="11" cy="11" r="8"></circle>
+              <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+            </svg>
+            <span class="search-btn-text">全文搜索...</span>
+          </span>
+          <kbd class="kbd-badge">⌘K</kbd>
+        </button>
+      </div>
+
+      <!-- 侧边栏菜单列表 -->
+      <div class="sidebar-nav-body">
+        <!-- 导航分组 1：分类专栏 (支持多层级子专栏) -->
+        <div class="sidebar-nav-group">
+          <div class="nav-group-title">文章专栏</div>
+          
+          <!-- 全部文章 -->
+          <a href="../index.html" class="sidebar-nav-item  category-filter-btn" data-tag="all" data-label="全部文章" title="全部文章">
+            <span class="nav-item-left">
+              <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg>
+              <span class="nav-item-text">全部文章</span>
+            </span>
+          </a>
+
+          <!-- 专栏：前端开发 -->
+          <div class="nav-item-tree">
+            <div class="tree-header-row">
+              <a href="../index.html?tag=%E5%89%8D%E7%AB%AF%E5%BC%80%E5%8F%91" class="sidebar-nav-item category-filter-btn" data-tag="前端开发" data-label="前端开发" title="前端开发">
+                <span class="nav-item-left">
+                  <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"></polyline><polyline points="8 6 2 12 8 18"></polyline></svg>
+                  <span class="nav-item-text">前端开发</span>
+                </span>
+              </a>
+              <button type="button" class="subtree-toggle-btn" aria-label="展开或折叠前端开发子菜单" title="展开或折叠前端开发">
+                <svg class="chevron-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+              </button>
+            </div>
+            <div class="nav-subtree">
+              <a href="../index.html?tag=Vue" class="subtree-item category-filter-btn" data-tag="Vue" data-label="Vue 与组件" title="Vue 与组件">
+                <span class="subtree-item-left">
+                  <span class="subtree-item-dot"></span>
+                  <span class="subtree-item-name">Vue 与组件</span>
+                </span>
+              </a>
+              <a href="../index.html?tag=JavaScript" class="subtree-item category-filter-btn" data-tag="JavaScript" data-label="JS 与工具函数" title="JS 与工具函数">
+                <span class="subtree-item-left">
+                  <span class="subtree-item-dot"></span>
+                  <span class="subtree-item-name">JS 与工具函数</span>
+                </span>
+              </a>
+              <a href="../index.html?tag=%E5%BE%AE%E4%BF%A1%E5%B0%8F%E7%A8%8B%E5%BA%8F" class="subtree-item category-filter-btn" data-tag="微信小程序" data-label="微信小程序" title="微信小程序">
+                <span class="subtree-item-left">
+                  <span class="subtree-item-dot"></span>
+                  <span class="subtree-item-name">微信小程序</span>
+                </span>
+              </a>
+            </div>
+          </div>
+
+          <!-- 专栏：Linux 与服务端 -->
+          <div class="nav-item-tree">
+            <div class="tree-header-row">
+              <a href="../index.html?tag=Linux" class="sidebar-nav-item category-filter-btn" data-tag="Linux" data-label="Linux 与服务端" title="Linux 与服务端">
+                <span class="nav-item-left">
+                  <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="8" rx="2" ry="2"></rect><rect x="2" y="14" width="20" height="8" rx="2" ry="2"></rect><line x1="6" y1="6" x2="6.01" y2="6"></line><line x1="6" y1="18" x2="6.01" y2="18"></line></svg>
+                  <span class="nav-item-text">Linux 与服务端</span>
+                </span>
+              </a>
+              <button type="button" class="subtree-toggle-btn" aria-label="展开或折叠Linux 与服务端子菜单" title="展开或折叠Linux 与服务端">
+                <svg class="chevron-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+              </button>
+            </div>
+            <div class="nav-subtree">
+              <a href="../index.html?tag=Docker" class="subtree-item category-filter-btn" data-tag="Docker" data-label="Docker 与容器" title="Docker 与容器">
+                <span class="subtree-item-left">
+                  <span class="subtree-item-dot"></span>
+                  <span class="subtree-item-name">Docker 与容器</span>
+                </span>
+              </a>
+              <a href="../index.html?tag=Nginx" class="subtree-item category-filter-btn" data-tag="Nginx" data-label="网络与反代" title="网络与反代">
+                <span class="subtree-item-left">
+                  <span class="subtree-item-dot"></span>
+                  <span class="subtree-item-name">网络与反代</span>
+                </span>
+              </a>
+              <a href="../index.html?tag=%E5%8E%8B%E5%8A%9B%E6%B5%8B%E8%AF%95" class="subtree-item category-filter-btn" data-tag="压力测试" data-label="性能与压测" title="性能与压测">
+                <span class="subtree-item-left">
+                  <span class="subtree-item-dot"></span>
+                  <span class="subtree-item-name">性能与压测</span>
+                </span>
+              </a>
+            </div>
+          </div>
+
+          <!-- 专栏：效率工具与软件 -->
+          <div class="nav-item-tree">
+            <div class="tree-header-row">
+              <a href="../index.html?tag=%E6%95%88%E7%8E%87%E5%B7%A5%E5%85%B7" class="sidebar-nav-item category-filter-btn" data-tag="效率工具" data-label="效率工具与软件" title="效率工具与软件">
+                <span class="nav-item-left">
+                  <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"></path></svg>
+                  <span class="nav-item-text">效率工具与软件</span>
+                </span>
+              </a>
+              <button type="button" class="subtree-toggle-btn" aria-label="展开或折叠效率工具与软件子菜单" title="展开或折叠效率工具与软件">
+                <svg class="chevron-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+              </button>
+            </div>
+            <div class="nav-subtree">
+              <a href="../index.html?tag=Git" class="subtree-item category-filter-btn" data-tag="Git" data-label="Git 与 SVN" title="Git 与 SVN">
+                <span class="subtree-item-left">
+                  <span class="subtree-item-dot"></span>
+                  <span class="subtree-item-name">Git 与 SVN</span>
+                </span>
+              </a>
+              <a href="../index.html?tag=Claude" class="subtree-item category-filter-btn" data-tag="Claude" data-label="Claude 与 AI" title="Claude 与 AI">
+                <span class="subtree-item-left">
+                  <span class="subtree-item-dot"></span>
+                  <span class="subtree-item-name">Claude 与 AI</span>
+                </span>
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <div class="sidebar-nav-group">
+          <div class="nav-group-title">导航与资源</div>
+          <a href="../ai.html" class="sidebar-nav-item " title="AI 导航">
+            <span class="nav-item-left">
+              <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+              <span class="nav-item-text">AI 导航</span>
+            </span>
+          </a>
+          <a href="../tools.html" class="sidebar-nav-item " title="工具导航">
+            <span class="nav-item-left">
+              <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"></path></svg>
+              <span class="nav-item-text">工具导航</span>
+            </span>
+          </a>
+          <a href="../node-vle.html" class="sidebar-nav-item " title="节点生成器">
+            <span class="nav-item-left">
+              <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>
+              <span class="nav-item-text">节点生成器</span>
+            </span>
+          </a>
+          <a href="../nav.html" class="sidebar-nav-item " title="GitHub 导航">
+            <span class="nav-item-left">
+              <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"></polygon></svg>
+              <span class="nav-item-text">GitHub 导航</span>
+            </span>
+          </a>
+          <a href="../files.html" class="sidebar-nav-item " title="资源文件库">
+            <span class="nav-item-left">
+              <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path><line x1="12" y1="11" x2="12" y2="17"></line><line x1="9" y1="14" x2="15" y2="14"></line></svg>
+              <span class="nav-item-text">资源文件库</span>
+            </span>
+          </a>
+          <a href="https://github.com/vmrey/vmrey.github.io" target="_blank" rel="noopener noreferrer" class="sidebar-nav-item" title="GitHub 源码">
+            <span class="nav-item-left">
+              <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0 9 18.13V22"></path></svg>
+              <span class="nav-item-text">GitHub 源码</span>
+            </span>
+          </a>
+          <a href="../about.html" class="sidebar-nav-item " title="关于本站">
+            <span class="nav-item-left">
+              <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+              <span class="nav-item-text">关于本站</span>
+            </span>
+          </a>
+        </div>
+      </div>
+
+      <!-- 底部区域：主题切换与版权声明 -->
+      <div class="sidebar-footer">
+        <div class="theme-toggle-row">
+          <span id="theme-mode-text">深色模式</span>
+          <button id="theme-toggle" class="theme-toggle-btn" type="button" title="切换主题外观"></button>
+        </div>
+        <div class="sidebar-copyright">
+          © 2018-<span class="current-year">2026</span> vmrey.github.io<br>用代码与文字记录探索
+        </div>
+      </div>
+    </aside>
+
+    <!-- 主内容区 -->
+    <main class="app-main">
+      <div class="article-container">
+        <!-- 文章标题与元数据头部 -->
+        <header class="article-header">
+          <a href="../index.html" class="back-link">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
+            <span>返回文章列表</span>
+          </a>
+          <h1 class="article-title">TypeScript 轻量可逆加密与混淆工具实战</h1>
+          <div class="article-meta">
+            <span class="post-block-tag">前端开发</span>
+            <span>·</span>
+            <time datetime="2026-08-31">2026-08-31</time>
+            <span>·</span>
+            <span>6 分钟阅读</span>
+          </div>
+        </header>
+
+        <!-- 正文内容区 -->
+        <div class="article-layout">
+          <article class="article-content" id="main-content">
+            <div class="prose">
+<p>在前端或全栈业务开发中，我们经常遇到一些<strong>不需要引入笨重庞大的第三方加密库（如 crypto-js），但又需要对敏感字符串进行快速混淆防窥视</strong>的场景：</p>
+<ul>
+<li><strong>URL 参数防窥视</strong>：防止用户直接肉眼看懂 <code>userId</code>、<code>orderNo</code> 或关键 Query 参数；
+</li>
+<li><strong>二维码与防篡改传参</strong>：生成轻量防爬虫抓取的密文字符串；
+</li>
+<li><strong>前端轻量缓存混淆</strong>：避免明文直接暴露在 <code>localStorage</code> 或 <code>sessionStorage</code> 中；
+</li>
+<li><strong>纯 TypeScript、零外部依赖</strong>：即拷即用，体积不到 2KB，性能达到毫秒级。
+</li>
+</ul>
+<p>本文将为您分享一套经过工业级打磨的纯 TypeScript 轻量可逆加密工具库，并提供完整的源码、调用示范与绝对路径下载地址。</p>
+<hr>
+<h2 id="一-资源文件与快速进入">一、资源文件与快速进入</h2>
+<p>该工具已收录至本站文件管理中心，支持在线高亮预览与直接下载：</p>
+<ul>
+<li>🌐 <strong>文件管理中心在线预览</strong>：<a href="https://vmrey.github.io/files.html" target="_blank" rel="noopener noreferrer">https://vmrey.github.io/files.html</a>
+</li>
+<li>📥 <strong>TypeScript 源码文件直接下载</strong>：<a href="https://vmrey.github.io/assets/files/cipherTool.ts" target="_blank" rel="noopener noreferrer">https://vmrey.github.io/assets/files/cipherTool.ts</a>
+</li>
+</ul>
+<hr>
+<h2 id="二-调用示范与实战代码">二、调用示范与实战代码</h2>
+<p>在项目中将 <code>cipherTool.ts</code> 放置于工具目录（例如 <code>src/utils/cipherTool.ts</code>），即可直接导入并调用：</p>
+<pre><code class="language-typescript">// 导入 encrypt 和 decrypt 函数（根据你的文件实际路径调整相对路径）
+import { encrypt, decrypt } from './utils/cipherTool';
+
+// 示例 1：不使用口令（默认混淆）
+const originalText = &quot;Hello, TypeScript!&quot;;
+const cipherText = encrypt(originalText);
+console.log(&quot;密文:&quot;, cipherText);
+
+const decryptedText = decrypt(cipherText);
+console.log(&quot;明文:&quot;, decryptedText);
+
+// 示例 2：使用自定义加密口令
+const secretKey = &quot;my_super_secure_key&quot;;
+const secureCipher = encrypt(&quot;敏感数据：123456&quot;, secretKey);
+console.log(&quot;带口令密文:&quot;, secureCipher);
+
+const securePlain = decrypt(secureCipher, secretKey);
+console.log(&quot;带口令解密:&quot;, securePlain);</code></pre>
+<h3 id="进阶用例-中文-emoji-表情与-url-参数">进阶用例：中文、Emoji 表情与 URL 参数</h3>
+<pre><code class="language-typescript">// 示例 3：原生支持中文、Emoji 与 URL Query 串
+const queryParam = &quot;qrcodeNo=88888&amp;user=张三&amp;status=VIP🎉&quot;;
+const customPassword = &quot;我的专属口令_2026&quot;;
+
+// 加密
+const encryptedUrlParam = encrypt(queryParam, customPassword);
+console.log(&quot;URL安全密文:&quot;, encryptedUrlParam);
+// 输出类似: WHbvsquyz1YNcE_n1xxC7_fKxHxaJwMJ...（完全由 URL-Safe 字符组成）
+
+// 解密还原
+const restoredParam = decrypt(encryptedUrlParam, customPassword);
+console.log(&quot;完美还原:&quot;, restoredParam);
+// 输出: qrcodeNo=88888&amp;user=张三&amp;status=VIP🎉</code></pre>
+<hr>
+<h2 id="三-完整-typescript-工具源码-ciphertool-ts">三、完整 TypeScript 工具源码 (<code>cipherTool.ts</code>)</h2>
+<p>以下是该工具库的完整源代码实现：</p>
+<pre><code class="language-typescript">/**
+ * 轻量可逆加密工具库 (TypeScript 版)
+ * 特性：
+ * 1. 纯 TypeScript 实现，零外部依赖，极度轻量；
+ * 2. 基于 64 位打乱码表 + 动态异或 (XOR) 双重混淆；
+ * 3. 完美兼容中文、Emoji、URL 参数串及各类特殊符号；
+ * 4. 支持任意文本口令（支持重复字符），自动衍生专属暗号字典。
+ */
+
+interface DerivedKeys {
+    cipherMap: string;
+    xorKey: number;
+}
+
+// 基础 64 位 URL-Safe 字符原料（已随机打乱顺序，即使不输入口令也是混淆暗号表）
+const BASE_ALPHABET: string = 'X0qP-4iIdcUrmtGnLWw531shzKavoT8bufRMZlDHSFye2Q76CgxjBpA_Vk9YNOJE';
+
+/**
+ * 根据用户输入的任意口令，确定性衍生出专属暗号表与异或密钥
+ */
+const deriveKeys = (keyPhrase: string = ''): DerivedKeys =&gt; {
+    const text: string = String(keyPhrase).trim();
+    if (!text) {
+        return {
+            cipherMap: BASE_ALPHABET,
+            xorKey: 88
+        };
+    }
+
+    const chars: string[] = BASE_ALPHABET.split('');
+
+    // FNV-1a 哈希生成 32 位种子
+    let seed: number = 0x811c9dc5;
+    for (let i = 0; i &lt; text.length; i++) {
+        seed ^= text.charCodeAt(i);
+        seed = Math.imul(seed, 0x01000193) &gt;&gt;&gt; 0;
+    }
+
+    // 异或动态扰动偏置 (0~255)
+    const xorKey: number = seed &amp; 0xff;
+
+    // Mulberry32 确定性随机数发生器
+    const prng = (): number =&gt; {
+        seed = (seed + 0x6D2B79F5) &gt;&gt;&gt; 0;
+        let t: number = Math.imul(seed ^ (seed &gt;&gt;&gt; 15), 1 | seed);
+        t = (t + Math.imul(t ^ (t &gt;&gt;&gt; 7), 61 | t)) ^ t;
+        return ((t ^ (t &gt;&gt;&gt; 14)) &gt;&gt;&gt; 0) / 4294967296;
+    };
+
+    // Fisher-Yates 确定性洗牌算法
+    for (let i = chars.length - 1; i &gt; 0; i--) {
+        const j: number = Math.floor(prng() * (i + 1));
+        const temp = chars[i];
+        chars[i] = chars[j];
+        chars[j] = temp;
+    }
+
+    return {
+        cipherMap: chars.join(''),
+        xorKey
+    };
+};
+
+/**
+ * 字符串 -&gt; UTF-8 字节数组
+ */
+const utf8ToBytes = (str: string): number[] =&gt; {
+    const bytes: number[] = [];
+    for (let i = 0; i &lt; str.length; i++) {
+        let code: number = str.charCodeAt(i);
+        if (code &gt;= 0xd800 &amp;&amp; code &lt;= 0xdbff) {
+            const low: number = str.charCodeAt(++i);
+            code = (code - 0xd800) * 0x400 + (low - 0xdc00) + 0x10000;
+        }
+        if (code &lt; 0x80) {
+            bytes.push(code);
+        } else if (code &lt; 0x800) {
+            bytes.push(0xc0 | (code &gt;&gt; 6), 0x80 | (code &amp; 0x3f));
+        } else if (code &lt; 0x10000) {
+            bytes.push(0xe0 | (code &gt;&gt; 12), 0x80 | ((code &gt;&gt; 6) &amp; 0x3f), 0x80 | (code &amp; 0x3f));
+        } else {
+            bytes.push(0xf0 | (code &gt;&gt; 18), 0x80 | ((code &gt;&gt; 12) &amp; 0x3f), 0x80 | ((code &gt;&gt; 6) &amp; 0x3f), 0x80 | (code &amp; 0x3f));
+        }
+    }
+    return bytes;
+};
+
+/**
+ * UTF-8 字节数组 -&gt; 还原为字符串
+ */
+const bytesToUtf8 = (bytes: number[]): string =&gt; {
+    const chars: string[] = [];
+    let i = 0;
+    while (i &lt; bytes.length) {
+        const b = bytes[i];
+        let code: number, extra: number;
+        if (b &lt; 0x80) {
+            code = b; extra = 0;
+        } else if ((b &amp; 0xe0) === 0xc0) {
+            code = b &amp; 0x1f; extra = 1;
+        } else if ((b &amp; 0xf0) === 0xe0) {
+            code = b &amp; 0x0f; extra = 2;
+        } else if ((b &amp; 0xf8) === 0xf0) {
+            code = b &amp; 0x07; extra = 3;
+        } else {
+            chars.push(''); i++; continue;
+        }
+        if (i + extra &gt;= bytes.length) {
+            chars.push(''); break;
+        }
+        for (let j = 0; j &lt; extra; j++) {
+            code = (code &lt;&lt; 6) | (bytes[++i] &amp; 0x3f);
+        }
+        i++;
+        if (code &gt; 0xffff) {
+            code -= 0x10000;
+            chars.push(String.fromCharCode(0xd800 | (code &gt;&gt; 10), 0xdc00 | (code &amp; 0x3ff)));
+        } else {
+            chars.push(String.fromCharCode(code));
+        }
+    }
+    return chars.join('');
+};
+
+/**
+ * 字节数组 -&gt; Base64 密文字符串
+ */
+const bytesToBase64 = (bytes: number[], cipherMap: string): string =&gt; {
+    let out = '';
+    for (let i = 0; i &lt; bytes.length; i += 3) {
+        const b0 = bytes[i];
+        const b1 = i + 1 &lt; bytes.length ? bytes[i + 1] : 0;
+        const b2 = i + 2 &lt; bytes.length ? bytes[i + 2] : 0;
+        out += cipherMap[b0 &gt;&gt; 2];
+        out += cipherMap[((b0 &amp; 0x03) &lt;&lt; 4) | (b1 &gt;&gt; 4)];
+        out += i + 1 &lt; bytes.length ? cipherMap[((b1 &amp; 0x0f) &lt;&lt; 2) | (b2 &gt;&gt; 6)] : '=';
+        out += i + 2 &lt; bytes.length ? cipherMap[b2 &amp; 0x3f] : '=';
+    }
+    return out;
+};
+
+/**
+ * Base64 密文字符串 -&gt; 还原为字节数组
+ */
+const base64ToBytes = (base64: string, cipherMap: string): number[] | null =&gt; {
+    if (!base64) return null;
+    let clean = String(base64).trim();
+    while (clean.endsWith('=')) clean = clean.slice(0, -1);
+    if (!clean) return null;
+    const bytes: number[] = [];
+    let buffer = 0, bits = 0;
+    for (let i = 0; i &lt; clean.length; i++) {
+        const value = cipherMap.indexOf(clean[i]);
+        if (value &lt; 0) return null;
+        buffer = ((buffer &lt;&lt; 6) | value) &amp; 0xffffffff;
+        bits += 6;
+        if (bits &gt;= 8) {
+            bits -= 8;
+            bytes.push((buffer &gt;&gt; bits) &amp; 0xff);
+        }
+    }
+    return bytes;
+};
+
+/**
+ * 加密函数
+ * @param str 需要加密的明文（支持中文、Emoji、URL 参数等）
+ * @param keyPhrase 可选的加密口令（支持任意长度与重复字符）
+ * @returns 经过混淆编码后的密文字符串
+ */
+export const encrypt = (str: string, keyPhrase: string = ''): string =&gt; {
+    if (!str) return '';
+    const { cipherMap, xorKey } = deriveKeys(keyPhrase);
+    const bytes = utf8ToBytes(str);
+    for (let i = 0; i &lt; bytes.length; i++) {
+        bytes[i] = (bytes[i] ^ ((xorKey + i) &amp; 0xff)) &amp; 0xff;
+    }
+    return bytesToBase64(bytes, cipherMap);
+};
+
+/**
+ * 解密函数
+ * @param cipher 需要解密的密文
+ * @param keyPhrase 可选的解密口令（必须与加密时一致）
+ * @returns 还原出的原始明文字符串，失败返回空字符串
+ */
+export const decrypt = (cipher: string, keyPhrase: string = ''): string =&gt; {
+    if (!cipher) return '';
+    const { cipherMap, xorKey } = deriveKeys(keyPhrase);
+    const bytes = base64ToBytes(cipher, cipherMap);
+    if (!bytes) return '';
+    const decoded: number[] = [];
+    for (let i = 0; i &lt; bytes.length; i++) {
+        decoded.push((bytes[i] ^ ((xorKey + i) &amp; 0xff)) &amp; 0xff);
+    }
+    return bytesToUtf8(decoded);
+};</code></pre>
+<hr>
+<h2 id="四-核心技术设计与亮点">四、核心技术设计与亮点</h2>
+<ol>
+<li><strong>口令衍生字典（Key-to-Alphabet Derivation）</strong>：
+
+<ul>
+<li>区别于传统算法要求用户记忆复杂的无重复密钥，本工具允许用户随心输入包含<strong>中文、特殊符号、重复字符</strong>的口令；
+</li>
+<li>通过 FNV-1a 产生 32 位种子，再驱动 Mulberry32 发生器和 Fisher-Yates 算法，自动生成<strong>严格 64 位无碰撞</strong>的专属暗号映射表。
+</li>
+</ul>
+</li>
+<li><strong>动态异或偏移（Dynamic XOR Offset）</strong>：
+
+<ul>
+<li>采用 <code>bytes[i] ^ ((xorKey + i) &amp; 0xff)</code> 公式，引入了位置变量 <code>i</code>；
+</li>
+<li>彻底消除了简单静态异或的规律性，相同明文字符在不同位置的密文截然不同。
+</li>
+</ul>
+</li>
+<li><strong>URL-Safe 与二维码零转义</strong>：
+
+<ul>
+<li>码表严格选用 <code>A-Z, a-z, 0-9, -, _</code>；
+</li>
+<li>产生的密文不需要调用 <code>encodeURIComponent</code>，可直接作为 GET 参数、二维码内容或文件名称传输。
+</li>
+</ul>
+</li>
+</ol>
+<hr>
+<h2 id="五-总结与适用边界">五、总结与适用边界</h2>
+<ul>
+<li><strong>推荐场景</strong>：业务 Query 参数防直视、二维码混淆、防初级爬虫、轻量级敏感标记；
+</li>
+<li><strong>注意事项</strong>：本工具主要定位为<strong>强力混淆（Heavy Obfuscation）</strong>，兼顾极致轻量与易用性。若涉及银行密码、资金交易等极高安全等级场景，建议配合服务端非对称加密或 AES-GCM 协议使用。
+</li>
+</ul>
+            </div>
+
+            <div class="post-block-footer" style="margin-top: 3.5rem; padding-top: 1.5rem;">
+              <a href="../index.html" class="read-more-text">
+                <span>← 返回文章专栏</span>
+              </a>
+            </div>
+          </article>
+        </div>
+      </div>
+
+        <!-- 右侧文章大纲 TOC -->
+        <aside class="article-toc-panel" aria-label="文章目录大纲">
+          <div class="toc-box">
+            <div class="toc-box-title">本页导读 · 快速直达</div>
+            <ul class="toc-list">
+            <li>
+              <a href="#一-资源文件与快速进入" class="toc-link" title="一、资源文件与快速进入">一、资源文件与快速进入</a>
+            </li>
+            <li>
+              <a href="#二-调用示范与实战代码" class="toc-link" title="二、调用示范与实战代码">二、调用示范与实战代码</a>
+            </li>
+            <li>
+              <a href="#进阶用例-中文-emoji-表情与-url-参数" class="toc-link" title="进阶用例：中文、Emoji 表情与 URL 参数">进阶用例：中文、Emoji 表情与 URL 参数</a>
+            </li>
+            <li>
+              <a href="#三-完整-typescript-工具源码-ciphertool-ts" class="toc-link" title="三、完整 TypeScript 工具源码 (`cipherTool.ts`)">三、完整 TypeScript 工具源码 (`cipherTool.ts`)</a>
+            </li>
+            <li>
+              <a href="#四-核心技术设计与亮点" class="toc-link" title="四、核心技术设计与亮点">四、核心技术设计与亮点</a>
+            </li>
+            <li>
+              <a href="#五-总结与适用边界" class="toc-link" title="五、总结与适用边界">五、总结与适用边界</a>
+            </li>
+            </ul>
+          </div>
+        </aside>
+    </main>
+
+  </div>
+
+  <!-- 全局回到顶部按钮 (右下角固定) -->
+  <button id="back-to-top-btn" class="back-to-top-btn" type="button" title="回到顶部" aria-label="回到顶部">
+    <svg class="back-to-top-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+      <polyline points="18 15 12 9 6 15"></polyline>
+    </svg>
+  </button>
+
+  <script defer src="../js/config.js"></script>
+  <script defer src="../data/search-index.js"></script>
+  <script defer src="../js/main.js"></script>
+  <script defer src="../js/prism.js"></script>
+  <script defer src="../js/search.js"></script>
+  <script defer src="../js/file-preview.js"></script>
+
+</body>
+</html>

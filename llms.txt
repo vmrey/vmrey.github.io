@@ -12,9 +12,10 @@
 - [关于本站 (About Author)](https://vmrey.github.io/about.html): 博主个人简介、技术栈与工程理念
 - [完整知识库快照 (Full Knowledge Digest)](https://vmrey.github.io/llms-full.txt): 全站技术文章详细摘要与纯文本知识库
 
-## 技术文章全景大纲 (Technical Articles - 共 71 篇)
+## 技术文章全景大纲 (Technical Articles - 共 72 篇)
 
-### 前端开发 (41 篇)
+### 前端开发 (42 篇)
+- [TypeScript 轻量可逆加密与混淆工具实战](https://vmrey.github.io/posts/cipher-tool-03b7.html): 深度解析基于 64 位随机打乱码表与动态异或偏移的纯 TypeScript 轻量可逆加密方案，零外部依赖，完美兼容中文、Emoji、URL 安全与自定义口令。
 - [微信小程序与跨端开发排坑：彻底搞定键盘遮挡与输入框文字溢出（全平台兼容指南）](https://vmrey.github.io/posts/miniprogram-form-bugs-248d.html): 深入剖析微信小程序与移动端跨端（uni-app/H5）开发中两大高频表单交互 Bug——软键盘遮挡输入框与 Flex 占位符溢出挤压，提供小程序、iOS、Android、HarmonyOS 与 H5 全系统兼容解决方案与避坑清单。
 - [前端踩坑记录：如何正确获取 textarea 的光标位置？](https://vmrey.github.io/posts/textarea-9e34.html): 深度复盘与 Code Review：解析 textarea 标签赋值与事件监听误区，分享基于现代标准 API 的光标位置获取最佳实践。
 - [微信小程序踩坑记录：如何完美解决图片强制刷新（彻底告别本地缓存）](https://vmrey.github.io/posts/wx-img-refresh-ffc2.html): 深度剖析微信小程序图片本地强缓存与渲染层复用机制，系统总结 URL 时间戳、HTTP 头控制、Base64 编码、wx:if 渲染层重建、云开发临时链接及 FileSystemManager 本地沙盒接管等 8 种全场景强制刷新实战方案。

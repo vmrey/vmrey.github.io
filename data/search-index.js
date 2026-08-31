@@ -4,6 +4,56 @@
  */
 window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
   {
+    "id": "cipher-tool-03b7",
+    "type": "post",
+    "title": "TypeScript 轻量可逆加密与混淆工具实战",
+    "url": "posts/cipher-tool-03b7.html",
+    "externalUrl": "",
+    "category": "前端开发",
+    "date": "2026-08-31",
+    "tags": [
+      "前端开发",
+      "TypeScript",
+      "加解密",
+      "工具函数",
+      "数据安全"
+    ],
+    "summary": "深度解析基于 64 位随机打乱码表与动态异或偏移的纯 TypeScript 轻量可逆加密方案，零外部依赖，完美兼容中文、Emoji、URL 安全与自定义口令。",
+    "content": "🔐 TypeScript 轻量可逆加密与混淆工具实战 在前端或全栈业务开发中，我们经常遇到一些 不需要引入笨重庞大的第三方加密库（如 crypto-js），但又需要对敏感字符串进行快速混淆防窥视 的场景： URL 参数防窥视 ：防止用户直接肉眼看懂 userId 、 orderNo 或关键 Query 参数； 二维码与防篡改传参 ：生成轻量防爬虫抓取的密文字符串； 前端轻量缓存混淆 ：避免明文直接暴露在 localStorage 或 sessionStorage 中； 纯 TypeScript、零外部依赖 ：即拷即用，体积不到 2KB，性能达到毫秒级。 本文将为您分享一套经过工业级打磨的纯 TypeScript 轻量可逆加密工具库，并提供完整的源码、调用示范与绝对路径下载地址。 --- 一、资源文件与快速进入 该工具已收录至本站文件管理中心，支持在线高亮预览与直接下载： 🌐 文件管理中心在线预览 ： https://vmrey.github.io/files.html https://vmrey.github.io/files.html 📥 TypeScript 源码文件直接下载 ： https://vmrey.github.io/assets/files/cipherTool.ts https://vmrey.github.io/assets/files/cipherTool.ts --- 二、调用示范与实战代码 在项目中将 cipherTool.ts 放置于工具目录（例如 src/utils/cipherTool.ts ），即可直接导入并调用： typescript // 导入 encrypt 和 decrypt 函数（根据你的文件实际路径调整相对路径） import { encrypt, decrypt } from './utils/cipherTool'; // 示例 1：不使用口令（默认混淆） const originalText = \"Hello, TypeScript!\"; const cipherText = encrypt originalText ; console.log \"密文:\", cipherText ; const decryptedText = decrypt cipherText ; console.log \"明文:\", decryptedText ; // 示例 2：使用自定义加密口令 const secretKey = \"my_super_secure_key\"; const secureCipher = encrypt \"敏感数据：123456\", secretKey ; console.log \"带口令密文:\", secureCipher ; const securePlain = decrypt secureCipher, secretKey ; console.log \"带口令解密:\", securePlain ; 进阶用例：中文、Emoji 表情与 URL 参数 typescript // 示例 3：原生支持中文、Emoji 与 URL Query 串 const queryParam = \"qrcodeNo=88888&user=张三&status=VIP🎉\"; const customPassword = \"我的专属口令_2026\"; // 加密 const encryptedUrlParam = encrypt queryParam, customPassword ; console.log \"URL安全密文:\", encryptedUrlParam ; // 输出类似: WHbvsquyz1YNcE_n1xxC7_fKxHxaJwMJ...（完全由 URL-Safe 字符组成） // 解密还原 const restoredParam = decrypt encryptedUrlParam, customPassword ; console.log \"完美还原:\", restoredParam ; // 输出: qrcodeNo=88888&user=张三&status=VIP🎉 --- 三、完整 TypeScript 工具源码 cipherTool.ts 以下是该工具库的完整源代码实现： typescript / 轻量可逆加密工具库 TypeScript 版 特性： 1. 纯 TypeScript 实现，零外部依赖，极度轻量； 2. 基于 64 位打乱码表 + 动态异或 XOR 双重混淆； 3. 完美兼容中文、Emoji、URL 参数串及各类特殊符号； 4. 支持任意文本口令（支持重复字符），自动衍生专属暗号字典。 / interface DerivedKeys { cipherMap: string; xorKey: number; } // 基础 64 位 URL-Safe 字符原料（已随机打乱顺序，即使不输入口令也是混淆暗号表） const BASE_ALPHABET: string = 'X0qP-4iIdcUrmtGnLWw531shzKavoT8bufRMZlDHSFye2Q76CgxjBpA_Vk9YNOJE'; / 根据用户输入的任意口令，确定性衍生出专属暗号表与异或密钥 / const deriveKeys = keyPhrase: string = '' : DerivedKeys => { const text: string = String keyPhrase .trim ; if !text { return { cipherMap: BASE_ALPHABET, xorKey: 88 }; } const chars: string = BASE_ALPHABET.split '' ; // FNV-1a 哈希生成 32 位种子 let seed: number = 0x811c9dc5; for let i = 0; i < text.length; i++ { seed ^= text.charCodeAt i ; seed = Math.imul seed, 0x01000193 >>> 0; } // 异或动态扰动偏置 0~255 const xorKey: number = seed & 0xff; // Mulberry32 确定性随机数发生器 const prng = : number => { seed = seed + 0x6D2B79F5 >>> 0; let t: number = Math.imul seed ^ seed >>> 15 , 1 | seed ; t = t + Math.imul t ^ t >>> 7 , 61 | t ^ t; return t ^ t >>> 14 >>> 0 / 4294967296; }; // Fisher-Yates 确定性洗牌算法 for let i = chars.length - 1; i > 0; i-- { const j: number = Math.floor prng i + 1 ; const temp = chars i ; chars i = chars j ; chars j = temp; } return { cipherMap: chars.join '' , xorKey }; }; / 字符串 -> UTF-8 字节数组 / const utf8ToBytes = str: string : number => { const bytes: number = ; for let i = 0; i < str.length; i++ { let code: number = str.charCodeAt i ; if code >= 0xd800 && code <= 0xdbff { const low: number = str.charCodeAt ++i ; code = code - 0xd800 0x400 + low - 0xdc00 + 0x10000; } if code < 0x80 { bytes.push code ; } else if code < 0x800 { bytes.push 0xc0 | code >> 6 , 0x80 | code & 0x3f ; } else if code < 0x10000 { bytes.push 0xe0 | code >> 12 , 0x80 | code >> 6 & 0x3f , 0x80 | code & 0x3f ; } else { bytes.push 0xf0 | code >> 18 , 0x80 | code >> 12 & 0x3f , 0x80 | code >> 6 & 0x3f , 0x80 | code & 0x3f ; } } return bytes; }; / UTF-8 字节数组 -> 还原为字符串 / const bytesToUtf8 = bytes: number : string => { const chars: string = ; let i = 0; while i < bytes.length { const b = bytes i ; let code: number, extra: number; if b < 0x80 { code = b; extra = 0; } else if b & 0xe0 === 0xc0 { code = b & 0x1f; extra = 1; } else if b & 0xf0 === 0xe0 { code = b & 0x0f; extra = 2; } else if b & 0xf8 === 0xf0 { code = b & 0x07; extra = 3; } else { chars.push '' ; i++; continue; } if i + extra >= bytes.length { chars.push '' ; break; } for let j = 0; j < extra; j++ { code = code << 6 | bytes ++i & 0x3f ; } i++; if code > 0xffff { code -= 0x10000; chars.push String.fromCharCode 0xd800 | code >> 10 , 0xdc00 | code & 0x3ff ; } else { chars.push String.fromCharCode code ; } } return chars.join '' ; }; / 字节数组 -> Base64 密文字符串 / const bytesToBase64 = bytes: number , cipherMap: string : string => { let out = ''; for let i = 0; i < bytes.length; i += 3 { const b0 = bytes i ; const b1 = i + 1 < bytes.length ? bytes i + 1 : 0; const b2 = i + 2 < bytes.length ? bytes i + 2 : 0; out += cipherMap b0 >> 2 ; out += cipherMap b0 & 0x03 << 4 | b1 >> 4 ; out += i + 1 < bytes.length ? cipherMap b1 & 0x0f << 2 | b2 >> 6 : '='; out += i + 2 < bytes.length ? cipherMap b2 & 0x3f : '='; } return out; }; / Base64 密文字符串 -> 还原为字节数组 / const base64ToBytes = base64: string, cipherMap: string : number | null => { if !base64 return null; let clean = String base64 .trim ; while clean.endsWith '=' clean = clean.slice 0, -1 ; if !clean return null; const bytes: number = ; let buffer = 0, bits = 0; for let i = 0; i < clean.length; i++ { const value = cipherMap.indexOf clean i ; if value < 0 return null; buffer = buffer << 6 | value & 0xffffffff; bits += 6; if bits >= 8 { bits -= 8; bytes.push buffer >> bits & 0xff ; } } return bytes; }; / 加密函数 @param str 需要加密的明文（支持中文、Emoji、URL 参数等） @param keyPhrase 可选的加密口令（支持任意长度与重复字符） @returns 经过混淆编码后的密文字符串 / export const encrypt = str: string, keyPhrase: string = '' : string => { if !str return ''; const { cipherMap, xorKey } = deriveKeys keyPhrase ; const bytes = utf8ToBytes str ; for let i = 0; i < bytes.length; i++ { bytes i = bytes i ^ xorKey + i & 0xff & 0xff; } return bytesToBase64 bytes, cipherMap ; }; / 解密函数 @param cipher 需要解密的密文 @param keyPhrase 可选的解密口令（必须与加密时一致） @returns 还原出的原始明文字符串，失败返回空字符串 / export const decrypt = cipher: string, keyPhrase: string = '' : string => { if !cipher return ''; const { cipherMap, xorKey } = deriveKeys keyPhrase ; const bytes = base64ToBytes cipher, cipherMap ; if !bytes return ''; const decoded: number = ; for let i = 0; i < bytes.length; i++ { decoded.push bytes i ^ xorKey + i & 0xff & 0xff ; } return bytesToUtf8 decoded ; }; --- 四、核心技术设计与亮点 1. 口令衍生字典（Key-to-Alphabet Derivation） ： 区别于传统算法要求用户记忆复杂的无重复密钥，本工具允许用户随心输入包含 中文、特殊符号、重复字符 的口令； 通过 FNV-1a 产生 32 位种子，再驱动 Mulberry32 发生器和 Fisher-Yates 算法，自动生成 严格 64 位无碰撞 的专属暗号映射表。 2. 动态异或偏移（Dynamic XOR Offset） ： 采用 bytes i ^ xorKey + i & 0xff 公式，引入了位置变量 i ； 彻底消除了简单静态异或的规律性，相同明文字符在不同位置的密文截然不同。 3. URL-Safe 与二维码零转义 ： 码表严格选用 A-Z, a-z, 0-9, -, _ ； 产生的密文不需要调用 encodeURIComponent ，可直接作为 GET 参数、二维码内容或文件名称传输。 --- 五、总结与适用边界 推荐场景 ：业务 Query 参数防直视、二维码混淆、防初级爬虫、轻量级敏感标记； 注意事项 ：本工具主要定位为 强力混淆（Heavy Obfuscation） ，兼顾极致轻量与易用性。若涉及银行密码、资金交易等极高安全等级场景，建议配合服务端非对称加密或 AES-GCM 协议使用。",
+    "sections": [
+      {
+        "title": "一、资源文件与快速进入",
+        "anchor": "#一-资源文件与快速进入",
+        "id": "一-资源文件与快速进入"
+      },
+      {
+        "title": "二、调用示范与实战代码",
+        "anchor": "#二-调用示范与实战代码",
+        "id": "二-调用示范与实战代码"
+      },
+      {
+        "title": "进阶用例：中文、Emoji 表情与 URL 参数",
+        "anchor": "#进阶用例-中文-emoji-表情与-url-参数",
+        "id": "进阶用例-中文-emoji-表情与-url-参数"
+      },
+      {
+        "title": "三、完整 TypeScript 工具源码 (`cipherTool.ts`)",
+        "anchor": "#三-完整-typescript-工具源码-ciphertool-ts",
+        "id": "三-完整-typescript-工具源码-ciphertool-ts"
+      },
+      {
+        "title": "四、核心技术设计与亮点",
+        "anchor": "#四-核心技术设计与亮点",
+        "id": "四-核心技术设计与亮点"
+      },
+      {
+        "title": "五、总结与适用边界",
+        "anchor": "#五-总结与适用边界",
+        "id": "五-总结与适用边界"
+      }
+    ]
+  },
+  {
     "id": "miniprogram-form-bugs-248d",
     "type": "post",
     "title": "微信小程序与跨端开发排坑：彻底搞定键盘遮挡与输入框文字溢出（全平台兼容指南）",
@@ -3439,7 +3489,7 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
     "url": "ai.html#ai-google-gemini",
     "externalUrl": "https://gemini.google.com/",
     "category": "AI 导航 · 前沿大模型与对话平台",
-    "date": "2026-08-29",
+    "date": "2026-08-31",
     "tags": [
       "Gemini",
       "Google",
@@ -3458,7 +3508,7 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
     "url": "ai.html#ai-chatgpt",
     "externalUrl": "https://chatgpt.com/",
     "category": "AI 导航 · 前沿大模型与对话平台",
-    "date": "2026-08-29",
+    "date": "2026-08-31",
     "tags": [
       "ChatGPT",
       "OpenAI",
@@ -3477,7 +3527,7 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
     "url": "ai.html#ai-claude",
     "externalUrl": "https://claude.ai/",
     "category": "AI 导航 · 前沿大模型与对话平台",
-    "date": "2026-08-29",
+    "date": "2026-08-31",
     "tags": [
       "Claude",
       "Anthropic",
@@ -3496,7 +3546,7 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
     "url": "ai.html#ai-deepseek-深度求索",
     "externalUrl": "https://chat.deepseek.com/",
     "category": "AI 导航 · 前沿大模型与对话平台",
-    "date": "2026-08-29",
+    "date": "2026-08-31",
     "tags": [
       "DeepSeek",
       "R1推理",
@@ -3515,7 +3565,7 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
     "url": "ai.html#ai-kimi-月之暗面",
     "externalUrl": "https://kimi.moonshot.cn/",
     "category": "AI 导航 · 前沿大模型与对话平台",
-    "date": "2026-08-29",
+    "date": "2026-08-31",
     "tags": [
       "Kimi",
       "月之暗面",
@@ -3534,7 +3584,7 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
     "url": "ai.html#ai-grok",
     "externalUrl": "https://grok.com/",
     "category": "AI 导航 · 前沿大模型与对话平台",
-    "date": "2026-08-29",
+    "date": "2026-08-31",
     "tags": [
       "Grok",
       "xAI",
@@ -3553,7 +3603,7 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
     "url": "ai.html#ai-claude-code",
     "externalUrl": "https://github.com/anthropics/claude-code",
     "category": "AI 导航 · AI 智能体与自主编程",
-    "date": "2026-08-29",
+    "date": "2026-08-31",
     "tags": [
       "ClaudeCode",
       "AI编程",
@@ -3572,7 +3622,7 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
     "url": "ai.html#ai-cursor",
     "externalUrl": "https://www.cursor.com/",
     "category": "AI 导航 · AI 智能体与自主编程",
-    "date": "2026-08-29",
+    "date": "2026-08-31",
     "tags": [
       "Cursor",
       "VSCode",
@@ -3591,7 +3641,7 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
     "url": "ai.html#ai-v0-by-vercel",
     "externalUrl": "https://v0.dev/",
     "category": "AI 导航 · AI 智能体与自主编程",
-    "date": "2026-08-29",
+    "date": "2026-08-31",
     "tags": [
       "v0",
       "Vercel",
@@ -3610,7 +3660,7 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
     "url": "ai.html#ai-bolt-new",
     "externalUrl": "https://bolt.new/",
     "category": "AI 导航 · AI 智能体与自主编程",
-    "date": "2026-08-29",
+    "date": "2026-08-31",
     "tags": [
       "Bolt.new",
       "全栈开发",
@@ -3629,7 +3679,7 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
     "url": "ai.html#ai-agnes-ai",
     "externalUrl": "https://platform.agnes-ai.com/",
     "category": "AI 导航 · AI 智能体与自主编程",
-    "date": "2026-08-29",
+    "date": "2026-08-31",
     "tags": [
       "AgnesAI",
       "AI智能体",
@@ -3649,7 +3699,7 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
     "url": "ai.html#ai-midjourney",
     "externalUrl": "https://www.midjourney.com/",
     "category": "AI 导航 · AI 图像与多模态创作",
-    "date": "2026-08-29",
+    "date": "2026-08-31",
     "tags": [
       "Midjourney",
       "AI绘画",
@@ -3668,7 +3718,7 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
     "url": "ai.html#ai-flux-1-black-forest-labs",
     "externalUrl": "https://blackforestlabs.ai/",
     "category": "AI 导航 · AI 图像与多模态创作",
-    "date": "2026-08-29",
+    "date": "2026-08-31",
     "tags": [
       "FLUX.1",
       "开源模型",
@@ -3687,7 +3737,7 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
     "url": "ai.html#ai-runway-gen-3",
     "externalUrl": "https://runwayml.com/",
     "category": "AI 导航 · AI 图像与多模态创作",
-    "date": "2026-08-29",
+    "date": "2026-08-31",
     "tags": [
       "Runway",
       "Gen-3",
@@ -3706,7 +3756,7 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
     "url": "ai.html#ai-openrouter",
     "externalUrl": "https://openrouter.ai/",
     "category": "AI 导航 · AI 聚合平台与 API 服务",
-    "date": "2026-08-29",
+    "date": "2026-08-31",
     "tags": [
       "OpenRouter",
       "模型网关",
@@ -3725,7 +3775,7 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
     "url": "ai.html#ai-hugging-face",
     "externalUrl": "https://huggingface.co/",
     "category": "AI 导航 · AI 聚合平台与 API 服务",
-    "date": "2026-08-29",
+    "date": "2026-08-31",
     "tags": [
       "HuggingFace",
       "开源社区",
@@ -3744,7 +3794,7 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
     "url": "ai.html#ai-siliconflow-硅基流动",
     "externalUrl": "https://siliconflow.cn/",
     "category": "AI 导航 · AI 聚合平台与 API 服务",
-    "date": "2026-08-29",
+    "date": "2026-08-31",
     "tags": [
       "SiliconFlow",
       "硅基流动",
@@ -3763,7 +3813,7 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
     "url": "tools.html#tool-草料二维码",
     "externalUrl": "https://cli.im/",
     "category": "工具导航 · 实用生成与办公工具",
-    "date": "2026-08-29",
+    "date": "2026-08-31",
     "tags": [
       "二维码",
       "QR Code",
@@ -3782,7 +3832,7 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
     "url": "tools.html#tool-1password-强密码生成器",
     "externalUrl": "https://1password.com/zh-cn/password-generator",
     "category": "工具导航 · 实用生成与办公工具",
-    "date": "2026-08-29",
+    "date": "2026-08-31",
     "tags": [
       "1Password",
       "密码生成器",
@@ -3801,7 +3851,7 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
     "url": "tools.html#tool-轻松传-easychuan",
     "externalUrl": "https://easychuan.cn/",
     "category": "工具导航 · 实用生成与办公工具",
-    "date": "2026-08-29",
+    "date": "2026-08-31",
     "tags": [
       "轻松传",
       "文件传输",
@@ -3821,7 +3871,7 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
     "url": "tools.html#tool-smallpdf-pdf-转-word",
     "externalUrl": "https://smallpdf.com/cn/pdf-to-word",
     "category": "工具导航 · 实用生成与办公工具",
-    "date": "2026-08-29",
+    "date": "2026-08-31",
     "tags": [
       "Smallpdf",
       "PDF转Word",
@@ -3841,7 +3891,7 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
     "url": "tools.html#tool-mobaxterm",
     "externalUrl": "https://mobaxterm.mobatek.net/",
     "category": "工具导航 · 终端与远程运维工具",
-    "date": "2026-08-29",
+    "date": "2026-08-31",
     "tags": [
       "MobaXterm",
       "SSH",
@@ -3862,7 +3912,7 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
     "url": "tools.html#tool-finalshell",
     "externalUrl": "http://www.hostbuf.com/",
     "category": "工具导航 · 终端与远程运维工具",
-    "date": "2026-08-29",
+    "date": "2026-08-31",
     "tags": [
       "FinalShell",
       "SSH",
@@ -3882,7 +3932,7 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
     "url": "tools.html#tool-aapanel-宝塔国际版",
     "externalUrl": "https://www.aapanel.com/new/download.html",
     "category": "工具导航 · 终端与远程运维工具",
-    "date": "2026-08-29",
+    "date": "2026-08-31",
     "tags": [
       "aaPanel",
       "宝塔面板",
@@ -3903,7 +3953,7 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
     "url": "tools.html#tool-mqttx",
     "externalUrl": "https://mqttx.app/zh/downloads",
     "category": "工具导航 · 终端与远程运维工具",
-    "date": "2026-08-29",
+    "date": "2026-08-31",
     "tags": [
       "MQTTX",
       "MQTT",
@@ -3924,7 +3974,7 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
     "url": "tools.html#tool-draw-io",
     "externalUrl": "https://app.diagrams.net/",
     "category": "工具导航 · 架构设计与思维导图",
-    "date": "2026-08-29",
+    "date": "2026-08-31",
     "tags": [
       "架构图",
       "流程图",
@@ -3943,7 +3993,7 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
     "url": "tools.html#tool-pdmaner-元数建模",
     "externalUrl": "https://www.pdmaas.cn/Download",
     "category": "工具导航 · 架构设计与思维导图",
-    "date": "2026-08-29",
+    "date": "2026-08-31",
     "tags": [
       "PDManer",
       "数据库建模",
@@ -3963,7 +4013,7 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
     "url": "tools.html#tool-dbeaver",
     "externalUrl": "https://dbeaver.io/download/",
     "category": "工具导航 · 架构设计与思维导图",
-    "date": "2026-08-29",
+    "date": "2026-08-31",
     "tags": [
       "DBeaver",
       "数据库管理",
@@ -3983,7 +4033,7 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
     "url": "tools.html#tool-geek-uninstaller",
     "externalUrl": "https://geekuninstaller.com/",
     "category": "工具导航 · 系统优化与效率工具",
-    "date": "2026-08-29",
+    "date": "2026-08-31",
     "tags": [
       "Geek",
       "软件卸载",
@@ -4002,7 +4052,7 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
     "url": "tools.html#tool-kms-在线激活服务-kms-cx",
     "externalUrl": "https://kms.cx/",
     "category": "工具导航 · 系统优化与效率工具",
-    "date": "2026-08-29",
+    "date": "2026-08-31",
     "tags": [
       "KMS",
       "Windows激活",
@@ -4022,7 +4072,7 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
     "url": "tools.html#tool-flyenv",
     "externalUrl": "https://flyenv.com/download.html",
     "category": "工具导航 · 系统优化与效率工具",
-    "date": "2026-08-29",
+    "date": "2026-08-31",
     "tags": [
       "FlyEnv",
       "开发环境",
@@ -4043,7 +4093,7 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
     "url": "tools.html#tool-winrar-官方中文网",
     "externalUrl": "https://www.winrar.com.cn/",
     "category": "工具导航 · 系统优化与效率工具",
-    "date": "2026-08-29",
+    "date": "2026-08-31",
     "tags": [
       "WinRAR",
       "压缩工具",
@@ -4064,7 +4114,7 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
     "url": "tools.html#tool-cloudconvert-svg-to-ico",
     "externalUrl": "https://cloudconvert.com/svg-to-ico",
     "category": "工具导航 · 图像与多媒体处理",
-    "date": "2026-08-29",
+    "date": "2026-08-31",
     "tags": [
       "SVG",
       "ICO",
@@ -4083,7 +4133,7 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
     "url": "tools.html#tool-tinify-tinypng-中文网",
     "externalUrl": "https://tinify.cn/",
     "category": "工具导航 · 图像与多媒体处理",
-    "date": "2026-08-29",
+    "date": "2026-08-31",
     "tags": [
       "Tinify",
       "TinyPNG",
@@ -4103,7 +4153,7 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
     "url": "tools.html#tool-hills-lite-emby-jellyfin-客户端",
     "externalUrl": "https://apps.microsoft.com/detail/9nxnzfrllwzx?hl=zh-CN&gl=CN",
     "category": "工具导航 · 图像与多媒体处理",
-    "date": "2026-08-29",
+    "date": "2026-08-31",
     "tags": [
       "HillsLite",
       "Emby",
@@ -4123,7 +4173,7 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
     "url": "tools.html#tool-ffmpeg",
     "externalUrl": "https://www.ffmpeg.org/",
     "category": "工具导航 · 图像与多媒体处理",
-    "date": "2026-08-29",
+    "date": "2026-08-31",
     "tags": [
       "FFmpeg",
       "音视频处理",
@@ -4143,7 +4193,7 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
     "url": "tools.html#tool-ippure-ip-纯净度检测",
     "externalUrl": "https://ippure.com/",
     "category": "工具导航 · 网络诊断与安全检测",
-    "date": "2026-08-29",
+    "date": "2026-08-31",
     "tags": [
       "IPPure",
       "IP查询",
@@ -4163,7 +4213,7 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
     "url": "tools.html#tool-cloudflare-优选-ip-节点库-090227-xyz",
     "externalUrl": "https://cf.090227.xyz/",
     "category": "工具导航 · 网络诊断与安全检测",
-    "date": "2026-08-29",
+    "date": "2026-08-31",
     "tags": [
       "Cloudflare",
       "CF优选",
@@ -4183,7 +4233,7 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
     "url": "node-vle.html",
     "externalUrl": "",
     "category": "独立工具 · 网络与部署运维",
-    "date": "2026-08-29",
+    "date": "2026-08-31",
     "tags": [
       "VLESS",
       "节点生成器",
@@ -4201,7 +4251,7 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
     "url": "nav.html#github-fnm",
     "externalUrl": "https://github.com/Schniz/fnm",
     "category": "GitHub 导航 · Node.js 版本管理",
-    "date": "2026-08-29",
+    "date": "2026-08-31",
     "tags": [
       "Rust",
       "Node.js",
@@ -4220,7 +4270,7 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
     "url": "nav.html#github-nvm",
     "externalUrl": "https://github.com/nvm-sh/nvm",
     "category": "GitHub 导航 · Node.js 版本管理",
-    "date": "2026-08-29",
+    "date": "2026-08-31",
     "tags": [
       "Shell",
       "Bash",
@@ -4239,7 +4289,7 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
     "url": "nav.html#github-ventoy",
     "externalUrl": "https://github.com/ventoy/Ventoy",
     "category": "GitHub 导航 · 系统与装机利器",
-    "date": "2026-08-29",
+    "date": "2026-08-31",
     "tags": [
       "Ventoy",
       "启动盘",
@@ -4259,7 +4309,7 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
     "url": "nav.html#github-lky-officetools",
     "externalUrl": "https://github.com/OdysseusYuan/LKY_OfficeTools",
     "category": "GitHub 导航 · 系统与装机利器",
-    "date": "2026-08-29",
+    "date": "2026-08-31",
     "tags": [
       "Office",
       "LKY",
@@ -4279,7 +4329,7 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
     "url": "nav.html#github-fail2ban",
     "externalUrl": "https://github.com/fail2ban/fail2ban",
     "category": "GitHub 导航 · 服务器安全与防护",
-    "date": "2026-08-29",
+    "date": "2026-08-31",
     "tags": [
       "Fail2Ban",
       "Linux安全",
@@ -4299,7 +4349,7 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
     "url": "nav.html#github-acme-sh",
     "externalUrl": "https://github.com/acmesh-official/acme.sh",
     "category": "GitHub 导航 · 服务器安全与防护",
-    "date": "2026-08-29",
+    "date": "2026-08-31",
     "tags": [
       "acme.sh",
       "SSL证书",
@@ -4319,7 +4369,7 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
     "url": "nav.html#github-lit",
     "externalUrl": "https://lit.dev/",
     "category": "GitHub 导航 · 前端开发与 Web Components",
-    "date": "2026-08-29",
+    "date": "2026-08-31",
     "tags": [
       "Lit",
       "WebComponents",
@@ -4340,7 +4390,7 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
     "url": "nav.html#github-fingerprintjs",
     "externalUrl": "https://github.com/fingerprintjs/fingerprintjs",
     "category": "GitHub 导航 · 前端安全与设备识别",
-    "date": "2026-08-29",
+    "date": "2026-08-31",
     "tags": [
       "Fingerprint",
       "设备指纹",
@@ -4360,7 +4410,7 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
     "url": "nav.html#github-cloudflarespeedtest",
     "externalUrl": "https://github.com/XIU2/CloudflareSpeedTest",
     "category": "GitHub 导航 · 网络加速与穿透工具",
-    "date": "2026-08-29",
+    "date": "2026-08-31",
     "tags": [
       "CloudflareSpeedTest",
       "Cloudflare",
@@ -4381,7 +4431,7 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
     "url": "nav.html#github-frp",
     "externalUrl": "https://github.com/fatedier/frp",
     "category": "GitHub 导航 · 网络加速与穿透工具",
-    "date": "2026-08-29",
+    "date": "2026-08-31",
     "tags": [
       "frp",
       "内网穿透",
@@ -4401,7 +4451,7 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
     "url": "nav.html#github-v2rayng",
     "externalUrl": "https://github.com/2dust/v2rayNG",
     "category": "GitHub 导航 · 网络加速与穿透工具",
-    "date": "2026-08-29",
+    "date": "2026-08-31",
     "tags": [
       "v2rayNG",
       "Android",
@@ -4422,7 +4472,7 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
     "url": "nav.html#github-v2rayn",
     "externalUrl": "https://github.com/2dust/v2rayN",
     "category": "GitHub 导航 · 网络加速与穿透工具",
-    "date": "2026-08-29",
+    "date": "2026-08-31",
     "tags": [
       "v2rayN",
       "Windows",
@@ -4443,7 +4493,7 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
     "url": "nav.html#github-edgetunnel",
     "externalUrl": "https://github.com/cmliu/edgetunnel",
     "category": "GitHub 导航 · 网络加速与穿透工具",
-    "date": "2026-08-29",
+    "date": "2026-08-31",
     "tags": [
       "edgetunnel",
       "Cloudflare",
@@ -4464,7 +4514,7 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
     "url": "nav.html#github-multi-easygost",
     "externalUrl": "https://github.com/KANIKIG/Multi-EasyGost",
     "category": "GitHub 导航 · 网络加速与穿透工具",
-    "date": "2026-08-29",
+    "date": "2026-08-31",
     "tags": [
       "Gost",
       "端口转发",
@@ -4485,7 +4535,7 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
     "url": "nav.html#github-emqx",
     "externalUrl": "https://github.com/emqx/emqx",
     "category": "GitHub 导航 · 物联网与消息中间件",
-    "date": "2026-08-29",
+    "date": "2026-08-31",
     "tags": [
       "EMQX",
       "MQTT",
@@ -4507,7 +4557,7 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
     "url": "files.html#file-fileupload-vue",
     "externalUrl": "",
     "category": "资源文件 · 前端组件",
-    "date": "2026-08-29",
+    "date": "2026-08-31",
     "tags": [
       "vue",
       "前端组件"
@@ -4523,7 +4573,7 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
     "url": "files.html#file-queryform-vue",
     "externalUrl": "",
     "category": "资源文件 · 前端组件",
-    "date": "2026-08-29",
+    "date": "2026-08-31",
     "tags": [
       "vue",
       "前端组件"
@@ -4533,13 +4583,29 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
     "sections": []
   },
   {
+    "id": "file-ciphertool-ts",
+    "type": "file",
+    "title": "cipherTool.ts",
+    "url": "files.html#file-ciphertool-ts",
+    "externalUrl": "",
+    "category": "资源文件 · 代码库",
+    "date": "2026-08-31",
+    "tags": [
+      "ts",
+      "代码库"
+    ],
+    "summary": "TypeScript 轻量可逆加密与混淆工具库源码（支持自定义口令、中文/Emoji、URL安全） (6.3 KB, undefined 行)",
+    "content": "cipherTool.ts TypeScript 轻量可逆加密与混淆工具库源码（支持自定义口令、中文/Emoji、URL安全） 代码库 ts",
+    "sections": []
+  },
+  {
     "id": "file-tools-js",
     "type": "file",
     "title": "tools.js",
     "url": "files.html#file-tools-js",
     "externalUrl": "",
     "category": "资源文件 · 代码库",
-    "date": "2026-08-29",
+    "date": "2026-08-31",
     "tags": [
       "js",
       "代码库"
@@ -4555,7 +4621,7 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
     "url": "files.html#file-frps-sh",
     "externalUrl": "",
     "category": "资源文件 · Shell 脚本",
-    "date": "2026-08-29",
+    "date": "2026-08-31",
     "tags": [
       "sh",
       "Shell 脚本"
@@ -4571,7 +4637,7 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
     "url": "files.html#file-xray-sh",
     "externalUrl": "",
     "category": "资源文件 · Shell 脚本",
-    "date": "2026-08-29",
+    "date": "2026-08-31",
     "tags": [
       "sh",
       "Shell 脚本"
@@ -4587,7 +4653,7 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
     "url": "files.html#file-renametool-bat",
     "externalUrl": "",
     "category": "资源文件 · Windows 批处理",
-    "date": "2026-08-29",
+    "date": "2026-08-31",
     "tags": [
       "bat",
       "Windows 批处理"
@@ -4603,7 +4669,7 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
     "url": "files.html#file-cmd-proxy-bat",
     "externalUrl": "",
     "category": "资源文件 · Windows 批处理",
-    "date": "2026-08-29",
+    "date": "2026-08-31",
     "tags": [
       "bat",
       "Windows 批处理"
@@ -4619,7 +4685,7 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
     "url": "files.html#file-cmd-proxy-agy-bat",
     "externalUrl": "",
     "category": "资源文件 · Windows 批处理",
-    "date": "2026-08-29",
+    "date": "2026-08-31",
     "tags": [
       "bat",
       "Windows 批处理"
@@ -4635,7 +4701,7 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
     "url": "files.html#file-windows-activation-bat",
     "externalUrl": "",
     "category": "资源文件 · Windows 批处理",
-    "date": "2026-08-29",
+    "date": "2026-08-31",
     "tags": [
       "bat",
       "Windows 批处理"
@@ -4651,7 +4717,7 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
     "url": "files.html#file-imghandle-jpg-zip",
     "externalUrl": "",
     "category": "资源文件 · 压缩资源包",
-    "date": "2026-08-29",
+    "date": "2026-08-31",
     "tags": [
       "zip",
       "压缩资源包"
@@ -4667,7 +4733,7 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
     "url": "files.html#file-curvecharts-rar",
     "externalUrl": "",
     "category": "资源文件 · 压缩资源包",
-    "date": "2026-08-29",
+    "date": "2026-08-31",
     "tags": [
       "rar",
       "压缩资源包"
@@ -4683,7 +4749,7 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
     "url": "files.html#file-优惠券弹框组件-zip",
     "externalUrl": "",
     "category": "资源文件 · 压缩资源包",
-    "date": "2026-08-29",
+    "date": "2026-08-31",
     "tags": [
       "zip",
       "压缩资源包"

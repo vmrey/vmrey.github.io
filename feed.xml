@@ -5,8 +5,16 @@
     <link>https://vmrey.github.io/</link>
     <description>构建工具，写干净的代码</description>
     <language>zh-CN</language>
-    <lastBuildDate>Sat, 29 Aug 2026 13:06:41 GMT</lastBuildDate>
+    <lastBuildDate>Mon, 31 Aug 2026 13:40:10 GMT</lastBuildDate>
     <atom:link href="https://vmrey.github.io/feed.xml" rel="self" type="application/rss+xml"/>
+    <item>
+      <title>TypeScript 轻量可逆加密与混淆工具实战</title>
+      <link>https://vmrey.github.io/posts/cipher-tool-03b7.html</link>
+      <guid isPermaLink="true">https://vmrey.github.io/posts/cipher-tool-03b7.html</guid>
+      <pubDate>Mon, 31 Aug 2026 00:00:00 GMT</pubDate>
+      <category>前端开发</category>
+      <description>深度解析基于 64 位随机打乱码表与动态异或偏移的纯 TypeScript 轻量可逆加密方案，零外部依赖，完美兼容中文、Emoji、URL 安全与自定义口令。</description>
+    </item>
     <item>
       <title>微信小程序与跨端开发排坑：彻底搞定键盘遮挡与输入框文字溢出（全平台兼容指南）</title>
       <link>https://vmrey.github.io/posts/miniprogram-form-bugs-248d.html</link>
@@ -238,14 +246,6 @@
       <pubDate>Wed, 22 Apr 2026 00:00:00 GMT</pubDate>
       <category>前端开发</category>
       <description>通过正则表达式与 new Function / eval 构建轻量高效的字符串模板渲染引擎，解析 Mustache/EJS 核心思想。</description>
-    </item>
-    <item>
-      <title>前端输入框严格限制只能输入中国手机号码的最佳实践</title>
-      <link>https://vmrey.github.io/posts/mobile-verify-635b.html</link>
-      <guid isPermaLink="true">https://vmrey.github.io/posts/mobile-verify-635b.html</guid>
-      <pubDate>Wed, 15 Apr 2026 00:00:00 GMT</pubDate>
-      <category>前端开发</category>
-      <description>结合 input 事件过滤、粘贴拦截与最新 11 位号段正则，打造极致体验的手机号输入框校验。</description>
     </item>
   </channel>
 </rss>
