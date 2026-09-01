@@ -354,7 +354,7 @@ redis-cli -h 127.0.0.1 -p 6379 FLUSHALL ASYNC
 # 异步清空当前数据库数据
 redis-cli -h 127.0.0.1 -p 6379 FLUSHDB ASYNC</code></pre>
 <p><strong>原理解析</strong>：加入 <code>ASYNC</code> 后，清空操作会被交由后台的新线程执行，Redis 主线程可以继续处理其他命令，极大降低了对业务的影响。</p>
-<div class="callout"><p>⚠️ <strong>生产环境避坑指南</strong>：  <br><code>FLUSHALL</code> 和 <code>FLUSHDB</code> 属于极其危险的操作。在生产环境中，强烈建议在 <code>redis.conf</code> 中通过 <code>rename-command FLUSHALL &quot;&quot;</code> 和 <code>rename-command FLUSHDB &quot;&quot;</code> 将其禁用，防止误操作导致数据灾难。</p></div>
+<blockquote><p>⚠️ <strong>生产环境避坑指南</strong>：  <br><code>FLUSHALL</code> 和 <code>FLUSHDB</code> 属于极其危险的操作。在生产环境中，强烈建议在 <code>redis.conf</code> 中通过 <code>rename-command FLUSHALL &quot;&quot;</code> 和 <code>rename-command FLUSHDB &quot;&quot;</code> 将其禁用，防止误操作导致数据灾难。</p></blockquote>
 <hr>
 <h2 id="二-redis-内存淘汰策略-maxmemory-policy">二、 Redis 内存淘汰策略 (maxmemory-policy)</h2>
 <p>当 Redis 的内存使用量达到了配置的上限（由 <code>redis.conf</code> 中的 <code>maxmemory</code> 参数决定）时，如果继续向 Redis 中写入数据，Redis 就会触发内存淘汰机制。</p>

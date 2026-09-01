@@ -354,7 +354,7 @@ systemctl stop firewalld
 systemctl disable firewalld</code></pre>
 <hr>
 <h2 id="二-端口放行与管理指令">二、端口放行与管理指令</h2>
-<div class="callout"><p><strong>注意</strong>：必须带有 <code>--permanent</code> 参数才能将规则持久化写入配置文件，否则服务器重启后失效。</p></div>
+<blockquote><p><strong>注意</strong>：必须带有 <code>--permanent</code> 参数才能将规则持久化写入配置文件，否则服务器重启后失效。</p></blockquote>
 <pre><code class="language-bash"># 1. 开放指定端口 (以 80 和 443 为例)
 firewall-cmd --zone=public --add-port=80/tcp --permanent
 firewall-cmd --zone=public --add-port=443/tcp --permanent

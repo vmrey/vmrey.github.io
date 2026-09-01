@@ -335,7 +335,7 @@
         <div class="article-layout">
           <article class="article-content" id="main-content">
             <div class="prose">
-<div class="callout"><p><strong>FFmpeg</strong> 是音视频处理领域的事实标准工具。通过 FFmpeg 可以实现将本地 MP4/MKV 视频文件、网络 RTSP 摄像头流或麦克风音频，实时编码封装推送到 RTMP/FLV 直播流媒体服务器（如 YouTube、Bilibili、斗鱼、Nginx-RTMP 等）。</p></div>
+<blockquote><p><strong>FFmpeg</strong> 是音视频处理领域的事实标准工具。通过 FFmpeg 可以实现将本地 MP4/MKV 视频文件、网络 RTSP 摄像头流或麦克风音频，实时编码封装推送到 RTMP/FLV 直播流媒体服务器（如 YouTube、Bilibili、斗鱼、Nginx-RTMP 等）。</p></blockquote>
 <hr>
 <h2 id="一-基础-rtmp-视频推流核心命令">一、基础 RTMP 视频推流核心命令</h2>
 <p>将本地视频文件原画质推送到 RTMP 节点：</p>
@@ -389,7 +389,12 @@
 <h2 id="二-进阶实战-7x24小时无人值守循环推流">二、进阶实战：7x24小时无人值守循环推流</h2>
 <p>将文件夹内的视频无限循环直播推流（可配合 <code>screen</code> 或 <code>nohup</code> 后台常驻）：</p>
 <pre><code class="language-bash">nohup ffmpeg -re -stream_loop -1 -i &quot;video.mp4&quot; -c:v libx264 -preset veryfast -b:v 3000k -maxrate 3500k -bufsize 6000k -pix_fmt yuv420p -g 50 -c:a aac -b:a 128k -ar 44100 -f flv &quot;rtmp://live-push.example.com/live/streamkey&quot; &gt; /var/log/ffmpeg_live.log 2&gt;&amp;1 &amp;</code></pre>
-<div class="callout"><p>💡 <strong>参数补充</strong>：<br>- <strong><code>-stream_loop -1</code></strong>：开启无限循环播放输入源；<br>- <strong><code>-preset veryfast</code></strong>：H.264 快速编码预设，大幅降低 CPU 负载；<br>- <strong><code>-g 50</code></strong>：设置关键帧间隔（GOP），通常设为帧率的 2 倍（2秒一个关键帧），提升观众秒开率。</p></div>
+<blockquote><ul class="callout-list">
+  <li>💡 <strong>参数补充</strong>：</li>
+  <li><strong><code>-stream_loop -1</code></strong>：开启无限循环播放输入源；</li>
+  <li><strong><code>-preset veryfast</code></strong>：H.264 快速编码预设，大幅降低 CPU 负载；</li>
+  <li><strong><code>-g 50</code></strong>：设置关键帧间隔（GOP），通常设为帧率的 2 倍（2秒一个关键帧），提升观众秒开率。</li>
+</ul></blockquote>
 <hr>
 <h2 id="三-常用进阶推流场景速查">三、常用进阶推流场景速查</h2>
 <h3 id="1-重新编码并压制为标准-1080p-30fps">1. 重新编码并压制为标准 1080P / 30fps</h3>

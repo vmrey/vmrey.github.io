@@ -335,7 +335,7 @@
         <div class="article-layout">
           <article class="article-content" id="main-content">
             <div class="prose">
-<div class="callout"><p><strong>RustDesk</strong> 是一款优秀的开源远程桌面控制软件，支持全平台互通。通过自建 <code>hbbs</code>（ID 注册/打洞）与 <code>hbbr</code>（数据中继）服务器，可以彻底摆脱官方公共服务器的带宽限制与延迟波动，实现端到端高速低延迟直连。</p></div>
+<blockquote><p><strong>RustDesk</strong> 是一款优秀的开源远程桌面控制软件，支持全平台互通。通过自建 <code>hbbs</code>（ID 注册/打洞）与 <code>hbbr</code>（数据中继）服务器，可以彻底摆脱官方公共服务器的带宽限制与延迟波动，实现端到端高速低延迟直连。</p></blockquote>
 <hr>
 <h2 id="一-核心架构与网络端口规划">一、核心架构与网络端口规划</h2>
 <p>RustDesk 服务端主要由两个核心组件构成：</p>
@@ -391,7 +391,7 @@
 </table>
 </div>
 
-<div class="callout"><p>⚠️ <strong>注意</strong>：请务必在服务器安全组（如阿里云/腾讯云/华为云）以及系统防火墙（UFW/Firewalld）中放行以上端口，尤其是 <strong><code>21116</code> 必须同时放行 TCP 和 UDP</strong>！</p></div>
+<blockquote><p>⚠️ <strong>注意</strong>：请务必在服务器安全组（如阿里云/腾讯云/华为云）以及系统防火墙（UFW/Firewalld）中放行以上端口，尤其是 <strong><code>21116</code> 必须同时放行 TCP 和 UDP</strong>！</p></blockquote>
 <hr>
 <h2 id="二-服务端-docker-compose-部署步骤">二、服务端 Docker Compose 部署步骤</h2>
 <h3 id="第一步-安装-docker-环境">第一步：安装 Docker 环境</h3>
@@ -440,7 +440,7 @@
 <p>服务首次成功启动后，<code>hbbs</code> 会在 <code>./data</code> 目录下自动生成一对非对称加密公私钥（用于防止中继服务器被他人未授权蹭用）：</p>
 <p>执行以下命令查看你的专属公钥：</p>
 <pre><code class="language-bash">cat ./data/id_ed25519.pub</code></pre>
-<div class="callout"><p>📋 输出的字符串即为你的 <strong>Key 密钥</strong>（类似一串 Base64 编码文本），复制并妥善保存。</p></div>
+<blockquote><p>📋 输出的字符串即为你的 <strong>Key 密钥</strong>（类似一串 Base64 编码文本），复制并妥善保存。</p></blockquote>
 <hr>
 <h2 id="四-rustdesk-客户端连接配置指南">四、RustDesk 客户端连接配置指南</h2>
 <p>在控制端和被控端（Windows / macOS / Linux / Android / iOS）电脑或手机上下载并打开 RustDesk 客户端：</p>

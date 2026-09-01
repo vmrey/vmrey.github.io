@@ -1696,18 +1696,142 @@ body.sidebar-collapsed .app-main {
 .callout {
   width: 100%;
   border-radius: var(--radius-md);
-  padding: 1.1rem 1.25rem;
-  margin: 1.65rem 0;
+  padding: 0.95rem 1.15rem;
+  margin: 1.5rem 0;
   border-left: 4px solid var(--primary);
   background: var(--primary-soft);
   color: var(--text-main);
-  font-size: 0.95rem;
+  font-size: 0.9375rem;
+  line-height: 1.65;
 }
 
 .callout-title {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
   font-weight: 700;
-  margin-bottom: 0.35rem;
+  font-size: 0.95rem;
+  margin-bottom: 0.45rem;
   color: var(--primary-soft-text);
+}
+
+.callout-title svg {
+  width: 1rem;
+  height: 1rem;
+  flex-shrink: 0;
+}
+
+.callout-body {
+  color: var(--text-main);
+}
+
+.callout-body > p {
+  margin: 0;
+}
+
+.callout-body > p + p {
+  margin-top: 0.5rem;
+}
+
+.callout-list {
+  margin: 0;
+  padding-left: 1.25rem;
+  list-style: disc;
+}
+
+.callout-list li {
+  margin-bottom: 0.35rem;
+}
+
+.callout-list li:last-child {
+  margin-bottom: 0;
+}
+
+/* GFM Alert Type Variations */
+/* 1. Note (Blue) */
+.callout-note {
+  border-left-color: #0284c7;
+  background: rgba(2, 132, 199, 0.08);
+}
+.callout-note .callout-title {
+  color: #0284c7;
+}
+
+/* 2. Tip (Green) */
+.callout-tip {
+  border-left-color: #16a34a;
+  background: rgba(22, 163, 74, 0.08);
+}
+.callout-tip .callout-title {
+  color: #16a34a;
+}
+
+/* 3. Important (Purple) */
+.callout-important {
+  border-left-color: #8b5cf6;
+  background: rgba(139, 92, 246, 0.08);
+}
+.callout-important .callout-title {
+  color: #8b5cf6;
+}
+
+/* 4. Warning (Amber) */
+.callout-warning {
+  border-left-color: #d97706;
+  background: rgba(217, 119, 6, 0.08);
+}
+.callout-warning .callout-title {
+  color: #d97706;
+}
+
+/* 5. Caution (Red) */
+.callout-caution {
+  border-left-color: #dc2626;
+  background: rgba(220, 38, 38, 0.08);
+}
+.callout-caution .callout-title {
+  color: #dc2626;
+}
+
+/* Dark mode adjustments */
+[data-theme="dark"] .callout-note {
+  border-left-color: #38bdf8;
+  background: rgba(56, 189, 248, 0.1);
+}
+[data-theme="dark"] .callout-note .callout-title {
+  color: #38bdf8;
+}
+
+[data-theme="dark"] .callout-tip {
+  border-left-color: #4ade80;
+  background: rgba(74, 222, 128, 0.1);
+}
+[data-theme="dark"] .callout-tip .callout-title {
+  color: #4ade80;
+}
+
+[data-theme="dark"] .callout-important {
+  border-left-color: #a78bfa;
+  background: rgba(167, 139, 250, 0.1);
+}
+[data-theme="dark"] .callout-important .callout-title {
+  color: #a78bfa;
+}
+
+[data-theme="dark"] .callout-warning {
+  border-left-color: #fbbf24;
+  background: rgba(251, 191, 36, 0.1);
+}
+[data-theme="dark"] .callout-warning .callout-title {
+  color: #fbbf24;
+}
+
+[data-theme="dark"] .callout-caution {
+  border-left-color: #f87171;
+  background: rgba(248, 113, 113, 0.1);
+}
+[data-theme="dark"] .callout-caution .callout-title {
+  color: #f87171;
 }
 
 /* Prose Multimedia & File Download Elements */

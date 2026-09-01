@@ -358,7 +358,7 @@
 <pre><code class="language-bash">curl -Lo cf-ddns.sh https://vmrey.github.io/assets/files/cf-ddns.sh &amp;&amp; chmod +x cf-ddns.sh</code></pre>
 <h3 id="方式二-使用-wget-下载">方式二：使用 <code>wget</code> 下载</h3>
 <pre><code class="language-bash">wget -O cf-ddns.sh https://vmrey.github.io/assets/files/cf-ddns.sh &amp;&amp; chmod +x cf-ddns.sh</code></pre>
-<div class="callout"><p>💾 <strong>文件资源</strong>：也可直接在本站文件中心下载或在线预览：<a href="../assets/files/cf-ddns.sh">cf-ddns.sh</a>。</p></div>
+<blockquote><p>💾 <strong>文件资源</strong>：也可直接在本站文件中心下载或在线预览：<a href="../assets/files/cf-ddns.sh">cf-ddns.sh</a>。</p></blockquote>
 <hr>
 <h2 id="2-配置说明">⚙️ 2. 配置说明</h2>
 <h3 id="步骤-a-获取-cloudflare-api-token">步骤 A：获取 Cloudflare API Token</h3>
@@ -466,7 +466,7 @@ FORCE=false</code></pre>
 <h3 id="规则-b-记录执行日志-便于故障排查">规则 B：记录执行日志（便于故障排查）</h3>
 <pre><code class="language-cron"># 每 5 分钟检测一次并追加日志到 /var/log/cf-ddns.log
 */5 * * * * /path/to/cf-ddns.sh &gt;&gt; /var/log/cf-ddns.log 2&gt;&amp;1</code></pre>
-<div class="callout"><p><strong>注意</strong>：请将 <code>/path/to/cf-ddns.sh</code> 替换为您服务器上的绝对路径（例如 <code>/root/scripts/cf-ddns.sh</code>）。</p></div>
+<blockquote><p><strong>注意</strong>：请将 <code>/path/to/cf-ddns.sh</code> 替换为您服务器上的绝对路径（例如 <code>/root/scripts/cf-ddns.sh</code>）。</p></blockquote>
 <p>重载/重启 Cron 服务（根据 Linux 发行版选择）：</p>
 <pre><code class="language-bash"># CentOS / RHEL
 systemctl reload crond.service
@@ -496,7 +496,7 @@ systemctl restart cron</code></pre>
 </ul>
 </li>
 </ol>
-<div class="callout"><p>💡 <strong>小提示</strong>：如遇到更换域名、重置 DNS 记录或切换 API Token 后解析不生效的情况，只需执行 <code>rm -f ~/.cf-id_*.txt ~/.cf-wan_ip_*.txt</code> 清理本地缓存即可。</p></div>
+<blockquote><p>💡 <strong>小提示</strong>：如遇到更换域名、重置 DNS 记录或切换 API Token 后解析不生效的情况，只需执行 <code>rm -f ~/.cf-id_*.txt ~/.cf-wan_ip_*.txt</code> 清理本地缓存即可。</p></blockquote>
             </div>
 
             <div class="post-block-footer" style="margin-top: 3.5rem; padding-top: 1.5rem;">

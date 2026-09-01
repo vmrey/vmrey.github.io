@@ -335,7 +335,7 @@
         <div class="article-layout">
           <article class="article-content" id="main-content">
             <div class="prose">
-<div class="callout"><p><strong>Kodbox（可道云）</strong> 是一款界面类似 Windows 桌面交互、体验极佳的私有云存储与在线协作文档管理系统。本文整理两种最常用的实战部署方案，供不同环境灵活选择。</p></div>
+<blockquote><p><strong>Kodbox（可道云）</strong> 是一款界面类似 Windows 桌面交互、体验极佳的私有云存储与在线协作文档管理系统。本文整理两种最常用的实战部署方案，供不同环境灵活选择。</p></blockquote>
 <hr>
 <h2 id="方案对比与选型建议">方案对比与选型建议</h2>
 <div class="table-container">
@@ -386,7 +386,7 @@
       # 持久化挂载：Kodbox 的所有系统配置、SQLite数据库(./site/data/kodbox.sqlite)与用户网盘文件均保存在此
       - &quot;./site:/var/www/html&quot;
     restart: always</code></pre>
-<div class="callout"><p>💡 <strong>提示</strong>：若宿主机 443 端口已被占用，可将端口映射修改为 <code>8080:80</code> 或 <code>8888:80</code>，后续通过 <code>http://服务器IP:8080</code> 访问。</p></div>
+<blockquote><p>💡 <strong>提示</strong>：若宿主机 443 端口已被占用，可将端口映射修改为 <code>8080:80</code> 或 <code>8888:80</code>，后续通过 <code>http://服务器IP:8080</code> 访问。</p></blockquote>
 <h3 id="第三步-拉取镜像并后台启动">第三步：拉取镜像并后台启动</h3>
 <p>在 <code>docker-compose.yml</code> 同级目录下执行：</p>
 <pre><code class="language-bash">docker compose up -d</code></pre>

@@ -419,7 +419,18 @@
 </table>
 </div>
 
-<div class="callout"><p>[!NOTE]<br>- <strong>小程序专属属性</strong>：<code>adjust-position</code> 和 <code>cursor-spacing</code> 属于微信/支付宝等小程序规范扩展，在原生 HTML/H5 中会被浏览器当成未知属性忽略。<br>- <strong>CSS3 标准规范</strong>：Flex 容器子项的 <code>min-width: 0</code> 属于 W3C 现代标准规范，在所有现代移动浏览器、小程序、Webview 及各操作系统中均 <strong>100% 表现一致</strong>。</p></div>
+<div class="callout callout-note">
+  <div class="callout-title">
+    <svg viewBox="0 0 16 16" width="16" height="16" fill="currentColor"><path d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8Zm8-6.5a6.5 6.5 0 1 0 0 13 6.5 6.5 0 0 0 0-13ZM6.5 7.75A.75.75 0 0 1 7.25 7h1a.75.75 0 0 1 .75.75v2.75h.25a.75.75 0 0 1 0 1.5h-2a.75.75 0 0 1 0-1.5h.25v-2h-.25a.75.75 0 0 1-.75-.75ZM8 6a1 1 0 1 1 0-2 1 1 0 0 1 0 2Z"/></svg>
+    <span>Note</span>
+  </div>
+  <div class="callout-body">
+    <ul class="callout-list">
+  <li><strong>小程序专属属性</strong>：<code>adjust-position</code> 和 <code>cursor-spacing</code> 属于微信/支付宝等小程序规范扩展，在原生 HTML/H5 中会被浏览器当成未知属性忽略。</li>
+  <li><strong>CSS3 标准规范</strong>：Flex 容器子项的 <code>min-width: 0</code> 属于 W3C 现代标准规范，在所有现代移动浏览器、小程序、Webview 及各操作系统中均 <strong>100% 表现一致</strong>。</li>
+</ul>
+  </div>
+</div>
 <hr>
 <h2 id="二-坑位一-键盘抬起遮挡输入框">🕳️ 二、坑位一：键盘抬起遮挡输入框</h2>
 <h3 id="1-现象描述">1. 现象描述</h3>
@@ -455,7 +466,18 @@
   :adjust-position=&quot;true&quot;
   :cursor-spacing=&quot;100&quot;
 /&gt;</code></pre>
-<div class="callout"><p>[!TIP]<br>- <strong>长表单页面</strong>：统一建议设置 <code>:cursor-spacing=&quot;100&quot;</code>（单位 px），保证输入框与操作提示完全露出；<br>- <strong>弹窗/Modal 表单</strong>：短表单建议保持 <code>24~40</code>，防止弹窗整体被推移出屏幕可见范围顶部。</p></div>
+<div class="callout callout-tip">
+  <div class="callout-title">
+    <svg viewBox="0 0 16 16" width="16" height="16" fill="currentColor"><path d="M8 1.5c-2.363 0-4 1.69-4 3.75 0 .984.424 1.625.984 2.304l.214.253c.223.264.47.556.673.848.284.411.537.896.621 1.49a.75.75 0 0 1-1.484.211c-.04-.282-.163-.547-.37-.847a8.456 8.456 0 0 0-.542-.68c-.629-.757-1.346-1.62-1.346-3.08A5.25 5.25 0 0 1 8 0a5.25 5.25 0 0 1 5.25 5.25c0 1.46-.717 2.323-1.346 3.08a8.456 8.456 0 0 0-.542.68c-.207.3-.33.565-.37.847a.75.75 0 0 1-1.485-.212c.084-.593.337-1.078.621-1.489.203-.292.45-.584.673-.848.075-.088.147-.173.213-.253.561-.679.985-1.32.985-2.304 0-2.06-1.637-3.75-4-3.75ZM5.75 12h4.5a.75.75 0 0 1 0 1.5h-4.5a.75.75 0 0 1 0-1.5Zm1 3h2.5a.75.75 0 0 1 0 1.5h-2.5a.75.75 0 0 1 0-1.5Z"/></svg>
+    <span>Tip</span>
+  </div>
+  <div class="callout-body">
+    <ul class="callout-list">
+  <li><strong>长表单页面</strong>：统一建议设置 <code>:cursor-spacing=&quot;100&quot;</code>（单位 px），保证输入框与操作提示完全露出；</li>
+  <li><strong>弹窗/Modal 表单</strong>：短表单建议保持 <code>24~40</code>，防止弹窗整体被推移出屏幕可见范围顶部。</li>
+</ul>
+  </div>
+</div>
 <hr>
 <h4 id="方案-b-移动端-h5-专用平滑居中滚动与收起回弹方案">方案 B：移动端 H5 专用平滑居中滚动与收起回弹方案</h4>
 <p>在纯 H5 环境下（iOS Safari、Android Chrome、鸿蒙浏览器），通过 Vue 组合式 Hook 实现聚焦居中滚动与失焦回弹：</p>
@@ -695,7 +717,15 @@ onUnmounted(() =&gt; {
     &lt;input class=&quot;input-control&quot; placeholder=&quot;请输入预计尾款金额&quot; /&gt;
   &lt;/view&gt;
 &lt;/view&gt;</code></pre>
-<div class="callout"><p>[!IMPORTANT]<br><strong>兼容性结论</strong>：该 CSS 方案基于 W3C Flexbox 现代标准规范，在 <strong>微信小程序、H5、iOS Safari、Android Chrome、HarmonyOS ArkWeb、uni-app App</strong> 均 100% 完美支持，且零平台副作用。</p></div>
+<div class="callout callout-important">
+  <div class="callout-title">
+    <svg viewBox="0 0 16 16" width="16" height="16" fill="currentColor"><path d="M0 1.75C0 .784.784 0 1.75 0h12.5C15.216 0 16 .784 16 1.75v9.5A1.75 1.75 0 0 1 14.25 13H9.06l-2.573 2.573A1.458 1.458 0 0 1 4 14.543V13H1.75A1.75 1.75 0 0 1 0 11.25Zm1.75-.25a.25.25 0 0 0-.25.25v9.5c0 .138.112.25.25.25h2.75a.75.75 0 0 1 .75.75v2.19l2.72-2.72a.749.749 0 0 1 .53-.22h6.5a.25.25 0 0 0 .25-.25v-9.5a.25.25 0 0 0-.25-.25Zm7 2.25v2.5a.75.75 0 0 1-1.5 0v-2.5a.75.75 0 0 1 1.5 0ZM9 9a1 1 0 1 1-2 0 1 1 0 0 1 2 0Z"/></svg>
+    <span>Important</span>
+  </div>
+  <div class="callout-body">
+    <p><strong>兼容性结论</strong>：该 CSS 方案基于 W3C Flexbox 现代标准规范，在 <strong>微信小程序、H5、iOS Safari、Android Chrome、HarmonyOS ArkWeb、uni-app App</strong> 均 100% 完美支持，且零平台副作用。</p>
+  </div>
+</div>
 <hr>
 <h2 id="四-移动端表单开发自检速查清单-checklist">📋 四、移动端表单开发自检速查清单 (Checklist)</h2>
 <p>在上线微信小程序或移动跨端表单页面前，建议使用以下清单逐项自检：</p>
