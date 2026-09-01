@@ -5,8 +5,16 @@
     <link>https://vmrey.github.io/</link>
     <description>构建工具，写干净的代码</description>
     <language>zh-CN</language>
-    <lastBuildDate>Tue, 01 Sep 2026 07:29:48 GMT</lastBuildDate>
+    <lastBuildDate>Tue, 01 Sep 2026 13:59:13 GMT</lastBuildDate>
     <atom:link href="https://vmrey.github.io/feed.xml" rel="self" type="application/rss+xml"/>
+    <item>
+      <title>Cloudflare DDNS 动态域名解析自动更新脚本与使用指南</title>
+      <link>https://vmrey.github.io/posts/cf-ddns-912c.html</link>
+      <guid isPermaLink="true">https://vmrey.github.io/posts/cf-ddns-912c.html</guid>
+      <pubDate>Tue, 01 Sep 2026 00:00:00 GMT</pubDate>
+      <category>Linux与服务端</category>
+      <description>基于 Cloudflare API v4 实现的轻量级 DDNS 动态域名解析自动更新脚本，支持 IPv4/IPv6 双栈探测、本地智能缓存对比及 Crontab 自动化守护。</description>
+    </item>
     <item>
       <title>TypeScript 轻量可逆加密与混淆工具实战</title>
       <link>https://vmrey.github.io/posts/cipher-tool-03b7.html</link>
@@ -238,14 +246,6 @@
       <pubDate>Sat, 02 May 2026 00:00:00 GMT</pubDate>
       <category>前端开发</category>
       <description>实战整理针对级联选择器与目录树的高频递归操作函数：扁平化转换、树深度查找、剪枝过滤与路径追踪。</description>
-    </item>
-    <item>
-      <title>实现一个最优雅的微型 JavaScript 模板引擎：30 行代码解析核心原理</title>
-      <link>https://vmrey.github.io/posts/mini-js-template-ee56.html</link>
-      <guid isPermaLink="true">https://vmrey.github.io/posts/mini-js-template-ee56.html</guid>
-      <pubDate>Wed, 22 Apr 2026 00:00:00 GMT</pubDate>
-      <category>前端开发</category>
-      <description>通过正则表达式与 new Function / eval 构建轻量高效的字符串模板渲染引擎，解析 Mustache/EJS 核心思想。</description>
     </item>
   </channel>
 </rss>

@@ -15,6 +15,10 @@
     "desc": "TypeScript 轻量可逆加密与混淆工具库源码（支持自定义口令、中文/Emoji、URL安全）",
     "category": "代码库"
   },
+  "cf-ddns.sh": {
+    "desc": "Cloudflare DDNS 动态域名解析自动检测与同步脚本（支持 IPv4/IPv6、缓存与定时任务）",
+    "category": "Shell 脚本"
+  },
   "frps.sh": {
     "desc": "FRP 内网穿透服务端 Linux 一键自动化安装、配置与 Systemd 管理脚本",
     "category": "Shell 脚本"
