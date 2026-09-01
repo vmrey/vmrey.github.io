@@ -286,7 +286,13 @@ function renderNodeVleLayout({
               <div class="gen-form-group" id="sec-result" style="margin-top: 24px;">
                 <div class="gen-result-header">
                   <div class="gen-result-title">
-                    <label>5. 生成结果与一键导出:</label>
+                    <label>
+                      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+                        <polyline points="22 4 12 14.01 9 11.01"></polyline>
+                      </svg>
+                      <span>5. 生成结果与一键导出</span>
+                    </label>
                     <span id="resultCountBadge" class="gen-badge success" style="display: none;">已生成 0 个独立节点</span>
                   </div>
                   <button id="copyBtn" class="gen-btn gen-btn-secondary" onclick="copyResults()">

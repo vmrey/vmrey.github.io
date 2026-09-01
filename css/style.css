@@ -4276,6 +4276,22 @@ del {
   gap: 0.5rem;
 }
 
+.gen-result-title label {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--text-main);
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  margin: 0;
+  cursor: default;
+}
+
+.gen-result-title svg {
+  color: var(--primary);
+  flex-shrink: 0;
+}
+
 /* ==========================================================================
    VLESS 生成器移动端 / 平板 / 桌面多端响应式适配
    ========================================================================== */
