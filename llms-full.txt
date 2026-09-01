@@ -866,18 +866,34 @@
 - 三、方法二：修改网卡配置
 
 ---
-## [50] 轻量级高性能内网穿透：frp 远程桌面 RDP 搭建与系统服务配置
+## [50] 轻量级高性能内网穿透：frp 远程桌面 RDP 搭建与全平台配置实战
 - **永久链接 (URL)**: https://vmrey.github.io/posts/frp-desktop-6af7.html
 - **所属专栏 (Category)**: Linux 与服务端
 - **发布日期 (Date)**: 2021-05-18
-- **技术标签 (Tags)**: Linux, frp, 远程桌面, 内网穿透, RDP
-- **核心摘要**: 基于 VPS 部署 frps 服务端并配置 systemd 守护进程开机自启，搭配 Windows 客户端通过 STCP 安全加密协议实现 3389 远程桌面穿透。
+- **技术标签 (Tags)**: Linux, frp, 远程桌面, 内网穿透, RDP, Systemd, Windows
+- **核心摘要**: 深入解析 frp 内网穿透核心机制，详解 TCP 直接转发与 STCP 端到端双向加密穿透方案，提供 Linux 服务端一键脚本/Systemd 守护与 Windows 客户端 NSSM 隐蔽自启全套配置。
 
 ### 核心内容要点与大纲:
-- 一、架构原理与优势
-- 二、VPS 服务端部署步骤 (CentOS / Debian / Ubuntu)
-- 三、被控端 Windows 客户端配置 (frpc.ini)
-- 四、访问端 Windows 配置与一键连接
+- 🌐 一、架构原理与穿透模式选型
+- 📊 核心穿透模式技术对比矩阵
+- 🚀 二、VPS 服务端部署步骤 (CentOS / Debian / Ubuntu)
+- 方案 A：使用一键自动化部署脚本（最简推荐）
+- 方案 B：手动二进制部署与 Systemd 守护配置
+- 1. 下载并解压最新发行包
+- 2. 编写服务端配置文件 (`frps.toml` / `frps.ini`)
+- 3. 配置 Systemd 系统守护进程
+- 4. 启动服务与防火墙放行
+- 🖥️ 三、被控端 Windows 客户端配置 (Target)
+- 1. 开启 Windows 远程桌面功能
+- 2. 配置被控端 `frpc`
+- 3. 使用 NSSM 将 frpc 注册为 Windows 系统服务（开机静默自启）
+- 💻 四、访问端 Windows 配置与极速连接 (Visitor)
+- 1. 编写访问端配置文件
+- 2. 制作一键快速连接批处理脚本 (`Start-RDP.bat`)
+- ⚡ 五、Windows RDP 画面与网络性能极致调优
+- 1. 开启 RemoteFX 与硬件图形加速 (组策略)
+- 2. 注册表优化 TCP 连接吞吐
+- 🛠️ 六、高频踩坑与排障自检清单
 
 ---
 ## [51] Element UI 中 el-calendar 日历组件禁用与灰色置灰点击处理
