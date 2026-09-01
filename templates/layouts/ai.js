@@ -109,6 +109,7 @@ ${cardsHtml}
             <h1>AI 导航</h1>
             <div class="feed-stats-pills">
               <span class="stat-pill highlight" id="ai-count-badge">共 ${aiCategories.length} 个分类 · ${totalAiTools} 个顶尖 AI 工具</span>
+              <span class="stat-pill-divider" aria-hidden="true">·</span>
               <span class="stat-pill">前沿大模型与智能体精选</span>
             </div>
           </div>

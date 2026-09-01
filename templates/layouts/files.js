@@ -78,6 +78,7 @@ ${filesRowsHtml}
             <h1>资源文件库</h1>
             <div class="feed-stats-pills">
               <span class="stat-pill highlight" id="files-count-badge">共 ${resourceFolders.length} 个文件夹 · ${resourceFilesCount} 个附件</span>
+              <span class="stat-pill-divider" aria-hidden="true">·</span>
               <span class="stat-pill">文件夹嵌套树状浏览</span>
             </div>
           </div>

@@ -112,6 +112,7 @@ ${cardsHtml}
             <h1>GitHub 导航</h1>
             <div class="feed-stats-pills">
               <span class="stat-pill highlight" id="nav-count-badge">共 ${navCategories.length} 个分类 · ${totalRepos} 个精选项目</span>
+              <span class="stat-pill-divider" aria-hidden="true">·</span>
               <span class="stat-pill">开源利器精选收录</span>
             </div>
           </div>

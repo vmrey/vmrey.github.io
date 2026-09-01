@@ -13,6 +13,7 @@ function renderFeedHeader({
             <h1 id="feed-header-title">${title}</h1>
             <div class="feed-stats-pills">
               <span class="stat-pill highlight" id="feed-stat-count">共 ${totalCount} 篇内容</span>
+              <span class="stat-pill-divider" aria-hidden="true">·</span>
               <span class="stat-pill" id="feed-stat-pagesize">每页 ${pageSize} 条</span>
             </div>
           </div>

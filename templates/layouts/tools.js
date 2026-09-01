@@ -115,6 +115,7 @@ ${cardsHtml}
             <h1>工具导航</h1>
             <div class="feed-stats-pills">
               <span class="stat-pill highlight" id="tools-count-badge">共 ${toolsCategories.length} 个分类 · ${totalTools} 个实用工具</span>
+              <span class="stat-pill-divider" aria-hidden="true">·</span>
               <span class="stat-pill">开发效能利器精选</span>
             </div>
           </div>
