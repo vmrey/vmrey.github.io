@@ -1,0 +1,657 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>基于 Cloudflare Workers 完美反代 GitHub Pages 与静态站点实战指南 - vmrey.github.io</title>
+  <meta name="description" content="深入剖析如何使用 Cloudflare Workers 零成本搭建高性能 GitHub Pages 与静态站点反向代理。全面解决 OPTIONS 跨域预检、ERR_CONTENT_DECODING_FAILED 乱码崩溃、SRI 完整性校验拦截、301/302 重定向泄露及 Sitemap/RSS SEO 索引保全等核心痛点。">
+  <meta name="keywords" content="Cloudflare, Workers, 反向代理, GitHub Pages, 跨域, SEO">
+  <meta name="author" content="vmrey">
+  <meta name="robots" content="index, follow">
+  <meta name="google-site-verification" content="Vi8ircfK8SuZNzZBrtU7av_aXeiUKrLDKgef-84unTM">
+  <link rel="canonical" href="https://vmrey.github.io/posts/cf-proxy-bdc5.html">
+  <link rel="alternate" type="application/rss+xml" title="vmrey.github.io RSS 订阅源" href="https://vmrey.github.io/feed.xml">
+  <link rel="alternate" type="text/plain" title="LLMs.txt AI 知识索引" href="https://vmrey.github.io/llms.txt">
+  <link rel="icon" type="image/svg+xml" href="../favicon.svg">
+
+  <!-- Open Graph 社交卡片 (微信/QQ/Telegram/GitHub) -->
+  <meta property="og:site_name" content="vmrey's Blog">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="基于 Cloudflare Workers 完美反代 GitHub Pages 与静态站点实战指南 - vmrey.github.io">
+  <meta property="og:description" content="深入剖析如何使用 Cloudflare Workers 零成本搭建高性能 GitHub Pages 与静态站点反向代理。全面解决 OPTIONS 跨域预检、ERR_CONTENT_DECODING_FAILED 乱码崩溃、SRI 完整性校验拦截、301/302 重定向泄露及 Sitemap/RSS SEO 索引保全等核心痛点。">
+  <meta property="og:url" content="https://vmrey.github.io/posts/cf-proxy-bdc5.html">
+  <meta property="og:image" content="https://vmrey.github.io/favicon.svg">
+
+  <!-- Twitter / X 社交卡片 -->
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="基于 Cloudflare Workers 完美反代 GitHub Pages 与静态站点实战指南 - vmrey.github.io">
+  <meta name="twitter:description" content="深入剖析如何使用 Cloudflare Workers 零成本搭建高性能 GitHub Pages 与静态站点反向代理。全面解决 OPTIONS 跨域预检、ERR_CONTENT_DECODING_FAILED 乱码崩溃、SRI 完整性校验拦截、301/302 重定向泄露及 Sitemap/RSS SEO 索引保全等核心痛点。">
+  <meta name="twitter:image" content="https://vmrey.github.io/favicon.svg">
+
+  <!-- 页面绘制前同步初始化深浅色主题，彻底杜绝首屏白屏闪烁 (Anti-FOUC) -->
+  <script>
+    (function() {
+      try {
+        var t = localStorage.getItem('theme');
+        if (!t) {
+          var isDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+          t = isDark ? 'dark' : 'light';
+        }
+        document.documentElement.setAttribute('data-theme', t);
+      } catch(e) {}
+    })();
+  </script>
+  
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "headline": "基于 Cloudflare Workers 完美反代 GitHub Pages 与静态站点实战指南",
+    "description": "深入剖析如何使用 Cloudflare Workers 零成本搭建高性能 GitHub Pages 与静态站点反向代理。全面解决 OPTIONS 跨域预检、ERR_CONTENT_DECODING_FAILED 乱码崩溃、SRI 完整性校验拦截、301/302 重定向泄露及 Sitemap/RSS SEO 索引保全等核心痛点。",
+    "datePublished": "2026-09-02",
+    "dateModified": "2026-09-02",
+    "author": {
+      "@type": "Person",
+      "name": "vmrey",
+      "url": "https://vmrey.github.io/about.html"
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "vmrey.github.io",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "https://vmrey.github.io/favicon.svg"
+      }
+    },
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": "https://vmrey.github.io/posts/cf-proxy-bdc5.html"
+    },
+    "keywords": "Cloudflare, Workers, 反向代理, GitHub Pages, 跨域, SEO",
+    "articleSection": "Linux与服务端"
+  }
+  </script>
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="../css/prism.css">
+</head>
+<body>
+
+  <!-- 移动端顶部标题导航条 -->
+  <div class="mobile-header">
+    <div class="mobile-title-wrap">
+      <svg class="mobile-book-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path>
+        <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path>
+        <line x1="9" y1="7" x2="15" y2="7"></line>
+        <line x1="9" y1="11" x2="13" y2="11"></line>
+      </svg>
+      <div class="mobile-title">vmrey.github.io</div>
+    </div>
+    <button id="menu-toggle-btn" class="menu-toggle-btn" aria-label="切换侧边栏菜单">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <line x1="3" y1="12" x2="21" y2="12"></line>
+        <line x1="3" y1="6" x2="21" y2="6"></line>
+        <line x1="3" y1="18" x2="21" y2="18"></line>
+      </svg>
+    </button>
+  </div>
+
+  <div id="sidebar-overlay" class="sidebar-overlay"></div>
+
+  <div class="app-layout">
+    
+    <!-- 左侧常驻导航 -->
+    <aside class="app-sidebar" id="app-sidebar">
+      <!-- 顶部固定区域：Logo、标题与全局搜索 -->
+      <div class="sidebar-header-section">
+        <div class="sidebar-header-row">
+          <a href="../index.html" class="sidebar-brand">
+            <div class="sidebar-avatar" title="vmrey.github.io 博客">
+              <svg class="sidebar-avatar-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path>
+                <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path>
+                <line x1="9" y1="7" x2="15" y2="7"></line>
+                <line x1="9" y1="11" x2="13" y2="11"></line>
+              </svg>
+            </div>
+            <div class="sidebar-info">
+              <div class="sidebar-name">vmrey.github.io</div>
+              <div class="sidebar-tagline">构建工具，写干净的代码</div>
+            </div>
+          </a>
+          <button type="button" id="sidebar-collapse-btn" class="sidebar-collapse-btn" title="折叠/展开侧边栏 (PC)" aria-label="折叠侧边栏">
+            <svg class="collapse-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="15 18 9 12 15 6"></polyline>
+            </svg>
+          </button>
+        </div>
+
+        <!-- 左侧全局搜索快捷入口 (支持 ⌘K) -->
+        <button class="sidebar-search-btn open-search-modal" type="button" title="全站深度全文搜索 (Cmd+K)">
+          <span class="search-btn-left">
+            <svg class="search-icon" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="11" cy="11" r="8"></circle>
+              <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+            </svg>
+            <span class="search-btn-text">全文搜索...</span>
+          </span>
+          <kbd class="kbd-badge">⌘K</kbd>
+        </button>
+      </div>
+
+      <!-- 侧边栏菜单列表 -->
+      <div class="sidebar-nav-body">
+        <!-- 导航分组 1：分类专栏 (支持多层级子专栏) -->
+        <div class="sidebar-nav-group">
+          <div class="nav-group-title">文章专栏</div>
+          
+          <!-- 全部文章 -->
+          <a href="../index.html" class="sidebar-nav-item  category-filter-btn" data-tag="all" data-label="全部文章" title="全部文章">
+            <span class="nav-item-left">
+              <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg>
+              <span class="nav-item-text">全部文章</span>
+            </span>
+          </a>
+
+          <!-- 专栏：前端开发 -->
+          <div class="nav-item-tree">
+            <div class="tree-header-row">
+              <a href="../index.html?tag=%E5%89%8D%E7%AB%AF%E5%BC%80%E5%8F%91" class="sidebar-nav-item category-filter-btn" data-tag="前端开发" data-label="前端开发" title="前端开发">
+                <span class="nav-item-left">
+                  <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"></polyline><polyline points="8 6 2 12 8 18"></polyline></svg>
+                  <span class="nav-item-text">前端开发</span>
+                </span>
+              </a>
+              <button type="button" class="subtree-toggle-btn" aria-label="展开或折叠前端开发子菜单" title="展开或折叠前端开发">
+                <svg class="chevron-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+              </button>
+            </div>
+            <div class="nav-subtree">
+              <a href="../index.html?tag=Vue" class="subtree-item category-filter-btn" data-tag="Vue" data-label="Vue 与组件" title="Vue 与组件">
+                <span class="subtree-item-left">
+                  <span class="subtree-item-dot"></span>
+                  <span class="subtree-item-name">Vue 与组件</span>
+                </span>
+              </a>
+              <a href="../index.html?tag=JavaScript" class="subtree-item category-filter-btn" data-tag="JavaScript" data-label="JS 与工具函数" title="JS 与工具函数">
+                <span class="subtree-item-left">
+                  <span class="subtree-item-dot"></span>
+                  <span class="subtree-item-name">JS 与工具函数</span>
+                </span>
+              </a>
+              <a href="../index.html?tag=%E5%BE%AE%E4%BF%A1%E5%B0%8F%E7%A8%8B%E5%BA%8F" class="subtree-item category-filter-btn" data-tag="微信小程序" data-label="微信小程序" title="微信小程序">
+                <span class="subtree-item-left">
+                  <span class="subtree-item-dot"></span>
+                  <span class="subtree-item-name">微信小程序</span>
+                </span>
+              </a>
+            </div>
+          </div>
+
+          <!-- 专栏：Linux 与服务端 -->
+          <div class="nav-item-tree">
+            <div class="tree-header-row">
+              <a href="../index.html?tag=Linux" class="sidebar-nav-item category-filter-btn" data-tag="Linux" data-label="Linux 与服务端" title="Linux 与服务端">
+                <span class="nav-item-left">
+                  <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="8" rx="2" ry="2"></rect><rect x="2" y="14" width="20" height="8" rx="2" ry="2"></rect><line x1="6" y1="6" x2="6.01" y2="6"></line><line x1="6" y1="18" x2="6.01" y2="18"></line></svg>
+                  <span class="nav-item-text">Linux 与服务端</span>
+                </span>
+              </a>
+              <button type="button" class="subtree-toggle-btn" aria-label="展开或折叠Linux 与服务端子菜单" title="展开或折叠Linux 与服务端">
+                <svg class="chevron-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+              </button>
+            </div>
+            <div class="nav-subtree">
+              <a href="../index.html?tag=Docker" class="subtree-item category-filter-btn" data-tag="Docker" data-label="Docker 与容器" title="Docker 与容器">
+                <span class="subtree-item-left">
+                  <span class="subtree-item-dot"></span>
+                  <span class="subtree-item-name">Docker 与容器</span>
+                </span>
+              </a>
+              <a href="../index.html?tag=Nginx" class="subtree-item category-filter-btn" data-tag="Nginx" data-label="网络与反代" title="网络与反代">
+                <span class="subtree-item-left">
+                  <span class="subtree-item-dot"></span>
+                  <span class="subtree-item-name">网络与反代</span>
+                </span>
+              </a>
+              <a href="../index.html?tag=%E5%8E%8B%E5%8A%9B%E6%B5%8B%E8%AF%95" class="subtree-item category-filter-btn" data-tag="压力测试" data-label="性能与压测" title="性能与压测">
+                <span class="subtree-item-left">
+                  <span class="subtree-item-dot"></span>
+                  <span class="subtree-item-name">性能与压测</span>
+                </span>
+              </a>
+            </div>
+          </div>
+
+          <!-- 专栏：效率工具与软件 -->
+          <div class="nav-item-tree">
+            <div class="tree-header-row">
+              <a href="../index.html?tag=%E6%95%88%E7%8E%87%E5%B7%A5%E5%85%B7" class="sidebar-nav-item category-filter-btn" data-tag="效率工具" data-label="效率工具与软件" title="效率工具与软件">
+                <span class="nav-item-left">
+                  <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"></path></svg>
+                  <span class="nav-item-text">效率工具与软件</span>
+                </span>
+              </a>
+              <button type="button" class="subtree-toggle-btn" aria-label="展开或折叠效率工具与软件子菜单" title="展开或折叠效率工具与软件">
+                <svg class="chevron-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+              </button>
+            </div>
+            <div class="nav-subtree">
+              <a href="../index.html?tag=Git" class="subtree-item category-filter-btn" data-tag="Git" data-label="Git 与 SVN" title="Git 与 SVN">
+                <span class="subtree-item-left">
+                  <span class="subtree-item-dot"></span>
+                  <span class="subtree-item-name">Git 与 SVN</span>
+                </span>
+              </a>
+              <a href="../index.html?tag=Claude" class="subtree-item category-filter-btn" data-tag="Claude" data-label="Claude 与 AI" title="Claude 与 AI">
+                <span class="subtree-item-left">
+                  <span class="subtree-item-dot"></span>
+                  <span class="subtree-item-name">Claude 与 AI</span>
+                </span>
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <div class="sidebar-nav-group">
+          <div class="nav-group-title">导航与资源</div>
+          <a href="../ai.html" class="sidebar-nav-item " title="AI 导航">
+            <span class="nav-item-left">
+              <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+              <span class="nav-item-text">AI 导航</span>
+            </span>
+          </a>
+          <a href="../tools.html" class="sidebar-nav-item " title="工具导航">
+            <span class="nav-item-left">
+              <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"></path></svg>
+              <span class="nav-item-text">工具导航</span>
+            </span>
+          </a>
+          <a href="../node-vle.html" class="sidebar-nav-item " title="节点生成器">
+            <span class="nav-item-left">
+              <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>
+              <span class="nav-item-text">节点生成器</span>
+            </span>
+          </a>
+          <a href="../nav.html" class="sidebar-nav-item " title="GitHub 导航">
+            <span class="nav-item-left">
+              <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"></polygon></svg>
+              <span class="nav-item-text">GitHub 导航</span>
+            </span>
+          </a>
+          <a href="../files.html" class="sidebar-nav-item " title="资源文件库">
+            <span class="nav-item-left">
+              <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path><line x1="12" y1="11" x2="12" y2="17"></line><line x1="9" y1="14" x2="15" y2="14"></line></svg>
+              <span class="nav-item-text">资源文件库</span>
+            </span>
+          </a>
+          <a href="https://github.com/vmrey/vmrey.github.io" target="_blank" rel="noopener noreferrer" class="sidebar-nav-item" title="GitHub 源码">
+            <span class="nav-item-left">
+              <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0 9 18.13V22"></path></svg>
+              <span class="nav-item-text">GitHub 源码</span>
+            </span>
+          </a>
+          <a href="../about.html" class="sidebar-nav-item " title="关于本站">
+            <span class="nav-item-left">
+              <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+              <span class="nav-item-text">关于本站</span>
+            </span>
+          </a>
+        </div>
+      </div>
+
+      <!-- 底部区域：主题切换与版权声明 -->
+      <div class="sidebar-footer">
+        <div class="theme-toggle-row">
+          <span id="theme-mode-text">深色模式</span>
+          <button id="theme-toggle" class="theme-toggle-btn" type="button" title="切换主题外观"></button>
+        </div>
+        <div class="sidebar-copyright">
+          © 2018-<span class="current-year">2026</span> vmrey.github.io<br>用代码与文字记录探索
+        </div>
+      </div>
+    </aside>
+
+    <!-- 主内容区 -->
+    <main class="app-main">
+      <div class="article-container">
+        <!-- 文章标题与元数据头部 -->
+        <header class="article-header">
+          <a href="../index.html" class="back-link">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
+            <span>返回文章列表</span>
+          </a>
+          <h1 class="article-title">基于 Cloudflare Workers 完美反代 GitHub Pages 与静态站点实战指南</h1>
+          <div class="article-meta">
+            <span class="post-block-tag">Linux与服务端</span>
+            <span>·</span>
+            <time datetime="2026-09-02">2026-09-02</time>
+            <span>·</span>
+            <span>7 分钟阅读</span>
+          </div>
+        </header>
+
+        <!-- 正文内容区 -->
+        <div class="article-layout">
+          <article class="article-content" id="main-content">
+            <div class="prose">
+<p>在搭建个人博客、技术文档或静态项目展示站时，<strong>GitHub Pages</strong> 是极其常用的免费托管平台。然而在实际生产和国内访问场景中，开发者常常面临两大痛点：</p>
+<ol>
+<li><strong>网络连通性与加速需求</strong>：GitHub Pages 官方节点在部分地区访问延迟高或偶发阻断，需要借助 Cloudflare 全球边缘 CDN 进行加速；
+</li>
+<li><strong>自定义域名与防暴露需求</strong>：需要使用自己的独立域名，或者在单域名下通过子路径反向代理多个外部静态站点。
+</li>
+</ol>
+<p>许多开发者尝试用几行简单的 Cloudflare Worker 脚本进行 <code>fetch()</code> 代理，但很快就会掉进各种隐蔽的“深坑”——<strong>页面乱码崩溃 (ERR_CONTENT_DECODING_FAILED)</strong>、<strong>JavaScript 静态资源报 SRI 完整性校验失败被浏览器拦截</strong>、<strong>复杂跨域 OPTIONS 报错</strong>、<strong>搜索引擎 Sitemap/RSS 抓取失败</strong> 以及 <strong>301 跳转跳回源站域名</strong>。</p>
+<p>本文将带来一份经过深度调优的 <strong>Cloudflare Worker 生产级反向代理脚本</strong>，并逐一剖析背后的技术原理与盲区解决方案。</p>
+<hr>
+<h2 id="一-核心特性与-5-大盲区修复">一、🌟 核心特性与 5 大盲区修复</h2>
+<p>本反代脚本针对静态站点与 GitHub Pages 做了全方位适配，核心亮点包括：</p>
+<ul>
+<li><strong>⚡ OPTIONS 预检请求拦截</strong>：直接在边缘返回 CORS 响应头，无需回源，彻底解决复杂跨域调用报错；
+</li>
+<li><strong>🛡️ 彻底杜绝解码崩溃</strong>：修改响应主体文本后自动移除 <code>content-length</code> 与 <code>content-encoding</code> 头，解决浏览器的 <code>ERR_CONTENT_DECODING_FAILED</code>；
+</li>
+<li><strong>🔒 SRI 完整性校验自动剔除</strong>：自动过滤 HTML 中 <code>&lt;script&gt;</code> / <code>&lt;link&gt;</code> 的 <code>integrity</code> 属性，防止因文本替换破坏 Hash 导致浏览器安全拦截；
+</li>
+<li><strong>🔍 SEO 与爬虫友好</strong>：深度支持 <code>sitemap.xml</code>、<code>feed.xml</code>、<code>robots.txt</code> 及 JSON 数据的域名改写（兼容 <code>https:\/\/</code> 转义斜杠）；
+</li>
+<li><strong>🔄 301/302 重定向无缝重写</strong>：自动捕获并改写 <code>Location</code> 响应头，防止跳转时暴露真实源站域名；
+</li>
+<li><strong>🚀 二进制零损耗流式透传</strong>：图片、音视频、WebAssembly 及各类压缩包附件采用原生 Stream 直传，兼顾极速与低内存消耗。
+</li>
+</ul>
+<hr>
+<h2 id="二-脚本下载与免跳转预览">二、📥 脚本下载与免跳转预览</h2>
+<p>本站已将整理好的最新版 Worker 脚本收录至资源库，可直接下载或在线查看：</p>
+<div style="display: flex; gap: 12px; flex-wrap: wrap; margin: 18px 0;">
+  <a href="../assets/files/cf-worker-proxy.js" download class="article-btn primary" style="display: inline-flex; align-items: center; gap: 8px; padding: 10px 18px; border-radius: 8px; background: #2563eb; color: #ffffff; text-decoration: none; font-weight: 500; font-size: 14px; box-shadow: 0 2px 6px rgba(37,99,235,0.25);">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+    立即下载 cf-worker-proxy.js
+  </a>
+  <a href="../files.html" class="article-btn" style="display: inline-flex; align-items: center; gap: 8px; padding: 10px 18px; border-radius: 8px; border: 1px solid #cbd5e1; background: var(--bg-card, #ffffff); color: var(--text-main, #334155); text-decoration: none; font-weight: 500; font-size: 14px;">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
+    前往文件管理中心在线预览
+  </a>
+</div>
+<h3 id="命令行快速获取">命令行快速获取</h3>
+<pre><code class="language-bash"># 使用 curl 直接下载
+curl -Lo cf-worker-proxy.js https://vmrey.github.io/assets/files/cf-worker-proxy.js
+
+# 或使用 wget 下载
+wget -O cf-worker-proxy.js https://vmrey.github.io/assets/files/cf-worker-proxy.js</code></pre>
+<hr>
+<h2 id="三-完整脚本源码">三、💻 完整脚本源码</h2>
+<p>以下为生产级 <code>cf-worker-proxy.js</code> 完整实现：</p>
+<pre><code class="language-javascript">/**
+ * Cloudflare Worker 静态网站与 GitHub Pages 完美无缝反向代理脚本
+ * 
+ * 核心特性与盲区修复：
+ * 1. OPTIONS 预检请求拦截：直接返回允许跨域头，避免复杂请求跨域拦截
+ * 2. 请求头 Host/Origin/Referer 自动伪装：确保源站虚拟主机路由与防盗链正常
+ * 3. 301/302/307/308 重定向无缝改写：防止跳转时泄露或回退到源站域名
+ * 4. 彻底解决 ERR_CONTENT_DECODING_FAILED：对改写的 Body 自动清除 content-length 和 content-encoding
+ * 5. 网页 SRI 子资源完整性校验移除：防止路径或文本替换后浏览器阻断资源加载
+ * 6. 支持 XML (Sitemap/RSS Feed) 与纯文本：保全搜索引擎 SEO 与订阅
+ * 7. 二进制多媒体流式直传：图片、字体、音视频等资源零损耗高效代理
+ */
+
+export default {
+  async fetch(request, env, ctx) {
+    // 盲区修复 1：直接拦截并处理 OPTIONS 预检请求，防止复杂跨域报错
+    if (request.method === &quot;OPTIONS&quot;) {
+      return new Response(null, {
+        headers: {
+          &quot;Access-Control-Allow-Origin&quot;: &quot;*&quot;,
+          &quot;Access-Control-Allow-Methods&quot;: &quot;GET, HEAD, POST, OPTIONS&quot;,
+          &quot;Access-Control-Allow-Headers&quot;: request.headers.get(&quot;Access-Control-Request-Headers&quot;) || &quot;*&quot;,
+          &quot;Access-Control-Max-Age&quot;: &quot;86400&quot;,
+        }
+      });
+    }
+
+    const url = new URL(request.url);
+    const originalHost = url.host;
+
+    // =================== 核心配置区 ===================
+    // 目标网站域名（如 username.github.io，不带 https://）
+    const targetDomain = env.TARGET_DOMAIN || 'username.github.io';
+    // 目标站点的二级基础路径（若反代根目录请留空 ''，若反代子仓库请填写 '/repo-name'）
+    const targetBasePath = env.TARGET_BASE_PATH || '';
+    // ==================================================
+
+    const proxyUrl = new URL(request.url);
+    proxyUrl.host = targetDomain;
+    if (targetBasePath) {
+      proxyUrl.pathname = targetBasePath + proxyUrl.pathname;
+    }
+
+    const proxyHeaders = new Headers(request.headers);
+    proxyHeaders.set('Host', targetDomain);
+
+    if (proxyHeaders.has('Origin')) {
+      proxyHeaders.set('Origin', `https://${targetDomain}`);
+    }
+    if (proxyHeaders.has('Referer')) {
+      proxyHeaders.set('Referer', proxyHeaders.get('Referer').replace(originalHost, targetDomain));
+    }
+
+    const modifiedRequest = new Request(proxyUrl.toString(), {
+      headers: proxyHeaders,
+      method: request.method,
+      body: request.body,
+      redirect: 'manual' // 手动处理重定向，便于改写 Location 响应头
+    });
+
+    try {
+      const response = await fetch(modifiedRequest);
+      const modifiedResponseHeaders = new Headers(response.headers);
+
+      // 允许跨域并移除安全策略限制
+      modifiedResponseHeaders.set('Access-Control-Allow-Origin', '*');
+      modifiedResponseHeaders.delete('Content-Security-Policy');
+      modifiedResponseHeaders.delete('X-Frame-Options');
+
+      // 处理 301/302/303/307/308 重定向
+      if ([301, 302, 303, 307, 308].includes(response.status)) {
+        const location = modifiedResponseHeaders.get('Location');
+        if (location) {
+          const newLocation = location
+            .replace(`https://${targetDomain}${targetBasePath}`, `https://${originalHost}`)
+            .replace(`http://${targetDomain}${targetBasePath}`, `https://${originalHost}`);
+          modifiedResponseHeaders.set('Location', newLocation);
+        }
+        return new Response(null, { status: response.status, headers: modifiedResponseHeaders });
+      }
+
+      const contentType = response.headers.get('content-type') || '';
+
+      // 盲区修复 2：加入 XML (Sitemap/RSS) 和纯文本的支持，保全 SEO
+      if (
+        contentType.includes('text/html') ||
+        contentType.includes('text/css') ||
+        contentType.includes('application/javascript') ||
+        contentType.includes('application/json') ||
+        contentType.includes('application/xml') ||
+        contentType.includes('text/xml') ||
+        contentType.includes('text/plain')
+      ) {
+        let bodyText = await response.text();
+
+        // 盲区修复 3：凡是被 Worker 读取并修改了主体的内容，必须删除长度和压缩头
+        // 否则浏览器解码会直接崩溃 (ERR_CONTENT_DECODING_FAILED)
+        modifiedResponseHeaders.delete('content-length');
+        modifiedResponseHeaders.delete('content-encoding');
+
+        // [正则 1] 标准路径替换
+        const regexStandard = new RegExp(`(https?:)?//${targetDomain}${targetBasePath}`, 'g');
+        bodyText = bodyText.replace(regexStandard, `https://${originalHost}`);
+
+        // [正则 2] 转义路径替换（适用于 JSON / JS 里的转义 URL）
+        const escapedTargetDomain = targetDomain.replace(/\./g, '\\.');
+        const regexEscaped = new RegExp(`(https?:)?\\\\/\\\\/${escapedTargetDomain}`, 'g');
+        bodyText = bodyText.replace(regexEscaped, `https:\\/\\/${originalHost}`);
+
+        // 盲区修复 4：移除 HTML 中的子资源完整性校验 (integrity)，防止文件被修改后触发浏览器安全拦截
+        if (contentType.includes('text/html')) {
+          bodyText = bodyText.replace(/\s+integrity=&quot;[^&quot;]+&quot;/g, '');
+        }
+
+        return new Response(bodyText, {
+          status: response.status,
+          statusText: response.statusText,
+          headers: modifiedResponseHeaders
+        });
+      }
+
+      // 二进制文件（图片、音视频、压缩包等）原生流式透传
+      return new Response(response.body, {
+        status: response.status,
+        statusText: response.statusText,
+        headers: modifiedResponseHeaders
+      });
+
+    } catch (e) {
+      return new Response('Proxy Error: ' + e.message, { status: 500 });
+    }
+  }
+};</code></pre>
+<hr>
+<h2 id="四-5-分钟部署实战步骤">四、🚀 5 分钟部署实战步骤</h2>
+<h3 id="步骤-1-在-cloudflare-控制台创建-worker">步骤 1：在 Cloudflare 控制台创建 Worker</h3>
+<ol>
+<li>登录 <a href="https://dash.cloudflare.com/" target="_blank" rel="noopener noreferrer">Cloudflare Dashboard</a>；
+</li>
+<li>在左侧菜单栏进入 <strong>Workers 和 Pages (Workers &amp; Pages)</strong> -&gt; <strong>Overview</strong>；
+</li>
+<li>点击 <strong>创建 (Create application)</strong> -&gt; 选择 <strong>Workers</strong> -&gt; 点击 <strong>部署 (Deploy)</strong> 生成默认 Worker。
+</li>
+</ol>
+<hr>
+<h3 id="步骤-2-替换脚本代码并配置目标域名">步骤 2：替换脚本代码并配置目标域名</h3>
+<ol>
+<li>点击进入刚创建的 Worker 详情页，点击右上角 <strong>编辑代码 (Edit code)</strong>；
+</li>
+<li>清空编辑器原有内容，将上述 <code>cf-worker-proxy.js</code> 代码粘贴进去；
+</li>
+<li>修改核心配置区的 <code>targetDomain</code>（例如将 <code>username.github.io</code> 改为你自己的 GitHub Pages 域名，如 <code>vmrey.github.io</code>）；
+
+<ul>
+<li>如果你的 GitHub Pages 是仓库级二级路径（例如 <code>username.github.io/my-docs</code>），且你希望反代后在根路径直接访问，只需将 <code>targetBasePath</code> 设为 <code>'/my-docs'</code>；
+</li>
+<li>也可在 Worker <strong>设置 (Settings)</strong> -&gt; <strong>变量 (Variables)</strong> 中新增 <code>TARGET_DOMAIN</code> 和 <code>TARGET_BASE_PATH</code> 环境变量，实现配置与代码解耦；
+</li>
+</ul>
+</li>
+<li>点击右上角 <strong>部署 (Deploy)</strong> 保存生效。
+</li>
+</ol>
+<hr>
+<h3 id="步骤-3-绑定自定义域名-custom-domains">步骤 3：绑定自定义域名 (Custom Domains)</h3>
+<ol>
+<li>在 Worker 详情页面，点击顶部 <strong>设置 (Settings)</strong> 选项卡；
+</li>
+<li>选择 <strong>域和路由 (Domains &amp; Routes)</strong>；
+</li>
+<li>点击 <strong>添加 (Add)</strong> -&gt; <strong>自定义域 (Custom Domain)</strong>；
+</li>
+<li>输入你托管在 Cloudflare 上的独立域名（例如 <code>blog.yourdomain.com</code>）；
+</li>
+<li>Cloudflare 将自动为你配置 DNS 解析记录和免费 SSL/TLS 证书。
+</li>
+</ol>
+<hr>
+<h2 id="五-核心原理与常见问题剖析">五、🔍 核心原理与常见问题剖析</h2>
+<h3 id="1-为什么修改-body-必须删除-content-length-和-content-encoding">1. 为什么修改 Body 必须删除 <code>content-length</code> 和 <code>content-encoding</code>？</h3>
+<p>源站发送给 Cloudflare 的 HTTP 响应很多是经过 Gzip 或 Brotli 压缩的（包含 <code>content-encoding: gzip</code> 和固定长度的 <code>content-length</code>）。</p>
+<p>当 Worker 调用 <code>await response.text()</code> 时，Cloudflare 底层会自动将其解压缩为纯字符串。如果我们修改了字符串内容并直接返回，原有的 <code>content-length</code>（字节数已发生改变）和 <code>content-encoding</code>（内容已变成未压缩纯文本）就会与实际内容产生冲突，导致浏览器解码崩溃报 <code>ERR_CONTENT_DECODING_FAILED</code>。</p>
+<p><strong>修复策略</strong>：在返回新 Response 之前执行 <code>delete('content-length')</code> 和 <code>delete('content-encoding')</code>，由 Cloudflare 边缘节点重新协商最优压缩算法。</p>
+<h3 id="2-为什么要剥除-html-中的-integrity-属性">2. 为什么要剥除 HTML 中的 <code>integrity</code> 属性？</h3>
+<p>很多现代前端打包工具（如 Webpack / Vite）在构建时会为 <code>&lt;script&gt;</code> 和 <code>&lt;link&gt;</code> 标签添加 SRI (Subresource Integrity) 校验哈希（例如 <code>integrity=&quot;sha384-...&quot;</code>）。</p>
+<p>如果我们在反代过程中替换了 JS 文件内部的 API 路径或源站域名，JS 文件的哈希值就会改变，导致浏览器触发 SRI 校验失败而拒绝执行脚本。</p>
+<p><strong>修复策略</strong>：通过正则 <code>replace(/\s+integrity=&quot;[^&quot;]+&quot;/g, '')</code> 移除 SRI 属性，确保修改后的资源正常加载。</p>
+<h3 id="3-如何支持带有转义斜杠的-json-js-数据">3. 如何支持带有转义斜杠的 JSON / JS 数据？</h3>
+<p>许多现代博客框架（如 VitePress、Hexo、VuePress）会将全局配置序列化为 JSON 注入页面中，域名中的斜杠常被转义为 <code>https:\/\/username.github.io</code>。</p>
+<p>单一的标准正则无法匹配这类转义格式，本脚本通过 <code>[正则 2]</code> 转义域名匹配，完美覆盖所有序列化场景。</p>
+<hr>
+<h2 id="六-总结">六、📝 总结</h2>
+<p>通过 Cloudflare Workers 的边缘无服务器计算能力，配合细致的响应头清理、正则替换与重定向处理，我们无需自行购买并配置 Nginx 服务器，就能在几分钟内搭建起一套高可用、免维护、抗高并发且全球极速的静态网站反向代理体系。</p>
+            </div>
+
+            <div class="post-block-footer" style="margin-top: 3.5rem; padding-top: 1.5rem; border-top: 1px dashed var(--border);">
+              <a href="../index.html" class="back-link">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
+                <span>返回文章列表</span>
+              </a>
+            </div>
+          </article>
+        </div>
+      </div>
+
+        <!-- 右侧文章大纲 TOC -->
+        <aside class="article-toc-panel" aria-label="文章目录大纲">
+          <div class="toc-box">
+            <div class="toc-box-title">本页导读 · 快速直达</div>
+            <ul class="toc-list">
+            <li>
+              <a href="#一-核心特性与-5-大盲区修复" class="toc-link" title="一、🌟 核心特性与 5 大盲区修复">一、🌟 核心特性与 5 大盲区修复</a>
+            </li>
+            <li>
+              <a href="#二-脚本下载与免跳转预览" class="toc-link" title="二、📥 脚本下载与免跳转预览">二、📥 脚本下载与免跳转预览</a>
+            </li>
+            <li>
+              <a href="#命令行快速获取" class="toc-link" title="命令行快速获取">命令行快速获取</a>
+            </li>
+            <li>
+              <a href="#三-完整脚本源码" class="toc-link" title="三、💻 完整脚本源码">三、💻 完整脚本源码</a>
+            </li>
+            <li>
+              <a href="#四-5-分钟部署实战步骤" class="toc-link" title="四、🚀 5 分钟部署实战步骤">四、🚀 5 分钟部署实战步骤</a>
+            </li>
+            <li>
+              <a href="#步骤-1-在-cloudflare-控制台创建-worker" class="toc-link" title="步骤 1：在 Cloudflare 控制台创建 Worker">步骤 1：在 Cloudflare 控制台创建 Worker</a>
+            </li>
+            <li>
+              <a href="#步骤-2-替换脚本代码并配置目标域名" class="toc-link" title="步骤 2：替换脚本代码并配置目标域名">步骤 2：替换脚本代码并配置目标域名</a>
+            </li>
+            <li>
+              <a href="#步骤-3-绑定自定义域名-custom-domains" class="toc-link" title="步骤 3：绑定自定义域名 (Custom Domains)">步骤 3：绑定自定义域名 (Custom Domains)</a>
+            </li>
+            <li>
+              <a href="#五-核心原理与常见问题剖析" class="toc-link" title="五、🔍 核心原理与常见问题剖析">五、🔍 核心原理与常见问题剖析</a>
+            </li>
+            <li>
+              <a href="#1-为什么修改-body-必须删除-content-length-和-content-encoding" class="toc-link" title="1. 为什么修改 Body 必须删除 `content-length` 和 `content-encoding`？">1. 为什么修改 Body 必须删除 `content-length` 和 `content-encoding`？</a>
+            </li>
+            <li>
+              <a href="#2-为什么要剥除-html-中的-integrity-属性" class="toc-link" title="2. 为什么要剥除 HTML 中的 `integrity` 属性？">2. 为什么要剥除 HTML 中的 `integrity` 属性？</a>
+            </li>
+            <li>
+              <a href="#3-如何支持带有转义斜杠的-json-js-数据" class="toc-link" title="3. 如何支持带有转义斜杠的 JSON / JS 数据？">3. 如何支持带有转义斜杠的 JSON / JS 数据？</a>
+            </li>
+            <li>
+              <a href="#六-总结" class="toc-link" title="六、📝 总结">六、📝 总结</a>
+            </li>
+            </ul>
+          </div>
+        </aside>
+    </main>
+
+  </div>
+
+  <!-- 全局回到顶部按钮 (右下角固定) -->
+  <button id="back-to-top-btn" class="back-to-top-btn" type="button" title="回到顶部" aria-label="回到顶部">
+    <svg class="back-to-top-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+      <polyline points="18 15 12 9 6 15"></polyline>
+    </svg>
+  </button>
+
+  <script defer src="../js/config.js"></script>
+  <script defer src="../data/search-index.js"></script>
+  <script defer src="../js/main.js"></script>
+  <script defer src="../js/prism.js"></script>
+  <script defer src="../js/search.js"></script>
+  <script defer src="../js/file-preview.js"></script>
+
+</body>
+</html>

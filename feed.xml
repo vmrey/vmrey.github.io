@@ -5,8 +5,16 @@
     <link>https://vmrey.github.io/</link>
     <description>构建工具，写干净的代码</description>
     <language>zh-CN</language>
-    <lastBuildDate>Tue, 01 Sep 2026 15:09:28 GMT</lastBuildDate>
+    <lastBuildDate>Wed, 02 Sep 2026 11:52:39 GMT</lastBuildDate>
     <atom:link href="https://vmrey.github.io/feed.xml" rel="self" type="application/rss+xml"/>
+    <item>
+      <title>基于 Cloudflare Workers 完美反代 GitHub Pages 与静态站点实战指南</title>
+      <link>https://vmrey.github.io/posts/cf-proxy-bdc5.html</link>
+      <guid isPermaLink="true">https://vmrey.github.io/posts/cf-proxy-bdc5.html</guid>
+      <pubDate>Wed, 02 Sep 2026 00:00:00 GMT</pubDate>
+      <category>Linux与服务端</category>
+      <description>深入剖析如何使用 Cloudflare Workers 零成本搭建高性能 GitHub Pages 与静态站点反向代理。全面解决 OPTIONS 跨域预检、ERR_CONTENT_DECODING_FAILED 乱码崩溃、SRI 完整性校验拦截、301/302 重定向泄露及 Sitemap/RSS SEO 索引保全等核心痛点。</description>
+    </item>
     <item>
       <title>Cloudflare DDNS 动态域名解析自动更新脚本与使用指南</title>
       <link>https://vmrey.github.io/posts/cf-ddns-912c.html</link>
@@ -238,14 +246,6 @@
       <pubDate>Fri, 08 May 2026 00:00:00 GMT</pubDate>
       <category>Linux与服务端</category>
       <description>详解 Xray 核心 DNS 分流配置与防污染机制，基于 Geosite 域名列表实现境外加密 DNS 解析与境内直连智能分流。</description>
-    </item>
-    <item>
-      <title>常用树结构递归工具函数合集：树平铺、节点查找与层级过滤</title>
-      <link>https://vmrey.github.io/posts/js-tree-recursion-209b.html</link>
-      <guid isPermaLink="true">https://vmrey.github.io/posts/js-tree-recursion-209b.html</guid>
-      <pubDate>Sat, 02 May 2026 00:00:00 GMT</pubDate>
-      <category>前端开发</category>
-      <description>实战整理针对级联选择器与目录树的高频递归操作函数：扁平化转换、树深度查找、剪枝过滤与路径追踪。</description>
     </item>
   </channel>
 </rss>

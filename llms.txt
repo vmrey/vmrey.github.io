@@ -12,9 +12,10 @@
 - [关于本站 (About Author)](https://vmrey.github.io/about.html): 博主个人简介、技术栈与工程理念
 - [完整知识库快照 (Full Knowledge Digest)](https://vmrey.github.io/llms-full.txt): 全站技术文章详细摘要与纯文本知识库
 
-## 技术文章全景大纲 (Technical Articles - 共 73 篇)
+## 技术文章全景大纲 (Technical Articles - 共 74 篇)
 
-### Linux与服务端 (9 篇)
+### Linux与服务端 (10 篇)
+- [基于 Cloudflare Workers 完美反代 GitHub Pages 与静态站点实战指南](https://vmrey.github.io/posts/cf-proxy-bdc5.html): 深入剖析如何使用 Cloudflare Workers 零成本搭建高性能 GitHub Pages 与静态站点反向代理。全面解决 OPTIONS 跨域预检、ERR_CONTENT_DECODING_FAILED 乱码崩溃、SRI 完整性校验拦截、301/302 重定向泄露及 Sitemap/RSS SEO 索引保全等核心痛点。
 - [Cloudflare DDNS 动态域名解析自动更新脚本与使用指南](https://vmrey.github.io/posts/cf-ddns-912c.html): 基于 Cloudflare API v4 实现的轻量级 DDNS 动态域名解析自动更新脚本，支持 IPv4/IPv6 双栈探测、本地智能缓存对比及 Crontab 自动化守护。
 - [Linux 生产环境 Docker 官方一键安装脚本与国内镜像加速配置](https://vmrey.github.io/posts/docker-mirror-5e12.html): 整理 Ubuntu/Debian/CentOS 下 Docker CE 与 Docker Compose 官方标准安装流程及最新稳定镜像源配置。
 - [使用 Docker Compose 快速搭建 RustDesk 自建远程桌面中继服务器（hbbs/hbbr）](https://vmrey.github.io/posts/rustdesk-docker-6a97.html): 基于 Docker Compose 完整部署开源远程桌面 RustDesk 的 ID 注册服务器与中继服务，详解 21115-21119 端口映射、防火墙放行与客户端 Key 密钥联调。

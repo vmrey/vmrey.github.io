@@ -19,6 +19,10 @@
     "desc": "Cloudflare DDNS 动态域名解析自动检测与同步脚本（支持 IPv4/IPv6、缓存与定时任务）",
     "category": "Shell 脚本"
   },
+  "cf-worker-proxy.js": {
+    "desc": "Cloudflare Workers 静态托管与 GitHub Pages 完美无缝反向代理脚本（解决跨域、SEO、SRI拦截与乱码问题）",
+    "category": "代码库"
+  },
   "frps.sh": {
     "desc": "FRP 内网穿透服务端 Linux 一键自动化安装、配置与 Systemd 管理脚本",
     "category": "Shell 脚本"
