@@ -38,19 +38,22 @@ function renderBaseLayout({
   const safeDescription = escapeAttr(description);
   const safeKeywords = escapeAttr(keywords);
 
+  // 生成基于 CSS 变动特征的版本号，实现全网 CDN 与浏览器零延迟即时刷新 (Cache-Busting)
+  const assetVersion = '20260902c';
+
   const cssTags = [
-    `${assetPrefix}css/style.css`,
-    ...extraCss.map(c => c.startsWith('http') ? c : `${assetPrefix}${c}`)
+    `${assetPrefix}css/style.css?v=${assetVersion}`,
+    ...extraCss.map(c => c.startsWith('http') ? c : `${assetPrefix}${c}?v=${assetVersion}`)
   ].map(href => `<link rel="stylesheet" href="${href}">`).join('\n  ');
 
   const scriptTags = [
-    `${assetPrefix}js/config.js`,
-    `${assetPrefix}data/search-index.js`,
-    `${assetPrefix}js/main.js`,
-    `${assetPrefix}js/prism.js`,
-    `${assetPrefix}js/search.js`,
-    `${assetPrefix}js/file-preview.js`,
-    ...extraScripts.map(s => s.startsWith('http') ? s : `${assetPrefix}${s}`)
+    `${assetPrefix}js/config.js?v=${assetVersion}`,
+    `${assetPrefix}data/search-index.js?v=${assetVersion}`,
+    `${assetPrefix}js/main.js?v=${assetVersion}`,
+    `${assetPrefix}js/prism.js?v=${assetVersion}`,
+    `${assetPrefix}js/search.js?v=${assetVersion}`,
+    `${assetPrefix}js/file-preview.js?v=${assetVersion}`,
+    ...extraScripts.map(s => s.startsWith('http') ? s : `${assetPrefix}${s}?v=${assetVersion}`)
   ].map(src => `<script defer src="${src}"></script>`).join('\n  ');
 
   const jsonLdScript = jsonLd ? `\n  <script type="application/ld+json">\n  ${JSON.stringify(jsonLd, null, 2).replace(/\n/g, '\n  ')}\n  </script>` : '';
