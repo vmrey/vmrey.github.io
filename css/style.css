@@ -32,6 +32,8 @@
   --radius-sm: 6px;
   --radius-md: 10px;
   --radius-lg: 14px;
+  --radius-xl: 18px;
+  --radius-2xl: 24px;
   --radius-full: 9999px;
   
   --transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
@@ -4179,7 +4181,7 @@ del {
     max-width: 100%;
     max-height: 84vh;
     max-height: min(84vh, 84svh, 84dvh);
-    border-radius: var(--radius-lg);
+    border-radius: var(--radius-xl, 18px);
   }
   .preview-header {
     padding: 0.75rem 0.85rem;
