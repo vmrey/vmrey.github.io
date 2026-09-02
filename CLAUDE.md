@@ -263,31 +263,33 @@ npm run audit
 - **GitHub 优质开源导航 (`nav.html`)**：`data/github-nav.json` 单一数据源驱动，收录 fnm, nvm, Ventoy, Fail2Ban 等开源项目；
 - **健康熔断机制**：`manage-nav.js` 提供跨库唯一性查重、入库前真实网络连通性探测 (`check-alive`) 与失效死链自动清理 (`prune`)。
 
-### 🔘 4.6 全站 UI 按钮与文章内嵌资源下载卡片统一规范 (Button Design & Resource Card Specification)
+### 🔘 4.6 全站 UI 按钮与资源卡片统一规范 (Button Design & File Card Parity Specification)
 
-全站所有按钮与文章详情页资源下载组件已全量建立统一的设计系统与度量标准，AI 在编写新文章、扩展模板或新增组件时**必须严格遵守**：
+全站所有按钮与文章内嵌资源下载卡片严格遵循**「相同功能，100% 相同样式与度量」**的核心设计原则，AI 在编写新文章、扩展模板或新增组件时**必须严格遵守**：
 
-#### 1. 文章详情页内嵌资源下载卡片 (`.article-resource-card`)
-在 Markdown 文章中提供附件文件下载时，**严禁手写内联样式与硬编码色值**，必须使用以下标准语义化 HTML 结构：
+#### 1. 文章内嵌资源下载卡片 (`.nested-file-row.standalone-file-card`)
+在 Markdown 文章中提供附件资源下载时，其结构与外观必须与资源文件库（`files.html`）保持 **1:1 像素级完全一致**，严禁使用任何杂乱的内联样式或私有变体，必须采用以下标准语义化结构：
 
 ```html
-<div class="article-resource-card">
-  <div class="article-resource-info">
-    <div class="article-resource-icon">.JS</div>
-    <div class="article-resource-meta">
-      <div class="article-resource-title-row">
-        <span class="article-resource-name">文件名.js</span>
-        <span class="article-resource-badge">技术标签</span>
+<div class="nested-file-row standalone-file-card">
+  <div class="file-row-left">
+    <div class="file-type-pill" style="color: #0284c7; border-color: #0284c740; background: rgba(2, 132, 199, 0.1);">
+      .JS
+    </div>
+    <div class="file-name-meta">
+      <div class="file-name-line">
+        <span class="file-main-name">文件名.js</span>
+        <span class="file-size-tag">技术标签/大小</span>
       </div>
-      <div class="article-resource-desc">中文功能描述与核心用途说明</div>
+      <div class="file-desc-line" title="中文功能描述">中文功能描述与核心用途说明</div>
     </div>
   </div>
-  <div class="article-resource-actions">
-    <a href="../assets/files/文件名.js" download class="article-resource-btn primary" title="直接下载文件">
+  <div class="file-row-actions">
+    <a href="../assets/files/文件名.js" download="文件名.js" class="file-action-btn primary" title="直接下载该文件">
       <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
       <span>直接下载</span>
     </a>
-    <a href="../files.html" class="article-resource-btn" title="前往全站文件中心在线预览与管理">
+    <a href="../files.html" class="file-action-btn" title="前往全站文件中心在线预览与管理">
       <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
       <span>文件中心</span>
     </a>
@@ -295,18 +297,19 @@ npm run audit
 </div>
 ```
 
-#### 2. 全站 UI 按钮三级度量标准 (Button Metrics & Sizing Standards)
+#### 2. 全站 UI 按钮度量与层级规范 (Button Metrics & Sizing Standards)
 
-| 按钮类型 | 高度 (Height) | 内边距 (Padding) | 字号 (Font Size) | 圆角 (Radius) | 典型应用场景 |
-| :--- | :--- | :--- | :--- | :--- | :--- |
-| **标准中号按钮 (Medium)** | `34px` | `0 0.9rem` (14.4px) | `0.8125rem` (13px) | `var(--radius-md)` (10px) | 文章资源卡片按钮 (`.article-resource-btn`)、文件库操作按钮 (`.file-action-btn`)、开源访问按钮 (`.repo-visit-btn`)、返回列表链接 (`.back-link`) |
-| **紧凑小号按钮 (Small)** | `28px` | `0 0.6rem` (9.6px) | `0.75rem` (12px) | `var(--radius-sm)` (6px) | 流程图全屏按钮 (`.mermaid-fullscreen-btn`)、代码块复制按钮 (`.code-copy-btn`)、搜索结果跳转按钮 (`.search-res-external-btn`) |
-| **正方/圆形图标按钮 (Icon)** | `32px / 36px / 42px` | 正方形居中对齐 | `0.875rem` (14px) | `var(--radius-md)` / 全圆 | 翻页控制器 (`.page-btn`, 36px)、日夜切换 (`#theme-toggle`, 36px)、侧边栏折叠 (`#sidebar-collapse-btn`, 32px)、回到顶部 (`.back-to-top-btn`, 42px) |
+| 按钮类型 | 高度 (Height) | 内边距 (Padding) | 字号 (Font Size) | 字重 (Weight) | 图标尺寸 (SVG) | 典型应用场景 |
+| :--- | :--- | :--- | :--- | :--- | :--- | :--- |
+| **标准操作按钮 (`.file-action-btn` / `.repo-visit-btn`)** | **`32px`** | **`0 0.75rem`** (12px) | **`0.8rem`** (12.8px) | **`600`** | `14px * 14px` | 文件管理中心操作、文章内嵌下载卡片、GitHub 仓库访问、工具/AI 直达 |
+| **分类筛选胶囊 (`.nav-pill-btn`)** | **`32px`** | **`0 0.85rem`** (13.6px) | **`0.8rem`** (12.8px) | **`500`** | `14px * 14px` | 导航中心快捷分类筛选、文章列表标签过滤 |
+| **工具栏紧凑小按钮 (`.code-copy-btn` / `.mermaid-fullscreen-btn`)** | **`28px`** | **`0 0.6rem`** (9.6px) | **`0.75rem`** (12px) | **`500`** | `13px * 13px` | 代码块右上角一键复制、Mermaid 流程图全屏灯箱操作 |
+| **正方/圆形图标控制器** | **`32/36/42px`** | 居中 Flex 对齐 | **`0.875rem`** (14px) | **`600`** | `16~20px` | 翻页器 (`.page-btn`, 36px)、暗黑切换 (`#theme-toggle`, 36px)、回到顶部 (`.back-to-top-btn`, 42px) |
 
 #### 3. 按钮状态与交互规范
-- **Primary 强调态**：`background: var(--primary); border-color: var(--primary); color: #ffffff;`（暗黑模式下文字适配为高对比深色），悬停微上浮 `-1px` 并伴随柔和外发光；
-- **Secondary 次要/轮廓态**：`background: var(--surface); border: 1px solid var(--border); color: var(--text-main);`，悬停边框高亮为 `var(--border-focus)`；
-- **SVG 图标对齐**：图标宽高必须锁定（小号 `13px*13px` / 中号 `14px*14px`），设置 `flex-shrink: 0`，`line-height: 1` 保持文字基线垂直居中。
+- **Primary 强调态**：`background: var(--primary) !important; border-color: var(--primary) !important; color: #ffffff !important;`（暗黑模式文字自动切换为高对比深色 `#0b0d11`），悬停微上浮 `-1px`；
+- **Secondary 次要/轮廓态**：`background: var(--surface); border: 1px solid var(--border); color: var(--text-main) !important;`，悬停边框高亮为 `var(--border-focus)`；
+- **排版一致性**：所有按钮 `line-height: 1; vertical-align: middle;`，SVG 图标统一设置 `flex-shrink: 0; width: 14px; height: 14px;`，文字基线与图标绝对居中。
 
 ---
 

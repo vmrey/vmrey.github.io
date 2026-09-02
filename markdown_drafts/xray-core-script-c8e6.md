@@ -14,24 +14,26 @@ readTime: 3 分钟阅读
 
 ## 1. 安装与脚本下载
 
-<div class="article-resource-card">
-  <div class="article-resource-info">
-    <div class="article-resource-icon">.SH</div>
-    <div class="article-resource-meta">
-      <div class="article-resource-title-row">
-        <span class="article-resource-name">xray.sh</span>
-        <span class="article-resource-badge">Shell 脚本</span>
+<div class="nested-file-row standalone-file-card">
+  <div class="file-row-left">
+    <div class="file-type-pill" style="color: #a855f7; border-color: #a855f740; background: rgba(168, 85, 247, 0.1);">
+      .SH
+    </div>
+    <div class="file-name-meta">
+      <div class="file-name-line">
+        <span class="file-main-name">xray.sh</span>
+        <span class="file-size-tag">Shell 脚本</span>
       </div>
-      <div class="article-resource-desc">Xray Core 核心网络代理服务一键安装与证书部署脚本</div>
+      <div class="file-desc-line" title="Xray Core 核心网络代理服务一键安装与证书部署脚本">Xray Core 核心网络代理服务一键安装与证书部署脚本</div>
     </div>
   </div>
-  <div class="article-resource-actions">
-    <a href="../assets/files/xray.sh" download class="article-resource-btn primary" title="直接下载 xray.sh">
-      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+  <div class="file-row-actions">
+    <a href="../assets/files/xray.sh" download="xray.sh" class="file-action-btn primary" title="直接下载 xray.sh">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
       <span>直接下载</span>
     </a>
-    <a href="../files.html" class="article-resource-btn" title="前往全站文件中心在线预览与管理">
-      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+    <a href="../files.html" class="file-action-btn" title="前往全站文件中心在线预览与管理">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
       <span>文件中心</span>
     </a>
   </div>
