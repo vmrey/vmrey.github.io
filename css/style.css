@@ -2791,7 +2791,11 @@ del {
   opacity: 0;
   visibility: hidden;
   transition: opacity 0.2s ease, visibility 0.2s ease;
-  padding: 1.5rem;
+  padding: max(1.5rem, calc(env(safe-area-inset-top, 0px) + 1rem))
+           max(1.5rem, calc(env(safe-area-inset-right, 0px) + 1rem))
+           max(1.5rem, calc(env(safe-area-inset-bottom, 0px) + 1.25rem))
+           max(1.5rem, calc(env(safe-area-inset-left, 0px) + 1rem));
+  box-sizing: border-box;
 }
 
 .file-preview-modal.active {
@@ -2811,7 +2815,8 @@ del {
   position: relative;
   width: 100%;
   max-width: 960px;
-  max-height: 88vh;
+  max-height: 86vh;
+  max-height: min(86vh, 86svh, 86dvh);
   background: var(--surface);
   border: 1px solid var(--border);
   border-radius: var(--radius-xl);
@@ -2835,9 +2840,15 @@ del {
 
 .file-preview-modal.is-fullscreen .preview-dialog {
   width: 100vw !important;
+  height: 100% !important;
   height: 100vh !important;
+  height: 100svh !important;
+  height: 100dvh !important;
   max-width: 100vw !important;
+  max-height: 100% !important;
   max-height: 100vh !important;
+  max-height: 100svh !important;
+  max-height: 100dvh !important;
   border-radius: 0 !important;
   border: none !important;
   box-shadow: none !important;
@@ -2846,11 +2857,17 @@ del {
 
 .file-preview-modal.is-fullscreen .preview-header {
   border-radius: 0;
-  padding: 0.9rem 1.5rem;
+  padding-top: max(0.9rem, calc(env(safe-area-inset-top, 0px) + 0.75rem));
+  padding-right: max(1.5rem, calc(env(safe-area-inset-right, 0px) + 1rem));
+  padding-bottom: 0.9rem;
+  padding-left: max(1.5rem, calc(env(safe-area-inset-left, 0px) + 1rem));
 }
 
 .file-preview-modal.is-fullscreen .preview-body {
-  padding: 1.5rem 2rem;
+  padding-top: 1.5rem;
+  padding-right: max(2rem, calc(env(safe-area-inset-right, 0px) + 1rem));
+  padding-bottom: max(2rem, calc(env(safe-area-inset-bottom, 0px) + 1.5rem));
+  padding-left: max(2rem, calc(env(safe-area-inset-left, 0px) + 1rem));
   height: 100%;
 }
 
@@ -2862,14 +2879,17 @@ del {
   background: var(--bg-subtle);
   border-bottom: 1px solid var(--border);
   flex-shrink: 0;
-  gap: 1rem;
+  gap: 0.75rem;
+  box-sizing: border-box;
 }
 
 .preview-title-wrap {
   display: flex;
   align-items: center;
   gap: 0.75rem;
+  flex: 1 1 auto;
   min-width: 0;
+  overflow: hidden;
 }
 
 .preview-file-icon {
@@ -2888,7 +2908,9 @@ del {
   display: flex;
   flex-direction: column;
   gap: 0.15rem;
+  flex: 1 1 auto;
   min-width: 0;
+  overflow: hidden;
 }
 
 .preview-file-name {
@@ -2899,17 +2921,21 @@ del {
   overflow: hidden;
   text-overflow: ellipsis;
   font-family: var(--font-mono);
+  display: block;
 }
 
 .preview-file-meta {
   font-size: 0.75rem;
   color: var(--text-subtle);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .preview-header-actions {
   display: flex;
   align-items: center;
-  gap: 0.55rem;
+  gap: 0.5rem;
   flex-shrink: 0;
 }
 
@@ -3002,6 +3028,8 @@ del {
   flex: 1;
   overflow-y: auto;
   overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior: contain;
   padding: 1.25rem;
   background: #0f172a;
   min-height: 240px;
@@ -3033,7 +3061,7 @@ del {
 
 .preview-code-block {
   margin: 0;
-  padding: 0;
+  padding: 0 0 1.5rem 0;
   background: transparent !important;
   border: none !important;
   font-family: var(--font-mono);
@@ -4140,28 +4168,67 @@ del {
     display: none;
   }
 
-  /* 文件预览弹窗移动端适配 */
+  /* 文件预览弹窗移动端适配 (兼顾 iPhone 刘海屏/灵动岛与 Chrome/Safari 底部工具栏安全区域) */
   .file-preview-modal {
-    padding: 0.75rem 0.5rem;
+    padding: max(0.75rem, calc(env(safe-area-inset-top, 0px) + 0.5rem))
+             max(0.5rem, calc(env(safe-area-inset-right, 0px) + 0.5rem))
+             max(1.25rem, calc(env(safe-area-inset-bottom, 0px) + 0.85rem))
+             max(0.5rem, calc(env(safe-area-inset-left, 0px) + 0.5rem));
   }
   .preview-dialog {
     max-width: 100%;
-    max-height: 92vh;
+    max-height: 84vh;
+    max-height: min(84vh, 84svh, 84dvh);
     border-radius: var(--radius-lg);
   }
   .preview-header {
-    padding: 0.75rem 0.9rem;
+    padding: 0.75rem 0.85rem;
     gap: 0.5rem;
+    box-sizing: border-box;
+  }
+  .preview-title-wrap {
+    gap: 0.5rem;
+    flex: 1 1 auto;
+    min-width: 0;
+  }
+  .preview-file-icon {
+    width: 32px;
+    height: 32px;
+    flex-shrink: 0;
+  }
+  .preview-title-info {
+    flex: 1 1 auto;
+    min-width: 0;
   }
   .preview-file-name {
-    max-width: 180px;
-    font-size: 0.875rem;
+    max-width: 100%;
+    font-size: 0.85rem;
+  }
+  .preview-file-meta {
+    font-size: 0.7rem;
+  }
+  .preview-header-actions {
+    gap: 0.35rem;
+    flex-shrink: 0;
   }
   .preview-btn span {
-    display: inline;
+    display: none;
+  }
+  .preview-btn {
+    padding: 0;
+    width: 32px;
+    height: 32px;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+  .preview-fullscreen-btn,
+  .preview-close-btn {
+    width: 32px;
+    height: 32px;
+    flex-shrink: 0;
   }
   .preview-body {
-    padding: 0.9rem;
+    padding: 0.85rem;
     font-size: 0.825rem;
   }
   .file-preview-modal.is-fullscreen {
@@ -4169,14 +4236,28 @@ del {
   }
   .file-preview-modal.is-fullscreen .preview-dialog {
     border-radius: 0 !important;
+    width: 100vw !important;
+    height: 100% !important;
+    height: 100vh !important;
+    height: 100svh !important;
+    height: 100dvh !important;
+    max-height: 100% !important;
     max-height: 100vh !important;
+    max-height: 100svh !important;
+    max-height: 100dvh !important;
     max-width: 100vw !important;
   }
   .file-preview-modal.is-fullscreen .preview-header {
-    padding: 0.75rem 0.9rem;
+    padding-top: max(0.75rem, calc(env(safe-area-inset-top, 0px) + 0.65rem));
+    padding-right: max(0.85rem, calc(env(safe-area-inset-right, 0px) + 0.5rem));
+    padding-bottom: 0.75rem;
+    padding-left: max(0.85rem, calc(env(safe-area-inset-left, 0px) + 0.5rem));
   }
   .file-preview-modal.is-fullscreen .preview-body {
-    padding: 0.9rem;
+    padding-top: 0.75rem;
+    padding-right: max(0.85rem, calc(env(safe-area-inset-right, 0px) + 0.5rem));
+    padding-bottom: max(2rem, calc(env(safe-area-inset-bottom, 0px) + 1.5rem));
+    padding-left: max(0.85rem, calc(env(safe-area-inset-left, 0px) + 0.5rem));
   }
 
   /* 资源管理器文件行移动端排版 */
@@ -4263,18 +4344,6 @@ del {
   }
   .folder-count-badge {
     font-size: 0.7rem;
-  }
-  .preview-file-name {
-    max-width: 130px;
-  }
-  .preview-btn span {
-    display: none;
-  }
-  .preview-btn {
-    padding: 0;
-    width: 32px;
-    height: 32px;
-    justify-content: center;
   }
   .nav-repo-card {
     padding: 1.1rem;
