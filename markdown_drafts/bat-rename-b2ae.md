@@ -159,8 +159,28 @@ pause
 
 ## 五、📥 脚本下载与免跳转预览
 
-- 💾 **脚本源文件下载**：[RenameTool.bat](../assets/files/RenameTool.bat)
-- 📁 **在线高亮与管理中心**：[前往资源文件库 (files.html)](../files.html) 查看全部 Shell / BAT 脚本附件。
+<div class="article-resource-card">
+  <div class="article-resource-info">
+    <div class="article-resource-icon">.BAT</div>
+    <div class="article-resource-meta">
+      <div class="article-resource-title-row">
+        <span class="article-resource-name">RenameTool.bat</span>
+        <span class="article-resource-badge">Windows 批处理</span>
+      </div>
+      <div class="article-resource-desc">批量修改文件名与文件夹名自动化批处理工具（支持递归与特殊字符防破坏）</div>
+    </div>
+  </div>
+  <div class="article-resource-actions">
+    <a href="../assets/files/RenameTool.bat" download class="article-resource-btn primary" title="直接下载 RenameTool.bat">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+      <span>直接下载</span>
+    </a>
+    <a href="../files.html" class="article-resource-btn" title="前往全站文件中心在线预览与管理">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+      <span>文件中心</span>
+    </a>
+  </div>
+</div>
 
 ---
 

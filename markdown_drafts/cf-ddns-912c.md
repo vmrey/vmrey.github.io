@@ -42,7 +42,28 @@ curl -Lo cf-ddns.sh https://vmrey.github.io/assets/files/cf-ddns.sh && chmod +x 
 wget -O cf-ddns.sh https://vmrey.github.io/assets/files/cf-ddns.sh && chmod +x cf-ddns.sh
 ```
 
-> 💾 **文件资源**：也可直接在本站文件中心下载或在线预览：[cf-ddns.sh](../assets/files/cf-ddns.sh)。
+<div class="article-resource-card">
+  <div class="article-resource-info">
+    <div class="article-resource-icon">.SH</div>
+    <div class="article-resource-meta">
+      <div class="article-resource-title-row">
+        <span class="article-resource-name">cf-ddns.sh</span>
+        <span class="article-resource-badge">Shell 脚本</span>
+      </div>
+      <div class="article-resource-desc">Cloudflare DDNS 动态域名解析自动检测与同步脚本（支持 IPv4/IPv6、智能缓存与 Crontab）</div>
+    </div>
+  </div>
+  <div class="article-resource-actions">
+    <a href="../assets/files/cf-ddns.sh" download class="article-resource-btn primary" title="直接下载 cf-ddns.sh">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+      <span>直接下载</span>
+    </a>
+    <a href="../files.html" class="article-resource-btn" title="前往全站文件中心在线预览与管理">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+      <span>文件中心</span>
+    </a>
+  </div>
+</div>
 
 ---
 

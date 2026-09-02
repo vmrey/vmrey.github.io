@@ -37,15 +37,27 @@ readTime: 7 分钟阅读
 
 本站已将整理好的最新版 Worker 脚本收录至资源库，可直接下载或在线查看：
 
-<div style="display: flex; gap: 12px; flex-wrap: wrap; margin: 18px 0;">
-  <a href="../assets/files/cf-worker-proxy.js" download class="article-btn primary" style="display: inline-flex; align-items: center; gap: 8px; padding: 10px 18px; border-radius: 8px; background: #2563eb; color: #ffffff; text-decoration: none; font-weight: 500; font-size: 14px; box-shadow: 0 2px 6px rgba(37,99,235,0.25);">
-    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
-    立即下载 cf-worker-proxy.js
-  </a>
-  <a href="../files.html" class="article-btn" style="display: inline-flex; align-items: center; gap: 8px; padding: 10px 18px; border-radius: 8px; border: 1px solid #cbd5e1; background: var(--bg-card, #ffffff); color: var(--text-main, #334155); text-decoration: none; font-weight: 500; font-size: 14px;">
-    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
-    前往文件管理中心在线预览
-  </a>
+<div class="article-resource-card">
+  <div class="article-resource-info">
+    <div class="article-resource-icon">.JS</div>
+    <div class="article-resource-meta">
+      <div class="article-resource-title-row">
+        <span class="article-resource-name">cf-worker-proxy.js</span>
+        <span class="article-resource-badge">Cloudflare Worker</span>
+      </div>
+      <div class="article-resource-desc">生产级静态网站与 GitHub Pages 完美无缝反代脚本（解决跨域、SEO、SRI 与解码报错）</div>
+    </div>
+  </div>
+  <div class="article-resource-actions">
+    <a href="../assets/files/cf-worker-proxy.js" download class="article-resource-btn primary" title="直接下载脚本文件">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+      <span>直接下载</span>
+    </a>
+    <a href="../files.html" class="article-resource-btn" title="前往全站文件中心在线预览与管理">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+      <span>文件中心</span>
+    </a>
+  </div>
 </div>
 
 ### 命令行快速获取

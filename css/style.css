@@ -3467,6 +3467,168 @@ del {
 }
 
 /* ==========================================================================
+   Article Resource Download Card (文章详情页资源下载卡片统一规范)
+   ========================================================================== */
+.article-resource-card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.25rem;
+  padding: 1.15rem 1.35rem;
+  margin: 1.75rem 0 2rem;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--card-shadow);
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.article-resource-card:hover {
+  border-color: var(--primary);
+  box-shadow: var(--card-shadow-hover);
+}
+
+.article-resource-info {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  min-width: 0;
+  flex: 1;
+}
+
+.article-resource-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  border-radius: var(--radius-md);
+  background: var(--primary-soft);
+  color: var(--primary);
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  flex-shrink: 0;
+  border: 1px solid rgba(2, 132, 199, 0.2);
+}
+
+[data-theme="dark"] .article-resource-icon {
+  border-color: rgba(56, 189, 248, 0.25);
+}
+
+.article-resource-meta {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  min-width: 0;
+}
+
+.article-resource-title-row {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.article-resource-name {
+  font-size: 0.975rem;
+  font-weight: 600;
+  color: var(--text-main);
+  line-height: 1.35;
+}
+
+.article-resource-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.1rem 0.45rem;
+  font-size: 0.725rem;
+  font-weight: 500;
+  border-radius: var(--radius-sm);
+  background: var(--bg-subtle);
+  color: var(--text-muted);
+  border: 1px solid var(--border);
+}
+
+.article-resource-desc {
+  font-size: 0.825rem;
+  color: var(--text-muted);
+  line-height: 1.45;
+}
+
+.article-resource-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  flex-shrink: 0;
+  flex-wrap: wrap;
+}
+
+.article-resource-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.45rem;
+  padding: 0.5rem 1rem;
+  font-size: 0.85rem;
+  font-weight: 500;
+  border-radius: var(--radius-md);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  color: var(--text-main);
+  text-decoration: none;
+  cursor: pointer;
+  transition: var(--transition);
+  white-space: nowrap;
+  user-select: none;
+}
+
+.article-resource-btn:hover {
+  background: var(--bg-subtle);
+  border-color: var(--border-focus);
+  color: var(--primary);
+  transform: translateY(-1px);
+}
+
+.article-resource-btn.primary {
+  background: var(--primary);
+  border-color: var(--primary);
+  color: #ffffff;
+  box-shadow: 0 2px 8px rgba(2, 132, 199, 0.25);
+}
+
+[data-theme="dark"] .article-resource-btn.primary {
+  color: #0b0d11;
+  box-shadow: 0 2px 8px rgba(56, 189, 248, 0.3);
+}
+
+.article-resource-btn.primary:hover {
+  background: var(--primary-hover);
+  border-color: var(--primary-hover);
+  box-shadow: 0 4px 14px rgba(2, 132, 199, 0.35);
+}
+
+[data-theme="dark"] .article-resource-btn.primary:hover {
+  box-shadow: 0 4px 14px rgba(56, 189, 248, 0.4);
+}
+
+@media (max-width: 768px) {
+  .article-resource-card {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 1rem;
+    padding: 1rem;
+  }
+  .article-resource-actions {
+    width: 100%;
+  }
+  .article-resource-btn {
+    flex: 1;
+  }
+}
+
+
+/* ==========================================================================
    Back To Top Floating Button (右下角常驻固定回到顶部)
    ========================================================================== */
 .back-to-top-btn {

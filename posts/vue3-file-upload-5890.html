@@ -338,9 +338,30 @@
 <p>在实际业务开发中，我们经常需要一个组件来处理文件上传、展示已上传文件（回显/编辑模式）以及手动触发上传。Element Plus 的 <code>el-upload</code> 默认功能往往不够灵活。</p>
 <p>本文将详细解析并教你如何使用一个功能增强的自定义文件上传组件。</p>
 <hr>
-<h2 id="一-组件源代码-fileuploader-vue">一、组件源代码 (<code>FileUploader.vue</code>)</h2>
-<p><a href="../assets/files/FileUpload.vue">FileUploader.vue 代码地址 </a></p>
-<h2 id="父组件调用示范-vue-3-composition-api">父组件调用示范 (Vue 3 Composition API)</h2>
+<h2 id="一-组件源代码-fileupload-vue">一、组件源代码 (<code>FileUpload.vue</code>)</h2>
+<div class="article-resource-card">
+  <div class="article-resource-info">
+    <div class="article-resource-icon">.VUE</div>
+    <div class="article-resource-meta">
+      <div class="article-resource-title-row">
+        <span class="article-resource-name">FileUpload.vue</span>
+        <span class="article-resource-badge">Vue 3 组件</span>
+      </div>
+      <div class="article-resource-desc">Vue3 + Element Plus 文件上传组件源码（支持回显、批量与手动控制提交）</div>
+    </div>
+  </div>
+  <div class="article-resource-actions">
+    <a href="../assets/files/FileUpload.vue" download class="article-resource-btn primary" title="直接下载 FileUpload.vue">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+      <span>直接下载</span>
+    </a>
+    <a href="../files.html" class="article-resource-btn" title="前往全站文件中心在线预览与管理">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+      <span>文件中心</span>
+    </a>
+  </div>
+</div>
+<h2 id="二-父组件调用示范-vue-3-composition-api">二、父组件调用示范 (Vue 3 Composition API)</h2>
 <p>在父组件中使用此组件，实现编辑和新增模式的切换。</p>
 <pre><code class="language-javascript">&lt;template&gt;
   &lt;el-card header=&quot;文件上传示例&quot;&gt;
@@ -441,10 +462,10 @@ const toggleEditMode = () =&gt; {
             <div class="toc-box-title">本页导读 · 快速直达</div>
             <ul class="toc-list">
             <li>
-              <a href="#一-组件源代码-fileuploader-vue" class="toc-link" title="一、组件源代码 (`FileUploader.vue`)">一、组件源代码 (`FileUploader.vue`)</a>
+              <a href="#一-组件源代码-fileupload-vue" class="toc-link" title="一、组件源代码 (`FileUpload.vue`)">一、组件源代码 (`FileUpload.vue`)</a>
             </li>
             <li>
-              <a href="#父组件调用示范-vue-3-composition-api" class="toc-link" title="父组件调用示范 (Vue 3 Composition API)">父组件调用示范 (Vue 3 Composition API)</a>
+              <a href="#二-父组件调用示范-vue-3-composition-api" class="toc-link" title="二、父组件调用示范 (Vue 3 Composition API)">二、父组件调用示范 (Vue 3 Composition API)</a>
             </li>
             </ul>
           </div>
