@@ -313,6 +313,57 @@ npm run audit
 
 ---
 
+### 🎨 4.7 全站设计系统与色彩体系规范 (Design Tokens & Color System Specification)
+
+全站严格基于原生 CSS 变量构建语义化设计令牌系统，**严禁手写硬编码十六进制色值**，所有界面元素必须统一引用以下标准 Token：
+
+#### 1. 核心主题色彩令牌表 (Light vs Dark Tokens)
+
+| CSS 变量名 (Token) | 亮色模式 (Light `:root`) | 暗黑模式 (Dark `[data-theme="dark"]`) | 核心语义与设计用途 |
+| :--- | :--- | :--- | :--- |
+| `--bg` | `#f8fafc` (Slate 50) | `#0b0d11` (Deep Charcoal) | 整个网页的底层背景色 |
+| `--bg-subtle` | `#f1f5f9` (Slate 100) | `#13161c` (Rich Dark) | 弱化背景、代码块背景、表格斑马纹、悬停浅底 |
+| `--surface` | `#ffffff` (Pure White) | `#15181f` (Card Dark) | 卡片容器、侧边栏、弹窗与浮层的表面底色 |
+| `--surface-hover` | `#ffffff` | `#1b1f28` | 卡片与交互元素鼠标悬停时的表面色 |
+| `--border` | `#e2e8f0` (Slate 200) | `#222733` (Muted Line) | 全站标准边框线、分割线与卡片边线 |
+| `--border-subtle` | `#f1f5f9` | `#191c24` | 极其轻微的弱分割线 |
+| `--border-focus` | `#94a3b8` (Slate 400) | `#4b5563` (Slate 600) | 输入框聚焦、按钮悬停与交互强调外边框 |
+| `--text-main` | `#0f172a` (Slate 900) | `#f1f5f9` (Slate 100) | 一级正文、文章主标题、核心导航文字 |
+| `--text-muted` | `#475569` (Slate 600) | `#94a3b8` (Slate 400) | 二级描述段落、文章摘要、次级文字 |
+| `--text-subtle` | `#94a3b8` (Slate 400) | `#64748b` (Slate 500) | 弱提示信息、文章发布日期、文件大小标签 |
+| `--primary` | `#0284c7` (Sky Blue 600) | `#38bdf8` (Sky Blue 400) | 全站品牌主色、超链接、Primary 按钮底色 |
+| `--primary-hover` | `#0369a1` (Sky Blue 700) | `#7dd3fc` (Sky Blue 300) | 品牌主色鼠标悬停态 |
+| `--primary-soft` | `#e0f2fe` (Sky Blue 100) | `rgba(56, 189, 248, 0.12)` | 品牌次级浅底（如直达工具按钮、高亮标签） |
+| `--primary-soft-text` | `#0369a1` | `#38bdf8` | 品牌次级浅底上的文字颜色 |
+| `--card-shadow` | `0 1px 3px rgba(0,0,0,0.03)` | `0 1px 3px rgba(0,0,0,0.3)` | 标准卡片与容器柔和投影 |
+| `--card-shadow-hover` | `0 8px 20px -3px rgba(0,0,0,0.06)` | `0 8px 20px -3px rgba(0,0,0,0.5)` | 卡片悬停浮起立体投影 |
+
+#### 2. 资源文件类型徽章色彩矩阵 (File Type Pill Badges)
+
+| 文件扩展名 | 品牌代表色 (Brand Color) | 边框透明度 (Border) | 背景底色 (Background) | 语义归类 |
+| :--- | :--- | :--- | :--- | :--- |
+| **`.VUE`** | `#10b981` (Emerald Green) | `rgba(16, 185, 129, 0.25)` | `rgba(16, 185, 129, 0.1)` | Vue 前端组件 |
+| **`.JS` / `.JSON`** | `#0284c7` (Sky Blue) | `rgba(2, 132, 199, 0.25)` | `rgba(2, 132, 199, 0.1)` | JavaScript / 配置文件 |
+| **`.TS`** | `#3b82f6` (Royal Blue) | `rgba(59, 130, 246, 0.25)` | `rgba(59, 130, 246, 0.1)` | TypeScript 模块 |
+| **`.SH`** | `#a855f7` (Purple) | `rgba(168, 85, 247, 0.25)` | `rgba(168, 85, 247, 0.1)` | Linux Shell 脚本 |
+| **`.BAT` / `.CMD`** | `#64748b` (Slate Grey) | `rgba(100, 116, 139, 0.25)` | `rgba(100, 116, 139, 0.1)` | Windows 批处理 |
+| **`.ZIP` / `.RAR`** | `#f59e0b` (Amber Orange) | `rgba(245, 158, 11, 0.25)` | `rgba(245, 158, 11, 0.1)` | 压缩资源包 |
+
+#### 3. GFM 文章提示块色彩标准 (Callouts & Alerts)
+- **`Note (提示)`**：左边框 `#0284c7`，背景色 `rgba(2, 132, 199, 0.08)`；
+- **`Tip (建议)`**：左边框 `#10b981`，背景色 `rgba(16, 185, 129, 0.08)`（暗黑 `#4ade80`）；
+- **`Important (要点)`**：左边框 `#8b5cf6`，背景色 `rgba(139, 92, 246, 0.08)`（暗黑 `#a78bfa`）；
+- **`Warning (警告)`**：左边框 `#f59e0b`，背景色 `rgba(245, 158, 11, 0.08)`（暗黑 `#fbbf24`）；
+- **`Caution (危险)`**：左边框 `#ef4444`，背景色 `rgba(239, 68, 68, 0.08)`（暗黑 `#f87171`）。
+
+#### 4. 圆角与字体度量标尺 (Metrics Tokens)
+- **`--radius-sm` (6px)**：文件扩展名徽章、代码块复制按钮、代码单字标签；
+- **`--radius-md` (10px)**：全站标准按钮、输入框、卡片、代码块容器、图片圆角；
+- **`--radius-lg` (14px)**：文章正文独立卡片、弹窗对话框、搜索框外层；
+- **`--radius-full` (9999px)**：分类筛选胶囊 (`.nav-pill-btn`)、计数徽标、头像。
+
+---
+
 ## 5. 规范与约束 (Rules & Constraints for AI)
 
 ### 必须遵守的规则 (DOs)
@@ -331,7 +382,8 @@ npm run audit
   - 每个 `.mermaid-wrap` 容器右上角必须自动挂载「全屏查看」操作按钮并支持点击放大（`cursor: zoom-in`）；
   - 全屏灯箱必须支持**鼠标滚轮无级缩放（0.2x~5.0x）**、**鼠标/触屏拖拽平移 (Pan & Drag)**、**双击快速切换 1x/2x**、**键盘 Esc 退出 / +/- 缩放 / 0 复位**，以及**矢量 SVG 一键无损导出下载**；
   - 必须确保 Mermaid SVG 矢量图在全屏放大至 500% 时保持绝对高清无锯齿，且深浅色主题无缝自适应。
-- **严格遵守全站 UI 按钮与资源卡片统一度量规范**：中号按钮必须统一为 `34px`（文章资源卡片、文件库操作等），小号按钮统一为 `28px`（复制、全屏查看等），图标按钮锁定 `32/36/42px`；文章内嵌附件必须使用标准 `.article-resource-card` 结构。
+- **严格遵守全站 UI 按钮与资源卡片统一度量规范**：标准操作按钮必须严格统一为 `32px`（`.file-action-btn`、`.repo-visit-btn`），小号按钮统一为 `28px`（复制、全屏查看等），图标按钮锁定 `32/36/42px`；文章内嵌附件必须使用标准 `.nested-file-row.standalone-file-card` 结构。
+- **严格遵守全站设计系统与色彩体系规范**：严禁手写私有 hex 颜色值，必须统一使用 `var(--primary)`, `var(--surface)`, `var(--text-main)`, `var(--border)` 等语义化设计令牌，保证深浅色模式 100% 自动适配。
 - **保护交互与类名一致性**：`css/style.css` 与 `templates/` 中的 CSS 类名有精密绑定，重构时必须保证选择器与 DOM 结构严格一致。
 
 ### 严禁的操作 (DON'Ts)
