@@ -39,7 +39,7 @@ function renderBaseLayout({
   const safeKeywords = escapeAttr(keywords);
 
   // 生成基于 CSS 变动特征的版本号，实现全网 CDN 与浏览器零延迟即时刷新 (Cache-Busting)
-  const assetVersion = '20260902e';
+  const assetVersion = '20260902f';
 
   const cssTags = [
     `${assetPrefix}css/style.css?v=${assetVersion}`,
