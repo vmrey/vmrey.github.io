@@ -310,5 +310,67 @@
         ]
       }
     ]
+  },
+  {
+    "category": "媒体与下载工具",
+    "description": "媒体与下载工具精选工具与资源",
+    "icon": "grid",
+    "items": [
+      {
+        "name": "yt-dlp",
+        "url": "https://github.com/yt-dlp/yt-dlp",
+        "tagline": "功能强大的命令行音视频下载工具",
+        "description": "yt-dlp 是 youtube-dl 的一个分支，支持下载数千个网站的音视频，拥有强大的功能和持续的维护更新。",
+        "category": "媒体与下载工具",
+        "badge": "媒体与下载工具",
+        "tags": [
+          "youtube",
+          "下载",
+          "多媒体",
+          "命令行"
+        ],
+        "repo": "yt-dlp/yt-dlp",
+        "language": "OpenSource"
+      },
+      {
+        "name": "KugouMusic.NET",
+        "url": "https://github.com/Linsxyx/KugouMusic.NET",
+        "tagline": "第三方跨平台酷狗音乐客户端",
+        "description": "基于 .NET 打造的第三方酷狗音乐客户端，无广告，提供清爽的听歌体验。",
+        "category": "媒体与下载工具",
+        "badge": "媒体与下载工具",
+        "tags": [
+          "音乐",
+          "酷狗",
+          "播放器",
+          ".NET"
+        ],
+        "repo": "Linsxyx/KugouMusic.NET",
+        "language": "OpenSource"
+      }
+    ]
+  },
+  {
+    "category": "网络辅助与传输工具",
+    "description": "网络辅助与传输工具精选工具与资源",
+    "icon": "grid",
+    "items": [
+      {
+        "name": "LANDrop",
+        "url": "https://github.com/LANDrop/LANDrop/releases",
+        "tagline": "局域网跨平台文件互传工具",
+        "description": "LANDrop 可以在局域网内实现不同平台设备间的高速文件互传，即用即走。",
+        "category": "网络辅助与传输工具",
+        "badge": "网络辅助与传输工具",
+        "tags": [
+          "局域网",
+          "传输",
+          "跨平台",
+          "效率"
+        ],
+        "repo": "LANDrop/LANDrop/releases",
+        "language": "OpenSource"
+      }
+    ]
   }
 ]
