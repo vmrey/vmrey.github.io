@@ -4770,6 +4770,37 @@ del {
   }
 }
 
+/* ─── 节点生成器非阻塞轻提示 Toast（替代原生 alert，避免主线程阻塞） ─── */
+#nv-toast {
+  position: fixed;
+  left: 50%;
+  bottom: 2.5rem;
+  transform: translate(-50%, 12px);
+  max-width: min(90vw, 480px);
+  padding: 0.7rem 1.1rem;
+  background: var(--surface);
+  color: var(--text-main);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  box-shadow: var(--card-shadow-hover);
+  font-size: 0.875rem;
+  line-height: 1.5;
+  opacity: 0;
+  pointer-events: none;
+  z-index: 12000;
+  transition: opacity 0.25s ease, transform 0.25s ease;
+}
+
+#nv-toast.visible {
+  opacity: 1;
+  transform: translate(-50%, 0);
+}
+
+/* 表格单元格内的短代码芯片禁止断行（避免端口号 21115 被折成两行） */
+.markdown-table td code {
+  white-space: nowrap;
+}
+
 
 
 

@@ -7,9 +7,26 @@ function getVal(id) {
     return el ? el.value.trim() : ''; 
 }
 
-function setVal(id, val) { 
+function setVal(id, val) {
     const el = document.getElementById(id);
-    if (el) { el.value = val; } 
+    if (el) { el.value = val; }
+}
+
+// 非阻塞轻提示（替代原生 alert，避免主线程阻塞导致页面假死）
+function showToast(message) {
+    if (typeof document === 'undefined') return;
+    let toast = document.getElementById('nv-toast');
+    if (!toast) {
+        toast = document.createElement('div');
+        toast.id = 'nv-toast';
+        toast.setAttribute('role', 'status');
+        toast.setAttribute('aria-live', 'polite');
+        document.body.appendChild(toast);
+    }
+    toast.textContent = message;
+    toast.classList.add('visible');
+    clearTimeout(showToast._timer);
+    showToast._timer = setTimeout(() => toast.classList.remove('visible'), 2600);
 }
 
 // 随机生成标准 RFC4122 v4 UUID
@@ -40,7 +57,7 @@ async function copyUUID() {
     const uuid = getVal('uuid');
     const btn = document.getElementById('copyUuidBtn');
     if (!uuid) {
-        alert("当前还没有 UUID，请先点击「随机生成」或导入节点！");
+        showToast("⚠️ 当前还没有 UUID，请先点击「随机生成」或导入节点！");
         return;
     }
     let copied = false;
@@ -74,7 +91,7 @@ async function copyUUID() {
             btn.classList.remove('primary');
         }, 1500);
     } else if (!copied) {
-        alert("复制失败，请手动长按或选中 UUID 复制！");
+        showToast("❌ 复制失败，请手动长按或选中 UUID 复制！");
     }
 }
 
@@ -230,13 +247,13 @@ function parseUrl(silent = false) {
     const rawInput = getVal('importUrl');
     const statusEl = document.getElementById('parseStatus');
 
-    if (!rawInput) { 
-        if (!silent) alert("请先粘贴完整的 VLESS 链接或 Base64 订阅内容！");
+    if (!rawInput) {
+        if (!silent) showToast("⚠️ 请先粘贴完整的 VLESS 链接或 Base64 订阅内容！");
         if (statusEl) {
             statusEl.innerHTML = '💡 粘贴 vless:// 链接或 Base64 订阅将实时动态解析';
             statusEl.style.color = 'var(--text-muted)';
         }
-        return; 
+        return;
     }
 
     try {
@@ -257,7 +274,7 @@ function parseUrl(silent = false) {
         if (!allVlessLinks || allVlessLinks.length === 0) {
             const otherProtocol = processedInput.match(/([a-zA-Z0-9_-]+):\/\//);
             const protoName = otherProtocol ? otherProtocol[1] : '';
-            if (!silent) alert(`导入提示：未检测到有效 VLESS 协议节点${protoName ? `（检测到 ${protoName} 协议，当前生成器专用于 VLESS 协议）` : ''}！`);
+            if (!silent) showToast(`⚠️ 未检测到有效 VLESS 协议节点${protoName ? `（检测到 ${protoName} 协议，当前生成器专用于 VLESS 协议）` : ''}！`);
             if (statusEl) {
                 statusEl.innerHTML = `⚠️ 未找到有效的 vless:// 链接${protoName ? ` (检测到 ${protoName})` : ''}`;
                 statusEl.style.color = '#ef4444';
@@ -317,14 +334,6 @@ function parseUrl(silent = false) {
             }
             statusEl.style.color = '#10b981';
         }
-
-        if (!silent) {
-            if (count > 1 || isBase64Sub) {
-                alert("✅ 单节点解析成功！检测到输入内容包含多个节点，已精准提取并填充第 1 个节点的所有参数与地址。");
-            } else {
-                alert("✅ 单节点解析成功！所有参数已提取并填入表单。");
-            }
-        }
     } catch (e) {
         console.error("URL 解析失败:", e);
         if (statusEl) {
@@ -332,7 +341,7 @@ function parseUrl(silent = false) {
             statusEl.style.color = '#ef4444';
         }
         if (!silent) {
-            alert("❌ 解析失败，请检查链接格式。\n错误信息: " + e.message);
+            showToast("❌ 解析失败，请检查链接格式：" + e.message);
         }
     }
 }
@@ -355,9 +364,9 @@ function cleanAndDedupDomains() {
     textarea.value = unique.join('\n');
 
     if (unique.length > 0) {
-        alert(`✅ 去重完成！当前共有 ${unique.length} 个有效独立节点。`);
+        showToast(`✅ 去重完成！当前共有 ${unique.length} 个有效独立节点。`);
     } else {
-        alert("目标节点列表为空。");
+        showToast("目标节点列表为空。");
     }
 }
 
@@ -404,7 +413,7 @@ function extractHostFromLine(line) {
 function generateNodes() {
     const uuid = getVal('uuid');
     if (!uuid) {
-        alert("请输入或生成 UUID！");
+        showToast("⚠️ 请输入或生成 UUID！");
         document.getElementById('uuid').focus();
         return;
     }
@@ -417,7 +426,7 @@ function generateNodes() {
     )];
     
     if (finalDomains.length === 0) {
-        alert("请至少输入一个目标 IP 或域名！");
+        showToast("⚠️ 请至少输入一个目标 IP 或域名！");
         document.getElementById('domains').focus();
         return;
     }
@@ -493,7 +502,7 @@ async function copyResults() {
     const copyBtn = document.getElementById('copyBtn');
     const textToCopy = resultEl ? resultEl.value : '';
 
-    if (!textToCopy) { alert("没有可复制的内容！请先生成节点。"); return; }
+    if (!textToCopy) { showToast("⚠️ 没有可复制的内容！请先生成节点。"); return; }
     
     try {
         if (navigator.clipboard && window.isSecureContext) {
@@ -512,7 +521,7 @@ async function copyResults() {
             document.execCommand('copy');
             showCopySuccess(copyBtn);
         } catch (e) {
-            alert("复制失败，请手动全选复制结果文本框！");
+            showToast("❌ 复制失败，请手动全选复制结果文本框！");
         }
         resultEl.readOnly = readonlyState;
     }
