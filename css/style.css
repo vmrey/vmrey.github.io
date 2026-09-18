@@ -4774,8 +4774,8 @@ del {
 #nv-toast {
   position: fixed;
   left: 50%;
-  bottom: 2.5rem;
-  transform: translate(-50%, 12px);
+  top: 2.5rem;
+  transform: translate(-50%, -12px);
   max-width: min(90vw, 480px);
   padding: 0.7rem 1.1rem;
   background: var(--surface);
