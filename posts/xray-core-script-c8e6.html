@@ -393,6 +393,19 @@ chmod +x xray.sh
 </li>
 </ol>
 <hr>
+<h2 id="3-vps-网络加速与-bbr-拥塞控制算法优化">3. VPS 网络加速与 BBR 拥塞控制算法优化</h2>
+<p>部署 Xray 服务后，强烈建议为 VPS 启用 <strong>BBR / BBRv3</strong> 拥塞控制算法。BBR 能够在高延迟、高丢包的国际公网线路上大幅降低丢包重传率、提升带宽吞吐上限并平滑连接抖动。</p>
+<p>你可以选择以下两种经过实测的加速脚本之一进行一键配置：</p>
+<h3 id="方案-a-actions-bbr-v3-现代化-bbrv3-加速脚本-推荐">方案 A：Actions-bbr-v3 现代化 BBRv3 加速脚本（推荐）</h3>
+<p>专为 <strong>Debian 12+ / Ubuntu 24.04+</strong> 优化的最新版 BBRv3 内核安装与网络加速管理脚本。脚本会自动识别系统架构（x86_64 / aarch64），一键安装标准版或 Max 激进吞吐内核。</p>
+<p><strong>一键安装与运行命令：</strong></p>
+<pre><code class="language-bash">bash &lt;(curl -fsSL https://raw.githubusercontent.com/byJoey/Actions-bbr-v3/main/install.sh)</code></pre>
+<blockquote><p><strong>快捷命令</strong>：首次运行后，脚本会自动注册联网快捷命令，后续直接在终端输入 <code>b</code> 即可唤起管理菜单，随时进行状态检查、内核切换或卸载。</p></blockquote>
+<h3 id="方案-b-经典多合一-linux-内核与-bbr-bbrplus-加速脚本">方案 B：经典多合一 Linux 内核与 BBR / BBRplus 加速脚本</h3>
+<p>兼容性广泛的经典多合一 TCP 加速脚本，支持 CentOS / Debian / Ubuntu 多平台，涵盖 原生 BBR、BBRplus、LotServer（锐速）等多种加速模式的安装与系统参数调优。</p>
+<p><strong>一键执行命令：</strong></p>
+<pre><code class="language-bash">bash &lt;(curl -Lso- https://git.io/kernel.sh)</code></pre>
+<p>运行后在交互式菜单中输入对应数字即可选择安装对应版本的加速内核并一键切换生效。安装新内核后根据提示重启 VPS，再次运行脚本确认加速状态显示为“已启用”即可。</p>
             </div>
 
             <div class="post-block-footer" style="margin-top: 3.5rem; padding-top: 1.5rem; border-top: 1px dashed var(--border);">
@@ -424,6 +437,15 @@ chmod +x xray.sh
             </li>
             <li>
               <a href="#2-怎么用-使用步骤" class="toc-link" title="2. 怎么用？（使用步骤）">2. 怎么用？（使用步骤）</a>
+            </li>
+            <li>
+              <a href="#3-vps-网络加速与-bbr-拥塞控制算法优化" class="toc-link" title="3. VPS 网络加速与 BBR 拥塞控制算法优化">3. VPS 网络加速与 BBR 拥塞控制算法优化</a>
+            </li>
+            <li>
+              <a href="#方案-a-actions-bbr-v3-现代化-bbrv3-加速脚本-推荐" class="toc-link" title="方案 A：Actions-bbr-v3 现代化 BBRv3 加速脚本（推荐）">方案 A：Actions-bbr-v3 现代化 BBRv3 加速脚本（推荐）</a>
+            </li>
+            <li>
+              <a href="#方案-b-经典多合一-linux-内核与-bbr-bbrplus-加速脚本" class="toc-link" title="方案 B：经典多合一 Linux 内核与 BBR / BBRplus 加速脚本">方案 B：经典多合一 Linux 内核与 BBR / BBRplus 加速脚本</a>
             </li>
             </ul>
           </div>

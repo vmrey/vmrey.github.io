@@ -282,6 +282,24 @@
         ],
         "repo": "KANIKIG/Multi-EasyGost",
         "language": "OpenSource"
+      },
+      {
+        "name": "Actions-bbr-v3",
+        "url": "https://github.com/byJoey/Actions-bbr-v3",
+        "tagline": "🚀 Debian/Ubuntu VPS 的 BBRv3 内核安装与网络加速一键管理脚本",
+        "description": "专为 Debian/Ubuntu VPS 设计的 BBRv3 拥塞控制算法内核管理脚本。支持一键快速安装、切换标准与 Max 激进吞吐内核、状态监控与快捷命令调用，大幅优化 VPS 网络吞吐与连接延迟。",
+        "category": "网络加速与穿透工具",
+        "badge": "Shell / BBRv3加速",
+        "tags": [
+          "BBR",
+          "BBRv3",
+          "VPS加速",
+          "Linux内核",
+          "网络优化",
+          "Shell"
+        ],
+        "repo": "byJoey/Actions-bbr-v3",
+        "language": "Shell"
       }
     ]
   },

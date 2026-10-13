@@ -1750,7 +1750,7 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
       "脚本自动化"
     ],
     "summary": "Linux 生产环境一键拉取并安装最新 Xray 核心，配置 Systemd 守护进程与日志轮转。",
-    "content": "Xray 一键安装脚本使用说明 本文档提供了运行托管在 GitHub 上的 xray.sh 脚本的通用安装命令，并说明了具体的使用方法及相关注意事项。 1. 安装与脚本下载 <div class=\"nested-file-row standalone-file-card\"> <div class=\"file-row-left\"> <div class=\"file-type-pill\" style=\"color: a855f7; border-color: a855f740; background: rgba 168, 85, 247, 0.1 ;\"> .SH </div> <div class=\"file-name-meta\"> <div class=\"file-name-line\"> <span class=\"file-main-name\">xray.sh</span> <span class=\"file-size-tag\">Shell 脚本</span> </div> <div class=\"file-desc-line\" title=\"Xray Core 核心网络代理服务一键安装与证书部署脚本\">Xray Core 核心网络代理服务一键安装与证书部署脚本</div> </div> </div> <div class=\"file-row-actions\"> <a href=\"../assets/files/xray.sh\" download=\"xray.sh\" class=\"file-action-btn primary\" title=\"直接下载 xray.sh\"> <svg width=\"14\" height=\"14\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4\"></path><polyline points=\"7 10 12 15 17 10\"></polyline><line x1=\"12\" y1=\"15\" x2=\"12\" y2=\"3\"></line></svg> <span>直接下载</span> </a> <a href=\"../files.html\" class=\"file-action-btn\" title=\"前往全站文件中心在线预览与管理\"> <svg width=\"14\" height=\"14\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z\"></path><circle cx=\"12\" cy=\"12\" r=\"3\"></circle></svg> <span>文件中心</span> </a> </div> </div> 您可以根据服务器的环境（是否预装了 curl 或 wget ），选择以下任意一种方式进行安装： 方法一：使用 curl （推荐，最快捷） 此命令会直接读取网络文件并执行，不会在服务器本地留下脚本文件。 bash bash < curl -Ls https://vmrey.github.io/assets/files/xray.sh 方法二：使用 wget 如果您的服务器没有安装 curl ，可以使用 wget 达到相同的效果。 bash wget -O- https://vmrey.github.io/assets/files/xray.sh | bash 方法三：分步执行（适合需要先检查代码的用户） 将脚本下载到本地，赋予执行权限后再手动运行。 bash 1. 下载脚本 curl -O https://vmrey.github.io/assets/files/xray.sh 2. 赋予脚本执行权限 chmod +x xray.sh 3. 运行脚本 ./xray.sh --- 2. 怎么用？（使用步骤） 1. 连接服务器 ：使用 SSH 客户端（如 Termius, Xshell, PuTTY 或 macOS/Linux 自带的终端）连接到您的 Linux 服务器（VPS）。 2. 复制命令 ：复制上述“安装命令”中的任意一条。 3. 执行安装 ：在服务器终端内粘贴该命令并按回车键运行。 4. 跟随提示操作 ：脚本运行后，通常会弹出交互式菜单或按步骤提示您输入/确认相关配置（如选择安装的协议、端口号、伪装域名等）。请仔细阅读终端打印的提示，输入对应数字或按回车确认。 5. 保存节点信息 ：安装完成后，脚本一般会在终端底部输出最终的客户端连接信息（如 VLESS/VMess 分享链接、配置 JSON 或二维码），请务必妥善复制并保存这些信息，用于配置您的本地客户端。 ---",
+    "content": "Xray 一键安装脚本使用说明 本文档提供了运行托管在 GitHub 上的 xray.sh 脚本的通用安装命令，并说明了具体的使用方法及相关注意事项。 1. 安装与脚本下载 <div class=\"nested-file-row standalone-file-card\"> <div class=\"file-row-left\"> <div class=\"file-type-pill\" style=\"color: a855f7; border-color: a855f740; background: rgba 168, 85, 247, 0.1 ;\"> .SH </div> <div class=\"file-name-meta\"> <div class=\"file-name-line\"> <span class=\"file-main-name\">xray.sh</span> <span class=\"file-size-tag\">Shell 脚本</span> </div> <div class=\"file-desc-line\" title=\"Xray Core 核心网络代理服务一键安装与证书部署脚本\">Xray Core 核心网络代理服务一键安装与证书部署脚本</div> </div> </div> <div class=\"file-row-actions\"> <a href=\"../assets/files/xray.sh\" download=\"xray.sh\" class=\"file-action-btn primary\" title=\"直接下载 xray.sh\"> <svg width=\"14\" height=\"14\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4\"></path><polyline points=\"7 10 12 15 17 10\"></polyline><line x1=\"12\" y1=\"15\" x2=\"12\" y2=\"3\"></line></svg> <span>直接下载</span> </a> <a href=\"../files.html\" class=\"file-action-btn\" title=\"前往全站文件中心在线预览与管理\"> <svg width=\"14\" height=\"14\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z\"></path><circle cx=\"12\" cy=\"12\" r=\"3\"></circle></svg> <span>文件中心</span> </a> </div> </div> 您可以根据服务器的环境（是否预装了 curl 或 wget ），选择以下任意一种方式进行安装： 方法一：使用 curl （推荐，最快捷） 此命令会直接读取网络文件并执行，不会在服务器本地留下脚本文件。 bash bash < curl -Ls https://vmrey.github.io/assets/files/xray.sh 方法二：使用 wget 如果您的服务器没有安装 curl ，可以使用 wget 达到相同的效果。 bash wget -O- https://vmrey.github.io/assets/files/xray.sh | bash 方法三：分步执行（适合需要先检查代码的用户） 将脚本下载到本地，赋予执行权限后再手动运行。 bash 1. 下载脚本 curl -O https://vmrey.github.io/assets/files/xray.sh 2. 赋予脚本执行权限 chmod +x xray.sh 3. 运行脚本 ./xray.sh --- 2. 怎么用？（使用步骤） 1. 连接服务器 ：使用 SSH 客户端（如 Termius, Xshell, PuTTY 或 macOS/Linux 自带的终端）连接到您的 Linux 服务器（VPS）。 2. 复制命令 ：复制上述“安装命令”中的任意一条。 3. 执行安装 ：在服务器终端内粘贴该命令并按回车键运行。 4. 跟随提示操作 ：脚本运行后，通常会弹出交互式菜单或按步骤提示您输入/确认相关配置（如选择安装的协议、端口号、伪装域名等）。请仔细阅读终端打印的提示，输入对应数字或按回车确认。 5. 保存节点信息 ：安装完成后，脚本一般会在终端底部输出最终的客户端连接信息（如 VLESS/VMess 分享链接、配置 JSON 或二维码），请务必妥善复制并保存这些信息，用于配置您的本地客户端。 --- 3. VPS 网络加速与 BBR 拥塞控制算法优化 部署 Xray 服务后，强烈建议为 VPS 启用 BBR / BBRv3 拥塞控制算法。BBR 能够在高延迟、高丢包的国际公网线路上大幅降低丢包重传率、提升带宽吞吐上限并平滑连接抖动。 你可以选择以下两种经过实测的加速脚本之一进行一键配置： 方案 A：Actions-bbr-v3 现代化 BBRv3 加速脚本（推荐） 专为 Debian 12+ / Ubuntu 24.04+ 优化的最新版 BBRv3 内核安装与网络加速管理脚本。脚本会自动识别系统架构（x86_64 / aarch64），一键安装标准版或 Max 激进吞吐内核。 一键安装与运行命令： bash bash < curl -fsSL https://raw.githubusercontent.com/byJoey/Actions-bbr-v3/main/install.sh > 快捷命令 ：首次运行后，脚本会自动注册联网快捷命令，后续直接在终端输入 b 即可唤起管理菜单，随时进行状态检查、内核切换或卸载。 方案 B：经典多合一 Linux 内核与 BBR / BBRplus 加速脚本 兼容性广泛的经典多合一 TCP 加速脚本，支持 CentOS / Debian / Ubuntu 多平台，涵盖 原生 BBR、BBRplus、LotServer（锐速）等多种加速模式的安装与系统参数调优。 一键执行命令： bash bash < curl -Lso- https://git.io/kernel.sh 运行后在交互式菜单中输入对应数字即可选择安装对应版本的加速内核并一键切换生效。安装新内核后根据提示重启 VPS，再次运行脚本确认加速状态显示为“已启用”即可。",
     "sections": [
       {
         "title": "1. 安装与脚本下载",
@@ -1776,6 +1776,21 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
         "title": "2. 怎么用？（使用步骤）",
         "anchor": "#2-怎么用-使用步骤",
         "id": "2-怎么用-使用步骤"
+      },
+      {
+        "title": "3. VPS 网络加速与 BBR 拥塞控制算法优化",
+        "anchor": "#3-vps-网络加速与-bbr-拥塞控制算法优化",
+        "id": "3-vps-网络加速与-bbr-拥塞控制算法优化"
+      },
+      {
+        "title": "方案 A：Actions-bbr-v3 现代化 BBRv3 加速脚本（推荐）",
+        "anchor": "#方案-a-actions-bbr-v3-现代化-bbrv3-加速脚本-推荐",
+        "id": "方案-a-actions-bbr-v3-现代化-bbrv3-加速脚本-推荐"
+      },
+      {
+        "title": "方案 B：经典多合一 Linux 内核与 BBR / BBRplus 加速脚本",
+        "anchor": "#方案-b-经典多合一-linux-内核与-bbr-bbrplus-加速脚本",
+        "id": "方案-b-经典多合一-linux-内核与-bbr-bbrplus-加速脚本"
       }
     ]
   },
@@ -3752,7 +3767,7 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
     "url": "ai.html#ai-google-gemini",
     "externalUrl": "https://gemini.google.com/",
     "category": "AI 导航 · 前沿大模型与对话平台",
-    "date": "2026-09-18",
+    "date": "2026-10-13",
     "tags": [
       "Gemini",
       "Google",
@@ -3771,7 +3786,7 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
     "url": "ai.html#ai-chatgpt",
     "externalUrl": "https://chatgpt.com/",
     "category": "AI 导航 · 前沿大模型与对话平台",
-    "date": "2026-09-18",
+    "date": "2026-10-13",
     "tags": [
       "ChatGPT",
       "OpenAI",
@@ -3790,7 +3805,7 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
     "url": "ai.html#ai-claude",
     "externalUrl": "https://claude.ai/",
     "category": "AI 导航 · 前沿大模型与对话平台",
-    "date": "2026-09-18",
+    "date": "2026-10-13",
     "tags": [
       "Claude",
       "Anthropic",
@@ -3809,7 +3824,7 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
     "url": "ai.html#ai-deepseek-深度求索",
     "externalUrl": "https://chat.deepseek.com/",
     "category": "AI 导航 · 前沿大模型与对话平台",
-    "date": "2026-09-18",
+    "date": "2026-10-13",
     "tags": [
       "DeepSeek",
       "R1推理",
@@ -3828,7 +3843,7 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
     "url": "ai.html#ai-kimi-月之暗面",
     "externalUrl": "https://kimi.moonshot.cn/",
     "category": "AI 导航 · 前沿大模型与对话平台",
-    "date": "2026-09-18",
+    "date": "2026-10-13",
     "tags": [
       "Kimi",
       "月之暗面",
@@ -3847,7 +3862,7 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
     "url": "ai.html#ai-grok",
     "externalUrl": "https://grok.com/",
     "category": "AI 导航 · 前沿大模型与对话平台",
-    "date": "2026-09-18",
+    "date": "2026-10-13",
     "tags": [
       "Grok",
       "xAI",
@@ -3866,7 +3881,7 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
     "url": "ai.html#ai-claude-code",
     "externalUrl": "https://github.com/anthropics/claude-code",
     "category": "AI 导航 · AI 智能体与自主编程",
-    "date": "2026-09-18",
+    "date": "2026-10-13",
     "tags": [
       "ClaudeCode",
       "AI编程",
@@ -3885,7 +3900,7 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
     "url": "ai.html#ai-cursor",
     "externalUrl": "https://www.cursor.com/",
     "category": "AI 导航 · AI 智能体与自主编程",
-    "date": "2026-09-18",
+    "date": "2026-10-13",
     "tags": [
       "Cursor",
       "VSCode",
@@ -3904,7 +3919,7 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
     "url": "ai.html#ai-v0-by-vercel",
     "externalUrl": "https://v0.dev/",
     "category": "AI 导航 · AI 智能体与自主编程",
-    "date": "2026-09-18",
+    "date": "2026-10-13",
     "tags": [
       "v0",
       "Vercel",
@@ -3923,7 +3938,7 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
     "url": "ai.html#ai-bolt-new",
     "externalUrl": "https://bolt.new/",
     "category": "AI 导航 · AI 智能体与自主编程",
-    "date": "2026-09-18",
+    "date": "2026-10-13",
     "tags": [
       "Bolt.new",
       "全栈开发",
@@ -3942,7 +3957,7 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
     "url": "ai.html#ai-agnes-ai",
     "externalUrl": "https://platform.agnes-ai.com/",
     "category": "AI 导航 · AI 智能体与自主编程",
-    "date": "2026-09-18",
+    "date": "2026-10-13",
     "tags": [
       "AgnesAI",
       "AI智能体",
@@ -3962,7 +3977,7 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
     "url": "ai.html#ai-midjourney",
     "externalUrl": "https://www.midjourney.com/",
     "category": "AI 导航 · AI 图像与多模态创作",
-    "date": "2026-09-18",
+    "date": "2026-10-13",
     "tags": [
       "Midjourney",
       "AI绘画",
@@ -3981,7 +3996,7 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
     "url": "ai.html#ai-flux-1-black-forest-labs",
     "externalUrl": "https://blackforestlabs.ai/",
     "category": "AI 导航 · AI 图像与多模态创作",
-    "date": "2026-09-18",
+    "date": "2026-10-13",
     "tags": [
       "FLUX.1",
       "开源模型",
@@ -4000,7 +4015,7 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
     "url": "ai.html#ai-runway-gen-3",
     "externalUrl": "https://runwayml.com/",
     "category": "AI 导航 · AI 图像与多模态创作",
-    "date": "2026-09-18",
+    "date": "2026-10-13",
     "tags": [
       "Runway",
       "Gen-3",
@@ -4019,7 +4034,7 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
     "url": "ai.html#ai-openrouter",
     "externalUrl": "https://openrouter.ai/",
     "category": "AI 导航 · AI 聚合平台与 API 服务",
-    "date": "2026-09-18",
+    "date": "2026-10-13",
     "tags": [
       "OpenRouter",
       "模型网关",
@@ -4038,7 +4053,7 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
     "url": "ai.html#ai-hugging-face",
     "externalUrl": "https://huggingface.co/",
     "category": "AI 导航 · AI 聚合平台与 API 服务",
-    "date": "2026-09-18",
+    "date": "2026-10-13",
     "tags": [
       "HuggingFace",
       "开源社区",
@@ -4057,7 +4072,7 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
     "url": "ai.html#ai-siliconflow-硅基流动",
     "externalUrl": "https://siliconflow.cn/",
     "category": "AI 导航 · AI 聚合平台与 API 服务",
-    "date": "2026-09-18",
+    "date": "2026-10-13",
     "tags": [
       "SiliconFlow",
       "硅基流动",
@@ -4076,7 +4091,7 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
     "url": "tools.html#tool-草料二维码",
     "externalUrl": "https://cli.im/",
     "category": "工具导航 · 实用生成与办公工具",
-    "date": "2026-09-18",
+    "date": "2026-10-13",
     "tags": [
       "二维码",
       "QR Code",
@@ -4095,7 +4110,7 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
     "url": "tools.html#tool-1password-强密码生成器",
     "externalUrl": "https://1password.com/zh-cn/password-generator",
     "category": "工具导航 · 实用生成与办公工具",
-    "date": "2026-09-18",
+    "date": "2026-10-13",
     "tags": [
       "1Password",
       "密码生成器",
@@ -4114,7 +4129,7 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
     "url": "tools.html#tool-轻松传-easychuan",
     "externalUrl": "https://easychuan.cn/",
     "category": "工具导航 · 实用生成与办公工具",
-    "date": "2026-09-18",
+    "date": "2026-10-13",
     "tags": [
       "轻松传",
       "文件传输",
@@ -4134,7 +4149,7 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
     "url": "tools.html#tool-smallpdf-pdf-转-word",
     "externalUrl": "https://smallpdf.com/cn/pdf-to-word",
     "category": "工具导航 · 实用生成与办公工具",
-    "date": "2026-09-18",
+    "date": "2026-10-13",
     "tags": [
       "Smallpdf",
       "PDF转Word",
@@ -4154,7 +4169,7 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
     "url": "tools.html#tool-mobaxterm",
     "externalUrl": "https://mobaxterm.mobatek.net/",
     "category": "工具导航 · 终端与远程运维工具",
-    "date": "2026-09-18",
+    "date": "2026-10-13",
     "tags": [
       "MobaXterm",
       "SSH",
@@ -4175,7 +4190,7 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
     "url": "tools.html#tool-finalshell",
     "externalUrl": "http://www.hostbuf.com/",
     "category": "工具导航 · 终端与远程运维工具",
-    "date": "2026-09-18",
+    "date": "2026-10-13",
     "tags": [
       "FinalShell",
       "SSH",
@@ -4195,7 +4210,7 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
     "url": "tools.html#tool-aapanel-宝塔国际版",
     "externalUrl": "https://www.aapanel.com/new/download.html",
     "category": "工具导航 · 终端与远程运维工具",
-    "date": "2026-09-18",
+    "date": "2026-10-13",
     "tags": [
       "aaPanel",
       "宝塔面板",
@@ -4216,7 +4231,7 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
     "url": "tools.html#tool-mqttx",
     "externalUrl": "https://mqttx.app/zh/downloads",
     "category": "工具导航 · 终端与远程运维工具",
-    "date": "2026-09-18",
+    "date": "2026-10-13",
     "tags": [
       "MQTTX",
       "MQTT",
@@ -4237,7 +4252,7 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
     "url": "tools.html#tool-draw-io",
     "externalUrl": "https://app.diagrams.net/",
     "category": "工具导航 · 架构设计与思维导图",
-    "date": "2026-09-18",
+    "date": "2026-10-13",
     "tags": [
       "架构图",
       "流程图",
@@ -4256,7 +4271,7 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
     "url": "tools.html#tool-pdmaner-元数建模",
     "externalUrl": "https://www.pdmaas.cn/Download",
     "category": "工具导航 · 架构设计与思维导图",
-    "date": "2026-09-18",
+    "date": "2026-10-13",
     "tags": [
       "PDManer",
       "数据库建模",
@@ -4276,7 +4291,7 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
     "url": "tools.html#tool-dbeaver",
     "externalUrl": "https://dbeaver.io/download/",
     "category": "工具导航 · 架构设计与思维导图",
-    "date": "2026-09-18",
+    "date": "2026-10-13",
     "tags": [
       "DBeaver",
       "数据库管理",
@@ -4296,7 +4311,7 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
     "url": "tools.html#tool-geek-uninstaller",
     "externalUrl": "https://geekuninstaller.com/",
     "category": "工具导航 · 系统优化与效率工具",
-    "date": "2026-09-18",
+    "date": "2026-10-13",
     "tags": [
       "Geek",
       "软件卸载",
@@ -4315,7 +4330,7 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
     "url": "tools.html#tool-kms-在线激活服务-kms-cx",
     "externalUrl": "https://kms.cx/",
     "category": "工具导航 · 系统优化与效率工具",
-    "date": "2026-09-18",
+    "date": "2026-10-13",
     "tags": [
       "KMS",
       "Windows激活",
@@ -4335,7 +4350,7 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
     "url": "tools.html#tool-flyenv",
     "externalUrl": "https://flyenv.com/download.html",
     "category": "工具导航 · 系统优化与效率工具",
-    "date": "2026-09-18",
+    "date": "2026-10-13",
     "tags": [
       "FlyEnv",
       "开发环境",
@@ -4356,7 +4371,7 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
     "url": "tools.html#tool-winrar-官方中文网",
     "externalUrl": "https://www.winrar.com.cn/",
     "category": "工具导航 · 系统优化与效率工具",
-    "date": "2026-09-18",
+    "date": "2026-10-13",
     "tags": [
       "WinRAR",
       "压缩工具",
@@ -4377,7 +4392,7 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
     "url": "tools.html#tool-cloudconvert-svg-to-ico",
     "externalUrl": "https://cloudconvert.com/svg-to-ico",
     "category": "工具导航 · 图像与多媒体处理",
-    "date": "2026-09-18",
+    "date": "2026-10-13",
     "tags": [
       "SVG",
       "ICO",
@@ -4396,7 +4411,7 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
     "url": "tools.html#tool-tinify-tinypng-中文网",
     "externalUrl": "https://tinify.cn/",
     "category": "工具导航 · 图像与多媒体处理",
-    "date": "2026-09-18",
+    "date": "2026-10-13",
     "tags": [
       "Tinify",
       "TinyPNG",
@@ -4416,7 +4431,7 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
     "url": "tools.html#tool-hills-lite-emby-jellyfin-客户端",
     "externalUrl": "https://apps.microsoft.com/detail/9nxnzfrllwzx?hl=zh-CN&gl=CN",
     "category": "工具导航 · 图像与多媒体处理",
-    "date": "2026-09-18",
+    "date": "2026-10-13",
     "tags": [
       "HillsLite",
       "Emby",
@@ -4436,7 +4451,7 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
     "url": "tools.html#tool-ffmpeg",
     "externalUrl": "https://www.ffmpeg.org/",
     "category": "工具导航 · 图像与多媒体处理",
-    "date": "2026-09-18",
+    "date": "2026-10-13",
     "tags": [
       "FFmpeg",
       "音视频处理",
@@ -4456,7 +4471,7 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
     "url": "tools.html#tool-ippure-ip-纯净度检测",
     "externalUrl": "https://ippure.com/",
     "category": "工具导航 · 网络诊断与安全检测",
-    "date": "2026-09-18",
+    "date": "2026-10-13",
     "tags": [
       "IPPure",
       "IP查询",
@@ -4476,7 +4491,7 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
     "url": "tools.html#tool-cloudflare-优选-ip-节点库-090227-xyz",
     "externalUrl": "https://cf.090227.xyz/",
     "category": "工具导航 · 网络诊断与安全检测",
-    "date": "2026-09-18",
+    "date": "2026-10-13",
     "tags": [
       "Cloudflare",
       "CF优选",
@@ -4496,7 +4511,7 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
     "url": "node-vle.html",
     "externalUrl": "",
     "category": "独立工具 · 网络与部署运维",
-    "date": "2026-09-18",
+    "date": "2026-10-13",
     "tags": [
       "VLESS",
       "节点生成器",
@@ -4514,7 +4529,7 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
     "url": "nav.html#github-fnm",
     "externalUrl": "https://github.com/Schniz/fnm",
     "category": "GitHub 导航 · Node.js 版本管理",
-    "date": "2026-09-18",
+    "date": "2026-10-13",
     "tags": [
       "Rust",
       "Node.js",
@@ -4533,7 +4548,7 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
     "url": "nav.html#github-nvm",
     "externalUrl": "https://github.com/nvm-sh/nvm",
     "category": "GitHub 导航 · Node.js 版本管理",
-    "date": "2026-09-18",
+    "date": "2026-10-13",
     "tags": [
       "Shell",
       "Bash",
@@ -4552,7 +4567,7 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
     "url": "nav.html#github-ventoy",
     "externalUrl": "https://github.com/ventoy/Ventoy",
     "category": "GitHub 导航 · 系统与装机利器",
-    "date": "2026-09-18",
+    "date": "2026-10-13",
     "tags": [
       "Ventoy",
       "启动盘",
@@ -4572,7 +4587,7 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
     "url": "nav.html#github-lky-officetools",
     "externalUrl": "https://github.com/OdysseusYuan/LKY_OfficeTools",
     "category": "GitHub 导航 · 系统与装机利器",
-    "date": "2026-09-18",
+    "date": "2026-10-13",
     "tags": [
       "Office",
       "LKY",
@@ -4592,7 +4607,7 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
     "url": "nav.html#github-fail2ban",
     "externalUrl": "https://github.com/fail2ban/fail2ban",
     "category": "GitHub 导航 · 服务器安全与防护",
-    "date": "2026-09-18",
+    "date": "2026-10-13",
     "tags": [
       "Fail2Ban",
       "Linux安全",
@@ -4612,7 +4627,7 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
     "url": "nav.html#github-acme-sh",
     "externalUrl": "https://github.com/acmesh-official/acme.sh",
     "category": "GitHub 导航 · 服务器安全与防护",
-    "date": "2026-09-18",
+    "date": "2026-10-13",
     "tags": [
       "acme.sh",
       "SSL证书",
@@ -4632,7 +4647,7 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
     "url": "nav.html#github-lit",
     "externalUrl": "https://lit.dev/",
     "category": "GitHub 导航 · 前端开发与 Web Components",
-    "date": "2026-09-18",
+    "date": "2026-10-13",
     "tags": [
       "Lit",
       "WebComponents",
@@ -4653,7 +4668,7 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
     "url": "nav.html#github-fingerprintjs",
     "externalUrl": "https://github.com/fingerprintjs/fingerprintjs",
     "category": "GitHub 导航 · 前端安全与设备识别",
-    "date": "2026-09-18",
+    "date": "2026-10-13",
     "tags": [
       "Fingerprint",
       "设备指纹",
@@ -4673,7 +4688,7 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
     "url": "nav.html#github-cloudflarespeedtest",
     "externalUrl": "https://github.com/XIU2/CloudflareSpeedTest",
     "category": "GitHub 导航 · 网络加速与穿透工具",
-    "date": "2026-09-18",
+    "date": "2026-10-13",
     "tags": [
       "CloudflareSpeedTest",
       "Cloudflare",
@@ -4694,7 +4709,7 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
     "url": "nav.html#github-frp",
     "externalUrl": "https://github.com/fatedier/frp",
     "category": "GitHub 导航 · 网络加速与穿透工具",
-    "date": "2026-09-18",
+    "date": "2026-10-13",
     "tags": [
       "frp",
       "内网穿透",
@@ -4714,7 +4729,7 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
     "url": "nav.html#github-v2rayng",
     "externalUrl": "https://github.com/2dust/v2rayNG",
     "category": "GitHub 导航 · 网络加速与穿透工具",
-    "date": "2026-09-18",
+    "date": "2026-10-13",
     "tags": [
       "v2rayNG",
       "Android",
@@ -4735,7 +4750,7 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
     "url": "nav.html#github-v2rayn",
     "externalUrl": "https://github.com/2dust/v2rayN",
     "category": "GitHub 导航 · 网络加速与穿透工具",
-    "date": "2026-09-18",
+    "date": "2026-10-13",
     "tags": [
       "v2rayN",
       "Windows",
@@ -4756,7 +4771,7 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
     "url": "nav.html#github-edgetunnel",
     "externalUrl": "https://github.com/cmliu/edgetunnel",
     "category": "GitHub 导航 · 网络加速与穿透工具",
-    "date": "2026-09-18",
+    "date": "2026-10-13",
     "tags": [
       "edgetunnel",
       "Cloudflare",
@@ -4777,7 +4792,7 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
     "url": "nav.html#github-multi-easygost",
     "externalUrl": "https://github.com/KANIKIG/Multi-EasyGost",
     "category": "GitHub 导航 · 网络加速与穿透工具",
-    "date": "2026-09-18",
+    "date": "2026-10-13",
     "tags": [
       "Gost",
       "端口转发",
@@ -4792,13 +4807,33 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
     "sections": []
   },
   {
+    "id": "github-actions-bbr-v3",
+    "type": "github",
+    "title": "Actions-bbr-v3 (byJoey/Actions-bbr-v3)",
+    "url": "nav.html#github-actions-bbr-v3",
+    "externalUrl": "https://github.com/byJoey/Actions-bbr-v3",
+    "category": "GitHub 导航 · 网络加速与穿透工具",
+    "date": "2026-10-13",
+    "tags": [
+      "BBR",
+      "BBRv3",
+      "VPS加速",
+      "Linux内核",
+      "网络优化",
+      "Shell"
+    ],
+    "summary": "🚀 Debian/Ubuntu VPS 的 BBRv3 内核安装与网络加速一键管理脚本 — 专为 Debian/Ubuntu VPS 设计的 BBRv3 拥塞控制算法内核管理脚本。支持一键快速安装、切换标准与 Max 激进吞吐内核、状态监控与快捷命令调用，大幅优化 VPS 网络吞吐与连接延迟。",
+    "content": "Actions-bbr-v3 byJoey/Actions-bbr-v3 https://github.com/byJoey/Actions-bbr-v3 🚀 Debian/Ubuntu VPS 的 BBRv3 内核安装与网络加速一键管理脚本 专为 Debian/Ubuntu VPS 设计的 BBRv3 拥塞控制算法内核管理脚本。支持一键快速安装、切换标准与 Max 激进吞吐内核、状态监控与快捷命令调用，大幅优化 VPS 网络吞吐与连接延迟。 BBR BBRv3 VPS加速 Linux内核 网络优化 Shell",
+    "sections": []
+  },
+  {
     "id": "github-emqx",
     "type": "github",
     "title": "EMQX (emqx/emqx)",
     "url": "nav.html#github-emqx",
     "externalUrl": "https://github.com/emqx/emqx",
     "category": "GitHub 导航 · 物联网与消息中间件",
-    "date": "2026-09-18",
+    "date": "2026-10-13",
     "tags": [
       "EMQX",
       "MQTT",
@@ -4820,7 +4855,7 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
     "url": "nav.html#github-yt-dlp",
     "externalUrl": "https://github.com/yt-dlp/yt-dlp",
     "category": "GitHub 导航 · 媒体与下载工具",
-    "date": "2026-09-18",
+    "date": "2026-10-13",
     "tags": [
       "youtube",
       "下载",
@@ -4838,7 +4873,7 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
     "url": "nav.html#github-kugoumusic-net",
     "externalUrl": "https://github.com/Linsxyx/KugouMusic.NET",
     "category": "GitHub 导航 · 媒体与下载工具",
-    "date": "2026-09-18",
+    "date": "2026-10-13",
     "tags": [
       "音乐",
       "酷狗",
@@ -4856,7 +4891,7 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
     "url": "nav.html#github-landrop",
     "externalUrl": "https://github.com/LANDrop/LANDrop/releases",
     "category": "GitHub 导航 · 网络辅助与传输工具",
-    "date": "2026-09-18",
+    "date": "2026-10-13",
     "tags": [
       "局域网",
       "传输",
@@ -4874,7 +4909,7 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
     "url": "files.html#file-fileupload-vue",
     "externalUrl": "",
     "category": "资源文件 · 前端组件",
-    "date": "2026-09-18",
+    "date": "2026-10-13",
     "tags": [
       "vue",
       "前端组件"
@@ -4890,7 +4925,7 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
     "url": "files.html#file-queryform-vue",
     "externalUrl": "",
     "category": "资源文件 · 前端组件",
-    "date": "2026-09-18",
+    "date": "2026-10-13",
     "tags": [
       "vue",
       "前端组件"
@@ -4906,7 +4941,7 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
     "url": "files.html#file-cf-worker-proxy-js",
     "externalUrl": "",
     "category": "资源文件 · 代码库",
-    "date": "2026-09-18",
+    "date": "2026-10-13",
     "tags": [
       "js",
       "代码库"
@@ -4922,7 +4957,7 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
     "url": "files.html#file-ciphertool-ts",
     "externalUrl": "",
     "category": "资源文件 · 代码库",
-    "date": "2026-09-18",
+    "date": "2026-10-13",
     "tags": [
       "ts",
       "代码库"
@@ -4938,7 +4973,7 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
     "url": "files.html#file-tools-js",
     "externalUrl": "",
     "category": "资源文件 · 代码库",
-    "date": "2026-09-18",
+    "date": "2026-10-13",
     "tags": [
       "js",
       "代码库"
@@ -4954,7 +4989,7 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
     "url": "files.html#file-cf-ddns-sh",
     "externalUrl": "",
     "category": "资源文件 · Shell 脚本",
-    "date": "2026-09-18",
+    "date": "2026-10-13",
     "tags": [
       "sh",
       "Shell 脚本"
@@ -4970,7 +5005,7 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
     "url": "files.html#file-frps-sh",
     "externalUrl": "",
     "category": "资源文件 · Shell 脚本",
-    "date": "2026-09-18",
+    "date": "2026-10-13",
     "tags": [
       "sh",
       "Shell 脚本"
@@ -4986,7 +5021,7 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
     "url": "files.html#file-xray-sh",
     "externalUrl": "",
     "category": "资源文件 · Shell 脚本",
-    "date": "2026-09-18",
+    "date": "2026-10-13",
     "tags": [
       "sh",
       "Shell 脚本"
@@ -5002,7 +5037,7 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
     "url": "files.html#file-renametool-bat",
     "externalUrl": "",
     "category": "资源文件 · Windows 批处理",
-    "date": "2026-09-18",
+    "date": "2026-10-13",
     "tags": [
       "bat",
       "Windows 批处理"
@@ -5018,7 +5053,7 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
     "url": "files.html#file-cmd-proxy-bat",
     "externalUrl": "",
     "category": "资源文件 · Windows 批处理",
-    "date": "2026-09-18",
+    "date": "2026-10-13",
     "tags": [
       "bat",
       "Windows 批处理"
@@ -5034,7 +5069,7 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
     "url": "files.html#file-cmd-proxy-agy-bat",
     "externalUrl": "",
     "category": "资源文件 · Windows 批处理",
-    "date": "2026-09-18",
+    "date": "2026-10-13",
     "tags": [
       "bat",
       "Windows 批处理"
@@ -5050,7 +5085,7 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
     "url": "files.html#file-windows-activation-bat",
     "externalUrl": "",
     "category": "资源文件 · Windows 批处理",
-    "date": "2026-09-18",
+    "date": "2026-10-13",
     "tags": [
       "bat",
       "Windows 批处理"
@@ -5066,7 +5101,7 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
     "url": "files.html#file-imghandle-jpg-zip",
     "externalUrl": "",
     "category": "资源文件 · 压缩资源包",
-    "date": "2026-09-18",
+    "date": "2026-10-13",
     "tags": [
       "zip",
       "压缩资源包"
@@ -5082,7 +5117,7 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
     "url": "files.html#file-curvecharts-rar",
     "externalUrl": "",
     "category": "资源文件 · 压缩资源包",
-    "date": "2026-09-18",
+    "date": "2026-10-13",
     "tags": [
       "rar",
       "压缩资源包"
@@ -5098,7 +5133,7 @@ window.SEARCH_DATABASE = window.BLOG_SEARCH_INDEX = [
     "url": "files.html#file-优惠券弹框组件-zip",
     "externalUrl": "",
     "category": "资源文件 · 压缩资源包",
-    "date": "2026-09-18",
+    "date": "2026-10-13",
     "tags": [
       "zip",
       "压缩资源包"
