@@ -12,7 +12,7 @@ window.BLOG_CONFIG = {
   githubUrl: 'https://github.com/vmrey/vmrey.github.io',
 
   // 2. 版权与年份信息
-  startYear: 2018, // 创办起步年份，将自动与当前年份拼接为 2018-2026 动态区间
+  startYear: 2018, // 创办起步年份
   copyrightNotice: '用代码与文字记录探索',
 
   // 3. 文章列表与分页配置

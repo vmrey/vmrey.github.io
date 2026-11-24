@@ -50,10 +50,8 @@ const CONFIG = window.BLOG_CONFIG || {
 })();
 
 document.addEventListener('DOMContentLoaded', () => {
-  // 1. 同步站点全局信息 (名称、描述、起步年份区间、页脚)
-  const currentYear = new Date().getFullYear();
+  // 1. 同步站点全局信息 (名称、描述、起步年份、页脚)
   const startYear = CONFIG.startYear || 2018;
-  const yearText = startYear >= currentYear ? `${currentYear}` : `${startYear}-${currentYear}`;
   
   document.querySelectorAll('.sidebar-name').forEach(el => {
     if (CONFIG.siteName) el.textContent = CONFIG.siteName;
@@ -64,7 +62,7 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   document.querySelectorAll('.sidebar-copyright').forEach(el => {
-    el.innerHTML = `© ${yearText} ${CONFIG.siteName || 'vmrey.github.io'}<br>${CONFIG.copyrightNotice || '用代码与文字记录探索'}`;
+    el.innerHTML = `© ${startYear} ${CONFIG.siteName || 'vmrey.github.io'}<br>${CONFIG.copyrightNotice || '用代码与文字记录探索'}`;
   });
 
   // 2. PC & Mobile Sidebar Toggle Controller

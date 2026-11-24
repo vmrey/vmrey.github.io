@@ -191,7 +191,7 @@ ${navCategoriesHtml}
           <button id="theme-toggle" class="theme-toggle-btn" type="button" title="切换主题外观"></button>
         </div>
         <div class="sidebar-copyright">
-          © ${blogConfig.startYear}-<span class="current-year">${new Date().getFullYear()}</span> ${blogConfig.siteName}<br>${blogConfig.copyrightNotice}
+          © ${blogConfig.startYear} ${blogConfig.siteName}<br>${blogConfig.copyrightNotice}
         </div>
       </div>
     </aside>`;
