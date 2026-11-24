@@ -25,7 +25,7 @@ function renderAboutLayout({
           <div class="article-meta">
             <span class="post-block-tag">关于本站</span>
             <span>·</span>
-            <time datetime="${blogConfig.startYear}-01-01">${blogConfig.startYear}-2026</time>
+            <time datetime="${blogConfig.startYear}-01-01">${blogConfig.startYear}</time>
             <span>·</span>
             <span>3 分钟阅读</span>
           </div>
